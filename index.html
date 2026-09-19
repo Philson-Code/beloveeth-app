@@ -85,37 +85,38 @@
 
     /* HERO SECTION */
     .hero {
-      padding: 50px 24px 60px; max-width: 1280px; margin: 0 auto;
-      display: grid; grid-template-columns: 1.15fr 0.85fr; gap: 40px; align-items: start;
+      padding: 40px 24px 50px; max-width: 1280px; margin: 0 auto;
+      display: grid; grid-template-columns: 1.15fr 0.85fr; gap: 36px; align-items: start;
     }
     .hero-tag {
       display: inline-block; background: var(--gold-light); color: var(--maroon); 
       padding: 6px 14px; border-radius: 20px; font-size: 12px; font-weight: 700; margin-bottom: 14px;
     }
-    .hero-title { font-family: 'Playfair Display', serif; font-size: 48px; line-height: 1.15; color: var(--charcoal); }
+    .hero-title { font-family: 'Playfair Display', serif; font-size: 44px; line-height: 1.15; color: var(--charcoal); }
     .hero-title span { color: var(--maroon); font-style: italic; }
 
-    /* BENEATH PREDICTIVE: MINI MARKET PULSE GRAPH WIDGET */
+    /* BENEATH PREDICTIVE: COMPACT MINI MARKET PULSE GRAPH WIDGET */
     .mini-market-pulse-widget {
-      background: #0F172A; color: white; border-radius: 18px; padding: 18px;
-      margin: 20px 0 24px; border: 1px solid rgba(212, 175, 55, 0.4);
-      box-shadow: 0 12px 32px rgba(0,0,0,0.25); position: relative;
+      background: #0F172A; color: white; border-radius: 16px; padding: 14px 18px;
+      margin: 18px 0 20px; border: 1px solid rgba(212, 175, 55, 0.4);
+      box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+      max-width: 380px; /* Reduced width so it's small & not stretched */
     }
-    .pulse-widget-top { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; }
+    .pulse-widget-top { display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; }
     .pulse-widget-title { 
-      font-size: 12px; font-weight: 800; color: var(--gold); 
+      font-size: 11px; font-weight: 800; color: var(--gold); 
       text-transform: uppercase; letter-spacing: 0.5px;
-      display: flex; align-items: center; gap: 8px; 
+      display: flex; align-items: center; gap: 6px; 
     }
 
-    /* LIVE BEEPING ANIMATION */
+    /* LIVE BEEPING ANIMATIONS */
     .live-beep-dot {
-      width: 10px; height: 10px; background: var(--green); border-radius: 50%;
-      box-shadow: 0 0 10px var(--green); animation: beepPulse 1.2s infinite;
+      width: 8px; height: 8px; background: var(--green); border-radius: 50%;
+      box-shadow: 0 0 8px var(--green); animation: beepPulse 1.2s infinite;
     }
     .live-beep-red {
-      width: 10px; height: 10px; background: var(--red); border-radius: 50%;
-      box-shadow: 0 0 10px var(--red); animation: beepPulse 0.9s infinite;
+      width: 8px; height: 8px; background: var(--red); border-radius: 50%;
+      box-shadow: 0 0 8px var(--red); animation: beepPulse 0.9s infinite;
     }
     @keyframes beepPulse {
       0% { transform: scale(0.8); opacity: 0.4; }
@@ -123,75 +124,83 @@
       100% { transform: scale(0.8); opacity: 0.4; }
     }
 
-    .mini-graph-container { height: 125px; width: 100%; }
+    .mini-graph-container { height: 85px; width: 100%; } /* Small height */
 
     /* MARQUEE RUNNING COMMENT AROUND GRAPH */
     .marquee-advisory-container {
-      margin-top: 12px; background: rgba(255, 255, 255, 0.05); border-radius: 8px;
-      padding: 8px 12px; overflow: hidden; border: 1px solid rgba(212, 175, 55, 0.25);
+      margin-top: 10px; background: rgba(255, 255, 255, 0.05); border-radius: 6px;
+      padding: 6px 10px; overflow: hidden; border: 1px solid rgba(212, 175, 55, 0.25);
     }
     .marquee-text {
-      font-size: 12px; font-weight: 700; color: var(--gold-light); white-space: nowrap;
-      display: inline-block; animation: scrollComment 18s linear infinite;
+      font-size: 11px; font-weight: 700; color: var(--gold-light); white-space: nowrap;
+      display: inline-block; animation: scrollComment 16s linear infinite;
     }
     @keyframes scrollComment {
       0% { transform: translateX(100%); }
       100% { transform: translateX(-100%); }
     }
 
-    .hero-desc { font-size: 15px; color: var(--slate); margin-bottom: 24px; }
+    .hero-desc { font-size: 14px; color: var(--slate); margin-bottom: 20px; }
 
-    /* PROP AI RIGHT SIDEBAR NEWS CARDS & MULTI-DIRECTION ANIMATIONS */
-    .ai-preview-box {
-      background: linear-gradient(135deg, #1A070B 0%, #3D0F19 100%);
-      border-radius: 20px; padding: 24px; color: white; border: 1px solid rgba(212, 175, 55, 0.3);
-      box-shadow: var(--shadow-lg); position: relative; overflow: hidden;
+    /* WHITE BLOG-STYLE DYNAMIC NEWS FEED (RIGHT SIDEBAR) */
+    .white-blog-news-box {
+      background: #FFFFFF;
+      border-radius: 20px; padding: 20px; color: var(--charcoal);
+      border: 1px solid var(--border-color);
+      box-shadow: 0 12px 35px rgba(0, 0, 0, 0.07);
+      max-height: 480px; /* Constrained height so it never off-screens */
+      display: flex; flex-direction: column; overflow: hidden;
     }
 
-    /* NEWS FEED CARDS WITH FADE & DIRECTIONAL ANIMATIONS */
+    .blog-feed-header {
+      display: flex; justify-content: space-between; align-items: center;
+      padding-bottom: 12px; border-bottom: 2px solid var(--soft); margin-bottom: 12px;
+    }
+    .blog-feed-title {
+      font-family: 'Playfair Display', serif; font-size: 18px; font-weight: 700;
+      color: var(--maroon); display: flex; align-items: center; gap: 8px;
+    }
+
+    /* SCROLLABLE NEWS FEED CONTAINER */
     .news-card-feed {
-      display: flex; flex-direction: column; gap: 14px; margin-top: 16px;
+      display: flex; flex-direction: column; gap: 12px;
+      overflow-y: auto; padding-right: 4px; max-height: 400px;
     }
-    .news-item {
-      background: rgba(255, 255, 255, 0.06); border: 1px solid rgba(255, 255, 255, 0.12);
+    .news-card-feed::-webkit-scrollbar { width: 4px; }
+    .news-card-feed::-webkit-scrollbar-thumb { background: #CBD5E1; border-radius: 10px; }
+
+    /* BLOG STYLE INDIVIDUAL NEWS ITEM */
+    .blog-news-card {
+      background: #FAF9F6; border: 1px solid #E2E8F0;
       border-radius: 12px; padding: 12px; transition: all 0.4s ease;
-      animation: swipeInRight 0.8s ease forwards;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.02);
     }
-    .news-item.slide-left { animation: swipeInLeft 0.8s ease forwards; }
-    .news-item.slide-top { animation: swipeInTop 0.8s ease forwards; }
-    .news-item.slide-bottom { animation: swipeInBottom 0.8s ease forwards; }
+    .blog-news-card:hover { transform: translateY(-2px); box-shadow: 0 6px 16px rgba(0,0,0,0.06); }
 
-    @keyframes swipeInRight {
-      0% { opacity: 0; transform: translateX(40px); }
-      100% { opacity: 1; transform: translateX(0); }
-    }
-    @keyframes swipeInLeft {
-      0% { opacity: 0; transform: translateX(-40px); }
-      100% { opacity: 1; transform: translateX(0); }
-    }
-    @keyframes swipeInTop {
-      0% { opacity: 0; transform: translateY(-30px); }
-      100% { opacity: 1; transform: translateY(0); }
-    }
-    @keyframes swipeInBottom {
-      0% { opacity: 0; transform: translateY(30px); }
-      100% { opacity: 1; transform: translateY(0); }
-    }
-
-    .news-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 6px; }
-    .news-tag { font-size: 10px; font-weight: 800; padding: 2px 6px; border-radius: 4px; text-transform: uppercase; }
-    .tag-material { background: rgba(212, 175, 55, 0.2); color: var(--gold); }
-    .tag-disaster { background: rgba(239, 68, 68, 0.2); color: var(--red); }
-    .news-title { font-size: 13px; font-weight: 700; color: #F8FAFC; margin-bottom: 4px; }
-    .news-desc { font-size: 11px; color: #94A3B8; line-height: 1.4; margin-bottom: 8px; }
+    .blog-card-top { display: flex; align-items: center; justify-content: space-between; margin-bottom: 6px; }
+    .blog-tag { font-size: 10px; font-weight: 800; padding: 2px 8px; border-radius: 12px; text-transform: uppercase; }
+    .tag-material { background: rgba(212, 175, 55, 0.18); color: #8A6D0B; }
+    .tag-disaster { background: rgba(239, 68, 68, 0.15); color: #DC2626; }
     
-    .news-media-box {
+    .blog-post-title { font-size: 13px; font-weight: 700; color: #0F172A; margin-bottom: 4px; line-height: 1.3; }
+    .blog-post-desc { font-size: 11px; color: #64748B; line-height: 1.4; margin-bottom: 8px; }
+    
+    .blog-post-media {
       width: 100%; height: 110px; border-radius: 8px; overflow: hidden; margin-top: 6px;
-      position: relative; background: #000;
     }
-    .news-media-box img, .news-media-box video {
-      width: 100%; height: 100%; object-fit: cover; opacity: 0.85;
+    .blog-post-media img {
+      width: 100%; height: 100%; object-fit: cover; transition: transform 0.3s ease;
     }
+    .blog-post-media img:hover { transform: scale(1.04); }
+
+    /* DIRECTIONAL ANIMATION CLASSES */
+    .slide-top { animation: swipeInTop 0.6s cubic-bezier(0.25, 1, 0.5, 1) forwards; }
+    .slide-left { animation: swipeInLeft 0.6s cubic-bezier(0.25, 1, 0.5, 1) forwards; }
+    .slide-bottom { animation: swipeInBottom 0.6s cubic-bezier(0.25, 1, 0.5, 1) forwards; }
+
+    @keyframes swipeInTop { 0% { opacity: 0; transform: translateY(-20px); } 100% { opacity: 1; transform: translateY(0); } }
+    @keyframes swipeInLeft { 0% { opacity: 0; transform: translateX(-20px); } 100% { opacity: 1; transform: translateX(0); } }
+    @keyframes swipeInBottom { 0% { opacity: 0; transform: translateY(20px); } 100% { opacity: 1; transform: translateY(0); } }
 
     /* SECTION HEADINGS */
     .section-header { text-align: center; max-width: 640px; margin: 0 auto 40px; }
@@ -299,21 +308,21 @@
       
       <h1 class="hero-title">Predictive <span>Valuations & Market Yields</span></h1>
 
-      <!-- BENEATH PREDICTIVE: MINI MARKET PULSE GRAPH WITH MARQUEE ADVISORY -->
+      <!-- BENEATH PREDICTIVE: COMPACT MINI MARKET PULSE GRAPH -->
       <div class="mini-market-pulse-widget" id="pulse">
         <div class="pulse-widget-top">
           <div class="pulse-widget-title">
             <div class="live-beep-dot"></div>
-            MARKET PULSE (LIVE REAL-TIME INDEX)
+            MARKET PULSE (LIVE INDEX)
           </div>
-          <span style="font-size: 11px; color: var(--gold); text-decoration: underline; cursor: pointer;">Live Analytics</span>
+          <span style="font-size: 10px; color: var(--gold); text-decoration: underline; cursor: pointer;">Live Analytics</span>
         </div>
 
         <div class="mini-graph-container">
           <canvas id="heroMiniGraph"></canvas>
         </div>
 
-        <!-- RUNNING ADVISORY COMMENT (MARQUEE) -->
+        <!-- RUNNING ADVISORY MARQUEE -->
         <div class="marquee-advisory-container">
           <div class="marquee-text" id="pulseAdvisoryText">
             🔥 "Invest now when it's going high!" • ⚠️ "Not Ibadan yet, buy Sango now!" • 🏗️ "Cement prices at ₦12,000/bag — lock in materials before Q4 rise!" • 📈 "Ikoyi yield index up +18.4%"
@@ -324,62 +333,46 @@
       <p class="hero-desc">Connecting verified land registries, spatial algorithms, material pricing trends, and diaspora buyers through a unified real estate hub.</p>
     </div>
 
-    <!-- PROP AI RIGHT SIDEBAR NEWS HEADLINES & MEDIA FEED WIDGET -->
-    <div class="ai-preview-box">
-      <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px;">
-        <h3 style="color:var(--gold); font-size:15px; display:flex; align-items:center; gap:8px;">
-          <div class="live-beep-red"></div> PROP AI LIVE NEWS FEED
-        </h3>
-        <span style="background:rgba(239, 68, 68, 0.2); color:#EF4444; padding:3px 8px; border-radius:12px; font-size:10px; font-weight:800;">LIVE UPDATES</span>
+    <!-- WHITE BLOG-STYLE DYNAMIC NEWS & MEDIA SIDEBAR -->
+    <div class="white-blog-news-box">
+      <div class="blog-feed-header">
+        <div class="blog-feed-title">
+          <div class="live-beep-red"></div> PROP AI Blog Intelligence
+        </div>
+        <span style="background:rgba(16, 185, 129, 0.12); color:#10B981; padding:3px 8px; border-radius:12px; font-size:10px; font-weight:800;">LIVE FEED</span>
       </div>
 
-      <p style="font-size:12px; color:#CBD5E1; margin-bottom:12px;">
-        Real-time material market rates, flood risks, and disaster alerts fading & swiping live across top, left, bottom, and right positions.
-      </p>
-
-      <!-- LIVE SWIPING NEWS HEADLINE CARDS WITH MEDIA RECAPS -->
-      <div class="news-card-feed" id="liveNewsFeedContainer">
+      <!-- BLOG SCROLLING CONTAINER -->
+      <div class="news-card-feed" id="liveBlogNewsContainer">
         
-        <!-- CARD 1: SWIPE RIGHT -->
-        <div class="news-item slide-top">
-          <div class="news-header">
-            <span class="news-tag tag-material">Material Rate Alert</span>
-            <div style="display:flex; align-items:center; gap:4px; font-size:10px; color:var(--gold);">
+        <!-- CARD 1 -->
+        <div class="blog-news-card slide-top">
+          <div class="blog-card-top">
+            <span class="blog-tag tag-material">Material Rate Alert</span>
+            <div style="display:flex; align-items:center; gap:4px; font-size:10px; color:#10B981; font-weight:700;">
               <div class="live-beep-dot"></div> Just Now
             </div>
           </div>
-          <div class="news-title">Dangote & BUA Cement Surge to ₦12,000/Bag</div>
-          <div class="news-desc">Depot prices in Lagos & Ogun states rise +8.2%. 9-inch blocks now ₦620 each.</div>
-          <div class="news-media-box">
-            <img src="https://images.unsplash.com/photo-1541888946425-d0fbb186a5b7?auto=format&fit=crop&w=500&q=80" alt="Cement & Materials">
+          <div class="blog-post-title">Dangote & BUA Cement Surge to ₦12,000/Bag</div>
+          <div class="blog-post-desc">Depot prices in Lagos & Ogun states rise +8.2%. Standard 9-inch blocks now retail at ₦620 each.</div>
+          <div class="blog-post-media">
+            <img src="https://images.unsplash.com/photo-1541888946425-d0fbb186a5b7?auto=format&fit=crop&w=500&q=80" alt="Cement & Building Materials">
           </div>
         </div>
 
-        <!-- CARD 2: SWIPE LEFT -->
-        <div class="news-item slide-left">
-          <div class="news-header">
-            <span class="news-tag tag-disaster">Flood Warning</span>
-            <div style="display:flex; align-items:center; gap:4px; font-size:10px; color:var(--red);">
+        <!-- CARD 2 -->
+        <div class="blog-news-card slide-left">
+          <div class="blog-card-top">
+            <span class="blog-tag tag-disaster">Flood Warning</span>
+            <div style="display:flex; align-items:center; gap:4px; font-size:10px; color:#DC2626; font-weight:700;">
               <div class="live-beep-red"></div> 4m ago
             </div>
           </div>
-          <div class="news-title">Lekki-Epe Drainage Alert & Flood Risk</div>
-          <div class="news-desc">Geospatial drainage locks triggered along Coastal Highway. Heavy runoff expected.</div>
-          <div class="news-media-box">
-            <img src="https://images.unsplash.com/photo-1547683905-f686c993aae5?auto=format&fit=crop&w=500&q=80" alt="Flood Warning">
+          <div class="blog-post-title">Lekki-Epe Drainage Alert & Coastal Risk</div>
+          <div class="blog-post-desc">Geospatial sensors triggered along Coastal Highway. High runoff expected before dusk.</div>
+          <div class="blog-post-media">
+            <img src="https://images.unsplash.com/photo-1547683905-f686c993aae5?auto=format&fit=crop&w=500&q=80" alt="Coastal Drainage & Flood Risk">
           </div>
-        </div>
-
-        <!-- CARD 3: SWIPE BOTTOM -->
-        <div class="news-item slide-bottom">
-          <div class="news-header">
-            <span class="news-tag tag-material">Regional Investment</span>
-            <div style="display:flex; align-items:center; gap:4px; font-size:10px; color:var(--gold);">
-              <div class="live-beep-dot"></div> 12m ago
-            </div>
-          </div>
-          <div class="news-title">Sango-Ota Industrial Yield Spike (+22.4%)</div>
-          <div class="news-desc">High land appreciation signals detected. Investors redirecting capital from Ibadan.</div>
         </div>
 
       </div>
@@ -520,9 +513,9 @@
   <!-- LOAD FLOATING PROP AI WIDGET WITH LIVE NEWS & DIRECTIONAL SWIPING -->
   <script src="prop-ai-widget.js"></script>
 
-  <!-- SCRIPT FOR GRAPH & DYNAMIC SWIPING NEWS ANIMATIONS -->
+  <!-- SCRIPT FOR COMPACT GRAPH & DYNAMIC BLOG ROTATOR -->
   <script>
-    // MINI GRAPH INITIALIZATION
+    // COMPACT GRAPH INITIALIZATION
     const ctx = document.getElementById('heroMiniGraph').getContext('2d');
     let graphLabels = ['5m ago', '4m ago', '3m ago', '2m ago', '1m ago', 'Now'];
     let graphData = [120, 126, 122, 135, 140, 152];
@@ -539,7 +532,7 @@
           borderWidth: 2,
           tension: 0.4,
           fill: true,
-          pointRadius: 3,
+          pointRadius: 2,
           pointBackgroundColor: '#10B981'
         }]
       },
@@ -557,47 +550,47 @@
     // REAL-TIME GRAPH UPDATE SIMULATION
     setInterval(() => {
       const lastVal = graphData[graphData.length - 1];
-      const newVal = lastVal + (Math.random() * 6 - 2.5);
+      const newVal = lastVal + (Math.random() * 5 - 2);
       graphData.shift();
       graphData.push(Number(newVal.toFixed(1)));
       miniGraph.update();
     }, 2500);
 
-    // DYNAMIC SWIPE & FADE NEWS FEED ROTATOR (RIGHT, LEFT, TOP, BOTTOM)
-    const newsContainer = document.getElementById('liveNewsFeedContainer');
-    const animations = ['slide-top', 'slide-left', 'slide-bottom', 'news-item'];
+    // DYNAMIC BLOG NEWS FEED ROTATOR
+    const blogContainer = document.getElementById('liveBlogNewsContainer');
+    const animations = ['slide-top', 'slide-left', 'slide-bottom'];
     
-    const freshNewsPool = [
-      { tag: 'Earthquake & Seismic', tagClass: 'tag-disaster', time: '1m ago', title: 'Tremor Alert: Coastal Soil Shift Detected', desc: 'Slight tectonic vibration logged along Victoria Island offshore faults.', img: 'https://images.unsplash.com/photo-1508873696983-2df515122519?auto=format&fit=crop&w=500&q=80' },
-      { tag: 'Material Rate Alert', tagClass: 'tag-material', time: '3m ago', title: 'Steel Rebar Up +5% across Depots', desc: '12mm & 16mm rebar prices adjusted due to import tariff changes.', img: '' },
-      { tag: 'Flood Alert', tagClass: 'tag-disaster', time: 'Live', title: 'Flash Flood Risk Elevated in Ajah Axis', desc: 'PropTech spatial cameras log rising canal water levels.', img: 'https://images.unsplash.com/photo-1547683905-f686c993aae5?auto=format&fit=crop&w=500&q=80' }
+    const freshBlogNews = [
+      { tag: 'Seismic & Soil Risk', tagClass: 'tag-disaster', time: '2m ago', title: 'Tremor Vibration Logging near Coastal Zones', desc: 'Mild tremors logged by PropTech ground sensors near Victoria Island faults.', img: 'https://images.unsplash.com/photo-1508873696983-2df515122519?auto=format&fit=crop&w=500&q=80' },
+      { tag: 'Material Inflation', tagClass: 'tag-material', time: '5m ago', title: 'Steel Rebar Rates Hike +5% Regional Average', desc: 'Import tariffs drive up 12mm & 16mm rebar prices across major industrial hubs.', img: '' },
+      { tag: 'Sango Appreciation', tagClass: 'tag-material', time: '8m ago', title: 'Sango Industrial Yield Surges Past +22.4%', desc: 'Investors actively shifting capital from Ibadan corridor towards Ogun hubs.', img: 'https://images.unsplash.com/photo-1504307651254-35680f356dfd?auto=format&fit=crop&w=500&q=80' }
     ];
 
-    let newsIndex = 0;
+    let blogIndex = 0;
     setInterval(() => {
-      if (newsContainer.children.length > 2) {
-        newsContainer.removeChild(newsContainer.lastElementChild);
+      if (blogContainer.children.length > 3) {
+        blogContainer.removeChild(blogContainer.lastElementChild);
       }
       
-      const itemData = freshNewsPool[newsIndex % freshNewsPool.length];
+      const itemData = freshBlogNews[blogIndex % freshBlogNews.length];
       const animClass = animations[Math.floor(Math.random() * animations.length)];
       
       const newCard = document.createElement('div');
-      newCard.className = `news-item ${animClass}`;
+      newCard.className = `blog-news-card ${animClass}`;
       newCard.innerHTML = `
-        <div class="news-header">
-          <span class="news-tag ${itemData.tagClass}">${itemData.tag}</span>
-          <div style="display:flex; align-items:center; gap:4px; font-size:10px; color:var(--gold);">
+        <div class="blog-card-top">
+          <span class="blog-tag ${itemData.tagClass}">${itemData.tag}</span>
+          <div style="display:flex; align-items:center; gap:4px; font-size:10px; color:#DC2626; font-weight:700;">
             <div class="live-beep-red"></div> ${itemData.time}
           </div>
         </div>
-        <div class="news-title">${itemData.title}</div>
-        <div class="news-desc">${itemData.desc}</div>
-        ${itemData.img ? `<div class="news-media-box"><img src="${itemData.img}"></div>` : ''}
+        <div class="blog-post-title">${itemData.title}</div>
+        <div class="blog-post-desc">${itemData.desc}</div>
+        ${itemData.img ? `<div class="blog-post-media"><img src="${itemData.img}"></div>` : ''}
       `;
 
-      newsContainer.insertBefore(newCard, newsContainer.firstChild);
-      newsIndex++;
+      blogContainer.insertBefore(newCard, blogContainer.firstChild);
+      blogIndex++;
     }, 4500);
 
     // SIMPLE CALCULATOR LOGIC
