@@ -1,563 +1,614 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Beloveeth — Real Estate Intelligence & Ecosystem</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Playfair+Display:ital,wght@0,600;0,700;1,400&display=swap" rel="stylesheet">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Beloveeth — PropTech Intelligence & Real Estate Ecosystem</title>
+  
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;0,700;1,400&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 
-<!-- Swiper.js CSS -->
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
+  <!-- Chart.js for Hero Mini Pulse Graph -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
-<!-- Chart.js for Hero Mini Pulse Graph -->
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <style>
+    :root {
+      --maroon: #5A1725;
+      --burgundy: #7A2033;
+      --gold: #D4AF37;
+      --gold-light: #F4E8C1;
+      --ivory: #FAF9F6;
+      --soft: #F1EFF4;
+      --slate: #64748B;
+      --charcoal: #0F172A;
+      --green: #10B981;
+      --red: #EF4444;
+      --card-bg: #FFFFFF;
+      --border-color: #E2E8F0;
+      --shadow-sm: 0 2px 8px rgba(0,0,0,0.04);
+      --shadow-md: 0 8px 30px rgba(0,0,0,0.08);
+      --shadow-lg: 0 20px 40px rgba(90,23,37,0.12);
+    }
 
-<style>
-:root {
-  --maroon: #5A1725;
-  --burgundy: #7A2033;
-  --gold: #D4AF37;
-  --gold-light: #F4E8C1;
-  --ivory: #FAF9F6;
-  --soft: #F1EFF4;
-  --grey: #E2E5EA;
-  --slate: #64748B;
-  --charcoal: #0F172A;
-  --green: #10B981;
-  --shadow-sm: 0 2px 8px rgba(0,0,0,0.04);
-  --shadow-md: 0 8px 30px rgba(0,0,0,0.08);
-  --shadow-lg: 0 20px 40px rgba(90,23,37,0.12);
-  --color-blend: linear-gradient(135deg, rgba(90, 23, 37, 0.95) 0%, rgba(15, 23, 42, 0.9) 100%);
-}
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    
+    body {
+      font-family: 'Plus Jakarta Sans', system-ui, sans-serif;
+      background: var(--ivory);
+      color: var(--charcoal);
+      min-height: 100vh;
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
 
-* { margin: 0; padding: 0; box-sizing: border-box; }
-body {
-  font-family: 'Plus Jakarta Sans', system-ui, sans-serif;
-  background: var(--ivory);
-  color: var(--charcoal);
-  min-height: 100vh;
-  line-height: 1.6;
-  overflow-x: hidden;
-}
+    /* HEADER & NAVIGATION */
+    header {
+      position: sticky; top: 0; z-index: 1000;
+      background: rgba(250, 249, 246, 0.94); 
+      backdrop-filter: blur(16px);
+      border-bottom: 1px solid var(--border-color);
+    }
+    .nav-container {
+      max-width: 1280px; margin: 0 auto; padding: 16px 24px;
+      display: flex; justify-content: space-between; align-items: center;
+    }
+    .brand-logo { 
+      font-family: 'Playfair Display', serif; 
+      font-size: 24px; 
+      font-weight: 700; 
+      color: var(--maroon); 
+      text-decoration: none;
+      display: flex; align-items: center; gap: 8px;
+    }
+    .brand-badge { 
+      background: var(--gold); 
+      color: var(--maroon); 
+      font-size: 10px; 
+      font-weight: 800; 
+      padding: 3px 8px; 
+      border-radius: 20px; 
+    }
+    .nav-links { display: flex; gap: 28px; list-style: none; }
+    .nav-links a { font-size: 14px; font-weight: 600; color: var(--slate); text-decoration: none; transition: color 0.2s; }
+    .nav-links a:hover { color: var(--maroon); }
 
-button, input, select { font: inherit; }
-button { cursor: pointer; transition: all 0.25s ease; }
-a { color: inherit; text-decoration: none; }
+    .header-actions { display: flex; align-items: center; gap: 16px; }
+    .cta-btn {
+      background: var(--maroon); color: white; padding: 10px 22px; 
+      border-radius: 30px; font-weight: 700; font-size: 13px; 
+      text-decoration: none; transition: all 0.3s;
+      box-shadow: 0 4px 12px rgba(90, 23, 37, 0.2);
+    }
+    .cta-btn:hover { background: var(--burgundy); box-shadow: var(--shadow-md); transform: translateY(-1px); }
 
-/* STICKY GLASS HEADER */
-header {
-  position: sticky;
-  top: 0;
-  z-index: 1000;
-  background: rgba(250, 249, 246, 0.88);
-  backdrop-filter: blur(16px);
-  border-bottom: 1px solid rgba(226, 229, 234, 0.8);
-}
+    /* HERO SECTION */
+    .hero {
+      padding: 50px 24px 60px; max-width: 1280px; margin: 0 auto;
+      display: grid; grid-template-columns: 1.15fr 0.85fr; gap: 40px; align-items: start;
+    }
+    .hero-tag {
+      display: inline-block; background: var(--gold-light); color: var(--maroon); 
+      padding: 6px 14px; border-radius: 20px; font-size: 12px; font-weight: 700; margin-bottom: 14px;
+    }
+    .hero-title { font-family: 'Playfair Display', serif; font-size: 48px; line-height: 1.15; color: var(--charcoal); }
+    .hero-title span { color: var(--maroon); font-style: italic; }
 
-.nav-container {
-  max-width: 1280px;
-  margin: 0 auto;
-  padding: 16px 24px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
+    /* BENEATH PREDICTIVE: MINI MARKET PULSE GRAPH WIDGET */
+    .mini-market-pulse-widget {
+      background: #0F172A; color: white; border-radius: 18px; padding: 18px;
+      margin: 20px 0 24px; border: 1px solid rgba(212, 175, 55, 0.4);
+      box-shadow: 0 12px 32px rgba(0,0,0,0.25); position: relative;
+    }
+    .pulse-widget-top { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; }
+    .pulse-widget-title { 
+      font-size: 12px; font-weight: 800; color: var(--gold); 
+      text-transform: uppercase; letter-spacing: 0.5px;
+      display: flex; align-items: center; gap: 8px; 
+    }
 
-.brand-logo {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  font-family: 'Playfair Display', serif;
-  font-size: 24px;
-  font-weight: 700;
-  color: var(--maroon);
-}
+    /* LIVE BEEPING ANIMATION */
+    .live-beep-dot {
+      width: 10px; height: 10px; background: var(--green); border-radius: 50%;
+      box-shadow: 0 0 10px var(--green); animation: beepPulse 1.2s infinite;
+    }
+    .live-beep-red {
+      width: 10px; height: 10px; background: var(--red); border-radius: 50%;
+      box-shadow: 0 0 10px var(--red); animation: beepPulse 0.9s infinite;
+    }
+    @keyframes beepPulse {
+      0% { transform: scale(0.8); opacity: 0.4; }
+      50% { transform: scale(1.3); opacity: 1; }
+      100% { transform: scale(0.8); opacity: 0.4; }
+    }
 
-.brand-badge {
-  background: var(--gold);
-  color: var(--maroon);
-  font-size: 10px;
-  font-weight: 800;
-  padding: 3px 8px;
-  border-radius: 20px;
-  text-transform: uppercase;
-}
+    .mini-graph-container { height: 125px; width: 100%; }
 
-.nav-links { display: flex; align-items: center; gap: 22px; list-style: none; }
-.nav-links a { font-size: 13px; font-weight: 600; color: var(--slate); }
-.nav-links a:hover, .nav-links a.active { color: var(--maroon); }
+    /* MARQUEE RUNNING COMMENT AROUND GRAPH */
+    .marquee-advisory-container {
+      margin-top: 12px; background: rgba(255, 255, 255, 0.05); border-radius: 8px;
+      padding: 8px 12px; overflow: hidden; border: 1px solid rgba(212, 175, 55, 0.25);
+    }
+    .marquee-text {
+      font-size: 12px; font-weight: 700; color: var(--gold-light); white-space: nowrap;
+      display: inline-block; animation: scrollComment 18s linear infinite;
+    }
+    @keyframes scrollComment {
+      0% { transform: translateX(100%); }
+      100% { transform: translateX(-100%); }
+    }
 
-.nav-cta {
-  background: var(--maroon);
-  color: white;
-  padding: 10px 20px;
-  border-radius: 30px;
-  font-weight: 700;
-  font-size: 13px;
-  box-shadow: 0 4px 14px rgba(90, 23, 37, 0.25);
-}
+    .hero-desc { font-size: 15px; color: var(--slate); margin-bottom: 24px; }
 
-/* HERO SECTION */
-.hero {
-  padding: 60px 24px 40px;
-  max-width: 1280px;
-  margin: 0 auto;
-  display: grid;
-  grid-template-columns: 1.1fr 0.9fr;
-  gap: 48px;
-  align-items: start;
-}
+    /* PROP AI RIGHT SIDEBAR NEWS CARDS & MULTI-DIRECTION ANIMATIONS */
+    .ai-preview-box {
+      background: linear-gradient(135deg, #1A070B 0%, #3D0F19 100%);
+      border-radius: 20px; padding: 24px; color: white; border: 1px solid rgba(212, 175, 55, 0.3);
+      box-shadow: var(--shadow-lg); position: relative; overflow: hidden;
+    }
 
-.hero-tag {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  background: var(--gold-light);
-  color: var(--maroon);
-  padding: 6px 16px;
-  border-radius: 30px;
-  font-size: 12px;
-  font-weight: 700;
-  margin-bottom: 20px;
-}
+    /* NEWS FEED CARDS WITH FADE & DIRECTIONAL ANIMATIONS */
+    .news-card-feed {
+      display: flex; flex-direction: column; gap: 14px; margin-top: 16px;
+    }
+    .news-item {
+      background: rgba(255, 255, 255, 0.06); border: 1px solid rgba(255, 255, 255, 0.12);
+      border-radius: 12px; padding: 12px; transition: all 0.4s ease;
+      animation: swipeInRight 0.8s ease forwards;
+    }
+    .news-item.slide-left { animation: swipeInLeft 0.8s ease forwards; }
+    .news-item.slide-top { animation: swipeInTop 0.8s ease forwards; }
+    .news-item.slide-bottom { animation: swipeInBottom 0.8s ease forwards; }
 
-.hero-title {
-  font-family: 'Playfair Display', serif;
-  font-size: 46px;
-  line-height: 1.15;
-  color: var(--charcoal);
-  margin-bottom: 16px;
-}
+    @keyframes swipeInRight {
+      0% { opacity: 0; transform: translateX(40px); }
+      100% { opacity: 1; transform: translateX(0); }
+    }
+    @keyframes swipeInLeft {
+      0% { opacity: 0; transform: translateX(-40px); }
+      100% { opacity: 1; transform: translateX(0); }
+    }
+    @keyframes swipeInTop {
+      0% { opacity: 0; transform: translateY(-30px); }
+      100% { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes swipeInBottom {
+      0% { opacity: 0; transform: translateY(30px); }
+      100% { opacity: 1; transform: translateY(0); }
+    }
 
-.hero-title span { color: var(--maroon); font-style: italic; }
+    .news-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 6px; }
+    .news-tag { font-size: 10px; font-weight: 800; padding: 2px 6px; border-radius: 4px; text-transform: uppercase; }
+    .tag-material { background: rgba(212, 175, 55, 0.2); color: var(--gold); }
+    .tag-disaster { background: rgba(239, 68, 68, 0.2); color: var(--red); }
+    .news-title { font-size: 13px; font-weight: 700; color: #F8FAFC; margin-bottom: 4px; }
+    .news-desc { font-size: 11px; color: #94A3B8; line-height: 1.4; margin-bottom: 8px; }
+    
+    .news-media-box {
+      width: 100%; height: 110px; border-radius: 8px; overflow: hidden; margin-top: 6px;
+      position: relative; background: #000;
+    }
+    .news-media-box img, .news-media-box video {
+      width: 100%; height: 100%; object-fit: cover; opacity: 0.85;
+    }
 
-/* HERO MINI MARKET PULSE GRAPH WIDGET */
-.hero-mini-pulse-card {
-  background: #0F172A;
-  color: white;
-  border-radius: 16px;
-  padding: 16px 20px;
-  margin-bottom: 24px;
-  border: 1px solid rgba(212, 175, 55, 0.3);
-  box-shadow: 0 10px 30px rgba(0,0,0,0.15);
-  position: relative;
-  overflow: hidden;
-}
+    /* SECTION HEADINGS */
+    .section-header { text-align: center; max-width: 640px; margin: 0 auto 40px; }
+    .section-header h2 { font-family: 'Playfair Display', serif; font-size: 32px; color: var(--maroon); margin-bottom: 10px; }
+    .section-header p { font-size: 14px; color: var(--slate); }
 
-.mini-pulse-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 10px;
-}
+    /* FEATURE CARDS GRID */
+    .features-section { max-width: 1280px; margin: 40px auto 60px; padding: 0 24px; }
+    .features-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+    .feature-card {
+      background: var(--card-bg); border-radius: 16px; padding: 28px;
+      border: 1px solid var(--border-color); box-shadow: var(--shadow-md);
+      transition: transform 0.3s ease;
+    }
+    .feature-card:hover { transform: translateY(-4px); }
+    .feature-card h3 { font-size: 18px; color: var(--maroon); margin-bottom: 10px; }
+    .feature-card p { font-size: 13px; color: var(--slate); line-height: 1.6; }
 
-.mini-pulse-title {
-  font-size: 12px;
-  font-weight: 800;
-  color: var(--gold);
-  text-transform: uppercase;
-  letter-spacing: 0.8px;
-  display: flex;
-  align-items: center;
-  gap: 8px;
-}
+    /* PROPERTY LISTINGS SECTION */
+    .listings-section { background: var(--soft); padding: 60px 24px; }
+    .listings-container { max-width: 1280px; margin: 0 auto; }
+    .property-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 28px; margin-top: 30px; }
+    
+    .property-card {
+      background: white; border-radius: 16px; overflow: hidden;
+      border: 1px solid var(--border-color); box-shadow: var(--shadow-sm);
+      transition: all 0.3s ease;
+    }
+    .property-card:hover { box-shadow: var(--shadow-md); transform: translateY(-4px); }
+    .property-img { width: 100%; height: 200px; object-fit: cover; }
+    .property-content { padding: 20px; }
+    .property-tag { display: inline-block; background: rgba(16, 185, 129, 0.1); color: var(--green); font-size: 11px; font-weight: 700; padding: 2px 8px; border-radius: 6px; margin-bottom: 8px; }
+    .property-title { font-size: 16px; font-weight: 700; color: var(--charcoal); margin-bottom: 6px; }
+    .property-loc { font-size: 12px; color: var(--slate); margin-bottom: 12px; }
+    .property-price { font-size: 18px; font-weight: 800; color: var(--maroon); }
 
-.live-dot-beep {
-  width: 8px;
-  height: 8px;
-  background: var(--green);
-  border-radius: 50%;
-  box-shadow: 0 0 8px var(--green);
-  animation: pulse-beep 1.2s infinite;
-}
+    /* REAL ESTATE CALCULATOR WIDGET */
+    .calc-section { max-width: 1280px; margin: 60px auto; padding: 0 24px; }
+    .calc-box {
+      background: white; border-radius: 20px; padding: 36px;
+      border: 1px solid var(--border-color); box-shadow: var(--shadow-md);
+      display: grid; grid-template-columns: 1fr 1fr; gap: 40px; align-items: center;
+    }
+    .calc-inputs { display: flex; flex-direction: column; gap: 16px; }
+    .calc-field { display: flex; flex-direction: column; gap: 6px; }
+    .calc-field label { font-size: 12px; font-weight: 700; color: var(--slate); }
+    .calc-field input, .calc-field select {
+      padding: 12px; border: 1px solid var(--border-color); border-radius: 10px; font-size: 14px; outline: none;
+    }
+    .calc-output {
+      background: #0F172A; color: white; padding: 30px; border-radius: 16px;
+      display: flex; flex-direction: column; gap: 16px; text-align: center;
+    }
 
-@keyframes pulse-beep {
-  0% { transform: scale(0.8); opacity: 0.4; }
-  50% { transform: scale(1.3); opacity: 1; }
-  100% { transform: scale(0.8); opacity: 0.4; }
-}
+    /* FOOTER */
+    footer {
+      background: #0A0406; color: white; padding: 60px 24px 30px;
+      border-top: 1px solid rgba(212, 175, 55, 0.2); margin-top: 60px;
+    }
+    .footer-container {
+      max-width: 1280px; margin: 0 auto;
+      display: grid; grid-template-columns: 2fr repeat(3, 1fr); gap: 40px; margin-bottom: 40px;
+    }
+    .footer-brand h3 { font-family: 'Playfair Display', serif; font-size: 22px; color: var(--gold); margin-bottom: 12px; }
+    .footer-brand p { font-size: 12px; color: #94A3B8; line-height: 1.6; max-width: 320px; }
+    .footer-col h4 { font-size: 14px; color: white; margin-bottom: 16px; }
+    .footer-col ul { list-style: none; display: flex; flex-direction: column; gap: 10px; }
+    .footer-col a { color: #94A3B8; font-size: 12px; text-decoration: none; transition: color 0.2s; }
+    .footer-col a:hover { color: var(--gold); }
+    .footer-bottom { max-width: 1280px; margin: 0 auto; padding-top: 24px; border-top: 1px solid rgba(255,255,255,0.08); text-align: center; font-size: 12px; color: #64748B; }
 
-.mini-chart-box {
-  height: 120px;
-  width: 100%;
-}
-
-/* RUNNING MARQUEE ADVISORY COMMENT */
-.hero-ticker-wrap {
-  margin-top: 10px;
-  background: rgba(255,255,255,0.05);
-  border-radius: 8px;
-  padding: 6px 12px;
-  overflow: hidden;
-  border: 1px solid rgba(255,255,255,0.1);
-}
-
-.hero-ticker-text {
-  font-size: 12px;
-  font-weight: 700;
-  color: var(--gold-light);
-  white-space: nowrap;
-  animation: scroll-comment 14s linear infinite;
-}
-
-@keyframes scroll-comment {
-  0% { transform: translateX(100%); }
-  100% { transform: translateX(-100%); }
-}
-
-.hero-desc {
-  font-size: 15px;
-  color: var(--slate);
-  margin-bottom: 28px;
-  max-width: 540px;
-}
-
-/* INTERACTIVE PROP AI PREVIEW CARD */
-.ai-interactive-card {
-  background: linear-gradient(135deg, #1A070B 0%, #3D0F19 100%);
-  color: white;
-  border-radius: 24px;
-  padding: 32px;
-  box-shadow: var(--shadow-lg);
-  border: 1px solid rgba(212, 175, 55, 0.3);
-}
-
-.ai-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 20px;
-}
-
-.ai-chat-window {
-  background: rgba(0, 0, 0, 0.3);
-  border-radius: 16px;
-  padding: 20px;
-  min-height: 160px;
-  margin-bottom: 16px;
-  border: 1px solid rgba(255,255,255,0.08);
-}
-
-.ai-prompt-chips {
-  display: flex;
-  gap: 8px;
-  flex-wrap: wrap;
-  margin-bottom: 16px;
-}
-
-.chip {
-  background: rgba(255, 255, 255, 0.08);
-  border: 1px solid rgba(255, 255, 255, 0.15);
-  color: #CBD5E1;
-  padding: 6px 12px;
-  border-radius: 20px;
-  font-size: 12px;
-  font-weight: 600;
-}
-
-.ai-input-box { display: flex; gap: 10px; }
-.ai-input-box input {
-  flex: 1; background: rgba(255,255,255,0.06);
-  border: 1px solid rgba(255,255,255,0.2);
-  border-radius: 12px; padding: 12px 16px; color: white; font-size: 13px;
-}
-.ai-input-box button {
-  background: var(--gold); color: var(--maroon);
-  border: none; padding: 12px 20px; border-radius: 12px; font-weight: 800; font-size: 13px;
-}
-
-/* PROPERTY CAROUSEL */
-.properties-slider-section {
-  background: linear-gradient(180deg, var(--ivory) 0%, #EEECF2 100%);
-  padding: 70px 24px;
-}
-
-.section-title-wrap {
-  max-width: 1280px; margin: 0 auto 36px;
-  display: flex; justify-content: space-between; align-items: flex-end;
-}
-
-.swiper { max-width: 1280px; padding: 10px 10px 50px !important; }
-
-.property-slide-card {
-  height: 420px; border-radius: 20px; overflow: hidden; position: relative;
-  box-shadow: var(--shadow-md); background-size: cover; background-position: center;
-  display: flex; flex-direction: column; justify-content: space-between; padding: 24px;
-}
-
-.property-overlay {
-  position: absolute; inset: 0;
-  background: linear-gradient(180deg, rgba(15, 23, 42, 0.25) 0%, rgba(90, 23, 37, 0.88) 75%, rgba(15, 23, 42, 0.98) 100%);
-  z-index: 1;
-}
-
-.card-top-tags, .card-bottom-info { position: relative; z-index: 2; color: white; }
-
-.status-tag {
-  background: rgba(255, 255, 255, 0.25); backdrop-filter: blur(8px);
-  color: white; padding: 6px 14px; border-radius: 20px; font-size: 11px; font-weight: 800;
-}
-
-.yield-tag { background: var(--gold); color: var(--maroon); padding: 6px 14px; border-radius: 20px; font-size: 11px; font-weight: 800; }
-
-@media (max-width: 960px) {
-  .hero { grid-template-columns: 1fr; }
-  .nav-links { display: none; }
-}
-</style>
+    @media (max-width: 960px) {
+      .hero { grid-template-columns: 1fr; }
+      .features-grid, .property-grid { grid-template-columns: 1fr; }
+      .calc-box { grid-template-columns: 1fr; }
+      .footer-container { grid-template-columns: 1fr; gap: 24px; }
+      .nav-links { display: none; }
+    }
+  </style>
 </head>
 <body>
 
-<header>
-  <div class="nav-container">
-    <a href="index.html" class="brand-logo">
-      BELOVEETH <span class="brand-badge">PROPETECH</span>
-    </a>
-
-    <ul class="nav-links">
-      <li><a href="index.html" class="active">Home</a></li>
-      <li><a href="#properties">Properties</a></li>
-      <li><a href="pulse.html">Market Pulse</a></li>
-      <li><a href="client.html">Client Portal</a></li>
-      <li><a href="partner.html">Partner JV</a></li>
-      <li><a href="#careers">Careers</a></li>
-      <li><a href="#meetus">Meet Us</a></li>
-    </ul>
-
-    <a href="client.html" class="nav-cta">Launch Portal →</a>
-  </div>
-</header>
-
-<section class="hero">
-  <div>
-    <div class="hero-tag">✨ Real Estate Spatial & Financial Intelligence</div>
-    <h1 class="hero-title">Predictive Valuations. <span>Institutional Assurance.</span></h1>
-
-    <!-- BENEATH PREDICTIVE: MINI MARKET PULSE GRAPH WIDGET -->
-    <div class="hero-mini-pulse-card">
-      <div class="mini-pulse-header">
-        <div class="mini-pulse-title">
-          <div class="live-dot-beep"></div>
-          Market Pulse Live Feed
-        </div>
-        <a href="pulse.html" style="font-size: 11px; color: var(--gold); text-decoration: underline;">Full Pulse Page →</a>
-      </div>
-
-      <div class="mini-chart-box">
-        <canvas id="heroMiniChart"></canvas>
-      </div>
-
-      <!-- CONTINUOUS ADVISORY COMMENT MARQUEE -->
-      <div class="hero-ticker-wrap">
-        <div class="hero-ticker-text" id="heroAdvisoryText">
-          🔥 "Invest now when it's going high!" • ⚠️ "Not Ibadan yet, strong buy in Sango!" • 📈 "Ikoyi yield index trending upward (+2.4%)"
-        </div>
+  <!-- HEADER -->
+  <header>
+    <div class="nav-container">
+      <a href="index.html" class="brand-logo">
+        BELOVEETH <span class="brand-badge">PROPTECH</span>
+      </a>
+      <ul class="nav-links">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="#properties">Properties</a></li>
+        <li><a href="#calculator">Mortgage & Yield Calculator</a></li>
+        <li><a href="#pulse">Market Pulse</a></li>
+      </ul>
+      <div class="header-actions">
+        <a href="#portal" class="cta-btn">Launch Portal →</a>
       </div>
     </div>
+  </header>
 
-    <p class="hero-desc">Connecting verified land registries, spatial algorithms, construction supply pricing, and diaspora buyers through a unified real estate intelligence hub.</p>
-    
-    <div style="display: flex; gap: 16px; flex-wrap: wrap;">
-      <a href="pulse.html" class="nav-cta" style="padding: 14px 28px; font-size: 14px;">Explore Full Market Pulse</a>
-      <a href="#properties" style="border: 2px solid var(--maroon); color: var(--maroon); padding: 14px 28px; border-radius: 30px; font-weight: 700; font-size: 14px;">Browse Properties</a>
-    </div>
-  </div>
-
-  <!-- INTERACTIVE AI CARD -->
-  <div class="ai-interactive-card">
-    <div class="ai-header">
-      <div style="display: flex; align-items: center; gap: 10px;">
-        <span style="font-size: 24px;">💡</span>
-        <div>
-          <strong style="font-size: 16px; color: var(--gold); display: block;">Prop AI Assistant</strong>
-          <small style="color: #94A3B8; font-size: 11px;">Real-Time Asset Co-Pilot</small>
-        </div>
-      </div>
-      <span style="background: rgba(212,175,55,0.2); color: var(--gold); border: 1px solid var(--gold); font-size: 10px; padding: 4px 10px; border-radius: 20px; font-weight: 800;">LIVE</span>
-    </div>
-
-    <div class="ai-chat-window" id="heroChat">
-      <div class="ai-message" style="color: #E2E8F0; font-size: 14px;">
-        "Hello! I am Prop AI. Ask me about property prices, cement rates, land verification, or high-yield locations."
-      </div>
-    </div>
-
-    <div class="ai-prompt-chips">
-      <button class="chip" onclick="quickPrompt('What is the forecast growth in Sango vs Ibadan?')">📍 Sango vs Ibadan</button>
-      <button class="chip" onclick="quickPrompt('Show cement and block price trends')">🧱 Material Prices</button>
-      <button class="chip" onclick="quickPrompt('Are there flood warnings in Lekki?')">🌊 Flood Warning Alert</button>
-    </div>
-
-    <form class="ai-input-box" onsubmit="handleHeroAsk(event)">
-      <input type="text" id="heroInput" placeholder="Ask Prop AI a question..." required />
-      <button type="submit" id="heroBtn">Ask AI</button>
-    </form>
-  </div>
-</section>
-
-<!-- PROPERTY SLIDER SECTION -->
-<section class="properties-slider-section" id="properties">
-  <div class="section-title-wrap">
+  <!-- HERO SECTION -->
+  <section class="hero">
     <div>
-      <span style="color: var(--maroon); font-weight: 800; font-size: 12px; letter-spacing: 1px; text-transform: uppercase;">Verified Asset Portfolio</span>
-      <h2 style="font-family: 'Playfair Display', serif; font-size: 34px;">Featured Institutional Listings</h2>
-    </div>
-    <a href="client.html" style="color: var(--maroon); font-weight: 800; font-size: 14px; border-bottom: 2px solid var(--maroon); padding-bottom: 4px;">See All Properties →</a>
-  </div>
-
-  <div class="swiper mySwiper">
-    <div class="swiper-wrapper">
+      <span class="hero-tag">✨ Real Estate Spatial & Financial Intelligence</span>
       
-      <div class="swiper-slide">
-        <div class="property-slide-card" style="background-image: url('https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?auto=format&fit=crop&w=800&q=80');">
-          <div class="property-overlay"></div>
-          <div class="card-top-tags">
-            <span class="status-tag">🛡️ Title Verified (C of O)</span>
-            <span class="yield-tag">+18.4% Yield</span>
+      <h1 class="hero-title">Predictive <span>Valuations & Market Yields</span></h1>
+
+      <!-- BENEATH PREDICTIVE: MINI MARKET PULSE GRAPH WITH MARQUEE ADVISORY -->
+      <div class="mini-market-pulse-widget" id="pulse">
+        <div class="pulse-widget-top">
+          <div class="pulse-widget-title">
+            <div class="live-beep-dot"></div>
+            MARKET PULSE (LIVE REAL-TIME INDEX)
           </div>
-          <div class="card-bottom-info">
-            <h3 style="font-family: 'Playfair Display', serif; font-size: 22px;">The Imperial Waterfront</h3>
-            <p style="font-size: 13px; color: #CBD5E1; margin-bottom: 12px;">Ibeju-Lekki High Growth Corridor</p>
-            <strong style="color: var(--gold-light); font-size: 18px;">₦145,000,000</strong>
+          <span style="font-size: 11px; color: var(--gold); text-decoration: underline; cursor: pointer;">Live Analytics</span>
+        </div>
+
+        <div class="mini-graph-container">
+          <canvas id="heroMiniGraph"></canvas>
+        </div>
+
+        <!-- RUNNING ADVISORY COMMENT (MARQUEE) -->
+        <div class="marquee-advisory-container">
+          <div class="marquee-text" id="pulseAdvisoryText">
+            🔥 "Invest now when it's going high!" • ⚠️ "Not Ibadan yet, buy Sango now!" • 🏗️ "Cement prices at ₦12,000/bag — lock in materials before Q4 rise!" • 📈 "Ikoyi yield index up +18.4%"
           </div>
         </div>
       </div>
 
-      <div class="swiper-slide">
-        <div class="property-slide-card" style="background-image: url('https://images.unsplash.com/photo-1512917774080-9991f1c4c750?auto=format&fit=crop&w=800&q=80');">
-          <div class="property-overlay"></div>
-          <div class="card-top-tags">
-            <span class="status-tag">🏢 Sango Logistics Hub</span>
-            <span class="yield-tag">+24.1% Yield</span>
-          </div>
-          <div class="card-bottom-info">
-            <h3 style="font-family: 'Playfair Display', serif; font-size: 22px;">Sango Commercial Estate</h3>
-            <p style="font-size: 13px; color: #CBD5E1; margin-bottom: 12px;">Sango-Ota Industrial Hub</p>
-            <strong style="color: var(--gold-light); font-size: 18px;">₦85,000,000</strong>
-          </div>
-        </div>
-      </div>
-
-      <div class="swiper-slide">
-        <div class="property-slide-card" style="background-image: url('https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=800&q=80');">
-          <div class="property-overlay"></div>
-          <div class="card-top-tags">
-            <span class="status-tag">🌿 Smart Villa</span>
-            <span class="yield-tag">+15.0% Yield</span>
-          </div>
-          <div class="card-bottom-info">
-            <h3 style="font-family: 'Playfair Display', serif; font-size: 22px;">Guzape Ridge Residences</h3>
-            <p style="font-size: 13px; color: #CBD5E1; margin-bottom: 12px;">Guzape, Abuja</p>
-            <strong style="color: var(--gold-light); font-size: 18px;">₦280,000,000</strong>
-          </div>
-        </div>
-      </div>
-
+      <p class="hero-desc">Connecting verified land registries, spatial algorithms, material pricing trends, and diaspora buyers through a unified real estate hub.</p>
     </div>
-    <div class="swiper-pagination"></div>
-    <div class="swiper-button-next" style="color: var(--gold);"></div>
-    <div class="swiper-button-prev" style="color: var(--gold);"></div>
-  </div>
-</section>
 
-<!-- SWIPER JS -->
-<script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+    <!-- PROP AI RIGHT SIDEBAR NEWS HEADLINES & MEDIA FEED WIDGET -->
+    <div class="ai-preview-box">
+      <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px;">
+        <h3 style="color:var(--gold); font-size:15px; display:flex; align-items:center; gap:8px;">
+          <div class="live-beep-red"></div> PROP AI LIVE NEWS FEED
+        </h3>
+        <span style="background:rgba(239, 68, 68, 0.2); color:#EF4444; padding:3px 8px; border-radius:12px; font-size:10px; font-weight:800;">LIVE UPDATES</span>
+      </div>
 
-<!-- LOAD FLOATING PROP AI JS WITH NEWS FEED -->
-<script src="prop-ai-widget.js"></script>
+      <p style="font-size:12px; color:#CBD5E1; margin-bottom:12px;">
+        Real-time material market rates, flood risks, and disaster alerts fading & swiping live across top, left, bottom, and right positions.
+      </p>
 
-<script>
-// INITIALIZE SWIPER
-new Swiper('.mySwiper', {
-  slidesPerView: 1,
-  spaceBetween: 24,
-  loop: true,
-  autoplay: { delay: 3500 },
-  pagination: { el: '.swiper-pagination', clickable: true },
-  navigation: { nextEl: '.swiper-button-next', prevEl: '.swiper-button-prev' },
-  breakpoints: { 640: { slidesPerView: 2 }, 1024: { slidesPerView: 3 } }
-});
+      <!-- LIVE SWIPING NEWS HEADLINE CARDS WITH MEDIA RECAPS -->
+      <div class="news-card-feed" id="liveNewsFeedContainer">
+        
+        <!-- CARD 1: SWIPE RIGHT -->
+        <div class="news-item slide-top">
+          <div class="news-header">
+            <span class="news-tag tag-material">Material Rate Alert</span>
+            <div style="display:flex; align-items:center; gap:4px; font-size:10px; color:var(--gold);">
+              <div class="live-beep-dot"></div> Just Now
+            </div>
+          </div>
+          <div class="news-title">Dangote & BUA Cement Surge to ₦12,000/Bag</div>
+          <div class="news-desc">Depot prices in Lagos & Ogun states rise +8.2%. 9-inch blocks now ₦620 each.</div>
+          <div class="news-media-box">
+            <img src="https://images.unsplash.com/photo-1541888946425-d0fbb186a5b7?auto=format&fit=crop&w=500&q=80" alt="Cement & Materials">
+          </div>
+        </div>
 
-// HERO MINI MARKET PULSE GRAPH
-const miniCtx = document.getElementById('heroMiniChart').getContext('2d');
-let miniLabels = ['10s', '8s', '6s', '4s', '2s', 'Now'];
-let miniData = [120, 128, 124, 138, 142, 155];
+        <!-- CARD 2: SWIPE LEFT -->
+        <div class="news-item slide-left">
+          <div class="news-header">
+            <span class="news-tag tag-disaster">Flood Warning</span>
+            <div style="display:flex; align-items:center; gap:4px; font-size:10px; color:var(--red);">
+              <div class="live-beep-red"></div> 4m ago
+            </div>
+          </div>
+          <div class="news-title">Lekki-Epe Drainage Alert & Flood Risk</div>
+          <div class="news-desc">Geospatial drainage locks triggered along Coastal Highway. Heavy runoff expected.</div>
+          <div class="news-media-box">
+            <img src="https://images.unsplash.com/photo-1547683905-f686c993aae5?auto=format&fit=crop&w=500&q=80" alt="Flood Warning">
+          </div>
+        </div>
 
-const heroMiniChart = new Chart(miniCtx, {
-  type: 'line',
-  data: {
-    labels: miniLabels,
-    datasets: [{
-      label: 'Live Valuation Index',
-      data: miniData,
-      borderColor: '#D4AF37',
-      backgroundColor: 'rgba(212, 175, 55, 0.15)',
-      borderWidth: 2,
-      tension: 0.4,
-      fill: true,
-      pointRadius: 2,
-      pointBackgroundColor: '#10B981'
-    }]
-  },
-  options: {
-    responsive: true,
-    maintainAspectRatio: false,
-    plugins: { legend: { display: false } },
-    scales: { x: { display: false }, y: { display: false } }
-  }
-});
+        <!-- CARD 3: SWIPE BOTTOM -->
+        <div class="news-item slide-bottom">
+          <div class="news-header">
+            <span class="news-tag tag-material">Regional Investment</span>
+            <div style="display:flex; align-items:center; gap:4px; font-size:10px; color:var(--gold);">
+              <div class="live-beep-dot"></div> 12m ago
+            </div>
+          </div>
+          <div class="news-title">Sango-Ota Industrial Yield Spike (+22.4%)</div>
+          <div class="news-desc">High land appreciation signals detected. Investors redirecting capital from Ibadan.</div>
+        </div>
 
-// MARQUEE ADVISORY DYNAMIC UPDATES
-const heroAdvisories = [
-  "🔥 'Invest now when it's going high!'",
-  "⚠️ 'Not Ibadan yet, buy Sango now — industrial demand surging!'",
-  "🏗️ 'Dangote Cement price update: ₦10,500/bag — lock in material contracts!'",
-  "🌊 'Flood mitigation completed on Lekki Expressway — property valuations rising +4.1%'",
-  "📈 'Quickly buy Ikoyi short-let penthouses! (+18.4% yield)'"
-];
+      </div>
+    </div>
+  </section>
 
-setInterval(() => {
-  const lastVal = miniData[miniData.length - 1];
-  const newVal = lastVal + (Math.random() * 8 - 3.5);
-  miniData.shift();
-  miniData.push(Number(newVal.toFixed(1)));
-  heroMiniChart.update();
+  <!-- FEATURES SECTION -->
+  <section class="features-section">
+    <div class="section-header">
+      <h2>Integrated Intelligence Ecosystem</h2>
+      <p>Combining geospatial mapping, material tracking, and financial forecasting.</p>
+    </div>
+    <div class="features-grid">
+      <div class="feature-card">
+        <h3>🏗️ Material Price Intelligence</h3>
+        <p>Live tracking for Dangote & BUA cement, 9-inch blocks, steel rebar, and timber across regional depots.</p>
+      </div>
+      <div class="feature-card">
+        <h3>🌊 Spatial Disaster Monitoring</h3>
+        <p>Geospatial analysis for flash floods, soil stability, drainage locks, and coastal flood alerts.</p>
+      </div>
+      <div class="feature-card">
+        <h3>📊 Predictive Yield Signals</h3>
+        <p>Dynamic AI market projections identifying high-appreciation zones across Sango, Ibadan, and Lekki.</p>
+      </div>
+    </div>
+  </section>
 
-  if (Math.random() > 0.6) {
-    const randomText = heroAdvisories[Math.floor(Math.random() * heroAdvisories.length)];
-    document.getElementById('heroAdvisoryText').innerText = randomText + " • " + heroAdvisories[Math.floor(Math.random() * heroAdvisories.length)];
-  }
-}, 2000);
+  <!-- FEATURED PROPERTIES SECTION -->
+  <section class="listings-section" id="properties">
+    <div class="listings-container">
+      <div class="section-header">
+        <h2>Verified Land & Property Listings</h2>
+        <p>Direct access to verified titles, spatial boundary mapping, and direct buyer connections.</p>
+      </div>
+      <div class="property-grid">
+        <div class="property-card">
+          <img src="https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?auto=format&fit=crop&w=600&q=80" class="property-img" alt="Property">
+          <div class="property-content">
+            <span class="property-tag">VERIFIED TITLE</span>
+            <h4 class="property-title">High-Yield Commercial Plot</h4>
+            <p class="property-loc">Sango Industrial Axis, Ogun State</p>
+            <div class="property-price">₦45,000,000</div>
+          </div>
+        </div>
 
-// PROP AI QUICK PROMPT
-function quickPrompt(text) {
-  document.getElementById('heroInput').value = text;
-  handleHeroAsk(new Event('submit'));
-}
+        <div class="property-card">
+          <img src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=600&q=80" class="property-img" alt="Property">
+          <div class="property-content">
+            <span class="property-tag">HIGH APPRECIATION</span>
+            <h4 class="property-title">Residential Estate Land</h4>
+            <p class="property-loc">Epe Corridor, Lagos</p>
+            <div class="property-price">₦18,500,000</div>
+          </div>
+        </div>
 
-function handleHeroAsk(e) {
-  e.preventDefault();
-  const input = document.getElementById('heroInput');
-  const chat = document.getElementById('heroChat');
-  const btn = document.getElementById('heroBtn');
-  if(!input.value.trim()) return;
+        <div class="property-card">
+          <img src="https://images.unsplash.com/photo-1512917774080-9991f1c4c750?auto=format&fit=crop&w=600&q=80" class="property-img" alt="Property">
+          <div class="property-content">
+            <span class="property-tag">DEVELOPMENT READY</span>
+            <h4 class="property-title">Luxury Residential Villa Plot</h4>
+            <p class="property-loc">Ikoyi, Lagos State</p>
+            <div class="property-price">₦280,000,000</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
 
-  const query = input.value;
-  input.value = '';
-  btn.innerText = 'Analyzing...';
-  btn.disabled = true;
+  <!-- REAL ESTATE MORTGAGE & YIELD CALCULATOR -->
+  <section class="calc-section" id="calculator">
+    <div class="calc-box">
+      <div>
+        <h2 style="font-family:'Playfair Display', serif; color: var(--maroon); margin-bottom: 8px;">Yield & Mortgage Estimator</h2>
+        <p style="font-size:13px; color: var(--slate); margin-bottom: 20px;">Calculate estimated property return on investment based on current material costs and inflation indices.</p>
+        
+        <div class="calc-inputs">
+          <div class="calc-field">
+            <label>PROPERTY VALUE (₦)</label>
+            <input type="number" id="calcValue" value="50000000">
+          </div>
+          <div class="calc-field">
+            <label>DOWN PAYMENT (%)</label>
+            <input type="number" id="calcDown" value="20">
+          </div>
+          <div class="calc-field">
+            <label>INVESTMENT HORIZON (YEARS)</label>
+            <input type="number" id="calcYears" value="5">
+          </div>
+        </div>
+      </div>
 
-  chat.innerHTML = `<div style="color: var(--gold); font-size: 13px;"><strong>Analyzing Query:</strong> "${query}"...</div>`;
+      <div class="calc-output">
+        <span style="font-size: 11px; color: var(--gold); font-weight: 800;">ESTIMATED PROJECTED VALUE</span>
+        <h3 style="font-size: 32px; color: white;" id="calcResult">₦ 88,500,000</h3>
+        <p style="font-size: 12px; color: #94A3B8;">Includes projected annual regional growth index (~12.2% p.a.)</p>
+      </div>
+    </div>
+  </section>
 
-  setTimeout(() => {
-    btn.innerText = 'Ask AI';
-    btn.disabled = false;
-    chat.innerHTML = `<div style="color: #E2E8F0; font-size: 13px;"><strong>Prop AI:</strong> Query for <em>"${query}"</em> complete! Sango industrial corridor is yielding +24.1% vs Ibadan at +11.2%. High recommendation to buy now!</div>`;
-  }, 900);
-}
-</script>
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-container">
+      <div class="footer-brand">
+        <h3>BELOVEETH PROPTECH</h3>
+        <p>Combining spatial geography, material inflation tracking, and predictive property algorithms into a single platform.</p>
+      </div>
+      <div class="footer-col">
+        <h4>Navigation</h4>
+        <ul>
+          <li><a href="index.html">Home Overview</a></li>
+          <li><a href="#properties">Verified Properties</a></li>
+          <li><a href="#calculator">Yield Estimator</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Intelligence</h4>
+        <ul>
+          <li><a href="#pulse">Live Market Pulse</a></li>
+          <li><a href="#">Material Cost Tracker</a></li>
+          <li><a href="#">Disaster & Flood Risk</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Contact</h4>
+        <ul>
+          <li><a href="#">Support Hub</a></li>
+          <li><a href="#">API Documentation</a></li>
+          <li><a href="#">Client Portal</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      &copy; 2026 Beloveeth App Inc. All rights reserved. PropTech Spatial & Valuation Platform.
+    </div>
+  </footer>
 
+  <!-- LOAD FLOATING PROP AI WIDGET WITH LIVE NEWS & DIRECTIONAL SWIPING -->
+  <script src="prop-ai-widget.js"></script>
+
+  <!-- SCRIPT FOR GRAPH & DYNAMIC SWIPING NEWS ANIMATIONS -->
+  <script>
+    // MINI GRAPH INITIALIZATION
+    const ctx = document.getElementById('heroMiniGraph').getContext('2d');
+    let graphLabels = ['5m ago', '4m ago', '3m ago', '2m ago', '1m ago', 'Now'];
+    let graphData = [120, 126, 122, 135, 140, 152];
+
+    const miniGraph = new Chart(ctx, {
+      type: 'line',
+      data: {
+        labels: graphLabels,
+        datasets: [{
+          label: 'Market Index',
+          data: graphData,
+          borderColor: '#D4AF37',
+          backgroundColor: 'rgba(212, 175, 55, 0.15)',
+          borderWidth: 2,
+          tension: 0.4,
+          fill: true,
+          pointRadius: 3,
+          pointBackgroundColor: '#10B981'
+        }]
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: { legend: { display: false } },
+        scales: { 
+          x: { display: false }, 
+          y: { display: false } 
+        }
+      }
+    });
+
+    // REAL-TIME GRAPH UPDATE SIMULATION
+    setInterval(() => {
+      const lastVal = graphData[graphData.length - 1];
+      const newVal = lastVal + (Math.random() * 6 - 2.5);
+      graphData.shift();
+      graphData.push(Number(newVal.toFixed(1)));
+      miniGraph.update();
+    }, 2500);
+
+    // DYNAMIC SWIPE & FADE NEWS FEED ROTATOR (RIGHT, LEFT, TOP, BOTTOM)
+    const newsContainer = document.getElementById('liveNewsFeedContainer');
+    const animations = ['slide-top', 'slide-left', 'slide-bottom', 'news-item'];
+    
+    const freshNewsPool = [
+      { tag: 'Earthquake & Seismic', tagClass: 'tag-disaster', time: '1m ago', title: 'Tremor Alert: Coastal Soil Shift Detected', desc: 'Slight tectonic vibration logged along Victoria Island offshore faults.', img: 'https://images.unsplash.com/photo-1508873696983-2df515122519?auto=format&fit=crop&w=500&q=80' },
+      { tag: 'Material Rate Alert', tagClass: 'tag-material', time: '3m ago', title: 'Steel Rebar Up +5% across Depots', desc: '12mm & 16mm rebar prices adjusted due to import tariff changes.', img: '' },
+      { tag: 'Flood Alert', tagClass: 'tag-disaster', time: 'Live', title: 'Flash Flood Risk Elevated in Ajah Axis', desc: 'PropTech spatial cameras log rising canal water levels.', img: 'https://images.unsplash.com/photo-1547683905-f686c993aae5?auto=format&fit=crop&w=500&q=80' }
+    ];
+
+    let newsIndex = 0;
+    setInterval(() => {
+      if (newsContainer.children.length > 2) {
+        newsContainer.removeChild(newsContainer.lastElementChild);
+      }
+      
+      const itemData = freshNewsPool[newsIndex % freshNewsPool.length];
+      const animClass = animations[Math.floor(Math.random() * animations.length)];
+      
+      const newCard = document.createElement('div');
+      newCard.className = `news-item ${animClass}`;
+      newCard.innerHTML = `
+        <div class="news-header">
+          <span class="news-tag ${itemData.tagClass}">${itemData.tag}</span>
+          <div style="display:flex; align-items:center; gap:4px; font-size:10px; color:var(--gold);">
+            <div class="live-beep-red"></div> ${itemData.time}
+          </div>
+        </div>
+        <div class="news-title">${itemData.title}</div>
+        <div class="news-desc">${itemData.desc}</div>
+        ${itemData.img ? `<div class="news-media-box"><img src="${itemData.img}"></div>` : ''}
+      `;
+
+      newsContainer.insertBefore(newCard, newsContainer.firstChild);
+      newsIndex++;
+    }, 4500);
+
+    // SIMPLE CALCULATOR LOGIC
+    function updateCalc() {
+      const val = parseFloat(document.getElementById('calcValue').value) || 0;
+      const years = parseFloat(document.getElementById('calcYears').value) || 1;
+      const futureVal = val * Math.pow(1 + 0.122, years);
+      document.getElementById('calcResult').innerText = '₦ ' + Math.round(futureVal).toLocaleString();
+    }
+    document.getElementById('calcValue').addEventListener('input', updateCalc);
+    document.getElementById('calcYears').addEventListener('input', updateCalc);
+  </script>
 </body>
 </html>
