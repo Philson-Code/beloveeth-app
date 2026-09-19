@@ -1,0 +1,408 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Beloveeth — Real-Time Market Pulse Analytics</title>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<style>
+:root {
+  --maroon: #5A1725;
+  --burgundy: #6B1E2E;
+  --gold: #D4AF37;
+  --ivory: #FCFBF8;
+  --white: #FFFFFF;
+  --soft: #F4F2EE;
+  --grey: #D9DCE0;
+  --slate: #66707A;
+  --charcoal: #20252B;
+  --green: #2E7D32;
+  --amber: #C67D0A;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  background: var(--ivory);
+  color: var(--charcoal);
+  min-height: 100vh;
+}
+
+button, select, input { font: inherit; }
+button { cursor: pointer; }
+a { color: inherit; text-decoration: none; }
+
+.container {
+  width: min(1280px, calc(100% - 48px));
+  margin: 30px auto 60px;
+}
+
+.back-link {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--maroon);
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  margin-bottom: 12px;
+}
+
+.top-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  margin-bottom: 24px;
+}
+
+.top-header h1 {
+  font-family: 'Georgia', serif;
+  font-size: 34px;
+  color: var(--charcoal);
+}
+
+.top-header p {
+  font-size: 14px;
+  color: var(--slate);
+  margin-top: 4px;
+}
+
+/* REGION FILTER BAR */
+.filter-bar {
+  background: white;
+  border: 1px solid var(--grey);
+  border-radius: 12px;
+  padding: 16px 20px;
+  display: flex;
+  gap: 16px;
+  align-items: center;
+  margin-bottom: 28px;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.02);
+}
+
+.filter-bar label {
+  font-size: 12px;
+  font-weight: 800;
+  text-transform: uppercase;
+  color: var(--maroon);
+}
+
+.filter-bar select {
+  padding: 8px 14px;
+  border-radius: 8px;
+  border: 1px solid var(--grey);
+  background: var(--soft);
+  font-size: 13px;
+  font-weight: 600;
+}
+
+/* 12 METRIC PILLARS GRID */
+.metrics-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+  margin-bottom: 32px;
+}
+
+.metric-card {
+  background: white;
+  border: 1px solid var(--grey);
+  border-radius: 12px;
+  padding: 18px;
+  position: relative;
+  overflow: hidden;
+}
+
+.metric-card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; width: 4px; height: 100%;
+  background: var(--maroon);
+}
+
+.metric-title {
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--slate);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.metric-value {
+  font-size: 22px;
+  font-weight: 800;
+  color: var(--charcoal);
+  margin: 6px 0;
+}
+
+.metric-badge {
+  font-size: 11px;
+  font-weight: 800;
+  color: var(--green);
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.metric-badge.alert {
+  color: var(--amber);
+}
+
+/* MAIN ANALYTICS GRAPH SECTION */
+.chart-grid {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: 24px;
+  margin-bottom: 32px;
+}
+
+.chart-card {
+  background: white;
+  border: 1px solid var(--grey);
+  border-radius: 16px;
+  padding: 24px;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.03);
+}
+
+.chart-card h3 {
+  font-size: 18px;
+  color: var(--maroon);
+  font-weight: 800;
+  margin-bottom: 4px;
+}
+
+.chart-card p {
+  font-size: 12px;
+  color: var(--slate);
+  margin-bottom: 20px;
+}
+
+/* RESEARCH & ANOMALIES FEED */
+.feed-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.feed-item {
+  padding: 12px;
+  border-radius: 8px;
+  background: var(--soft);
+  border-left: 3px solid var(--gold);
+}
+
+.feed-item strong {
+  font-size: 13px;
+  display: block;
+  color: var(--charcoal);
+}
+
+.feed-item span {
+  font-size: 11px;
+  color: var(--slate);
+}
+
+@media (max-width: 1024px) {
+  .metrics-grid { grid-template-columns: repeat(2, 1fr); }
+  .chart-grid { grid-template-columns: 1fr; }
+}
+
+@media (max-width: 600px) {
+  .metrics-grid { grid-template-columns: 1fr; }
+}
+</style>
+</head>
+<body>
+
+<div class="container">
+  <a href="index.html" class="back-link">← Return to Homepage</a>
+
+  <div class="top-header">
+    <div>
+      <h1>Beloveeth Market Pulse</h1>
+      <p>Real-time spatial data, price benchmarks, and historical market trend comparison.</p>
+    </div>
+    <span style="font-size: 12px; background: rgba(46, 125, 50, 0.1); color: var(--green); padding: 6px 12px; border-radius: 20px; font-weight: 800;">
+      ● Data Engine Live (Level 1 & 2 Verified)
+    </span>
+  </div>
+
+  <!-- REGION FILTER BAR -->
+  <div class="filter-bar">
+    <label>Select Market Corridor:</label>
+    <select id="regionSelect" onchange="updatePulseData()">
+      <option value="ibeju">Lagos — Ibeju-Lekki Growth Corridor</option>
+      <option value="ikoyi">Lagos — Ikoyi & Victoria Island Prime</option>
+      <option value="maitama">Abuja — Maitama & Katampe Extension</option>
+      <option value="rivers">Rivers — Port Harcourt Executive Corridor</option>
+    </select>
+  </div>
+
+  <!-- 12 REALTIME MARKET PULSE METRICS -->
+  <div class="metrics-grid">
+    <div class="metric-card">
+      <div class="metric-title">1. Market Movement</div>
+      <div class="metric-value" id="val-movement">Bullish (+4.2%)</div>
+      <div class="metric-badge">▲ High Velocity</div>
+    </div>
+
+    <div class="metric-card">
+      <div class="metric-title">2. Property Prices</div>
+      <div class="metric-value" id="val-price">₦120,000 / sqm</div>
+      <div class="metric-badge">▲ +14.8% YoY</div>
+    </div>
+
+    <div class="metric-card">
+      <div class="metric-title">3. Rent Trends</div>
+      <div class="metric-value" id="val-rent">₦4.5M / yr</div>
+      <div class="metric-badge">▲ +12.1% Rental Index</div>
+    </div>
+
+    <div class="metric-card">
+      <div class="metric-title">4. Market Demand</div>
+      <div class="metric-value" id="val-demand">88.4 / 100</div>
+      <div class="metric-badge">▲ High Absorption</div>
+    </div>
+
+    <div class="metric-card">
+      <div class="metric-title">5. Available Supply</div>
+      <div class="metric-value" id="val-supply">340 Units</div>
+      <div class="metric-badge alert">▼ Inventory Shortage</div>
+    </div>
+
+    <div class="metric-card">
+      <div class="metric-title">6. Location Activity</div>
+      <div class="metric-value" id="val-activity">92.1 Score</div>
+      <div class="metric-badge">▲ Infrastructure Surge</div>
+    </div>
+
+    <div class="metric-card">
+      <div class="metric-title">7. Investment Signals</div>
+      <div class="metric-value" id="val-signal">Strong Buy</div>
+      <div class="metric-badge">★ Yield Rating: 18.2%</div>
+    </div>
+
+    <div class="metric-card">
+      <div class="metric-title">8. Historical Data</div>
+      <div class="metric-value" id="val-historical">5-Year Growth</div>
+      <div class="metric-badge">▲ +112% Cumulative</div>
+    </div>
+
+    <div class="metric-card">
+      <div class="metric-title">9. Valuation Info</div>
+      <div class="metric-value" id="val-valuation">₦142M Est.</div>
+      <div class="metric-badge">Level 1 Verified</div>
+    </div>
+
+    <div class="metric-card">
+      <div class="metric-title">10. Market Reports</div>
+      <div class="metric-value">Q3 2026 Ready</div>
+      <div class="metric-badge">📄 Download Brief</div>
+    </div>
+
+    <div class="metric-card">
+      <div class="metric-title">11. Research</div>
+      <div class="metric-value">Port Impact</div>
+      <div class="metric-badge">GIS Survey Match</div>
+    </div>
+
+    <div class="metric-card">
+      <div class="metric-title">12. Opportunities & Anomalies</div>
+      <div class="metric-value" id="val-anomaly">2 Arbitrage Plots</div>
+      <div class="metric-badge alert">⚡ 11% Below Valuation</div>
+    </div>
+  </div>
+
+  <!-- INTERACTIVE COMPARISON GRAPH & RESEARCH -->
+  <div class="chart-grid">
+    <div class="chart-card">
+      <h3>Historical Price vs. Predicted Valuation (2021 – 2027)</h3>
+      <p>Comparing historical transactions against Beloveeth level 2 predictive yield calculations.</p>
+      <canvas id="marketPulseChart" height="120"></canvas>
+    </div>
+
+    <div class="chart-card">
+      <h3>Live Market Anomalies & Opportunities</h3>
+      <p>Flagged by Prop AI using real-time spatial scraping and title verification.</p>
+      
+      <div class="feed-list" id="anomalyFeed">
+        <div class="feed-item">
+          <strong>Under-priced Commercial Plot (Ibeju)</strong>
+          <span>Listed 11.4% below regional benchmark • Title: C of O</span>
+        </div>
+        <div class="feed-item">
+          <strong>High Yield Short-Let Anomaly</strong>
+          <span>Ikoyi Apartment yield projected at 21.4% (avg: 14%)</span>
+        </div>
+        <div class="feed-item">
+          <strong>Infrastructure Corridor Signal</strong>
+          <span>Katampe extension road expansion approved • Expect +15% surge</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+// CHART JS INITIALIZATION
+const ctx = document.getElementById('marketPulseChart').getContext('2d');
+let marketChart = new Chart(ctx, {
+  type: 'line',
+  data: {
+    labels: ['2021', '2022', '2023', '2024', '2025', '2026 (Now)', '2027 (Forecast)'],
+    datasets: [
+      {
+        label: 'Historical Benchmark (₦/sqm in thousands)',
+        data: [45, 58, 72, 89, 105, 120, 142],
+        borderColor: '#5A1725',
+        backgroundColor: 'rgba(90, 23, 37, 0.08)',
+        fill: true,
+        tension: 0.3,
+        borderWidth: 3
+      },
+      {
+        label: 'Predicted Growth Ceiling',
+        data: [45, 60, 78, 95, 115, 130, 158],
+        borderColor: '#D4AF37',
+        borderDash: [5, 5],
+        fill: false,
+        tension: 0.3,
+        borderWidth: 2
+      }
+    ]
+  },
+  options: {
+    responsive: true,
+    plugins: {
+      legend: { position: 'top' }
+    },
+    scales: {
+      y: { beginAtZero: false }
+    }
+  }
+});
+
+// UPDATE PULSE DATA ACCORDING TO SELECTED REGION
+function updatePulseData() {
+  const region = document.getElementById('regionSelect').value;
+  if (region === 'ikoyi') {
+    document.getElementById('val-price').innerText = '₦450,000 / sqm';
+    document.getElementById('val-rent').innerText = '₦25.0M / yr';
+    document.getElementById('val-signal').innerText = 'Hold / Premium Buy';
+    marketChart.data.datasets[0].data = [200, 240, 290, 340, 390, 450, 510];
+  } else if (region === 'maitama') {
+    document.getElementById('val-price').innerText = '₦280,000 / sqm';
+    document.getElementById('val-rent').innerText = '₦14.0M / yr';
+    document.getElementById('val-signal').innerText = 'Strong Buy';
+    marketChart.data.datasets[0].data = [110, 135, 170, 210, 245, 280, 330];
+  } else {
+    document.getElementById('val-price').innerText = '₦120,000 / sqm';
+    document.getElementById('val-rent').innerText = '₦4.5M / yr';
+    document.getElementById('val-signal').innerText = 'Strong Buy';
+    marketChart.data.datasets[0].data = [45, 58, 72, 89, 105, 120, 142];
+  }
+  marketChart.update();
+}
+</script>
+
+</body>
+</html>
