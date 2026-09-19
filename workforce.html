@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Beloveeth — Workforce CRM & Operations</title>
+<style>
+:root {
+  --maroon: #5A1725;
+  --burgundy: #6B1E2E;
+  --gold: #D4AF37;
+  --ivory: #FCFBF8;
+  --white: #FFFFFF;
+  --soft: #F4F2EE;
+  --grey: #D9DCE0;
+  --slate: #66707A;
+  --charcoal: #20252B;
+  --green: #2E7D32;
+  --amber: #C67D0A;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  background: var(--ivory);
+  color: var(--charcoal);
+  min-height: 100vh;
+}
+
+button, input, select { font: inherit; }
+button { cursor: pointer; }
+a { color: inherit; text-decoration: none; }
+
+.container {
+  width: min(1200px, calc(100% - 48px));
+  margin: 40px auto;
+}
+
+.top-bar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 32px;
+}
+
+.back-link {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--maroon);
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  margin-bottom: 8px;
+}
+
+.title {
+  font-family: 'Georgia', serif;
+  font-size: 32px;
+  color: var(--charcoal);
+}
+
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+  margin-bottom: 32px;
+}
+
+.stat-card {
+  background: white;
+  border: 1px solid var(--grey);
+  border-radius: 12px;
+  padding: 20px;
+}
+
+.stat-card small { font-size: 12px; color: var(--slate); display: block; }
+.stat-card strong { font-size: 24px; color: var(--maroon); display: block; margin-top: 4px; }
+
+.card {
+  background: white;
+  border: 1px solid var(--grey);
+  border-radius: 16px;
+  padding: 24px;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.03);
+  margin-bottom: 24px;
+}
+
+.card h3 {
+  font-size: 18px;
+  color: var(--maroon);
+  margin-bottom: 16px;
+  font-weight: 800;
+}
+
+/* CRM TABLE */
+.crm-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 13px;
+}
+
+.crm-table th {
+  text-align: left;
+  padding: 12px;
+  background: var(--soft);
+  color: var(--slate);
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.crm-table td {
+  padding: 14px 12px;
+  border-bottom: 1px solid var(--soft);
+}
+
+.badge {
+  padding: 4px 8px;
+  border-radius: 12px;
+  font-size: 11px;
+  font-weight: 700;
+  display: inline-block;
+}
+
+.badge-lead { background: rgba(198, 125, 10, 0.12); color: var(--amber); }
+.badge-verified { background: rgba(46, 125, 50, 0.12); color: var(--green); }
+.badge-inspection { background: rgba(90, 23, 37, 0.1); color: var(--maroon); }
+
+.action-btn {
+  background: var(--soft);
+  border: 1px solid var(--grey);
+  padding: 6px 12px;
+  border-radius: 6px;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.action-btn:hover {
+  background: var(--maroon);
+  color: white;
+  border-color: var(--maroon);
+}
+
+@media (max-width: 900px) {
+  .stats-grid { grid-template-columns: 1fr 1fr; }
+  .crm-table { display: block; overflow-x: auto; }
+}
+</style>
+</head>
+<body>
+
+<div class="container">
+  <a href="index.html" class="back-link">← Return to Homepage</a>
+  <div class="top-bar">
+    <div>
+      <h1 class="title">Workforce CRM & Operations</h1>
+      <p style="font-size: 13px; color: var(--slate);">Internal operations dashboard for buyer lead pipelines and title verification dispatch.</p>
+    </div>
+  </div>
+
+  <div class="stats-grid">
+    <div class="stat-card">
+      <small>Active Buyer Inquiries</small>
+      <strong>48 Leads</strong>
+    </div>
+    <div class="stat-card">
+      <small>Pending Site Inspections</small>
+      <strong>12 Scheduled</strong>
+    </div>
+    <div class="stat-card">
+      <small>Title Verifications Pending</small>
+      <strong>7 In Progress</strong>
+    </div>
+    <div class="stat-card">
+      <small>Pipeline Conversion Rate</small>
+      <strong>34.8%</strong>
+    </div>
+  </div>
+
+  <div class="card">
+    <h3>Active Client Leads & Pipeline Workflows</h3>
+    <table class="crm-table">
+      <thead>
+        <tr>
+          <th>Client Name</th>
+          <th>Interest / Region</th>
+          <th>Status Stage</th>
+          <th>Assigned Agent</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>Dr. Olanrewaju K.</strong></td>
+          <td>Eko Atlantic Tower B (Diaspora)</td>
+          <td><span class="badge badge-inspection">Inspection Scheduled</span></td>
+          <td>Agent Tunde V.</td>
+          <td><button class="action-btn" onclick="alert('Opening Lead Record...')">Manage Lead</button></td>
+        </tr>
+        <tr>
+          <td><strong>Chief Emeka N.</strong></td>
+          <td>Guzape Heights (Abuja)</td>
+          <td><span class="badge badge-lead">New Lead</span></td>
+          <td>Unassigned</td>
+          <td><button class="action-btn" onclick="alert('Assigning Lead...')">Assign</button></td>
+        </tr>
+        <tr>
+          <td><strong>Amina B.</strong></td>
+          <td>Ibeju-Lekki Commercial Plot</td>
+          <td><span class="badge badge-verified">Verification Complete</span></td>
+          <td>Agent Bisi O.</td>
+          <td><button class="action-btn" onclick="alert('Opening Lead Record...')">Manage Lead</button></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+</body>
+</html>
