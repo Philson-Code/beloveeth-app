@@ -10,7 +10,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;0,700;1,400&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 
-  <!-- Chart.js for Hero Mini Pulse Graph -->
+  <!-- Chart.js -->
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
   <style>
@@ -87,8 +87,8 @@
     }
     .cta-btn:hover { background: var(--maroon-accent); transform: translateY(-1px); }
 
-    /* FANCIFUL SEARCH / DREAM PROPERTY PROMPT BAR */
-    .hero-search-wrapper {
+    /* PROP AI MATCHING / PROMPT BAR */
+    .prop-ai-wrapper {
       max-width: 1280px;
       margin: 24px auto 0;
       padding: 0 24px;
@@ -138,7 +138,7 @@
       color: var(--slate-light);
       font-style: italic;
     }
-    .telegram-send-btn {
+    .ai-send-btn {
       background: linear-gradient(135deg, var(--maroon) 0%, var(--maroon-accent) 100%);
       border: none;
       width: 44px;
@@ -153,19 +153,19 @@
       transition: all 0.25s ease;
       flex-shrink: 0;
     }
-    .telegram-send-btn:hover {
+    .ai-send-btn:hover {
       transform: scale(1.06) rotate(-5deg);
       background: var(--gold);
       color: var(--maroon);
     }
-    .telegram-send-btn svg {
+    .ai-send-btn svg {
       width: 18px;
       height: 18px;
       fill: currentColor;
       margin-left: 2px;
     }
 
-    /* MAIN HERO & DASHBOARD AREA */
+    /* HERO & DASHBOARD AREA */
     .hero {
       padding: 24px 24px 40px; max-width: 1280px; margin: 0 auto;
       display: grid; grid-template-columns: 1.2fr 0.8fr; gap: 32px; align-items: start;
@@ -179,7 +179,7 @@
     .hero-title span { color: var(--maroon); font-style: italic; }
     .hero-desc { font-size: 14px; color: var(--slate); margin-top: 14px; }
 
-    /* EXTENDED MARKET PULSE WIDGET */
+    /* MARKET PULSE WIDGET */
     .mini-market-pulse-widget {
       background: #0F172A; color: white; border-radius: var(--radius-lg); padding: 20px;
       margin-top: 10px; border: 1px solid rgba(212, 175, 55, 0.3);
@@ -222,7 +222,7 @@
       100% { transform: translateX(-100%); }
     }
 
-    /* NEWSFEED CARD (NO SCROLLBAR, CONTROLLED SWIPING) */
+    /* NEWSFEED CARD (NO SCROLLBAR) */
     .white-blog-news-box {
       background: #FFFFFF;
       border-radius: var(--radius-lg); padding: 22px; color: var(--charcoal);
@@ -242,9 +242,7 @@
       color: var(--maroon); display: flex; align-items: center; gap: 8px;
     }
 
-    .news-card-feed {
-      display: flex; flex-direction: column; gap: 14px; position: relative; overflow: hidden;
-    }
+    .news-card-feed { display: flex; flex-direction: column; gap: 14px; position: relative; overflow: hidden; }
 
     .blog-news-card {
       background: var(--ivory); border: 1px solid var(--border-color);
@@ -261,28 +259,18 @@
     .blog-post-title { font-size: 14px; font-weight: 700; color: var(--charcoal); margin-bottom: 6px; line-height: 1.35; }
     .blog-post-desc { font-size: 12px; color: var(--slate); line-height: 1.45; margin-bottom: 10px; }
     
-    .blog-post-media {
-      width: 100%; height: 130px; border-radius: 10px; overflow: hidden; margin-top: 6px;
-    }
+    .blog-post-media { width: 100%; height: 130px; border-radius: 10px; overflow: hidden; margin-top: 6px; }
     .blog-post-media img { width: 100%; height: 100%; object-fit: cover; }
 
-    /* MULTI-DIRECTIONAL SWIPE ANIMATIONS */
     .swipe-up { animation: swipeUp 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
-    .swipe-down { animation: swipeDown 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
-    .swipe-left { animation: swipeLeft 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
-    .swipe-right { animation: swipeRight 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
-
     @keyframes swipeUp { 0% { opacity: 0; transform: translateY(20px); } 100% { opacity: 1; transform: translateY(0); } }
-    @keyframes swipeDown { 0% { opacity: 0; transform: translateY(-20px); } 100% { opacity: 1; transform: translateY(0); } }
-    @keyframes swipeLeft { 0% { opacity: 0; transform: translateX(20px); } 100% { opacity: 1; transform: translateX(0); } }
-    @keyframes swipeRight { 0% { opacity: 0; transform: translateX(-20px); } 100% { opacity: 1; transform: translateX(0); } }
 
     /* SECTION HEADERS */
     .section-header { text-align: center; max-width: 640px; margin: 0 auto 36px; }
     .section-header h2 { font-family: 'Playfair Display', serif; font-size: 32px; color: var(--maroon); margin-bottom: 8px; }
     .section-header p { font-size: 14px; color: var(--slate); }
 
-    /* PLATFORM FEATURES GRID */
+    /* FEATURES GRID */
     .features-section { max-width: 1280px; margin: 40px auto 60px; padding: 0 24px; }
     .features-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
     .feature-card {
@@ -294,12 +282,29 @@
     .feature-card h3 { font-size: 17px; color: var(--maroon); margin-bottom: 10px; font-weight: 700; }
     .feature-card p { font-size: 13px; color: var(--slate); line-height: 1.6; }
 
-    /* PROPERTY LISTINGS SECTION */
+    /* PROPERTY LISTINGS SLIDER SECTION */
     .listings-section { background: var(--soft); padding: 60px 24px; }
-    .listings-container { max-width: 1280px; margin: 0 auto; }
-    .property-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 28px; margin-top: 24px; }
+    .listings-container { max-width: 1280px; margin: 0 auto; position: relative; }
     
+    .slider-controls {
+      display: flex; justify-content: flex-end; gap: 12px; margin-bottom: 16px;
+    }
+    .slider-btn {
+      background: white; border: 1px solid var(--border-color); width: 40px; height: 40px;
+      border-radius: 50%; font-weight: bold; cursor: pointer; display: flex; align-items: center;
+      justify-content: center; box-shadow: var(--shadow-sm); transition: all 0.2s;
+    }
+    .slider-btn:hover { background: var(--maroon); color: white; border-color: var(--maroon); }
+
+    .property-slider-track {
+      display: flex; gap: 24px; overflow-x: auto; scroll-behavior: smooth;
+      padding-bottom: 16px; scrollbar-width: none;
+    }
+    .property-slider-track::-webkit-scrollbar { display: none; }
+
     .property-card {
+      flex: 0 0 calc(33.333% - 16px);
+      min-width: 300px;
       background: white; border-radius: var(--radius-lg); overflow: hidden;
       border: 1px solid var(--border-color); box-shadow: var(--shadow-sm);
       transition: all 0.3s ease;
@@ -312,7 +317,7 @@
     .property-loc { font-size: 12px; color: var(--slate); margin-bottom: 12px; }
     .property-price { font-size: 18px; font-weight: 800; color: var(--maroon); }
 
-    /* MORTGAGE & YIELD CALCULATOR */
+    /* CALCULATOR */
     .calc-section { max-width: 1280px; margin: 60px auto; padding: 0 24px; }
     .calc-box {
       background: white; border-radius: var(--radius-lg); padding: 36px;
@@ -322,7 +327,7 @@
     .calc-inputs { display: flex; flex-direction: column; gap: 16px; }
     .calc-field { display: flex; flex-direction: column; gap: 6px; }
     .calc-field label { font-size: 11px; font-weight: 800; color: var(--slate); letter-spacing: 0.5px; }
-    .calc-field input, .calc-field select {
+    .calc-field input {
       padding: 12px 16px; border: 1px solid var(--border-color); border-radius: 10px; font-size: 14px; font-weight: 600; outline: none; transition: border-color 0.2s;
     }
     .calc-field input:focus { border-color: var(--maroon); }
@@ -351,7 +356,8 @@
 
     @media (max-width: 960px) {
       .hero { grid-template-columns: 1fr; }
-      .features-grid, .property-grid { grid-template-columns: 1fr; }
+      .features-grid { grid-template-columns: 1fr; }
+      .property-card { flex: 0 0 85%; }
       .calc-box { grid-template-columns: 1fr; }
       .footer-container { grid-template-columns: 1fr; gap: 24px; }
       .nav-links { display: none; }
@@ -360,7 +366,7 @@
 </head>
 <body>
 
-  <!-- HEADER -->
+  <!-- HEADER NAVIGATION -->
   <header>
     <div class="nav-container">
       <a href="index.html" class="brand-logo">
@@ -378,12 +384,12 @@
     </div>
   </header>
 
-  <!-- TOP PROMPT / DREAM PROPERTY SEARCH BAR SECTION -->
-  <div class="hero-search-wrapper">
+  <!-- PROP AI MATCHING / PROMPT BAR -->
+  <div class="prop-ai-wrapper">
     <div class="search-eyebrow">✨ Prop AI Property Matcher — Turn Ideas into Real Estate</div>
     <div class="fanciful-search-box">
       <input type="text" placeholder="what do you have in mind, describe your dream property, and..." id="dreamPropertyInput">
-      <button class="telegram-send-btn" title="Submit Dream Property" id="sendBtn">
+      <button class="ai-send-btn" title="Submit Dream Property" id="sendBtn">
         <svg viewBox="0 0 24 24">
           <path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"/>
         </svg>
@@ -395,10 +401,9 @@
   <section class="hero">
     <div>
       <span class="hero-tag">✨ Real Estate Spatial & Financial Intelligence</span>
-      
       <h1 class="hero-title">Predictive <span>Valuations & Market Yields</span></h1>
 
-      <!-- EXTENDED MARKET PULSE GRAPH -->
+      <!-- MARKET PULSE GRAPH -->
       <div class="mini-market-pulse-widget" id="pulse">
         <div class="pulse-widget-top">
           <div class="pulse-widget-title">
@@ -423,7 +428,7 @@
       <p class="hero-desc">Connecting verified land registries, spatial algorithms, material pricing trends, and diaspora buyers through a unified real estate hub.</p>
     </div>
 
-    <!-- WHITE BLOG-STYLE NEWSFEED (NO SCROLLBARS, SWIPE ANIMATED) -->
+    <!-- LIVE NEWSFEED -->
     <div class="white-blog-news-box">
       <div class="blog-feed-header">
         <div class="blog-feed-title">
@@ -432,9 +437,7 @@
         <span style="background:rgba(16, 185, 129, 0.12); color:#10B981; padding:3px 8px; border-radius:12px; font-size:10px; font-weight:800;">LIVE UPDATES</span>
       </div>
 
-      <!-- CONTAINER FOR SINGLE SWIPING CARDS -->
       <div class="news-card-feed" id="liveBlogNewsContainer">
-        
         <div class="blog-news-card swipe-up">
           <div class="blog-card-top">
             <span class="blog-tag tag-material">Material Rate Alert</span>
@@ -448,12 +451,11 @@
             <img src="https://images.unsplash.com/photo-1541888946425-d0fbb186a5b7?auto=format&fit=crop&w=500&q=80" alt="Cement & Building Materials">
           </div>
         </div>
-
       </div>
     </div>
   </section>
 
-  <!-- FEATURES SECTION -->
+  <!-- FEATURES GRID -->
   <section class="features-section">
     <div class="section-header">
       <h2>Integrated Intelligence Ecosystem</h2>
@@ -475,14 +477,22 @@
     </div>
   </section>
 
-  <!-- FEATURED PROPERTIES SECTION -->
+  <!-- PROPERTY LISTINGS SLIDER SECTION -->
   <section class="listings-section" id="properties">
     <div class="listings-container">
-      <div class="section-header">
+      <div class="section-header" style="margin-bottom: 16px;">
         <h2>Verified Land & Property Listings</h2>
         <p>Direct access to verified titles, spatial boundary mapping, and direct buyer connections.</p>
       </div>
-      <div class="property-grid">
+
+      <!-- SLIDER CONTROLS -->
+      <div class="slider-controls">
+        <button class="slider-btn" id="slideLeft" title="Previous Property">&larr;</button>
+        <button class="slider-btn" id="slideRight" title="Next Property">&rarr;</button>
+      </div>
+
+      <!-- PROPERTY SLIDER TRACK -->
+      <div class="property-slider-track" id="propertySlider">
         <div class="property-card">
           <img src="https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?auto=format&fit=crop&w=600&q=80" class="property-img" alt="Property">
           <div class="property-content">
@@ -512,11 +522,21 @@
             <div class="property-price">₦280,000,000</div>
           </div>
         </div>
+
+        <div class="property-card">
+          <img src="https://images.unsplash.com/photo-1580587771525-78b9dba3b914?auto=format&fit=crop&w=600&q=80" class="property-img" alt="Property">
+          <div class="property-content">
+            <span class="property-tag">INDUSTRIAL ZONE</span>
+            <h4 class="property-title">Logistics Warehouse Acreage</h4>
+            <p class="property-loc">Ibadang Expressway, Oyo State</p>
+            <div class="property-price">₦65,000,000</div>
+          </div>
+        </div>
       </div>
     </div>
   </section>
 
-  <!-- REAL ESTATE MORTGAGE & YIELD CALCULATOR -->
+  <!-- CALCULATOR -->
   <section class="calc-section" id="calculator">
     <div class="calc-box">
       <div>
@@ -584,9 +604,9 @@
     </div>
   </footer>
 
-  <!-- SCRIPT FOR GRAPH & SWIPE NEWSFEED -->
+  <!-- JS CONTROLS FOR GRAPH & SLIDER -->
   <script>
-    // EXTENDED MINI GRAPH INITIALIZATION
+    // GRAPH INITIALIZATION
     const ctx = document.getElementById('heroMiniGraph').getContext('2d');
     let graphLabels = ['5m ago', '4m ago', '3m ago', '2m ago', '1m ago', 'Now'];
     let graphData = [120, 126, 122, 135, 140, 152];
@@ -611,83 +631,18 @@
         responsive: true,
         maintainAspectRatio: false,
         plugins: { legend: { display: false } },
-        scales: { 
-          x: { display: false }, 
-          y: { display: false } 
-        }
+        scales: { x: { display: false }, y: { display: false } }
       }
     });
 
-    // REAL-TIME GRAPH UPDATE SIMULATION
-    setInterval(() => {
-      const lastVal = graphData[graphData.length - 1];
-      const newVal = lastVal + (Math.random() * 5 - 2);
-      graphData.shift();
-      graphData.push(Number(newVal.toFixed(1)));
-      miniGraph.update();
-    }, 2500);
-
-    // MULTI-DIRECTIONAL SWIPE NEWSFEED ROTATOR
-    const newsFeedContainer = document.getElementById('liveBlogNewsContainer');
-    const swipeDirections = ['swipe-up', 'swipe-down', 'swipe-left', 'swipe-right'];
-    
-    const newsFeedDatabase = [
-      { 
-        tag: 'Material Rate Alert', 
-        tagClass: 'tag-material', 
-        time: 'Just Now', 
-        title: 'Dangote & BUA Cement Surge to ₦12,000/Bag', 
-        desc: 'Depot prices in Lagos & Ogun states rise +8.2%. Standard 9-inch blocks now retail at ₦620 each.', 
-        img: 'https://images.unsplash.com/photo-1541888946425-d0fbb186a5b7?auto=format&fit=crop&w=500&q=80' 
-      },
-      { 
-        tag: 'Flood Warning', 
-        tagClass: 'tag-disaster', 
-        time: '3m ago', 
-        title: 'Lekki-Epe Drainage Alert & Coastal Risk', 
-        desc: 'Geospatial sensors triggered along Coastal Highway. High runoff expected before dusk.', 
-        img: 'https://images.unsplash.com/photo-1547683905-f686c993aae5?auto=format&fit=crop&w=500&q=80' 
-      },
-      { 
-        tag: 'Sango Yield', 
-        tagClass: 'tag-yield', 
-        time: '6m ago', 
-        title: 'Sango Corridor Surges +22.4% Capital Appreciation', 
-        desc: 'Investors actively shifting capital from Ibadan highway towards Ogun industrial hubs.', 
-        img: 'https://images.unsplash.com/photo-1504307651254-35680f356dfd?auto=format&fit=crop&w=500&q=80' 
-      },
-      { 
-        tag: 'Soil Analysis', 
-        tagClass: 'tag-disaster', 
-        time: '10m ago', 
-        title: 'Tremor Vibration Logging near Coastal Zones', 
-        desc: 'Mild tremors logged by PropTech ground sensors near Victoria Island fault lines.', 
-        img: 'https://images.unsplash.com/photo-1508873696983-2df515122519?auto=format&fit=crop&w=500&q=80' 
-      }
-    ];
-
-    let currentNewsIndex = 1;
-
-    setInterval(() => {
-      const item = newsFeedDatabase[currentNewsIndex % newsFeedDatabase.length];
-      const randomDirection = swipeDirections[Math.floor(Math.random() * swipeDirections.length)];
-
-      newsFeedContainer.innerHTML = `
-        <div class="blog-news-card ${randomDirection}">
-          <div class="blog-card-top">
-            <span class="blog-tag ${item.tagClass}">${item.tag}</span>
-            <div style="display:flex; align-items:center; gap:4px; font-size:10px; color:#10B981; font-weight:700;">
-              <div class="live-beep-dot"></div> ${item.time}
-            </div>
-          </div>
-          <div class="blog-post-title">${item.title}</div>
-          <div class="blog-post-desc">${item.desc}</div>
-          ${item.img ? `<div class="blog-post-media"><img src="${item.img}" alt="News Feed Media"></div>` : ''}
-        </div>
-      `;
-
-      currentNewsIndex++;
-    }, 4500);
+    // PROPERTY SLIDER CONTROLS
+    const slider = document.getElementById('propertySlider');
+    document.getElementById('slideLeft').addEventListener('click', () => {
+      slider.scrollBy({ left: -320, behavior: 'smooth' });
+    });
+    document.getElementById('slideRight').addEventListener('click', () => {
+      slider.scrollBy({ left: 320, behavior: 'smooth' });
+    });
 
     // CALCULATOR LOGIC
     function updateCalc() {
