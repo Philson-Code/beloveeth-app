@@ -43,40 +43,35 @@ export default function Home() {
     if (prompt) setChatInput(prompt);
   };
 
-  // DYNAMIC CONVERSATIONAL LOGIC FOR PROP AI
+  // LOCAL FALLBACK RESPONSE LOGIC (If N-ATLaS API is offline or loading)
   const generatePropReply = (input) => {
     const text = input.toLowerCase().trim();
 
-    // Greetings (English, Pidgin, Local Languages)
     if (['hello', 'hi', 'hey', 'howdy', 'yo', 'sup', 'how far', 'bawo', 'sannu', 'kedu'].some(g => text.includes(g))) {
       return "Hey there! 👋 I'm active and ready! Are you looking to buy, rent, or check predictive yield scores in Lagos & Ogun today?";
     }
 
-    // Pricing / Budget
     if (text.includes('price') || text.includes('cost') || text.includes('budget') || text.includes('cheap') || text.includes('million') || text.includes('naira')) {
       return "Got it! Prices vary fast—Lekki Phase 1 averages ₦110M–₦250M, while Abeokuta expansion corridors start lower with 15%+ annual appreciation. What budget range are you targeting?";
     }
 
-    // Locations (Lekki, Epe, Ikeja, Abeokuta, Ogun)
     if (text.includes('lekki') || text.includes('epe') || text.includes('ikeja') || text.includes('ogun') || text.includes('lagos') || text.includes('abeokuta')) {
       return `Omo! ${input.toUpperCase()} is a hot topic right now! 📡 Our AI models track high demand & traffic infrastructure growth there. Want to open the Client VIP Dashboard to see traffic & yield forecasts?`;
     }
 
-    // Dashboard or Analysis requests
     if (text.includes('dashboard') || text.includes('analysis') || text.includes('traffic') || text.includes('yield') || text.includes('data')) {
       return "🔒 Full predictive models (congestion indices, 5-year capital appreciation, and safety heatmaps) are available inside the gated Client VIP Dashboard! Click 'VIP Dashboard' in the top bar to explore.";
     }
 
-    // Who created you / CEO
     if (text.includes('philip') || text.includes('ceo') || text.includes('who made you') || text.includes('owner')) {
       return "Philip is the CEO of Beloveeth Realty! 👑 He programmed me to make sure you get institutional-grade property insights without the fluff!";
     }
 
-    // Default conversational fallback
     return `I hear you on "${input}"! 🧮 Let me scan our database... I can help you find verified properties, check rental yield trends, or direct you to our VIP Predictive Analytics Dashboard! What's our next move?`;
   };
 
-  const handleSendMsg = (e) => {
+  // UPDATED ASYNC SEND HANDLER - CALLS /api/prop-chat (N-ATLaS MODEL)
+  const handleSendMsg = async (e) => {
     e.preventDefault();
     if (!chatInput.trim()) return;
 
@@ -84,10 +79,29 @@ export default function Home() {
     setChatMessages((prev) => [...prev, { sender: 'user', text: userText }]);
     setChatInput('');
 
-    setTimeout(() => {
-      const reply = generatePropReply(userText);
-      setChatMessages((prev) => [...prev, { sender: 'prop', text: reply }]);
-    }, 400);
+    try {
+      // Call Next.js API route connected to Hugging Face N-ATLaS
+      const res = await fetch('/api/prop-chat', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ message: userText }),
+      });
+
+      const data = await res.json();
+
+      if (data.reply) {
+        setChatMessages((prev) => [...prev, { sender: 'prop', text: data.reply }]);
+      } else {
+        // Fallback if API fails or isn't configured yet
+        const fallbackReply = generatePropReply(userText);
+        setChatMessages((prev) => [...prev, { sender: 'prop', text: fallbackReply }]);
+      }
+    } catch (err) {
+      console.error("API Call Error:", err);
+      // Fallback response on network error
+      const fallbackReply = generatePropReply(userText);
+      setChatMessages((prev) => [...prev, { sender: 'prop', text: fallbackReply }]);
+    }
   };
 
   const claimStreak = () => {
