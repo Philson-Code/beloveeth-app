@@ -3,12 +3,11 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Beloveeth Realty & PropTech — Property Is More Than a Place</title>
+<title>Beloveeth Realty & PropTech Platform</title>
 <style>
 :root {
   --maroon: #5A1725;
   --burgundy: #6B1E2E;
-  --burgundy-light: #7A2638;
   --gold: #D4AF37;
   --ivory: #FCFBF8;
   --white: #FFFFFF;
@@ -17,8 +16,6 @@
   --slate: #66707A;
   --charcoal: #20252B;
   --green: #2E7D32;
-  --amber: #C67D0A;
-  --radius: 14px;
   --shadow: 0 12px 40px rgba(32, 37, 43, 0.08);
 }
 
@@ -40,7 +37,7 @@ a { color: inherit; text-decoration: none; }
   margin: auto;
 }
 
-/* ================= HEADER & NAV ================= */
+/* NAVIGATION */
 header {
   position: sticky;
   top: 0;
@@ -127,7 +124,7 @@ header {
   transform: translateY(-1px);
 }
 
-/* ================= HERO ================= */
+/* HERO SECTION */
 .hero {
   padding: 80px 0 60px;
   position: relative;
@@ -188,7 +185,6 @@ header {
   flex-wrap: wrap;
 }
 
-/* ================= HERO CARD & MAP ================= */
 .hero-visual {
   background: white;
   border: 1px solid var(--grey);
@@ -248,7 +244,7 @@ header {
 
 .map-badge strong { color: var(--gold); display: block; }
 
-/* ================= PORTAL SWITCHER BANNER ================= */
+/* PORTAL SWITCHER */
 .portal-bar {
   background: var(--maroon);
   color: white;
@@ -287,7 +283,7 @@ header {
   margin-bottom: 16px;
 }
 
-/* ================= BELOVEETH PULSE ================= */
+/* BELOVEETH PULSE */
 .section { padding: 80px 0; }
 .section-header {
   display: flex;
@@ -329,7 +325,7 @@ header {
 .metric-box strong { font-size: 26px; color: var(--maroon); display: block; margin: 4px 0; }
 .metric-box span { font-size: 11px; font-weight: 700; color: var(--green); }
 
-/* ================= PROP AI SECTION ================= */
+/* PROP AI SECTION */
 .prop-box {
   background: var(--charcoal);
   color: white;
@@ -371,7 +367,7 @@ header {
 
 .prop-hierarchy-list li { margin-bottom: 6px; }
 
-/* ================= FOUNDER SECTION ================= */
+/* FOUNDER SECTION */
 .founder-card {
   background: white;
   border: 1px solid var(--grey);
@@ -402,7 +398,7 @@ header {
 .founder-info h4 { font-size: 18px; color: var(--maroon); }
 .founder-info p { font-size: 13px; color: var(--slate); margin-top: 4px; }
 
-/* ================= FOOTER ================= */
+/* FOOTER */
 footer {
   background: #18090D;
   color: white;
@@ -441,7 +437,6 @@ footer {
 </head>
 <body>
 
-<!-- HEADER -->
 <header>
   <div class="container nav">
     <a href="#" class="logo">
@@ -462,7 +457,6 @@ footer {
 </header>
 
 <main>
-  <!-- HERO -->
   <section class="hero">
     <div class="container hero-grid">
       <div>
@@ -493,7 +487,6 @@ footer {
     </div>
   </section>
 
-  <!-- 3-WAY PORTAL SWITCHER -->
   <section id="portals" class="portal-bar">
     <div class="container">
       <div style="text-align: center; margin-bottom: 24px;">
@@ -504,23 +497,22 @@ footer {
         <div class="portal-card">
           <h4>🏢 Client & Diaspora Portal</h4>
           <p>Access virtual viewings, title document vaults, yield projections, and 6-month predictive valuations.</p>
-          <button class="btn btn-outline" style="width: 100%;">Enter Client Portal</button>
+          <button class="btn btn-outline" style="width: 100%;" onclick="alert('Client Portal Selected')">Enter Client Portal</button>
         </div>
         <div class="portal-card">
           <h4>🤝 Partner & JV Portal</h4>
           <p>For developers, surveyors, and realtors to manage property submissions (`Draft → Published`) and joint-venture splits.</p>
-          <button class="btn btn-outline" style="width: 100%;">Enter Partner Portal</button>
+          <button class="btn btn-outline" style="width: 100%;" onclick="alert('Partner Portal Selected')">Enter Partner Portal</button>
         </div>
         <div class="portal-card">
           <h4>⚙️ Workforce & CRM System</h4>
           <p>Internal operational tools for buyer lead workflows, inspection tracking, and title verification tasks.</p>
-          <button class="btn btn-outline" style="width: 100%;">Workforce Login</button>
+          <button class="btn btn-outline" style="width: 100%;" onclick="alert('Workforce CRM Selected')">Workforce Login</button>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- BELOVEETH PULSE -->
   <section id="pulse" class="section container">
     <div class="section-header">
       <div>
@@ -554,7 +546,6 @@ footer {
     </div>
   </section>
 
-  <!-- PROP AI & DATA HIERARCHY -->
   <section id="predictive" class="section container">
     <div class="prop-box">
       <div class="prop-avatar-wrap">
@@ -581,7 +572,6 @@ footer {
     </div>
   </section>
 
-  <!-- FOUNDER SPOTLIGHT -->
   <section id="founder" class="container">
     <div class="founder-card">
       <div class="founder-img">PDJ</div>
@@ -596,7 +586,6 @@ footer {
   </section>
 </main>
 
-<!-- FOOTER -->
 <footer>
   <div class="container">
     <div class="footer-grid">
