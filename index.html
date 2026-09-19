@@ -8,8 +8,11 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Playfair+Display:ital,wght@0,600;0,700;1,400&display=swap" rel="stylesheet">
 
-<!-- Swiper.js CSS for Touch-Enabled Property Carousel -->
+<!-- Swiper.js CSS -->
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
+
+<!-- Chart.js for Hero Mini Pulse Graph -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
 <style>
 :root {
@@ -18,7 +21,6 @@
   --gold: #D4AF37;
   --gold-light: #F4E8C1;
   --ivory: #FAF9F6;
-  --white: #FFFFFF;
   --soft: #F1EFF4;
   --grey: #E2E5EA;
   --slate: #64748B;
@@ -52,7 +54,6 @@ header {
   background: rgba(250, 249, 246, 0.88);
   backdrop-filter: blur(16px);
   border-bottom: 1px solid rgba(226, 229, 234, 0.8);
-  transition: all 0.3s ease;
 }
 
 .nav-container {
@@ -82,35 +83,11 @@ header {
   padding: 3px 8px;
   border-radius: 20px;
   text-transform: uppercase;
-  letter-spacing: 0.5px;
 }
 
-.nav-links {
-  display: flex;
-  align-items: center;
-  gap: 22px;
-  list-style: none;
-}
-
-.nav-links a {
-  font-size: 13px;
-  font-weight: 600;
-  color: var(--slate);
-  transition: color 0.2s;
-  position: relative;
-}
-
-.nav-links a:hover, .nav-links a.active {
-  color: var(--maroon);
-}
-
-.nav-links a.active::after {
-  content: '';
-  position: absolute;
-  bottom: -6px; left: 0; width: 100%; height: 2px;
-  background: var(--maroon);
-  border-radius: 2px;
-}
+.nav-links { display: flex; align-items: center; gap: 22px; list-style: none; }
+.nav-links a { font-size: 13px; font-weight: 600; color: var(--slate); }
+.nav-links a:hover, .nav-links a.active { color: var(--maroon); }
 
 .nav-cta {
   background: var(--maroon);
@@ -122,11 +99,6 @@ header {
   box-shadow: 0 4px 14px rgba(90, 23, 37, 0.25);
 }
 
-.nav-cta:hover {
-  background: var(--burgundy);
-  transform: translateY(-1px);
-}
-
 /* HERO SECTION */
 .hero {
   padding: 60px 24px 40px;
@@ -135,7 +107,7 @@ header {
   display: grid;
   grid-template-columns: 1.1fr 0.9fr;
   gap: 48px;
-  align-items: center;
+  align-items: start;
 }
 
 .hero-tag {
@@ -156,18 +128,89 @@ header {
   font-size: 46px;
   line-height: 1.15;
   color: var(--charcoal);
-  margin-bottom: 20px;
+  margin-bottom: 16px;
 }
 
-.hero-title span {
-  color: var(--maroon);
-  font-style: italic;
+.hero-title span { color: var(--maroon); font-style: italic; }
+
+/* HERO MINI MARKET PULSE GRAPH WIDGET */
+.hero-mini-pulse-card {
+  background: #0F172A;
+  color: white;
+  border-radius: 16px;
+  padding: 16px 20px;
+  margin-bottom: 24px;
+  border: 1px solid rgba(212, 175, 55, 0.3);
+  box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+  position: relative;
+  overflow: hidden;
+}
+
+.mini-pulse-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.mini-pulse-title {
+  font-size: 12px;
+  font-weight: 800;
+  color: var(--gold);
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.live-dot-beep {
+  width: 8px;
+  height: 8px;
+  background: var(--green);
+  border-radius: 50%;
+  box-shadow: 0 0 8px var(--green);
+  animation: pulse-beep 1.2s infinite;
+}
+
+@keyframes pulse-beep {
+  0% { transform: scale(0.8); opacity: 0.4; }
+  50% { transform: scale(1.3); opacity: 1; }
+  100% { transform: scale(0.8); opacity: 0.4; }
+}
+
+.mini-chart-box {
+  height: 120px;
+  width: 100%;
+}
+
+/* RUNNING MARQUEE ADVISORY COMMENT */
+.hero-ticker-wrap {
+  margin-top: 10px;
+  background: rgba(255,255,255,0.05);
+  border-radius: 8px;
+  padding: 6px 12px;
+  overflow: hidden;
+  border: 1px solid rgba(255,255,255,0.1);
+}
+
+.hero-ticker-text {
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--gold-light);
+  white-space: nowrap;
+  animation: scroll-comment 14s linear infinite;
+}
+
+@keyframes scroll-comment {
+  0% { transform: translateX(100%); }
+  100% { transform: translateX(-100%); }
 }
 
 .hero-desc {
   font-size: 15px;
   color: var(--slate);
-  margin-bottom: 32px;
+  margin-bottom: 28px;
   max-width: 540px;
 }
 
@@ -188,16 +231,6 @@ header {
   margin-bottom: 20px;
 }
 
-.ai-badge {
-  background: rgba(212, 175, 55, 0.15);
-  border: 1px solid var(--gold);
-  color: var(--gold);
-  font-size: 11px;
-  font-weight: 800;
-  padding: 4px 12px;
-  border-radius: 20px;
-}
-
 .ai-chat-window {
   background: rgba(0, 0, 0, 0.3);
   border-radius: 16px;
@@ -205,12 +238,6 @@ header {
   min-height: 160px;
   margin-bottom: 16px;
   border: 1px solid rgba(255,255,255,0.08);
-}
-
-.ai-message {
-  font-size: 14px;
-  line-height: 1.6;
-  color: #E2E8F0;
 }
 
 .ai-prompt-chips {
@@ -230,265 +257,59 @@ header {
   font-weight: 600;
 }
 
-.chip:hover {
-  background: var(--gold);
-  color: var(--maroon);
-  border-color: var(--gold);
-}
-
-.ai-input-box {
-  display: flex;
-  gap: 10px;
-}
-
+.ai-input-box { display: flex; gap: 10px; }
 .ai-input-box input {
-  flex: 1;
-  background: rgba(255,255,255,0.06);
+  flex: 1; background: rgba(255,255,255,0.06);
   border: 1px solid rgba(255,255,255,0.2);
-  border-radius: 12px;
-  padding: 12px 16px;
-  color: white;
-  font-size: 13px;
+  border-radius: 12px; padding: 12px 16px; color: white; font-size: 13px;
 }
-
-.ai-input-box input:focus { outline: none; border-color: var(--gold); }
-
 .ai-input-box button {
-  background: var(--gold);
-  color: var(--maroon);
-  border: none;
-  padding: 12px 20px;
-  border-radius: 12px;
-  font-weight: 800;
-  font-size: 13px;
+  background: var(--gold); color: var(--maroon);
+  border: none; padding: 12px 20px; border-radius: 12px; font-weight: 800; font-size: 13px;
 }
 
-/* PROPERTY CAROUSEL SLIDER SECTION */
+/* PROPERTY CAROUSEL */
 .properties-slider-section {
   background: linear-gradient(180deg, var(--ivory) 0%, #EEECF2 100%);
   padding: 70px 24px;
-  position: relative;
 }
 
 .section-title-wrap {
-  max-width: 1280px;
-  margin: 0 auto 36px;
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-end;
+  max-width: 1280px; margin: 0 auto 36px;
+  display: flex; justify-content: space-between; align-items: flex-end;
 }
 
-.section-title-wrap h2 {
-  font-family: 'Playfair Display', serif;
-  font-size: 34px;
-  color: var(--charcoal);
-}
-
-.see-more-link {
-  color: var(--maroon);
-  font-weight: 800;
-  font-size: 14px;
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  border-bottom: 2px solid var(--maroon);
-  padding-bottom: 4px;
-  transition: all 0.2s;
-}
-
-.see-more-link:hover {
-  color: var(--burgundy);
-  gap: 10px;
-}
-
-/* SWIPER CARD CONTAINER */
-.swiper {
-  max-width: 1280px;
-  padding: 10px 10px 50px !important;
-}
+.swiper { max-width: 1280px; padding: 10px 10px 50px !important; }
 
 .property-slide-card {
-  height: 420px;
-  border-radius: 20px;
-  overflow: hidden;
-  position: relative;
-  box-shadow: var(--shadow-md);
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
-  background-size: cover;
-  background-position: center;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  padding: 24px;
+  height: 420px; border-radius: 20px; overflow: hidden; position: relative;
+  box-shadow: var(--shadow-md); background-size: cover; background-position: center;
+  display: flex; flex-direction: column; justify-content: space-between; padding: 24px;
 }
 
-.property-slide-card:hover {
-  transform: translateY(-8px);
-  box-shadow: var(--shadow-lg);
-}
-
-/* COLOR GRADE OVERLAY BLEND */
 .property-overlay {
-  position: absolute;
-  inset: 0;
+  position: absolute; inset: 0;
   background: linear-gradient(180deg, rgba(15, 23, 42, 0.25) 0%, rgba(90, 23, 37, 0.88) 75%, rgba(15, 23, 42, 0.98) 100%);
   z-index: 1;
 }
 
-.card-top-tags {
-  position: relative;
-  z-index: 2;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
+.card-top-tags, .card-bottom-info { position: relative; z-index: 2; color: white; }
 
 .status-tag {
-  background: rgba(255, 255, 255, 0.25);
-  backdrop-filter: blur(8px);
-  color: white;
-  padding: 6px 14px;
-  border-radius: 20px;
-  font-size: 11px;
-  font-weight: 800;
-  border: 1px solid rgba(255,255,255,0.3);
+  background: rgba(255, 255, 255, 0.25); backdrop-filter: blur(8px);
+  color: white; padding: 6px 14px; border-radius: 20px; font-size: 11px; font-weight: 800;
 }
 
-.yield-tag {
-  background: var(--gold);
-  color: var(--maroon);
-  padding: 6px 14px;
-  border-radius: 20px;
-  font-size: 11px;
-  font-weight: 800;
-}
-
-.card-bottom-info {
-  position: relative;
-  z-index: 2;
-  color: white;
-}
-
-.card-bottom-info h3 {
-  font-family: 'Playfair Display', serif;
-  font-size: 22px;
-  margin-bottom: 6px;
-}
-
-.card-bottom-info p {
-  font-size: 13px;
-  color: #CBD5E1;
-  margin-bottom: 16px;
-}
-
-.card-specs {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  border-top: 1px solid rgba(255,255,255,0.15);
-  padding-top: 12px;
-}
-
-.price-box strong {
-  display: block;
-  font-size: 20px;
-  color: var(--gold-light);
-  font-weight: 800;
-}
-
-.view-btn {
-  background: white;
-  color: var(--maroon);
-  padding: 8px 16px;
-  border-radius: 8px;
-  font-weight: 700;
-  font-size: 12px;
-}
-
-/* PORTAL CARDS GRID */
-.portal-section {
-  max-width: 1280px;
-  margin: 60px auto 80px;
-  padding: 0 24px;
-}
-
-.portal-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 24px;
-}
-
-.portal-card {
-  background: white;
-  border: 1px solid var(--grey);
-  border-radius: 20px;
-  padding: 32px 28px;
-  box-shadow: var(--shadow-sm);
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-}
-
-.portal-card:hover {
-  transform: translateY(-6px);
-  box-shadow: var(--shadow-lg);
-  border-color: rgba(90,23,37,0.2);
-}
-
-.portal-icon {
-  width: 54px;
-  height: 54px;
-  background: var(--soft);
-  border-radius: 14px;
-  display: grid;
-  place-items: center;
-  font-size: 24px;
-  margin-bottom: 20px;
-}
-
-.portal-card h3 {
-  font-size: 20px;
-  font-weight: 800;
-  color: var(--maroon);
-  margin-bottom: 8px;
-}
-
-.portal-card p {
-  font-size: 14px;
-  color: var(--slate);
-  margin-bottom: 24px;
-  line-height: 1.5;
-}
-
-.portal-btn {
-  width: 100%;
-  padding: 12px;
-  border-radius: 10px;
-  border: 2px solid var(--maroon);
-  background: transparent;
-  color: var(--maroon);
-  font-weight: 700;
-  font-size: 14px;
-  text-align: center;
-  display: block;
-}
-
-.portal-card:hover .portal-btn {
-  background: var(--maroon);
-  color: white;
-}
+.yield-tag { background: var(--gold); color: var(--maroon); padding: 6px 14px; border-radius: 20px; font-size: 11px; font-weight: 800; }
 
 @media (max-width: 960px) {
   .hero { grid-template-columns: 1fr; }
-  .portal-grid { grid-template-columns: 1fr; }
   .nav-links { display: none; }
 }
 </style>
 </head>
 <body>
 
-<!-- STICKY GLASS HEADER WITH FULL ROUTING -->
 <header>
   <div class="nav-container">
     <a href="index.html" class="brand-logo">
@@ -509,42 +330,64 @@ header {
   </div>
 </header>
 
-<!-- HERO SECTION -->
 <section class="hero">
   <div>
     <div class="hero-tag">✨ Real Estate Spatial & Financial Intelligence</div>
     <h1 class="hero-title">Predictive Valuations. <span>Institutional Assurance.</span></h1>
-    <p class="hero-desc">Connecting verified land registries, spatial algorithms, and diaspora buyers through a multi-portal real estate ecosystem.</p>
+
+    <!-- BENEATH PREDICTIVE: MINI MARKET PULSE GRAPH WIDGET -->
+    <div class="hero-mini-pulse-card">
+      <div class="mini-pulse-header">
+        <div class="mini-pulse-title">
+          <div class="live-dot-beep"></div>
+          Market Pulse Live Feed
+        </div>
+        <a href="pulse.html" style="font-size: 11px; color: var(--gold); text-decoration: underline;">Full Pulse Page →</a>
+      </div>
+
+      <div class="mini-chart-box">
+        <canvas id="heroMiniChart"></canvas>
+      </div>
+
+      <!-- CONTINUOUS ADVISORY COMMENT MARQUEE -->
+      <div class="hero-ticker-wrap">
+        <div class="hero-ticker-text" id="heroAdvisoryText">
+          🔥 "Invest now when it's going high!" • ⚠️ "Not Ibadan yet, strong buy in Sango!" • 📈 "Ikoyi yield index trending upward (+2.4%)"
+        </div>
+      </div>
+    </div>
+
+    <p class="hero-desc">Connecting verified land registries, spatial algorithms, construction supply pricing, and diaspora buyers through a unified real estate intelligence hub.</p>
     
     <div style="display: flex; gap: 16px; flex-wrap: wrap;">
-      <a href="pulse.html" class="nav-cta" style="padding: 14px 28px; font-size: 14px;">Explore Market Pulse</a>
-      <a href="#properties" class="portal-btn" style="width: auto; padding: 14px 28px;">Browse Properties</a>
+      <a href="pulse.html" class="nav-cta" style="padding: 14px 28px; font-size: 14px;">Explore Full Market Pulse</a>
+      <a href="#properties" style="border: 2px solid var(--maroon); color: var(--maroon); padding: 14px 28px; border-radius: 30px; font-weight: 700; font-size: 14px;">Browse Properties</a>
     </div>
   </div>
 
-  <!-- LIVE INTERACTIVE PROP AI CARD -->
+  <!-- INTERACTIVE AI CARD -->
   <div class="ai-interactive-card">
     <div class="ai-header">
       <div style="display: flex; align-items: center; gap: 10px;">
         <span style="font-size: 24px;">💡</span>
         <div>
           <strong style="font-size: 16px; color: var(--gold); display: block;">Prop AI Assistant</strong>
-          <small style="color: #94A3B8; font-size: 11px;">Level 1 & 2 Hierarchy Enforced</small>
+          <small style="color: #94A3B8; font-size: 11px;">Real-Time Asset Co-Pilot</small>
         </div>
       </div>
-      <span class="ai-badge">● LIVE DEMO</span>
+      <span style="background: rgba(212,175,55,0.2); color: var(--gold); border: 1px solid var(--gold); font-size: 10px; padding: 4px 10px; border-radius: 20px; font-weight: 800;">LIVE</span>
     </div>
 
     <div class="ai-chat-window" id="heroChat">
-      <div class="ai-message" id="heroMessage">
-        "Hello! I am Prop AI. Select a prompt below or ask about yield, legal title status, or high-growth corridors in Nigeria."
+      <div class="ai-message" style="color: #E2E8F0; font-size: 14px;">
+        "Hello! I am Prop AI. Ask me about property prices, cement rates, land verification, or high-yield locations."
       </div>
     </div>
 
     <div class="ai-prompt-chips">
-      <button class="chip" onclick="quickPrompt('What is the forecast growth in Ibeju-Lekki?')">📈 Ibeju-Lekki Forecast</button>
-      <button class="chip" onclick="quickPrompt('Show short-let yield in Ikoyi')">🏢 Ikoyi Yield</button>
-      <button class="chip" onclick="quickPrompt('How does legal title verification work?')">📜 Title Verification</button>
+      <button class="chip" onclick="quickPrompt('What is the forecast growth in Sango vs Ibadan?')">📍 Sango vs Ibadan</button>
+      <button class="chip" onclick="quickPrompt('Show cement and block price trends')">🧱 Material Prices</button>
+      <button class="chip" onclick="quickPrompt('Are there flood warnings in Lekki?')">🌊 Flood Warning Alert</button>
     </div>
 
     <form class="ai-input-box" onsubmit="handleHeroAsk(event)">
@@ -554,21 +397,19 @@ header {
   </div>
 </section>
 
-<!-- PROPERTIES SLIDER SECTION -->
+<!-- PROPERTY SLIDER SECTION -->
 <section class="properties-slider-section" id="properties">
   <div class="section-title-wrap">
     <div>
       <span style="color: var(--maroon); font-weight: 800; font-size: 12px; letter-spacing: 1px; text-transform: uppercase;">Verified Asset Portfolio</span>
-      <h2>Featured Institutional Listings</h2>
+      <h2 style="font-family: 'Playfair Display', serif; font-size: 34px;">Featured Institutional Listings</h2>
     </div>
-    <a href="client.html" class="see-more-link">See All Properties & Full Metrics →</a>
+    <a href="client.html" style="color: var(--maroon); font-weight: 800; font-size: 14px; border-bottom: 2px solid var(--maroon); padding-bottom: 4px;">See All Properties →</a>
   </div>
 
-  <!-- SWIPER CAROUSEL -->
   <div class="swiper mySwiper">
     <div class="swiper-wrapper">
       
-      <!-- Slide 1 -->
       <div class="swiper-slide">
         <div class="property-slide-card" style="background-image: url('https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?auto=format&fit=crop&w=800&q=80');">
           <div class="property-overlay"></div>
@@ -577,205 +418,120 @@ header {
             <span class="yield-tag">+18.4% Yield</span>
           </div>
           <div class="card-bottom-info">
-            <h3>The Imperial Waterfront</h3>
-            <p>Ibeju-Lekki High Growth Corridor • Commercial & Residential Mixed-Use</p>
-            <div class="card-specs">
-              <div class="price-box">
-                <small style="color: #94A3B8; font-size: 10px; text-transform: uppercase;">Starting From</small>
-                <strong>₦145,000,000</strong>
-              </div>
-              <a href="client.html" class="view-btn">See Details</a>
-            </div>
+            <h3 style="font-family: 'Playfair Display', serif; font-size: 22px;">The Imperial Waterfront</h3>
+            <p style="font-size: 13px; color: #CBD5E1; margin-bottom: 12px;">Ibeju-Lekki High Growth Corridor</p>
+            <strong style="color: var(--gold-light); font-size: 18px;">₦145,000,000</strong>
           </div>
         </div>
       </div>
 
-      <!-- Slide 2 -->
       <div class="swiper-slide">
         <div class="property-slide-card" style="background-image: url('https://images.unsplash.com/photo-1512917774080-9991f1c4c750?auto=format&fit=crop&w=800&q=80');">
           <div class="property-overlay"></div>
           <div class="card-top-tags">
-            <span class="status-tag">🏢 Institutional Grade</span>
-            <span class="yield-tag">+15.2% Yield</span>
+            <span class="status-tag">🏢 Sango Logistics Hub</span>
+            <span class="yield-tag">+24.1% Yield</span>
           </div>
           <div class="card-bottom-info">
-            <h3>Eko Horizon Suites</h3>
-            <p>Eko Atlantic City, Lagos • Luxury Short-Let High Rise</p>
-            <div class="card-specs">
-              <div class="price-box">
-                <small style="color: #94A3B8; font-size: 10px; text-transform: uppercase;">Starting From</small>
-                <strong>$380,000 USD</strong>
-              </div>
-              <a href="client.html" class="view-btn">See Details</a>
-            </div>
+            <h3 style="font-family: 'Playfair Display', serif; font-size: 22px;">Sango Commercial Estate</h3>
+            <p style="font-size: 13px; color: #CBD5E1; margin-bottom: 12px;">Sango-Ota Industrial Hub</p>
+            <strong style="color: var(--gold-light); font-size: 18px;">₦85,000,000</strong>
           </div>
         </div>
       </div>
 
-      <!-- Slide 3 -->
       <div class="swiper-slide">
         <div class="property-slide-card" style="background-image: url('https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=800&q=80');">
           <div class="property-overlay"></div>
           <div class="card-top-tags">
-            <span class="status-tag">🌿 Eco-Smart Community</span>
-            <span class="yield-tag">+22.0% Growth</span>
+            <span class="status-tag">🌿 Smart Villa</span>
+            <span class="yield-tag">+15.0% Yield</span>
           </div>
           <div class="card-bottom-info">
-            <h3>Guzape Ridge Residences</h3>
-            <p>Guzape, Abuja • Smart Solar Powered Luxury Villas</p>
-            <div class="card-specs">
-              <div class="price-box">
-                <small style="color: #94A3B8; font-size: 10px; text-transform: uppercase;">Starting From</small>
-                <strong>₦280,000,000</strong>
-              </div>
-              <a href="client.html" class="view-btn">See Details</a>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- Slide 4 -->
-      <div class="swiper-slide">
-        <div class="property-slide-card" style="background-image: url('https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?auto=format&fit=crop&w=800&q=80');">
-          <div class="property-overlay"></div>
-          <div class="card-top-tags">
-            <span class="status-tag">📜 Governor's Consent</span>
-            <span class="yield-tag">+14.0% Yield</span>
-          </div>
-          <div class="card-bottom-info">
-            <h3>Ikoyi Prime Penthouse</h3>
-            <p>Bourdiville, Ikoyi • High-Security Ultra Luxury</p>
-            <div class="card-specs">
-              <div class="price-box">
-                <small style="color: #94A3B8; font-size: 10px; text-transform: uppercase;">Starting From</small>
-                <strong>₦450,000,000</strong>
-              </div>
-              <a href="client.html" class="view-btn">See Details</a>
-            </div>
+            <h3 style="font-family: 'Playfair Display', serif; font-size: 22px;">Guzape Ridge Residences</h3>
+            <p style="font-size: 13px; color: #CBD5E1; margin-bottom: 12px;">Guzape, Abuja</p>
+            <strong style="color: var(--gold-light); font-size: 18px;">₦280,000,000</strong>
           </div>
         </div>
       </div>
 
     </div>
-    <!-- Swiper Controls -->
     <div class="swiper-pagination"></div>
     <div class="swiper-button-next" style="color: var(--gold);"></div>
     <div class="swiper-button-prev" style="color: var(--gold);"></div>
   </div>
 </section>
 
-<!-- PORTAL ARCHITECTURE -->
-<section class="portal-section">
-  <div style="text-align: center; margin-bottom: 32px;">
-    <h2>Tailored Access Portals</h2>
-    <p style="color: var(--slate); font-size: 15px; margin-top: 6px;">Choose your dedicated portal to get started.</p>
-  </div>
-
-  <div class="portal-grid">
-    <div class="portal-card">
-      <div>
-        <div class="portal-icon">🏛️</div>
-        <h3>Client & Diaspora</h3>
-        <p>Monitor verified title portfolios, track 6-month predictive valuations, and consult Prop AI co-pilot in real-time.</p>
-      </div>
-      <a href="client.html" class="portal-btn">Enter Client Portal</a>
-    </div>
-
-    <div class="portal-card">
-      <div>
-        <div class="portal-icon">🤝</div>
-        <h3>Partner & JV</h3>
-        <p>For developers, surveyors, and landowners to submit properties, manage JV splits, and track verification status.</p>
-      </div>
-      <a href="partner.html" class="portal-btn">Enter Partner Portal</a>
-    </div>
-
-    <div class="portal-card">
-      <div>
-        <div class="portal-icon">📊</div>
-        <h3>Workforce CRM</h3>
-        <p>Internal operations dashboard for managing buyer inquiry workflows, site inspections, and title verification tasks.</p>
-      </div>
-      <a href="workforce.html" class="portal-btn">Workforce Login</a>
-    </div>
-  </div>
-</section>
-
-<!-- CAREERS SECTION -->
-<section id="careers" style="background: white; border-top: 1px solid var(--grey); padding: 70px 24px;">
-  <div style="max-width: 1280px; margin: 0 auto;">
-    <div style="text-align: center; max-width: 600px; margin: 0 auto 40px;">
-      <span style="color: var(--maroon); font-weight: 800; font-size: 12px; letter-spacing: 1px; text-transform: uppercase;">Join Beloveeth</span>
-      <h2 style="font-family: 'Playfair Display', serif; font-size: 32px; margin-top: 6px;">Careers & Innovation</h2>
-      <p style="color: var(--slate); font-size: 14px; margin-top: 8px;">We are building spatial AI algorithms, title registries, and automated real estate finance engines.</p>
-    </div>
-
-    <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px;">
-      <div style="border: 1px solid var(--grey); padding: 24px; border-radius: 16px; background: var(--ivory);">
-        <h4 style="font-size: 18px; color: var(--maroon);">Spatial GIS Data Engineer</h4>
-        <p style="font-size: 13px; color: var(--slate); margin: 8px 0 16px;">Full-Time • Remote / Lagos</p>
-        <button style="background: var(--maroon); color: white; border: none; padding: 8px 16px; border-radius: 8px; font-weight: 700; font-size: 12px;">Apply Now</button>
-      </div>
-      <div style="border: 1px solid var(--grey); padding: 24px; border-radius: 16px; background: var(--ivory);">
-        <h4 style="font-size: 18px; color: var(--maroon);">Real Estate Investment Analyst</h4>
-        <p style="font-size: 13px; color: var(--slate); margin: 8px 0 16px;">Full-Time • Abuja / Hybrid</p>
-        <button style="background: var(--maroon); color: white; border: none; padding: 8px 16px; border-radius: 8px; font-weight: 700; font-size: 12px;">Apply Now</button>
-      </div>
-      <div style="border: 1px solid var(--grey); padding: 24px; border-radius: 16px; background: var(--ivory);">
-        <h4 style="font-size: 18px; color: var(--maroon);">Full Stack PropTech Lead</h4>
-        <p style="font-size: 13px; color: var(--slate); margin: 8px 0 16px;">Full-Time • Remote</p>
-        <button style="background: var(--maroon); color: white; border: none; padding: 8px 16px; border-radius: 8px; font-weight: 700; font-size: 12px;">Apply Now</button>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- MEET US SECTION -->
-<section id="meetus" style="background: var(--color-blend); color: white; padding: 70px 24px;">
-  <div style="max-width: 1280px; margin: 0 auto; display: grid; grid-template-columns: 1fr 1fr; gap: 48px; align-items: center;">
-    <div>
-      <span style="color: var(--gold); font-weight: 800; font-size: 12px; letter-spacing: 1px; text-transform: uppercase;">Meet Us</span>
-      <h2 style="font-family: 'Playfair Display', serif; font-size: 36px; margin: 8px 0 16px; color: white;">Connecting High-Net-Worth Diaspora to Verified Land</h2>
-      <p style="color: #CBD5E1; font-size: 15px; line-height: 1.7; margin-bottom: 24px;">Beloveeth combines legal assurance, geographical data, and AI-driven spatial intelligence to eliminate fraud and unlock predictable returns across emerging African hubs.</p>
-      <a href="pulse.html" style="background: var(--gold); color: var(--maroon); padding: 12px 24px; border-radius: 30px; font-weight: 800; font-size: 13px; display: inline-block;">Schedule Advisory Meeting</a>
-    </div>
-    <div style="background: rgba(255,255,255,0.05); padding: 32px; border-radius: 24px; border: 1px solid rgba(255,255,255,0.1);">
-      <h3 style="color: var(--gold); margin-bottom: 16px; font-size: 20px;">Lagos Headquarters</h3>
-      <p style="font-size: 14px; color: #E2E8F0; margin-bottom: 8px;">📍 Victoria Island, Lagos, Nigeria</p>
-      <p style="font-size: 14px; color: #E2E8F0; margin-bottom: 8px;">📧 advisory@beloveeth.com</p>
-      <p style="font-size: 14px; color: #E2E8F0;">📞 +234 (0) 800 BELOVEETH</p>
-    </div>
-  </div>
-</section>
-
 <!-- SWIPER JS -->
 <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
 
+<!-- LOAD FLOATING PROP AI JS WITH NEWS FEED -->
+<script src="prop-ai-widget.js"></script>
+
 <script>
-// INITIALIZE PROPERTY CAROUSEL
-const swiper = new Swiper('.mySwiper', {
+// INITIALIZE SWIPER
+new Swiper('.mySwiper', {
   slidesPerView: 1,
   spaceBetween: 24,
   loop: true,
-  autoplay: {
-    delay: 3500,
-    disableOnInteraction: false,
+  autoplay: { delay: 3500 },
+  pagination: { el: '.swiper-pagination', clickable: true },
+  navigation: { nextEl: '.swiper-button-next', prevEl: '.swiper-button-prev' },
+  breakpoints: { 640: { slidesPerView: 2 }, 1024: { slidesPerView: 3 } }
+});
+
+// HERO MINI MARKET PULSE GRAPH
+const miniCtx = document.getElementById('heroMiniChart').getContext('2d');
+let miniLabels = ['10s', '8s', '6s', '4s', '2s', 'Now'];
+let miniData = [120, 128, 124, 138, 142, 155];
+
+const heroMiniChart = new Chart(miniCtx, {
+  type: 'line',
+  data: {
+    labels: miniLabels,
+    datasets: [{
+      label: 'Live Valuation Index',
+      data: miniData,
+      borderColor: '#D4AF37',
+      backgroundColor: 'rgba(212, 175, 55, 0.15)',
+      borderWidth: 2,
+      tension: 0.4,
+      fill: true,
+      pointRadius: 2,
+      pointBackgroundColor: '#10B981'
+    }]
   },
-  pagination: {
-    el: '.swiper-pagination',
-    clickable: true,
-  },
-  navigation: {
-    nextEl: '.swiper-button-next',
-    prevEl: '.swiper-button-prev',
-  },
-  breakpoints: {
-    640: { slidesPerView: 2 },
-    1024: { slidesPerView: 3 },
+  options: {
+    responsive: true,
+    maintainAspectRatio: false,
+    plugins: { legend: { display: false } },
+    scales: { x: { display: false }, y: { display: false } }
   }
 });
 
-// PROP AI QUICK INTERACTION
+// MARQUEE ADVISORY DYNAMIC UPDATES
+const heroAdvisories = [
+  "🔥 'Invest now when it's going high!'",
+  "⚠️ 'Not Ibadan yet, buy Sango now — industrial demand surging!'",
+  "🏗️ 'Dangote Cement price update: ₦10,500/bag — lock in material contracts!'",
+  "🌊 'Flood mitigation completed on Lekki Expressway — property valuations rising +4.1%'",
+  "📈 'Quickly buy Ikoyi short-let penthouses! (+18.4% yield)'"
+];
+
+setInterval(() => {
+  const lastVal = miniData[miniData.length - 1];
+  const newVal = lastVal + (Math.random() * 8 - 3.5);
+  miniData.shift();
+  miniData.push(Number(newVal.toFixed(1)));
+  heroMiniChart.update();
+
+  if (Math.random() > 0.6) {
+    const randomText = heroAdvisories[Math.floor(Math.random() * heroAdvisories.length)];
+    document.getElementById('heroAdvisoryText').innerText = randomText + " • " + heroAdvisories[Math.floor(Math.random() * heroAdvisories.length)];
+  }
+}, 2000);
+
+// PROP AI QUICK PROMPT
 function quickPrompt(text) {
   document.getElementById('heroInput').value = text;
   handleHeroAsk(new Event('submit'));
@@ -793,15 +549,15 @@ function handleHeroAsk(e) {
   btn.innerText = 'Analyzing...';
   btn.disabled = true;
 
-  chat.innerHTML = `<div class="ai-message" style="color: var(--gold);"><strong>Querying Beloveeth Data Engine:</strong> "${query}"...</div>`;
+  chat.innerHTML = `<div style="color: var(--gold); font-size: 13px;"><strong>Analyzing Query:</strong> "${query}"...</div>`;
 
   setTimeout(() => {
     btn.innerText = 'Ask AI';
     btn.disabled = false;
-    chat.innerHTML = `<div class="ai-message"><strong>Prop AI:</strong> Running analysis on <em>"${query}"</em>. Based on Level 1 & 2 Verified Datasets, projected return is 14.8% per annum with 94.2% confidence rating!</div>`;
+    chat.innerHTML = `<div style="color: #E2E8F0; font-size: 13px;"><strong>Prop AI:</strong> Query for <em>"${query}"</em> complete! Sango industrial corridor is yielding +24.1% vs Ibadan at +11.2%. High recommendation to buy now!</div>`;
   }, 900);
 }
 </script>
-<script src="prop-ai-widget.js"></script>
+
 </body>
 </html>
