@@ -1,7 +1,6 @@
 /** @type {import('tailwindcss').Config} */
 module.exports = {
   content: [
-    "./app/**/*.{js,ts,jsx,tsx}",
     "./pages/**/*.{js,ts,jsx,tsx}",
     "./components/**/*.{js,ts,jsx,tsx}",
   ],
@@ -9,29 +8,24 @@ module.exports = {
     extend: {
       colors: {
         maroon: {
-          900: '#5A1725', // Deep Burgundy / Primary
-          800: '#6B1E2E',
-          700: '#7A2638',
+          50: "#fdf2f4",
+          100: "#fbe5e8",
+          600: "#7A2638",
+          700: "#6B1E2E",
+          800: "#5A1725", // Primary Brand Maroon
         },
         ivory: {
-          50: '#FCFBF8', // Warm White / Base
-          100: '#FFFFFF',
+          50: "#FCFBF8",  // Base Background
+          100: "#F1F2F3",
         },
-        neutral: {
-          soft: '#F1F2F3',
-          cool: '#D9DCE0',
-          slate: '#66707A',
-          charcoal: '#20252B',
-        },
-        semantic: {
-          emerald: '#10B981',
-          amber: '#F59E0B',
-          blue: '#3B82F6',
+        slate: {
+          subtle: "#66707A",
+          dark: "#20252B",
         }
       },
       fontFamily: {
-        sans: ['Inter', 'Manrope', 'sans-serif'],
-      }
+        sans: ['Inter', 'sans-serif'],
+      },
     },
   },
   plugins: [],
