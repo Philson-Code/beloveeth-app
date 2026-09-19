@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import Head from 'next/head';
-import PropAssistant from '../components/PropAssistant';
+import Link from 'next/link';
 
 export default function Home() {
   const [searchQuery, setSearchQuery] = useState('');
@@ -39,16 +39,19 @@ export default function Home() {
       {/* Global Navigation Header */}
       <header className="sticky top-0 z-40 bg-white/90 backdrop-blur-md border-b border-gray-200">
         <div className="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
-          <div className="flex items-center space-x-3">
-            <div className="w-8 h-8 bg-maroon-800 rounded flex items-center justify-center text-white font-bold text-xl">B</div>
-            <span className="font-semibold text-xl tracking-tight text-maroon-800">BELOVEETH <span className="font-light text-slate-dark">REALTY</span></span>
-          </div>
+          <Link href="/" className="flex items-center space-x-3">
+            <img 
+              src="/logo.png" 
+              alt="Beloveeth Realty" 
+              className="h-12 w-auto object-contain"
+            />
+          </Link>
 
           <nav className="hidden md:flex space-x-8 text-sm font-medium text-slate-dark">
-            <a href="#properties" className="hover:text-maroon-800 transition-colors">Properties</a>
-            <a href="#invest" className="hover:text-maroon-800 transition-colors">Invest</a>
-            <a href="#pulse" className="hover:text-maroon-800 transition-colors">Market Intelligence</a>
-            <a href="#locations" className="hover:text-maroon-800 transition-colors">Locations</a>
+            <Link href="#properties" className="hover:text-maroon-800 transition-colors">Properties</Link>
+            <Link href="#invest" className="hover:text-maroon-800 transition-colors">Invest</Link>
+            <Link href="#pulse" className="hover:text-maroon-800 transition-colors">Market Intelligence</Link>
+            <Link href="#locations" className="hover:text-maroon-800 transition-colors">Locations</Link>
           </nav>
 
           <div className="flex items-center space-x-4">
@@ -115,7 +118,7 @@ export default function Home() {
               <span className="text-xs font-bold text-maroon-800 tracking-widest uppercase">Beloveeth Pulse</span>
               <h2 className="text-3xl font-bold text-slate-dark mt-1">Market Signals & Trends</h2>
             </div>
-            <a href="#pulse" className="text-sm font-semibold text-maroon-800 hover:underline">View Full Market Intelligence →</a>
+            <Link href="#pulse" className="text-sm font-semibold text-maroon-800 hover:underline">View Full Market Intelligence →</Link>
           </div>
 
           <div className="grid md:grid-cols-3 gap-6">
@@ -182,15 +185,38 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Floating Prop AI Assistant */}
-      <PropAssistant />
+      {/* Executive Leadership Section */}
+      <section className="bg-white py-16 border-t border-gray-100">
+        <div className="max-w-7xl mx-auto px-6 flex flex-col md:flex-row items-center gap-12">
+          <div className="w-full md:w-1/3 flex justify-center">
+            <div className="relative w-64 h-80 overflow-hidden rounded-2xl shadow-lg border border-gray-100 bg-ivory-50 flex items-center justify-center">
+              <img 
+                src="/ceo.png" 
+                alt="Philip - Chief Executive Officer" 
+                className="w-full h-full object-cover object-top"
+              />
+            </div>
+          </div>
+          <div className="w-full md:w-2/3 space-y-4">
+            <span className="text-xs font-bold text-maroon-800 tracking-widest uppercase">Executive Leadership</span>
+            <h2 className="text-3xl font-bold text-slate-dark">Philip</h2>
+            <p className="text-sm font-semibold text-maroon-800">Chief Executive Officer, Beloveeth Realty</p>
+            <p className="text-slate-subtle text-base max-w-2xl">
+              Driving the evolution of Nigerian PropTech through artificial intelligence, transparent market signals, and institutional-grade real estate advisory.
+            </p>
+            <div className="pt-4 border-t border-gray-100 space-y-1 text-sm font-medium text-slate-dark">
+              <p>📞 <span className="font-semibold">Phone:</span> +234 800 000 0000</p>
+              <p>✉️ <span className="font-semibold">Email:</span> philip@beloveethrealty.com</p>
+            </div>
+          </div>
+        </div>
+      </section>
 
       {/* Footer */}
       <footer className="bg-slate-dark text-white py-12 border-t border-gray-800">
         <div className="max-w-7xl mx-auto px-6 flex flex-col md:flex-row justify-between items-center gap-6 text-sm text-gray-400">
-          <div>
-            <p className="font-semibold text-white">BELOVEETH REALTY</p>
-            <p className="text-xs mt-1">Transforming Properties into Prosperity</p>
+          <div className="flex items-center space-x-3">
+            <img src="/logo.png" alt="Beloveeth Realty" className="h-8 w-auto brightness-0 invert object-contain" />
           </div>
           <p>© 2026 Beloveeth Realty. All rights reserved.</p>
         </div>
