@@ -1,491 +1,644 @@
-<!DOCTYPE1 html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Beloveeth Realty | AI-Native PropTech Ecosystem</title>
-  
-  <!-- Leaflet CSS for World & Lagos Spatial Mapping -->
-  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
-  <!-- Chart.js for Data Analytics -->
-  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-  <!-- Tailwind CSS -->
-  <script src="https://cdn.tailwindcss.com"></script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Beloveeth Realty & PropTech — Property Is More Than a Place</title>
+<style>
+:root {
+  --maroon: #5A1725;
+  --burgundy: #6B1E2E;
+  --burgundy-light: #7A2638;
+  --gold: #D4AF37;
+  --ivory: #FCFBF8;
+  --white: #FFFFFF;
+  --soft: #F4F2EE;
+  --grey: #D9DCE0;
+  --slate: #66707A;
+  --charcoal: #20252B;
+  --green: #2E7D32;
+  --amber: #C67D0A;
+  --radius: 14px;
+  --shadow: 0 12px 40px rgba(32, 37, 43, 0.08);
+}
 
-  <script>
-    tailwind.config = {
-      theme: {
-        extend: {
-          colors: {
-            maroon: {
-              DEFAULT: '#5A1725',
-              hover: '#42101B',
-              light: '#7A2234',
-              soft: '#8C2B3F'
-            },
-            ivory: {
-              DEFAULT: '#FCFBF8',
-              card: '#FFFFFF',
-              border: '#E8E5DF'
-            },
-            dark: '#14171A'
-          }
-        }
-      }
-    }
-  </script>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body {
+  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  background: var(--ivory);
+  color: var(--charcoal);
+  line-height: 1.5;
+}
 
-  <style>
-    body { background-color: #FCFBF8; color: #14171A; font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; }
-    .pulse-ring {
-      border: 3px solid #5A1725;
-      background: rgba(90, 23, 37, 0.25);
-      border-radius: 50%;
-      height: 90px;
-      width: 90px;
-      position: absolute;
-      left: -25px;
-      top: -25px;
-      animation: pulsate 2s ease-out infinite;
-    }
-    @keyframes pulsate {
-      0% { transform: scale(0.1, 0.1); opacity: 0.0; }
-      50% { opacity: 1.0; }
-      100% { transform: scale(1.2, 1.2); opacity: 0.0; }
-    }
-    #worldMap, #lagosMap { height: 100%; width: 100%; z-index: 1; }
-    .custom-scroll::-webkit-scrollbar { width: 6px; }
-    .custom-scroll::-webkit-scrollbar-thumb { background: #5A1725; border-radius: 4px; }
-  </style>
+button, input, select { font: inherit; }
+button { cursor: pointer; }
+a { color: inherit; text-decoration: none; }
+
+.container {
+  width: min(1280px, calc(100% - 48px));
+  margin: auto;
+}
+
+/* ================= HEADER & NAV ================= */
+header {
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  height: 78px;
+  background: rgba(252, 251, 248, 0.94);
+  backdrop-filter: blur(14px);
+  border-bottom: 1px solid rgba(90, 23, 37, 0.08);
+}
+
+.nav {
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 11px;
+  font-weight: 800;
+  letter-spacing: -0.5px;
+  color: var(--maroon);
+}
+
+.logo-mark {
+  width: 38px;
+  height: 38px;
+  background: var(--maroon);
+  color: white;
+  border-radius: 9px;
+  display: grid;
+  place-items: center;
+  font-family: 'Georgia', serif;
+  font-size: 20px;
+}
+
+.nav-links {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  font-size: 14px;
+  font-weight: 600;
+  color: #444b51;
+}
+
+.nav-links a:hover { color: var(--maroon); }
+
+.nav-actions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.btn {
+  border: 0;
+  padding: 11px 18px;
+  border-radius: 9px;
+  font-weight: 700;
+  font-size: 13px;
+  transition: all 0.25s ease;
+}
+
+.btn-outline {
+  background: white;
+  border: 1px solid var(--grey);
+  color: var(--charcoal);
+}
+
+.btn-outline:hover {
+  border-color: var(--maroon);
+  color: var(--maroon);
+}
+
+.btn-primary {
+  background: var(--maroon);
+  color: white;
+}
+
+.btn-primary:hover {
+  background: var(--burgundy);
+  transform: translateY(-1px);
+}
+
+/* ================= HERO ================= */
+.hero {
+  padding: 80px 0 60px;
+  position: relative;
+  overflow: hidden;
+}
+
+.hero-grid {
+  display: grid;
+  grid-template-columns: 1.1fr 0.9fr;
+  gap: 60px;
+  align-items: center;
+}
+
+.eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 12px;
+  border: 1px solid rgba(90, 23, 37, 0.16);
+  border-radius: 30px;
+  color: var(--maroon);
+  background: white;
+  font-size: 12px;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin-bottom: 20px;
+}
+
+.live-dot {
+  width: 8px;
+  height: 8px;
+  background: var(--green);
+  border-radius: 50%;
+  box-shadow: 0 0 0 4px rgba(46, 125, 50, 0.15);
+}
+
+.hero h1 {
+  font-family: 'Georgia', serif;
+  font-size: clamp(42px, 5vw, 68px);
+  line-height: 1.05;
+  letter-spacing: -2px;
+  color: var(--charcoal);
+}
+
+.hero h1 span { color: var(--maroon); }
+
+.hero-copy {
+  font-size: 18px;
+  color: var(--slate);
+  margin: 22px 0 30px;
+  max-width: 580px;
+}
+
+.hero-buttons {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+/* ================= HERO CARD & MAP ================= */
+.hero-visual {
+  background: white;
+  border: 1px solid var(--grey);
+  border-radius: 20px;
+  padding: 24px;
+  box-shadow: var(--shadow);
+  position: relative;
+}
+
+.map-preview {
+  height: 280px;
+  background: linear-gradient(135deg, #1C242B, #2C353F);
+  border-radius: 12px;
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+}
+
+.map-overlay-node {
+  position: absolute;
+  width: 140px;
+  height: 140px;
+  border: 2px dashed var(--gold);
+  border-radius: 50%;
+  background: rgba(90, 23, 37, 0.25);
+  display: grid;
+  place-items: center;
+  animation: pulseRange 3s infinite ease-in-out;
+}
+
+@keyframes pulseRange {
+  0%, 100% { transform: scale(1); opacity: 0.8; }
+  50% { transform: scale(1.08); opacity: 1; }
+}
+
+.node-pin {
+  width: 12px;
+  height: 12px;
+  background: var(--gold);
+  border-radius: 50%;
+  box-shadow: 0 0 15px var(--gold);
+}
+
+.map-badge {
+  position: absolute;
+  bottom: 16px;
+  left: 16px;
+  background: rgba(32, 37, 43, 0.9);
+  padding: 10px 14px;
+  border-radius: 8px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  font-size: 12px;
+}
+
+.map-badge strong { color: var(--gold); display: block; }
+
+/* ================= PORTAL SWITCHER BANNER ================= */
+.portal-bar {
+  background: var(--maroon);
+  color: white;
+  padding: 30px 0;
+  margin: 40px 0;
+}
+
+.portal-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+}
+
+.portal-card {
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  padding: 22px;
+  border-radius: 12px;
+  transition: all 0.25s ease;
+}
+
+.portal-card:hover {
+  background: rgba(255, 255, 255, 0.15);
+  transform: translateY(-2px);
+}
+
+.portal-card h4 {
+  font-size: 16px;
+  color: var(--gold);
+  margin-bottom: 8px;
+}
+
+.portal-card p {
+  font-size: 13px;
+  color: #E2D9DC;
+  margin-bottom: 16px;
+}
+
+/* ================= BELOVEETH PULSE ================= */
+.section { padding: 80px 0; }
+.section-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  margin-bottom: 40px;
+}
+
+.section-kicker {
+  color: var(--maroon);
+  font-size: 12px;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  margin-bottom: 8px;
+}
+
+.section-title {
+  font-family: 'Georgia', serif;
+  font-size: 38px;
+  line-height: 1.1;
+}
+
+.pulse-metrics {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+  margin-bottom: 30px;
+}
+
+.metric-box {
+  background: white;
+  border: 1px solid var(--grey);
+  padding: 20px;
+  border-radius: 12px;
+}
+
+.metric-box small { color: var(--slate); font-size: 12px; display: block; }
+.metric-box strong { font-size: 26px; color: var(--maroon); display: block; margin: 4px 0; }
+.metric-box span { font-size: 11px; font-weight: 700; color: var(--green); }
+
+/* ================= PROP AI SECTION ================= */
+.prop-box {
+  background: var(--charcoal);
+  color: white;
+  border-radius: 20px;
+  padding: 40px;
+  display: grid;
+  grid-template-columns: 0.8fr 1.2fr;
+  gap: 40px;
+  align-items: center;
+}
+
+.prop-avatar-wrap { text-align: center; }
+
+.prop-avatar {
+  width: 100px;
+  height: 100px;
+  background: var(--maroon);
+  border: 3px solid var(--gold);
+  border-radius: 50%;
+  margin: 0 auto 16px;
+  display: grid;
+  place-items: center;
+  font-size: 36px;
+  box-shadow: 0 0 30px rgba(212, 175, 55, 0.2);
+}
+
+.prop-hierarchy-list {
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 12px;
+  padding: 20px;
+  font-size: 13px;
+}
+
+.prop-hierarchy-list ol {
+  padding-left: 20px;
+  margin-top: 10px;
+  color: #B0B8C0;
+}
+
+.prop-hierarchy-list li { margin-bottom: 6px; }
+
+/* ================= FOUNDER SECTION ================= */
+.founder-card {
+  background: white;
+  border: 1px solid var(--grey);
+  border-radius: 16px;
+  padding: 28px;
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  max-width: 720px;
+  margin: 40px auto;
+}
+
+.founder-img {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid var(--maroon);
+  background: var(--maroon);
+  color: white;
+  display: grid;
+  place-items: center;
+  font-weight: bold;
+  font-size: 22px;
+  flex-shrink: 0;
+}
+
+.founder-info h4 { font-size: 18px; color: var(--maroon); }
+.founder-info p { font-size: 13px; color: var(--slate); margin-top: 4px; }
+
+/* ================= FOOTER ================= */
+footer {
+  background: #18090D;
+  color: white;
+  padding: 60px 0 30px;
+  border-top: 3px solid var(--maroon);
+}
+
+.footer-grid {
+  display: grid;
+  grid-template-columns: 2fr repeat(3, 1fr);
+  gap: 40px;
+  margin-bottom: 40px;
+}
+
+.footer-brand p { color: #A09396; font-size: 13px; margin-top: 12px; max-width: 320px; }
+.footer-col h5 { color: var(--gold); font-size: 14px; margin-bottom: 16px; }
+.footer-col a { display: block; color: #D0C5C8; font-size: 13px; margin-bottom: 10px; }
+.footer-col a:hover { color: white; }
+
+.footer-bottom {
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  padding-top: 20px;
+  display: flex;
+  justify-content: space-between;
+  font-size: 12px;
+  color: #807376;
+}
+
+@media (max-width: 900px) {
+  .hero-grid, .prop-box, .portal-grid, .pulse-metrics, .footer-grid {
+    grid-template-columns: 1fr;
+  }
+  .founder-card { flex-direction: column; text-align: center; }
+}
+</style>
 </head>
-<body class="min-h-screen flex flex-col">
+<body>
 
-  <!-- TOP BRANDING & ROLE AUTH HEADER -->
-  <header class="bg-maroon text-white sticky top-0 z-50 shadow-xl border-b border-maroon-hover">
-    <div class="max-w-7xl mx-auto px-4 py-3 flex flex-wrap justify-between items-center gap-4">
-      <div class="flex items-center space-x-3">
-        <div class="bg-white text-maroon font-black px-3 py-1.5 rounded-lg text-lg tracking-wider border border-amber-300">
-          BELOVEETH
-        </div>
-        <div>
-          <span class="text-xs tracking-widest text-amber-200 block font-bold uppercase">Realty Platform v2.6</span>
-          <span class="text-[11px] text-gray-200">Lagos Spatial & Market Intelligence</span>
-        </div>
-      </div>
-
-      <!-- Live Role Switcher / Authentication Status -->
-      <div class="flex items-center space-x-2 bg-black/30 p-1.5 rounded-xl border border-white/10">
-        <span class="text-xs text-amber-200 font-bold px-2">Active Persona:</span>
-        <button onclick="switchPortalRole('CLIENT')" id="btn-CLIENT" class="role-btn text-xs font-bold px-3 py-1.5 rounded-lg bg-white text-maroon shadow transition">
-          🏢 Investor/Client
-        </button>
-        <button onclick="switchPortalRole('PARTNER')" id="btn-PARTNER" class="role-btn text-xs font-bold px-3 py-1.5 rounded-lg text-white hover:bg-white/10 transition">
-          🤝 Partner / Developer
-        </button>
-        <button onclick="switchPortalRole('WORKER')" id="btn-WORKER" class="role-btn text-xs font-bold px-3 py-1.5 rounded-lg text-white hover:bg-white/10 transition">
-          ⚙️ Internal Staff / CRM
-        </button>
-      </div>
-
-      <button onclick="openModal('authModal')" class="bg-amber-400 hover:bg-amber-300 text-maroon font-black text-xs px-4 py-2 rounded-lg shadow-md transition flex items-center gap-1">
-        🔐 Switch Role Login
-      </button>
-    </div>
-  </header>
-
-  <!-- PUBLIC MARKET INTELLIGENCE TICKER (For Informed Decision Making) -->
-  <section class="bg-maroon-hover text-amber-100 text-xs py-2 px-4 border-b border-maroon-light overflow-x-auto whitespace-nowrap flex justify-between items-center">
-    <div class="flex items-center space-x-6 animate-pulse">
-      <span>🌐 <strong>Lagos Market Index 2026:</strong> Lekki Corridor Yield +18.5% p.a.</span>
-      <span>|</span>
-      <span>🚦 <strong>Congestion Index:</strong> Lekki-Epe Expressway High Traffic (78/100)</span>
-      <span>|</span>
-      <span>📈 <strong>Short-Let Revenue:</strong> ₦264B Annualized</span>
-      <span>|</span>
-      <span>🏗️ <strong>Infrastructure Surge:</strong> Lagos-Calabar Coastal Hwy Driving Land Value</span>
-    </div>
-    <span class="bg-emerald-500 text-black text-[10px] font-black px-2 py-0.5 rounded uppercase">Live Data Feed</span>
-  </section>
-
-  <!-- MAIN CONTENT CONTAINER -->
-  <main class="flex-grow max-w-7xl w-full mx-auto p-4 md:p-6 space-y-8">
-
-    <!-- GEOGRAPHIC / WORLD SPATIAL TARGETING SECTION -->
-    <section class="bg-white rounded-2xl p-6 border-2 border-maroon shadow-lg space-y-4">
-      <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
-        <div>
-          <h2 class="text-xl font-black text-maroon flex items-center gap-2">
-            🌍 Global Focus & West Africa Hub Radius
-          </h2>
-          <p class="text-xs text-gray-600">
-            Open GIS spatial targeting highlighting Lagos, Nigeria as the high-yield capital investment zone.
-          </p>
-        </div>
-        <div class="flex items-center gap-2 text-xs font-bold">
-          <span class="w-3 h-3 rounded-full bg-maroon inline-block"></span>
-          <span>Beloveeth Target Zone (50km Radius)</span>
-        </div>
-      </div>
-
-      <!-- Map Element -->
-      <div class="relative w-full h-80 rounded-xl overflow-hidden border border-gray-300 shadow-inner">
-        <div id="worldMap"></div>
-      </div>
-    </section>
-
-    <!-- PUBLIC ANALYTICS & INFORMED INVESTMENT DECISION HUB -->
-    <section class="grid md:grid-cols-3 gap-6">
-      
-      <!-- Traffic Congestion & Traffic Analytics -->
-      <div class="bg-white p-5 rounded-2xl border border-ivory-border shadow-md space-y-3">
-        <div class="flex justify-between items-center">
-          <h3 class="font-extrabold text-sm text-maroon">🚦 Real-Time Congestion Index</h3>
-          <span class="text-[10px] font-bold bg-amber-100 text-amber-900 px-2 py-0.5 rounded">Google API Feed</span>
-        </div>
-        <p class="text-xs text-gray-500">Commute friction directly influences short-let rental rates and land value growth.</p>
-        <div class="h-44 relative">
-          <canvas id="trafficChart"></canvas>
-        </div>
-      </div>
-
-      <!-- ROI & Yield Trends -->
-      <div class="bg-white p-5 rounded-2xl border border-ivory-border shadow-md space-y-3">
-        <div class="flex justify-between items-center">
-          <h3 class="font-extrabold text-sm text-maroon">📈 5-Year Capital Yield Trend</h3>
-          <span class="text-[10px] font-bold bg-emerald-100 text-emerald-900 px-2 py-0.5 rounded">Verified 2026 Data</span>
-        </div>
-        <p class="text-xs text-gray-500">Comparing traditional residential leases vs. short-let serviced properties.</p>
-        <div class="h-44 relative">
-          <canvas id="yieldChart"></canvas>
-        </div>
-      </div>
-
-      <!-- Open Property Web Scraping / Live Aggregator -->
-      <div class="bg-white p-5 rounded-2xl border border-ivory-border shadow-md space-y-3 flex flex-col justify-between">
-        <div>
-          <div class="flex justify-between items-center mb-2">
-            <h3 class="font-extrabold text-sm text-maroon">📡 Open Real Estate Aggregator</h3>
-            <span class="text-[10px] font-bold bg-sky-100 text-sky-900 px-2 py-0.5 rounded">Live Scraper</span>
-          </div>
-          <p class="text-xs text-gray-500 mb-3">
-            Real-time open web prices compiled across Nigeria Property Centre & BusinessDay indices.
-          </p>
-          
-          <div class="space-y-2 text-xs">
-            <div class="p-2.5 bg-gray-50 rounded-lg flex justify-between items-center border border-gray-200">
-              <div>
-                <p class="font-bold text-gray-800">Ikoyi Luxury 3-Bed</p>
-                <p class="text-[10px] text-gray-500">Prime Capital Preservation</p>
-              </div>
-              <span class="font-black text-maroon">₦850M</span>
-            </div>
-            
-            <div class="p-2.5 bg-gray-50 rounded-lg flex justify-between items-center border border-gray-200">
-              <div>
-                <p class="font-bold text-gray-800">Lekki Phase 1 Terrace</p>
-                <p class="text-[10px] text-emerald-600 font-semibold">+18.2% Short-Let Yield</p>
-              </div>
-              <span class="font-black text-maroon">₦350M</span>
-            </div>
-
-            <div class="p-2.5 bg-gray-50 rounded-lg flex justify-between items-center border border-gray-200">
-              <div>
-                <p class="font-bold text-gray-800">Ibeju-Lekki Commercial Plot</p>
-                <p class="text-[10px] text-amber-600 font-semibold">Coastal Hwy Corridor</p>
-              </div>
-              <span class="font-black text-maroon">₦35M</span>
-            </div>
-          </div>
-        </div>
-
-        <button onclick="switchPortalRole('CLIENT')" class="w-full mt-3 py-2 bg-maroon text-white text-xs font-bold rounded-lg hover:bg-maroon-hover transition">
-          Analyze Portfolio Investment →
-        </button>
-      </div>
-    </section>
-
-    <!-- DYNAMIC DUAL ROLE DASHBOARDS CONTAINER -->
-    <!-- 1. CLIENT DASHBOARD -->
-    <section id="dashboard-CLIENT" class="role-dashboard space-y-6">
-      <div class="bg-maroon text-white p-6 rounded-2xl shadow-xl flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
-        <div>
-          <span class="bg-amber-400 text-maroon font-black text-[10px] px-2.5 py-1 rounded-full uppercase tracking-wider">Client & Investor Portal</span>
-          <h2 class="text-2xl font-black mt-2">Investments & Market GIS Analytics</h2>
-          <p class="text-xs text-amber-100">Tailored property models, land verification status, and capital growth tools.</p>
-        </div>
-        <div class="flex gap-2">
-          <button onclick="alert('Downloading Beloveeth 2026 Market Analysis PDF')" class="bg-white text-maroon font-bold text-xs px-4 py-2 rounded-lg hover:bg-gray-100 transition">
-            📄 Download Report
-          </button>
-          <a href="https://wa.me/2349052286312" target="_blank" class="bg-emerald-500 hover:bg-emerald-600 text-white font-bold text-xs px-4 py-2 rounded-lg transition">
-            💬 Speak to CEO (Philip)
-          </a>
-        </div>
-      </div>
-
-      <!-- Interactive Calculator & GIS Map -->
-      <div class="grid md:grid-cols-2 gap-6">
-        <div class="bg-white p-6 rounded-2xl border border-ivory-border shadow-md space-y-4">
-          <h3 class="font-black text-base text-maroon">🧮 Investor Yield & Appreciation Calculator</h3>
-          <div class="space-y-3 text-xs">
-            <div>
-              <label class="block font-bold text-gray-700 mb-1">Select Target Investment Corridor:</label>
-              <select id="calcCorridor" onchange="calculateYield()" class="w-full p-2.5 border border-gray-300 rounded-lg font-bold text-gray-800">
-                <option value="lekki">Lekki Phase 1 (Short-Let / High Liquidity)</option>
-                <option value="ibeju">Ibeju-Lekki (Free Trade Zone / High Appreciation)</option>
-                <option value="ikeja">Ikeja GRA (Mainland Prime / Stable Rental)</option>
-              </select>
-            </div>
-            <div>
-              <label class="block font-bold text-gray-700 mb-1">Capital Amount (₦ Millions):</label>
-              <input type="number" id="calcAmount" value="150" oninput="calculateYield()" class="w-full p-2.5 border border-gray-300 rounded-lg font-bold text-gray-800">
-            </div>
-            <div class="p-4 bg-maroon/5 rounded-xl border border-maroon/20 space-y-2">
-              <div class="flex justify-between font-bold">
-                <span class="text-gray-600">Projected 3-Yr Value:</span>
-                <span id="resAppreciation" class="text-maroon text-sm font-black">₦232.5M</span>
-              </div>
-              <div class="flex justify-between font-bold">
-                <span class="text-gray-600">Est. Annual Rental Yield:</span>
-                <span id="resYield" class="text-emerald-700 text-sm font-black">₦27.0M / yr (18%)</span>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div class="bg-white p-6 rounded-2xl border border-ivory-border shadow-md space-y-3">
-          <h3 class="font-black text-base text-maroon">🗺️ Lagos Micro-Location Heatmap</h3>
-          <p class="text-xs text-gray-500">Live zone bounds showing land acquisition hotspots and infrastructure projects.</p>
-          <div id="lagosMap" class="h-64 rounded-xl border border-gray-200"></div>
-        </div>
-      </div>
-    </section>
-
-    <!-- 2. PARTNER DASHBOARD -->
-    <section id="dashboard-PARTNER" class="role-dashboard space-y-6 hidden">
-      <div class="bg-slate-900 text-white p-6 rounded-2xl shadow-xl flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
-        <div>
-          <span class="bg-sky-400 text-black font-black text-[10px] px-2.5 py-1 rounded-full uppercase tracking-wider">Partner & Joint Venture Portal</span>
-          <h2 class="text-2xl font-black mt-2">Joint-Venture & Land Syndicate Pipeline</h2>
-          <p class="text-xs text-slate-300">Co-investment tools, real-time listing feeds, and joint development tracking.</p>
-        </div>
-        <button onclick="openModal('jvSubmitModal')" class="bg-sky-400 hover:bg-sky-300 text-black font-black text-xs px-4 py-2 rounded-lg shadow transition">
-          ➕ Submit JV Land Plot
-        </button>
-      </div>
-
-      <div class="grid md:grid-cols-3 gap-6">
-        <div class="bg-white p-5 rounded-2xl border border-ivory-border shadow-sm space-y-2">
-          <span class="text-[10px] font-bold text-gray-400 uppercase">Active Joint Ventures</span>
-          <p class="text-2xl font-black text-maroon">12 Projects</p>
-          <p class="text-xs text-emerald-600 font-bold">₦4.2B Combined Value</p>
-        </div>
-        <div class="bg-white p-5 rounded-2xl border border-ivory-border shadow-sm space-y-2">
-          <span class="text-[10px] font-bold text-gray-400 uppercase">Average Commission Share</span>
-          <p class="text-2xl font-black text-maroon">15% - 25%</p>
-          <p class="text-xs text-gray-500 font-bold">Partner Return Rate</p>
-        </div>
-        <div class="bg-white p-5 rounded-2xl border border-ivory-border shadow-sm space-y-2">
-          <span class="text-[10px] font-bold text-gray-400 uppercase">Title Verification SLA</span>
-          <p class="text-2xl font-black text-maroon">48 Hours</p>
-          <p class="text-xs text-sky-600 font-bold">Governor's Consent Checked</p>
-        </div>
-      </div>
-    </section>
-
-    <!-- 3. WORKER / INTERNAL CRM DASHBOARD -->
-    <section id="dashboard-WORKER" class="role-dashboard space-y-6 hidden">
-      <div class="bg-maroon-hover text-white p-6 rounded-2xl shadow-xl flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
-        <div>
-          <span class="bg-amber-400 text-maroon font-black text-[10px] px-2.5 py-1 rounded-full uppercase tracking-wider">Internal Operations & CRM</span>
-          <h2 class="text-2xl font-black mt-2">Beloveeth Internal Property & Lead CRM</h2>
-          <p class="text-xs text-amber-200">Manage client inquiries, scraper feeds, and GIS data enrichment for internal workers.</p>
-        </div>
-        <div class="flex gap-2">
-          <button onclick="alert('Syncing Google Places API & Real Estate Scrape Feeds...')" class="bg-amber-400 text-maroon font-black text-xs px-3 py-2 rounded-lg shadow">
-            🔄 Refresh Scrapers
-          </button>
-        </div>
-      </div>
-
-      <!-- CRM Table -->
-      <div class="bg-white rounded-2xl border border-ivory-border shadow-md overflow-hidden">
-        <div class="px-6 py-4 border-b border-gray-200 flex justify-between items-center">
-          <h3 class="font-black text-maroon text-sm">📥 Inbound Client Leads & Market Inquiries</h3>
-          <span class="text-xs bg-emerald-100 text-emerald-800 font-bold px-2.5 py-1 rounded-full">8 Active Today</span>
-        </div>
-        <div class="overflow-x-auto">
-          <table class="w-full text-left text-xs text-gray-700">
-            <thead class="bg-gray-50 text-gray-500 uppercase font-extrabold text-[10px]">
-              <tr>
-                <th class="p-3.5">Client Name</th>
-                <th class="p-3.5">Interest Zone</th>
-                <th class="p-3.5">Budget</th>
-                <th class="p-3.5">Status</th>
-                <th class="p-3.5">Action</th>
-              </tr>
-            </thead>
-            <tbody class="divide-y divide-gray-100">
-              <tr>
-                <td class="p-3.5 font-bold text-gray-900">Dr. Damilola A. (Diaspora)</td>
-                <td class="p-3.5">Lekki Phase 1 Shortlet</td>
-                <td class="p-3.5 font-bold text-emerald-700">₦250,000,000</td>
-                <td class="p-3.5"><span class="bg-amber-100 text-amber-800 text-[10px] font-bold px-2 py-0.5 rounded">Hot Lead</span></td>
-                <td class="p-3.5"><button class="bg-maroon text-white font-bold px-2.5 py-1 rounded text-[10px]">Assign Agent</button></td>
-              </tr>
-              <tr>
-                <td class="p-3.5 font-bold text-gray-900">Chief Kenneth O.</td>
-                <td class="p-3.5">Ibeju-Lekki Commercial Land</td>
-                <td class="p-3.5 font-bold text-emerald-700">₦120,000,000</td>
-                <td class="p-3.5"><span class="bg-emerald-100 text-emerald-800 text-[10px] font-bold px-2 py-0.5 rounded">Inspection Booked</span></td>
-                <td class="p-3.5"><button class="bg-maroon text-white font-bold px-2.5 py-1 rounded text-[10px]">Send C of O</button></td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-      </div>
-    </section>
-
-  </main>
-
-  <!-- THREE-WAY ROLE SWITCHER MODAL -->
-  <div id="authModal" class="fixed inset-0 bg-black/70 z-50 flex items-center justify-center p-4 hidden">
-    <div class="bg-white max-w-md w-full rounded-2xl p-6 space-y-6 shadow-2xl border-2 border-maroon relative">
-      <button onclick="closeModal('authModal')" class="absolute top-4 right-4 text-gray-400 hover:text-gray-800 font-bold">✕</button>
-      
-      <div class="text-center space-y-1">
-        <div class="w-10 h-10 bg-maroon/10 text-maroon rounded-full flex items-center justify-center mx-auto text-xl font-black">🔐</div>
-        <h3 class="text-xl font-black text-maroon">Three-Way Portal Login</h3>
-        <p class="text-xs text-gray-500">Access role-specific analytics, CRM tools, or investor dashboards.</p>
-      </div>
-
-      <div class="space-y-3">
-        <label class="block text-xs font-bold text-gray-700">Select Portal Role:</label>
-        <select id="loginRoleSelect" class="w-full p-3 border border-gray-300 rounded-xl font-bold text-xs text-gray-800">
-          <option value="CLIENT">🏢 Investor / Client Portal</option>
-          <option value="PARTNER">🤝 Partner / Developer JV Portal</option>
-          <option value="WORKER">⚙️ Staff / Internal CRM Dashboard</option>
-        </select>
-
-        <div>
-          <label class="block text-xs font-bold text-gray-700 mb-1">Access Passcode or Client Email:</label>
-          <input type="text" placeholder="e.g. client@beloveeth.com" class="w-full p-3 border border-gray-300 rounded-xl text-xs font-bold">
-        </div>
-
-        <button onclick="executeModalLogin()" class="w-full py-3 bg-maroon hover:bg-maroon-hover text-white font-black text-xs uppercase tracking-wider rounded-xl shadow-lg transition">
-          Authenticate Access →
-        </button>
-      </div>
+<!-- HEADER -->
+<header>
+  <div class="container nav">
+    <a href="#" class="logo">
+      <div class="logo-mark">B</div>
+      <span>BELOVEETH</span>
+    </a>
+    <nav class="nav-links">
+      <a href="#pulse">Market Pulse</a>
+      <a href="#predictive">Prop AI Engine</a>
+      <a href="#portals">3-Way Portals</a>
+      <a href="#founder">About Founder</a>
+    </nav>
+    <div class="nav-actions">
+      <button class="btn btn-outline" onclick="document.getElementById('portals').scrollIntoView({behavior:'smooth'})">Select Portal</button>
+      <button class="btn btn-primary">Get Started</button>
     </div>
   </div>
+</header>
 
-  <!-- Leaflet JS -->
-  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<main>
+  <!-- HERO -->
+  <section class="hero">
+    <div class="container hero-grid">
+      <div>
+        <div class="eyebrow">
+          <span class="live-dot"></span> Institutional PropTech Intelligence
+        </div>
+        <h1>Property is more than a place. <span>It's a decision.</span></h1>
+        <p class="hero-copy">
+          Beloveeth combines verified land records, open spatial intelligence, and witty financial algorithms to give you institutional precision across Nigerian real estate.
+        </p>
+        <div class="hero-buttons">
+          <button class="btn btn-primary" onclick="document.getElementById('portals').scrollIntoView({behavior:'smooth'})">Explore Portals</button>
+          <button class="btn btn-outline" onclick="document.getElementById('pulse').scrollIntoView({behavior:'smooth'})">View Market Pulse</button>
+        </div>
+      </div>
 
-  <script>
-    // 1. Role Switching Dynamic Functionality
-    function switchPortalRole(role) {
-      document.querySelectorAll('.role-dashboard').forEach(el => el.classList.add('hidden'));
-      document.getElementById(`dashboard-${role}`).classList.remove('hidden');
+      <div class="hero-visual">
+        <div class="map-preview">
+          <div class="map-overlay-node">
+            <div class="node-pin"></div>
+          </div>
+          <div class="map-badge">
+            <strong>Lagos Expansion Corridor</strong>
+            <span>Ibeju-Lekki Growth Node | +18.4% Yield Target</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
 
-      document.querySelectorAll('.role-btn').forEach(btn => {
-        btn.classList.remove('bg-white', 'text-maroon', 'shadow');
-        btn.classList.add('text-white');
-      });
-      const activeBtn = document.getElementById(`btn-${role}`);
-      if(activeBtn) {
-        activeBtn.classList.add('bg-white', 'text-maroon', 'shadow');
-        activeBtn.classList.remove('text-white');
-      }
-    }
+  <!-- 3-WAY PORTAL SWITCHER -->
+  <section id="portals" class="portal-bar">
+    <div class="container">
+      <div style="text-align: center; margin-bottom: 24px;">
+        <h3 style="color: var(--gold); font-size: 22px;">Choose Your Access Portal</h3>
+        <p style="font-size: 13px; color: #E2D9DC;">Role-based access designed for buyers, partners, and internal teams.</p>
+      </div>
+      <div class="portal-grid">
+        <div class="portal-card">
+          <h4>🏢 Client & Diaspora Portal</h4>
+          <p>Access virtual viewings, title document vaults, yield projections, and 6-month predictive valuations.</p>
+          <button class="btn btn-outline" style="width: 100%;">Enter Client Portal</button>
+        </div>
+        <div class="portal-card">
+          <h4>🤝 Partner & JV Portal</h4>
+          <p>For developers, surveyors, and realtors to manage property submissions (`Draft → Published`) and joint-venture splits.</p>
+          <button class="btn btn-outline" style="width: 100%;">Enter Partner Portal</button>
+        </div>
+        <div class="portal-card">
+          <h4>⚙️ Workforce & CRM System</h4>
+          <p>Internal operational tools for buyer lead workflows, inspection tracking, and title verification tasks.</p>
+          <button class="btn btn-outline" style="width: 100%;">Workforce Login</button>
+        </div>
+      </div>
+    </div>
+  </section>
 
-    function openModal(id) { document.getElementById(id).classList.remove('hidden'); }
-    function closeModal(id) { document.getElementById(id).classList.add('hidden'); }
+  <!-- BELOVEETH PULSE -->
+  <section id="pulse" class="section container">
+    <div class="section-header">
+      <div>
+        <div class="section-kicker">Live Intelligence</div>
+        <h2 class="section-title">Beloveeth Market Pulse</h2>
+      </div>
+      <span style="font-size: 13px; color: var(--slate);">Coverage: Lagos, Abuja, Rivers, Ogun & Oyo</span>
+    </div>
 
-    function executeModalLogin() {
-      const selected = document.getElementById('loginRoleSelect').value;
-      switchPortalRole(selected);
-      closeModal('authModal');
-    }
+    <div class="pulse-metrics">
+      <div class="metric-box">
+        <small>Avg 5-Year Capital Growth</small>
+        <strong>16.2% p.a.</strong>
+        <span>▲ +2.1% vs Q2 Index</span>
+      </div>
+      <div class="metric-box">
+        <small>Short-Let Yield (Lagos)</small>
+        <strong>18.5% Gross</strong>
+        <span>▲ High Demand Signal</span>
+      </div>
+      <div class="metric-box">
+        <small>Abuja Land Appreciation</small>
+        <strong>22.0% p.a.</strong>
+        <span>▲ Infrastructure Corridor</span>
+      </div>
+      <div class="metric-box">
+        <small>Scraped Property Benchmarks</small>
+        <strong>12,400+</strong>
+        <span>Live Market Validation</span>
+      </div>
+    </div>
+  </section>
 
-    // 2. Investment Calculator
-    function calculateYield() {
-      const corridor = document.getElementById('calcCorridor').value;
-      const amount = parseFloat(document.getElementById('calcAmount').value) || 0;
-      
-      let appRate = 0.15;
-      let yieldRate = 0.12;
+  <!-- PROP AI & DATA HIERARCHY -->
+  <section id="predictive" class="section container">
+    <div class="prop-box">
+      <div class="prop-avatar-wrap">
+        <div class="prop-avatar">💡</div>
+        <h3 style="font-size: 22px; color: var(--gold);">Meet Prop</h3>
+        <p style="font-size: 13px; color: #B0B8C0; margin-top: 6px;">Playful & Sharp Real Estate AI</p>
+      </div>
 
-      if(corridor === 'ibeju') { appRate = 0.28; yieldRate = 0.08; }
-      if(corridor === 'lekki') { appRate = 0.18; yieldRate = 0.18; }
-      if(corridor === 'ikeja') { appRate = 0.12; yieldRate = 0.10; }
+      <div>
+        <h3 style="font-size: 28px; margin-bottom: 12px;">Witty Personality, Ruthless Math</h3>
+        <p style="font-size: 14px; color: #D0D8E0; margin-bottom: 20px;">
+          Prop delivers witty, actionable insights without fabricating numbers. Every calculation strictly enforces our 4-level data hierarchy:
+        </p>
+        <div class="prop-hierarchy-list">
+          <strong>Prop Intelligence Stack:</strong>
+          <ol>
+            <li><strong>Beloveeth Verified Database:</strong> Highest priority legal & title records.</li>
+            <li><strong>Beloveeth Calculated Intelligence:</strong> Internal yield and cap-rate algorithms.</li>
+            <li><strong>Approved External Datasets:</strong> Google Business, traffic friction, & open GIS APIs.</li>
+            <li><strong>Web Research:</strong> Last resort, explicitly labeled with uncertainty bounds.</li>
+          </ol>
+        </div>
+      </div>
+    </div>
+  </section>
 
-      const totalApp = amount * Math.pow((1 + appRate), 3);
-      const annualYield = amount * yieldRate;
+  <!-- FOUNDER SPOTLIGHT -->
+  <section id="founder" class="container">
+    <div class="founder-card">
+      <div class="founder-img">PDJ</div>
+      <div class="founder-info">
+        <h4>Philip Dare-Johnson</h4>
+        <p><strong>Founder & Chief Executive Officer, Beloveeth Realty</strong></p>
+        <p style="margin-top: 8px; color: var(--slate); font-size: 13px;">
+          "We are building more than a listing site. Beloveeth is establishing the digital transaction infrastructure, verified transparency, and predictive intelligence needed to make real estate investments institutional-grade."
+        </p>
+      </div>
+    </div>
+  </section>
+</main>
 
-      document.getElementById('resAppreciation').innerText = `₦${totalApp.toFixed(1)}M`;
-      document.getElementById('resYield').innerText = `₦${annualYield.toFixed(1)}M / yr (${(yieldRate*100).toFixed(0)}%)`;
-    }
+<!-- FOOTER -->
+<footer>
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <a href="#" class="logo" style="color: white;">
+          <div class="logo-mark">B</div>
+          <span>BELOVEETH</span>
+        </a>
+        <p>Institutional Nigerian PropTech Platform. Property is more than a place. It's an informed decision.</p>
+      </div>
 
-    // 3. Initialize Open GIS Leaflet Maps
-    window.addEventListener('DOMContentLoaded', () => {
-      // Map 1: World Map Centered on Lagos Nigeria with Maroon Radar Pulsing Range
-      const worldMap = L.map('worldMap').setView([6.5244, 3.3792], 6);
-      L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-        attribution: '&copy; OpenStreetMap contributors'
-      }).addTo(worldMap);
+      <div class="footer-col">
+        <h5>Platform Engine</h5>
+        <a href="#">Properties Search</a>
+        <a href="#pulse">Beloveeth Pulse</a>
+        <a href="#predictive">Predictive Intelligence</a>
+        <a href="#">Diaspora Gateway</a>
+      </div>
 
-      // Lagos Center Pin & Pulsing Range Circle
-      const lagosCoords = [6.5244, 3.3792];
-      
-      L.circle(lagosCoords, {
-        color: '#5A1725',
-        fillColor: '#5A1725',
-        fillOpacity: 0.25,
-        radius: 65000 // 65km range
-      }).addTo(worldMap).bindPopup("<b>Beloveeth Core High-Yield Zone</b><br>Lagos State Corridor Range");
+      <div class="footer-col">
+        <h5>Portals & Ecosystem</h5>
+        <a href="#portals">Client Portal</a>
+        <a href="#portals">Partner JV Portal</a>
+        <a href="#portals">Workforce CRM</a>
+        <a href="#">Careers (We're Hiring!)</a>
+      </div>
 
-      L.marker(lagosCoords).addTo(worldMap)
-        .bindPopup("<b>Lagos Hub</b><br>Primary Property & Infrastructure Engine")
-        .openPopup();
+      <div class="footer-col">
+        <h5>Contact & Support</h5>
+        <a href="#">Support Hub</a>
+        <a href="#">Verification Helpdesk</a>
+        <a href="#">Lagos & Abuja Offices</a>
+        <a href="#">Legal Disclaimers</a>
+      </div>
+    </div>
 
-      // Map 2: Micro Lagos Heatmap Map
-      const lagosMap = L.map('lagosMap').setView([6.45, 3.60], 10);
-      L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-        attribution: '&copy; OpenStreetMap'
-      }).addTo(lagosMap);
+    <div class="footer-bottom">
+      <span>&copy; 2026 Beloveeth Realty & PropTech Platform. All rights reserved.</span>
+      <span>Institutional Precision • Playful Experience</span>
+    </div>
+  </div>
+</footer>
 
-      L.circle([6.45, 3.47], { color: '#5A1725', radius: 4000 }).addTo(lagosMap).bindPopup("Lekki Phase 1: High Short-Let Yield");
-      L.circle([6.46, 3.90], { color: '#D97706', radius: 9000 }).addTo(lagosMap).bindPopup("Ibeju-Lekki: Infrastructure Appreciation Target");
-
-      // 4. Initialize Chart.js Analytics (Traffic & ROI)
-      // Traffic Chart
-      new Chart(document.getElementById('trafficChart'), {
-        type: 'bar',
-        data: {
-          labels: ['7 AM', '10 AM', '1 PM', '5 PM', '8 PM'],
-          datasets: [{
-            label: 'Lekki Corridor Traffic Score',
-            data: [85, 45, 30, 92, 60],
-            backgroundColor: '#5A1725'
-          }]
-        },
-        options: { responsive: true, maintainAspectRatio: false }
-      });
-
-      // Yield Chart
-      new Chart(document.getElementById('yieldChart'), {
-        type: 'line',
-        data: {
-          labels: ['2022', '2023', '2024', '2025', '2026'],
-          datasets: [
-            { label: 'Short-Let Yield %', data: [11, 13, 15, 17, 18.5], borderColor: '#10B981', fill: false },
-            { label: 'Standard Lease %', data: [6, 6.5, 7, 7, 7.5], borderColor: '#6B7280', fill: false }
-          ]
-        },
-        options: { responsive: true, maintainAspectRatio: false }
-      });
-    });
-  </script>
 </body>
 </html>
