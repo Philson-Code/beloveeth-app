@@ -83,10 +83,89 @@
     }
     .cta-btn:hover { background: var(--burgundy); box-shadow: var(--shadow-md); transform: translateY(-1px); }
 
+    /* TOP PROMPT / DREAM PROPERTY SEARCH BAR SECTION */
+    .hero-search-wrapper {
+      max-width: 1280px;
+      margin: 24px auto 0;
+      padding: 0 24px;
+    }
+    .search-eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 11px;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.8px;
+      color: var(--maroon);
+      background: rgba(90, 23, 37, 0.08);
+      padding: 4px 12px;
+      border-radius: 20px;
+      margin-bottom: 10px;
+    }
+    .fanciful-search-box {
+      width: 100%;
+      background: linear-gradient(135deg, #FFFFFF 0%, #FAF6F0 100%);
+      border: 2px solid transparent;
+      background-clip: padding-box;
+      position: relative;
+      border-radius: 30px;
+      padding: 6px 8px 6px 20px;
+      display: flex;
+      align-items: center;
+      box-shadow: 0 10px 30px rgba(90, 23, 37, 0.08), 0 0 0 1px rgba(212, 175, 55, 0.3);
+      transition: all 0.3s ease;
+    }
+    .fanciful-search-box:focus-within {
+      box-shadow: 0 12px 35px rgba(90, 23, 37, 0.15), 0 0 0 2px var(--gold);
+      transform: translateY(-1px);
+    }
+    .fanciful-search-box input {
+      flex: 1;
+      border: none;
+      outline: none;
+      background: transparent;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: 15px;
+      font-weight: 500;
+      color: var(--charcoal);
+      padding-right: 12px;
+    }
+    .fanciful-search-box input::placeholder {
+      color: #94A3B8;
+      font-style: italic;
+    }
+    .telegram-send-btn {
+      background: linear-gradient(135deg, var(--maroon) 0%, var(--burgundy) 100%);
+      border: none;
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      color: white;
+      box-shadow: 0 4px 14px rgba(90, 23, 37, 0.3);
+      transition: all 0.25s ease;
+      flex-shrink: 0;
+    }
+    .telegram-send-btn:hover {
+      transform: scale(1.08) rotate(-5deg);
+      background: var(--gold);
+      color: var(--maroon);
+    }
+    .telegram-send-btn svg {
+      width: 20px;
+      height: 20px;
+      fill: currentColor;
+      margin-left: 2px;
+    }
+
     /* HERO SECTION */
     .hero {
-      padding: 40px 24px 50px; max-width: 1280px; margin: 0 auto;
-      display: grid; grid-template-columns: 1.15fr 0.85fr; gap: 36px; align-items: start;
+      padding: 30px 24px 50px; max-width: 1280px; margin: 0 auto;
+      display: grid; grid-template-columns: 1.25fr 0.75fr; gap: 32px; align-items: start;
     }
     .hero-tag {
       display: inline-block; background: var(--gold-light); color: var(--maroon); 
@@ -95,12 +174,12 @@
     .hero-title { font-family: 'Playfair Display', serif; font-size: 44px; line-height: 1.15; color: var(--charcoal); }
     .hero-title span { color: var(--maroon); font-style: italic; }
 
-    /* BENEATH PREDICTIVE: COMPACT MINI MARKET PULSE GRAPH WIDGET */
+    /* EXTENDED MARKET PULSE GRAPH WIDGET */
     .mini-market-pulse-widget {
-      background: #0F172A; color: white; border-radius: 16px; padding: 14px 18px;
+      background: #0F172A; color: white; border-radius: 16px; padding: 16px 20px;
       margin: 18px 0 20px; border: 1px solid rgba(212, 175, 55, 0.4);
       box-shadow: 0 10px 25px rgba(0,0,0,0.2);
-      max-width: 380px; /* Reduced width so it's small & not stretched */
+      width: 100%; /* Extended width closer to right feed */
     }
     .pulse-widget-top { display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; }
     .pulse-widget-title { 
@@ -124,9 +203,9 @@
       100% { transform: scale(0.8); opacity: 0.4; }
     }
 
-    .mini-graph-container { height: 85px; width: 100%; } /* Small height */
+    .mini-graph-container { height: 95px; width: 100%; }
 
-    /* MARQUEE RUNNING COMMENT AROUND GRAPH */
+    /* MARQUEE RUNNING COMMENT */
     .marquee-advisory-container {
       margin-top: 10px; background: rgba(255, 255, 255, 0.05); border-radius: 6px;
       padding: 6px 10px; overflow: hidden; border: 1px solid rgba(212, 175, 55, 0.25);
@@ -142,14 +221,15 @@
 
     .hero-desc { font-size: 14px; color: var(--slate); margin-bottom: 20px; }
 
-    /* WHITE BLOG-STYLE DYNAMIC NEWS FEED (RIGHT SIDEBAR) */
+    /* WHITE NEWSFEED (NO SCROLL, SWIPE CARDS ONLY) */
     .white-blog-news-box {
       background: #FFFFFF;
       border-radius: 20px; padding: 20px; color: var(--charcoal);
       border: 1px solid var(--border-color);
       box-shadow: 0 12px 35px rgba(0, 0, 0, 0.07);
-      max-height: 480px; /* Constrained height so it never off-screens */
-      display: flex; flex-direction: column; overflow: hidden;
+      min-height: 440px;
+      display: flex; flex-direction: column; 
+      overflow: hidden; /* No scrollbars */
     }
 
     .blog-feed-header {
@@ -157,50 +237,52 @@
       padding-bottom: 12px; border-bottom: 2px solid var(--soft); margin-bottom: 12px;
     }
     .blog-feed-title {
-      font-family: 'Playfair Display', serif; font-size: 18px; font-weight: 700;
+      font-family: 'Playfair Display', serif; font-size: 20px; font-weight: 700;
       color: var(--maroon); display: flex; align-items: center; gap: 8px;
     }
 
-    /* SCROLLABLE NEWS FEED CONTAINER */
+    /* NEWS FEED CONTAINER (WITHOUT SCROLL) */
     .news-card-feed {
-      display: flex; flex-direction: column; gap: 12px;
-      overflow-y: auto; padding-right: 4px; max-height: 400px;
+      display: flex; 
+      flex-direction: column; 
+      gap: 14px;
+      position: relative;
+      overflow: hidden; /* No scroll */
     }
-    .news-card-feed::-webkit-scrollbar { width: 4px; }
-    .news-card-feed::-webkit-scrollbar-thumb { background: #CBD5E1; border-radius: 10px; }
 
     /* BLOG STYLE INDIVIDUAL NEWS ITEM */
     .blog-news-card {
       background: #FAF9F6; border: 1px solid #E2E8F0;
-      border-radius: 12px; padding: 12px; transition: all 0.4s ease;
-      box-shadow: 0 2px 6px rgba(0,0,0,0.02);
+      border-radius: 12px; padding: 14px; transition: all 0.4s ease;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.03);
     }
-    .blog-news-card:hover { transform: translateY(-2px); box-shadow: 0 6px 16px rgba(0,0,0,0.06); }
 
     .blog-card-top { display: flex; align-items: center; justify-content: space-between; margin-bottom: 6px; }
     .blog-tag { font-size: 10px; font-weight: 800; padding: 2px 8px; border-radius: 12px; text-transform: uppercase; }
     .tag-material { background: rgba(212, 175, 55, 0.18); color: #8A6D0B; }
     .tag-disaster { background: rgba(239, 68, 68, 0.15); color: #DC2626; }
+    .tag-yield { background: rgba(16, 185, 129, 0.15); color: #047857; }
     
-    .blog-post-title { font-size: 13px; font-weight: 700; color: #0F172A; margin-bottom: 4px; line-height: 1.3; }
+    .blog-post-title { font-size: 14px; font-weight: 700; color: #0F172A; margin-bottom: 4px; line-height: 1.3; }
     .blog-post-desc { font-size: 11px; color: #64748B; line-height: 1.4; margin-bottom: 8px; }
     
     .blog-post-media {
-      width: 100%; height: 110px; border-radius: 8px; overflow: hidden; margin-top: 6px;
+      width: 100%; height: 120px; border-radius: 8px; overflow: hidden; margin-top: 6px;
     }
     .blog-post-media img {
-      width: 100%; height: 100%; object-fit: cover; transition: transform 0.3s ease;
+      width: 100%; height: 100%; object-fit: cover;
     }
-    .blog-post-media img:hover { transform: scale(1.04); }
 
-    /* DIRECTIONAL ANIMATION CLASSES */
-    .slide-top { animation: swipeInTop 0.6s cubic-bezier(0.25, 1, 0.5, 1) forwards; }
-    .slide-left { animation: swipeInLeft 0.6s cubic-bezier(0.25, 1, 0.5, 1) forwards; }
-    .slide-bottom { animation: swipeInBottom 0.6s cubic-bezier(0.25, 1, 0.5, 1) forwards; }
+    /* MULTI-DIRECTIONAL SWIPE ANIMATIONS (Left, Right, Up, Down) */
+    .swipe-up { animation: swipeUp 0.6s cubic-bezier(0.25, 1, 0.5, 1) forwards; }
+    .swipe-down { animation: swipeDown 0.6s cubic-bezier(0.25, 1, 0.5, 1) forwards; }
+    .swipe-left { animation: swipeLeft 0.6s cubic-bezier(0.25, 1, 0.5, 1) forwards; }
+    .swipe-right { animation: swipeRight 0.6s cubic-bezier(0.25, 1, 0.5, 1) forwards; }
 
-    @keyframes swipeInTop { 0% { opacity: 0; transform: translateY(-20px); } 100% { opacity: 1; transform: translateY(0); } }
-    @keyframes swipeInLeft { 0% { opacity: 0; transform: translateX(-20px); } 100% { opacity: 1; transform: translateX(0); } }
-    @keyframes swipeInBottom { 0% { opacity: 0; transform: translateY(20px); } 100% { opacity: 1; transform: translateY(0); } }
+    @keyframes swipeUp { 0% { opacity: 0; transform: translateY(30px); } 100% { opacity: 1; transform: translateY(0); } }
+    @keyframes swipeDown { 0% { opacity: 0; transform: translateY(-30px); } 100% { opacity: 1; transform: translateY(0); } }
+    @keyframes swipeLeft { 0% { opacity: 0; transform: translateX(35px); } 100% { opacity: 1; transform: translateX(0); } }
+    @keyframes swipeRight { 0% { opacity: 0; transform: translateX(-35px); } 100% { opacity: 1; transform: translateX(0); } }
 
     /* SECTION HEADINGS */
     .section-header { text-align: center; max-width: 640px; margin: 0 auto 40px; }
@@ -301,6 +383,20 @@
     </div>
   </header>
 
+  <!-- FANCIFUL PROMPT BOX ABOVE MARKET & NEWSFEED -->
+  <div class="hero-search-wrapper">
+    <div class="search-eyebrow">✨ Prop AI Property Matcher — Turn Ideas into Real Estate</div>
+    <div class="fanciful-search-box">
+      <input type="text" placeholder="what do you have in mind, describe your dream property, and..." id="dreamPropertyInput">
+      <button class="telegram-send-btn" title="Submit Dream Property" id="sendBtn">
+        <!-- Paper Plane / Telegram Icon -->
+        <svg viewBox="0 0 24 24">
+          <path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"/>
+        </svg>
+      </button>
+    </div>
+  </div>
+
   <!-- HERO SECTION -->
   <section class="hero">
     <div>
@@ -308,7 +404,7 @@
       
       <h1 class="hero-title">Predictive <span>Valuations & Market Yields</span></h1>
 
-      <!-- BENEATH PREDICTIVE: COMPACT MINI MARKET PULSE GRAPH -->
+      <!-- BENEATH PREDICTIVE: EXTENDED MARKET PULSE GRAPH -->
       <div class="mini-market-pulse-widget" id="pulse">
         <div class="pulse-widget-top">
           <div class="pulse-widget-title">
@@ -333,20 +429,20 @@
       <p class="hero-desc">Connecting verified land registries, spatial algorithms, material pricing trends, and diaspora buyers through a unified real estate hub.</p>
     </div>
 
-    <!-- WHITE BLOG-STYLE DYNAMIC NEWS & MEDIA SIDEBAR -->
+    <!-- WHITE BLOG-STYLE NEWSFEED (NO SCROLLBARS, SWIPE ANIMATED) -->
     <div class="white-blog-news-box">
       <div class="blog-feed-header">
         <div class="blog-feed-title">
-          <div class="live-beep-red"></div> PROP AI Blog Intelligence
+          <div class="live-beep-red"></div> Newsfeed
         </div>
-        <span style="background:rgba(16, 185, 129, 0.12); color:#10B981; padding:3px 8px; border-radius:12px; font-size:10px; font-weight:800;">LIVE FEED</span>
+        <span style="background:rgba(16, 185, 129, 0.12); color:#10B981; padding:3px 8px; border-radius:12px; font-size:10px; font-weight:800;">LIVE UPDATES</span>
       </div>
 
-      <!-- BLOG SCROLLING CONTAINER -->
+      <!-- CONTAINER FOR SINGLE SWIPING CARDS -->
       <div class="news-card-feed" id="liveBlogNewsContainer">
         
-        <!-- CARD 1 -->
-        <div class="blog-news-card slide-top">
+        <!-- INITIAL NEWS CARD -->
+        <div class="blog-news-card swipe-up">
           <div class="blog-card-top">
             <span class="blog-tag tag-material">Material Rate Alert</span>
             <div style="display:flex; align-items:center; gap:4px; font-size:10px; color:#10B981; font-weight:700;">
@@ -357,21 +453,6 @@
           <div class="blog-post-desc">Depot prices in Lagos & Ogun states rise +8.2%. Standard 9-inch blocks now retail at ₦620 each.</div>
           <div class="blog-post-media">
             <img src="https://images.unsplash.com/photo-1541888946425-d0fbb186a5b7?auto=format&fit=crop&w=500&q=80" alt="Cement & Building Materials">
-          </div>
-        </div>
-
-        <!-- CARD 2 -->
-        <div class="blog-news-card slide-left">
-          <div class="blog-card-top">
-            <span class="blog-tag tag-disaster">Flood Warning</span>
-            <div style="display:flex; align-items:center; gap:4px; font-size:10px; color:#DC2626; font-weight:700;">
-              <div class="live-beep-red"></div> 4m ago
-            </div>
-          </div>
-          <div class="blog-post-title">Lekki-Epe Drainage Alert & Coastal Risk</div>
-          <div class="blog-post-desc">Geospatial sensors triggered along Coastal Highway. High runoff expected before dusk.</div>
-          <div class="blog-post-media">
-            <img src="https://images.unsplash.com/photo-1547683905-f686c993aae5?auto=format&fit=crop&w=500&q=80" alt="Coastal Drainage & Flood Risk">
           </div>
         </div>
 
@@ -510,12 +591,9 @@
     </div>
   </footer>
 
-  <!-- LOAD FLOATING PROP AI WIDGET WITH LIVE NEWS & DIRECTIONAL SWIPING -->
-  <script src="prop-ai-widget.js"></script>
-
-  <!-- SCRIPT FOR COMPACT GRAPH & DYNAMIC BLOG ROTATOR -->
+  <!-- SCRIPT FOR EXTENDED GRAPH & MULTI-DIRECTIONAL SWIPE NEWSFEED -->
   <script>
-    // COMPACT GRAPH INITIALIZATION
+    // EXTENDED MINI GRAPH INITIALIZATION
     const ctx = document.getElementById('heroMiniGraph').getContext('2d');
     let graphLabels = ['5m ago', '4m ago', '3m ago', '2m ago', '1m ago', 'Now'];
     let graphData = [120, 126, 122, 135, 140, 152];
@@ -532,7 +610,7 @@
           borderWidth: 2,
           tension: 0.4,
           fill: true,
-          pointRadius: 2,
+          pointRadius: 3,
           pointBackgroundColor: '#10B981'
         }]
       },
@@ -556,42 +634,67 @@
       miniGraph.update();
     }, 2500);
 
-    // DYNAMIC BLOG NEWS FEED ROTATOR
-    const blogContainer = document.getElementById('liveBlogNewsContainer');
-    const animations = ['slide-top', 'slide-left', 'slide-bottom'];
+    // MULTI-DIRECTIONAL SWIPE NEWSFEED ROTATOR (NO SCROLLBARS)
+    const newsFeedContainer = document.getElementById('liveBlogNewsContainer');
+    const swipeDirections = ['swipe-up', 'swipe-down', 'swipe-left', 'swipe-right'];
     
-    const freshBlogNews = [
-      { tag: 'Seismic & Soil Risk', tagClass: 'tag-disaster', time: '2m ago', title: 'Tremor Vibration Logging near Coastal Zones', desc: 'Mild tremors logged by PropTech ground sensors near Victoria Island faults.', img: 'https://images.unsplash.com/photo-1508873696983-2df515122519?auto=format&fit=crop&w=500&q=80' },
-      { tag: 'Material Inflation', tagClass: 'tag-material', time: '5m ago', title: 'Steel Rebar Rates Hike +5% Regional Average', desc: 'Import tariffs drive up 12mm & 16mm rebar prices across major industrial hubs.', img: '' },
-      { tag: 'Sango Appreciation', tagClass: 'tag-material', time: '8m ago', title: 'Sango Industrial Yield Surges Past +22.4%', desc: 'Investors actively shifting capital from Ibadan corridor towards Ogun hubs.', img: 'https://images.unsplash.com/photo-1504307651254-35680f356dfd?auto=format&fit=crop&w=500&q=80' }
+    const newsFeedDatabase = [
+      { 
+        tag: 'Material Rate Alert', 
+        tagClass: 'tag-material', 
+        time: 'Just Now', 
+        title: 'Dangote & BUA Cement Surge to ₦12,000/Bag', 
+        desc: 'Depot prices in Lagos & Ogun states rise +8.2%. Standard 9-inch blocks now retail at ₦620 each.', 
+        img: 'https://images.unsplash.com/photo-1541888946425-d0fbb186a5b7?auto=format&fit=crop&w=500&q=80' 
+      },
+      { 
+        tag: 'Flood Warning', 
+        tagClass: 'tag-disaster', 
+        time: '3m ago', 
+        title: 'Lekki-Epe Drainage Alert & Coastal Risk', 
+        desc: 'Geospatial sensors triggered along Coastal Highway. High runoff expected before dusk.', 
+        img: 'https://images.unsplash.com/photo-1547683905-f686c993aae5?auto=format&fit=crop&w=500&q=80' 
+      },
+      { 
+        tag: 'Sango Yield', 
+        tagClass: 'tag-yield', 
+        time: '6m ago', 
+        title: 'Sango Corridor Surges +22.4% Capital Appreciation', 
+        desc: 'Investors actively shifting capital from Ibadan highway towards Ogun industrial hubs.', 
+        img: 'https://images.unsplash.com/photo-1504307651254-35680f356dfd?auto=format&fit=crop&w=500&q=80' 
+      },
+      { 
+        tag: 'Soil Analysis', 
+        tagClass: 'tag-disaster', 
+        time: '10m ago', 
+        title: 'Tremor Vibration Logging near Coastal Zones', 
+        desc: 'Mild tremors logged by PropTech ground sensors near Victoria Island fault lines.', 
+        img: 'https://images.unsplash.com/photo-1508873696983-2df515122519?auto=format&fit=crop&w=500&q=80' 
+      }
     ];
 
-    let blogIndex = 0;
+    let currentNewsIndex = 1;
+
     setInterval(() => {
-      if (blogContainer.children.length > 3) {
-        blogContainer.removeChild(blogContainer.lastElementChild);
-      }
-      
-      const itemData = freshBlogNews[blogIndex % freshBlogNews.length];
-      const animClass = animations[Math.floor(Math.random() * animations.length)];
-      
-      const newCard = document.createElement('div');
-      newCard.className = `blog-news-card ${animClass}`;
-      newCard.innerHTML = `
-        <div class="blog-card-top">
-          <span class="blog-tag ${itemData.tagClass}">${itemData.tag}</span>
-          <div style="display:flex; align-items:center; gap:4px; font-size:10px; color:#DC2626; font-weight:700;">
-            <div class="live-beep-red"></div> ${itemData.time}
+      const item = newsFeedDatabase[currentNewsIndex % newsFeedDatabase.length];
+      const randomDirection = swipeDirections[Math.floor(Math.random() * swipeDirections.length)];
+
+      newsFeedContainer.innerHTML = `
+        <div class="blog-news-card ${randomDirection}">
+          <div class="blog-card-top">
+            <span class="blog-tag ${item.tagClass}">${item.tag}</span>
+            <div style="display:flex; align-items:center; gap:4px; font-size:10px; color:#10B981; font-weight:700;">
+              <div class="live-beep-dot"></div> ${item.time}
+            </div>
           </div>
+          <div class="blog-post-title">${item.title}</div>
+          <div class="blog-post-desc">${item.desc}</div>
+          ${item.img ? `<div class="blog-post-media"><img src="${item.img}" alt="News Feed Media"></div>` : ''}
         </div>
-        <div class="blog-post-title">${itemData.title}</div>
-        <div class="blog-post-desc">${itemData.desc}</div>
-        ${itemData.img ? `<div class="blog-post-media"><img src="${itemData.img}"></div>` : ''}
       `;
 
-      blogContainer.insertBefore(newCard, blogContainer.firstChild);
-      blogIndex++;
-    }, 4500);
+      currentNewsIndex++;
+    }, 4000);
 
     // SIMPLE CALCULATOR LOGIC
     function updateCalc() {
