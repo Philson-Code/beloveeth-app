@@ -1,220 +1,519 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Beloveeth — Workforce CRM & Operations</title>
-<style>
-:root {
-  --maroon: #5A1725;
-  --burgundy: #6B1E2E;
-  --gold: #D4AF37;
-  --ivory: #FCFBF8;
-  --white: #FFFFFF;
-  --soft: #F4F2EE;
-  --grey: #D9DCE0;
-  --slate: #66707A;
-  --charcoal: #20252B;
-  --green: #2E7D32;
-  --amber: #C67D0A;
-}
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#5A1725" />
+  <title>Beloveeth — Workforce</title>
+  <meta name="description" content="Beloveeth Workforce — real estate operations, CRM, verification and intelligence command center." />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
 
-* { margin: 0; padding: 0; box-sizing: border-box; }
-body {
-  font-family: 'Inter', system-ui, -apple-system, sans-serif;
-  background: var(--ivory);
-  color: var(--charcoal);
-  min-height: 100vh;
-}
+  <style>
+    :root{
+      --maroon:#5A1725;
+      --burgundy:#6B1E2E;
+      --ivory:#FCFBF8;
+      --white:#fff;
+      --soft:#F4F2EE;
+      --line:#D9DCE0;
+      --slate:#66707A;
+      --charcoal:#20252B;
+      --green:#2E7D32;
+      --amber:#A96A08;
+      --red:#A33A3A;
+      --blue:#456B8A;
+      --shadow:0 12px 35px rgba(32,37,43,.07);
+      --radius:14px;
+    }
 
-button, input, select { font: inherit; }
-button { cursor: pointer; }
-a { color: inherit; text-decoration: none; }
+    *{box-sizing:border-box;margin:0;padding:0}
+    html{scroll-behavior:smooth}
+    body{
+      font-family:"DM Sans",Inter,system-ui,sans-serif;
+      background:var(--ivory);
+      color:var(--charcoal);
+      min-height:100vh;
+    }
+    button,input,select{font:inherit}
+    button{cursor:pointer}
+    a{text-decoration:none;color:inherit}
+    .app{display:flex;min-height:100vh}
 
-.container {
-  width: min(1200px, calc(100% - 48px));
-  margin: 40px auto;
-}
+    /* SIDEBAR */
+    .sidebar{
+      position:fixed;inset:0 auto 0 0;width:254px;
+      background:var(--maroon);color:#fff;
+      display:flex;flex-direction:column;z-index:30;
+    }
+    .brand{
+      height:76px;padding:0 22px;display:flex;align-items:center;
+      border-bottom:1px solid rgba(255,255,255,.13)
+    }
+    .brand-mark{
+      width:36px;height:36px;border:1px solid rgba(255,255,255,.35);
+      border-radius:10px;display:grid;place-items:center;
+      font-family:"Playfair Display",serif;font-size:20px;font-weight:700;
+    }
+    .brand-copy{margin-left:11px}
+    .brand-name{font-weight:800;letter-spacing:-.02em}
+    .brand-sub{font-size:10px;opacity:.68;margin-top:2px;text-transform:uppercase;letter-spacing:.12em}
 
-.top-bar {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 32px;
-}
+    .nav{padding:18px 12px;overflow:auto}
+    .nav-label{
+      color:rgba(255,255,255,.46);font-size:10px;font-weight:800;
+      letter-spacing:.13em;text-transform:uppercase;padding:13px 12px 7px
+    }
+    .nav-btn{
+      width:100%;border:0;background:transparent;color:rgba(255,255,255,.78);
+      display:flex;align-items:center;gap:11px;text-align:left;
+      padding:10px 12px;border-radius:9px;margin:2px 0;font-size:13px;font-weight:600;
+      transition:.2s;
+    }
+    .nav-btn:hover,.nav-btn.active{background:rgba(255,255,255,.11);color:#fff}
+    .nav-icon{width:20px;text-align:center;opacity:.9}
+    .sidebar-bottom{margin-top:auto;padding:14px;border-top:1px solid rgba(255,255,255,.12)}
+    .profile-mini{display:flex;align-items:center;gap:10px;padding:8px}
+    .avatar{width:34px;height:34px;border-radius:50%;background:#fff;color:var(--maroon);display:grid;place-items:center;font-weight:800;font-size:12px}
+    .profile-mini strong{font-size:12px;display:block}
+    .profile-mini span{font-size:10px;opacity:.62}
 
-.back-link {
-  font-size: 13px;
-  font-weight: 700;
-  color: var(--maroon);
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  margin-bottom: 8px;
-}
+    /* MAIN */
+    .main{margin-left:254px;flex:1;min-width:0}
+    .topbar{
+      height:76px;background:rgba(255,255,255,.96);backdrop-filter:blur(12px);
+      border-bottom:1px solid var(--line);display:flex;align-items:center;
+      padding:0 30px;gap:18px;position:sticky;top:0;z-index:20
+    }
+    .mobile-menu{display:none}
+    .command{
+      flex:1;max-width:560px;height:40px;border:1px solid var(--line);
+      background:var(--soft);border-radius:10px;display:flex;align-items:center;
+      padding:0 13px;color:var(--slate);font-size:12px
+    }
+    .command input{border:0;outline:0;background:transparent;flex:1;margin-left:8px;color:var(--charcoal)}
+    .top-actions{margin-left:auto;display:flex;gap:8px;align-items:center}
+    .icon-btn{
+      width:38px;height:38px;border:1px solid var(--line);background:#fff;
+      border-radius:9px;display:grid;place-items:center;color:var(--slate);position:relative
+    }
+    .dot{position:absolute;right:7px;top:6px;width:6px;height:6px;border-radius:50%;background:var(--burgundy)}
+    .primary{
+      border:0;background:var(--maroon);color:#fff;border-radius:9px;
+      padding:10px 14px;font-size:12px;font-weight:800
+    }
+    .primary:hover{background:var(--burgundy)}
 
-.title {
-  font-family: 'Georgia', serif;
-  font-size: 32px;
-  color: var(--charcoal);
-}
+    .content{padding:28px 30px 50px;max-width:1540px;margin:auto}
+    .eyebrow{font-size:10px;text-transform:uppercase;letter-spacing:.14em;color:var(--maroon);font-weight:800}
+    .page-head{display:flex;justify-content:space-between;gap:20px;align-items:flex-end;margin-bottom:22px}
+    .page-head h1{
+      font-family:"Playfair Display",Georgia,serif;font-size:36px;line-height:1.05;
+      letter-spacing:-.025em;margin-top:5px
+    }
+    .page-head p{color:var(--slate);font-size:13px;margin-top:8px;max-width:650px}
+    .head-actions{display:flex;gap:8px}
+    .secondary{
+      border:1px solid var(--line);background:#fff;color:var(--charcoal);
+      border-radius:9px;padding:10px 13px;font-size:12px;font-weight:700
+    }
 
-.stats-grid {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 16px;
-  margin-bottom: 32px;
-}
+    /* KPI */
+    .kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:18px}
+    .kpi{
+      background:#fff;border:1px solid var(--line);border-radius:var(--radius);
+      padding:17px 18px;box-shadow:0 2px 8px rgba(32,37,43,.025)
+    }
+    .kpi-top{display:flex;justify-content:space-between;align-items:center}
+    .kpi-label{font-size:11px;color:var(--slate);font-weight:700}
+    .kpi-icon{font-size:15px;color:var(--maroon)}
+    .kpi-value{font-size:27px;font-weight:800;letter-spacing:-.03em;margin:8px 0 4px}
+    .kpi-foot{font-size:10px;color:var(--slate)}
+    .up{color:var(--green);font-weight:800}
 
-.stat-card {
-  background: white;
-  border: 1px solid var(--grey);
-  border-radius: 12px;
-  padding: 20px;
-}
+    .grid-main{display:grid;grid-template-columns:minmax(0,1.65fr) minmax(300px,.75fr);gap:18px}
+    .panel{
+      background:#fff;border:1px solid var(--line);border-radius:var(--radius);
+      box-shadow:0 5px 22px rgba(32,37,43,.035);overflow:hidden
+    }
+    .panel-head{
+      padding:17px 18px;border-bottom:1px solid var(--soft);
+      display:flex;align-items:center;justify-content:space-between;gap:10px
+    }
+    .panel-title{font-size:14px;font-weight:800}
+    .panel-sub{font-size:10px;color:var(--slate);margin-top:3px}
+    .panel-body{padding:16px 18px}
 
-.stat-card small { font-size: 12px; color: var(--slate); display: block; }
-.stat-card strong { font-size: 24px; color: var(--maroon); display: block; margin-top: 4px; }
+    /* PIPELINE */
+    .pipeline{
+      display:grid;grid-template-columns:repeat(5,minmax(145px,1fr));
+      gap:10px;overflow-x:auto;padding-bottom:4px
+    }
+    .stage{
+      background:var(--soft);border:1px solid #E6E3DE;border-radius:10px;
+      min-height:190px;padding:10px
+    }
+    .stage-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:9px}
+    .stage-name{font-size:10px;font-weight:800;text-transform:uppercase;letter-spacing:.05em;color:var(--slate)}
+    .stage-count{font-size:10px;background:#fff;border:1px solid var(--line);padding:3px 6px;border-radius:999px;font-weight:800}
+    .lead{
+      background:#fff;border:1px solid var(--line);border-radius:9px;padding:10px;margin-bottom:7px;
+      box-shadow:0 2px 6px rgba(0,0,0,.025);cursor:pointer;transition:.18s
+    }
+    .lead:hover{transform:translateY(-1px);box-shadow:var(--shadow);border-color:#C8CCD0}
+    .lead strong{display:block;font-size:11px}
+    .lead .property{font-size:10px;color:var(--slate);margin:4px 0 8px}
+    .lead-foot{display:flex;justify-content:space-between;align-items:center;font-size:9px;color:var(--slate)}
+    .status{font-size:9px;font-weight:800;border-radius:999px;padding:3px 6px}
+    .status.maroon{background:rgba(90,23,37,.09);color:var(--maroon)}
+    .status.green{background:rgba(46,125,50,.1);color:var(--green)}
+    .status.amber{background:rgba(169,106,8,.1);color:var(--amber)}
+    .status.blue{background:rgba(69,107,138,.1);color:var(--blue)}
 
-.card {
-  background: white;
-  border: 1px solid var(--grey);
-  border-radius: 16px;
-  padding: 24px;
-  box-shadow: 0 4px 20px rgba(0,0,0,0.03);
-  margin-bottom: 24px;
-}
+    /* PROP */
+    .prop-panel{position:relative;min-height:270px;background:linear-gradient(180deg,#fff,#FCFBF8)}
+    .prop-orb{
+      width:70px;height:70px;border-radius:50%;background:var(--maroon);color:#fff;
+      display:grid;place-items:center;font-size:31px;box-shadow:0 14px 28px rgba(90,23,37,.2);
+      margin-bottom:13px;animation:float 3.4s ease-in-out infinite
+    }
+    @keyframes float{50%{transform:translateY(-6px) rotate(2deg)}}
+    .prop-panel h3{font-family:"Playfair Display",serif;font-size:23px}
+    .prop-panel p{font-size:11px;color:var(--slate);line-height:1.65;margin:6px 0 14px}
+    .prop-note{background:var(--soft);border:1px solid #E7E4DF;border-radius:10px;padding:11px;font-size:10px;line-height:1.55}
+    .prop-note strong{color:var(--maroon)}
+    .prop-actions{display:flex;gap:7px;margin-top:11px;flex-wrap:wrap}
+    .prop-actions button{border:1px solid var(--line);background:#fff;border-radius:8px;padding:7px 9px;font-size:10px;font-weight:700}
 
-.card h3 {
-  font-size: 18px;
-  color: var(--maroon);
-  margin-bottom: 16px;
-  font-weight: 800;
-}
+    /* TABLE */
+    .table-wrap{overflow:auto}
+    table{width:100%;border-collapse:collapse;min-width:760px}
+    th{
+      text-align:left;font-size:9px;color:var(--slate);text-transform:uppercase;letter-spacing:.08em;
+      background:var(--soft);padding:10px 12px;font-weight:800
+    }
+    td{padding:12px;border-bottom:1px solid var(--soft);font-size:11px;vertical-align:middle}
+    tr:last-child td{border-bottom:0}
+    .client{display:flex;align-items:center;gap:9px}
+    .client-avatar{width:29px;height:29px;border-radius:50%;background:var(--soft);display:grid;place-items:center;color:var(--maroon);font-size:9px;font-weight:800}
+    .client strong{font-size:11px;display:block}
+    .client span{font-size:9px;color:var(--slate)}
+    .link-btn{border:0;background:none;color:var(--maroon);font-size:10px;font-weight:800}
 
-/* CRM TABLE */
-.crm-table {
-  width: 100%;
-  border-collapse: collapse;
-  font-size: 13px;
-}
+    /* RIGHT SIDE */
+    .side-stack{display:flex;flex-direction:column;gap:18px}
+    .activity{display:flex;gap:10px;padding:10px 0;border-bottom:1px solid var(--soft)}
+    .activity:last-child{border-bottom:0}
+    .activity-dot{width:8px;height:8px;border-radius:50%;background:var(--maroon);margin-top:5px;flex:none}
+    .activity p{font-size:10px;line-height:1.5}
+    .activity small{display:block;color:var(--slate);font-size:9px;margin-top:3px}
+    .verification-row{display:flex;justify-content:space-between;align-items:center;padding:11px 0;border-bottom:1px solid var(--soft)}
+    .verification-row:last-child{border:0}
+    .verification-row strong{font-size:11px}
+    .verification-row span{display:block;font-size:9px;color:var(--slate);margin-top:3px}
+    .pill{font-size:9px;font-weight:800;padding:4px 7px;border-radius:999px}
+    .pill.pending{background:rgba(169,106,8,.1);color:var(--amber)}
+    .pill.ok{background:rgba(46,125,50,.1);color:var(--green)}
 
-.crm-table th {
-  text-align: left;
-  padding: 12px;
-  background: var(--soft);
-  color: var(--slate);
-  font-size: 11px;
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
-}
+    .lower{display:grid;grid-template-columns:1.25fr .75fr;gap:18px;margin-top:18px}
+    .signal{
+      display:flex;justify-content:space-between;align-items:center;
+      padding:12px 0;border-bottom:1px solid var(--soft)
+    }
+    .signal:last-child{border:0}
+    .signal-main strong{font-size:11px;display:block}
+    .signal-main span{font-size:9px;color:var(--slate)}
+    .signal-value{font-size:11px;font-weight:800}
+    .positive{color:var(--green)}
+    .caution{color:var(--amber)}
 
-.crm-table td {
-  padding: 14px 12px;
-  border-bottom: 1px solid var(--soft);
-}
+    .demo-strip{
+      display:flex;align-items:center;gap:8px;background:#F7F3F4;border:1px solid #E9DDE0;
+      color:var(--maroon);border-radius:9px;padding:9px 11px;font-size:10px;margin-top:18px
+    }
 
-.badge {
-  padding: 4px 8px;
-  border-radius: 12px;
-  font-size: 11px;
-  font-weight: 700;
-  display: inline-block;
-}
+    /* DRAWER */
+    .overlay{position:fixed;inset:0;background:rgba(32,37,43,.35);display:none;z-index:50}
+    .overlay.show{display:block}
+    .drawer{
+      position:absolute;right:0;top:0;height:100%;width:min(480px,92vw);background:#fff;
+      box-shadow:-20px 0 60px rgba(0,0,0,.12);padding:24px;overflow:auto
+    }
+    .drawer-head{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:20px}
+    .drawer h2{font-family:"Playfair Display",serif;font-size:27px}
+    .close{border:1px solid var(--line);background:#fff;width:34px;height:34px;border-radius:8px}
+    .detail-grid{display:grid;grid-template-columns:1fr 1fr;gap:9px;margin:15px 0}
+    .detail{background:var(--soft);border-radius:9px;padding:10px}
+    .detail label{font-size:9px;color:var(--slate);display:block;text-transform:uppercase;letter-spacing:.08em}
+    .detail strong{font-size:12px;display:block;margin-top:4px}
+    .timeline{border-left:2px solid #E7E1E3;padding-left:14px;margin:18px 0}
+    .event{position:relative;margin-bottom:17px}
+    .event:before{content:"";position:absolute;left:-21px;top:3px;width:8px;height:8px;border-radius:50%;background:var(--maroon)}
+    .event strong{font-size:11px}
+    .event p{font-size:10px;color:var(--slate);margin-top:3px;line-height:1.5}
 
-.badge-lead { background: rgba(198, 125, 10, 0.12); color: var(--amber); }
-.badge-verified { background: rgba(46, 125, 50, 0.12); color: var(--green); }
-.badge-inspection { background: rgba(90, 23, 37, 0.1); color: var(--maroon); }
-
-.action-btn {
-  background: var(--soft);
-  border: 1px solid var(--grey);
-  padding: 6px 12px;
-  border-radius: 6px;
-  font-size: 12px;
-  font-weight: 600;
-}
-
-.action-btn:hover {
-  background: var(--maroon);
-  color: white;
-  border-color: var(--maroon);
-}
-
-@media (max-width: 900px) {
-  .stats-grid { grid-template-columns: 1fr 1fr; }
-  .crm-table { display: block; overflow-x: auto; }
-}
-</style>
+    /* RESPONSIVE */
+    @media(max-width:1100px){
+      .sidebar{width:220px}.main{margin-left:220px}
+      .grid-main,.lower{grid-template-columns:1fr}
+      .kpis{grid-template-columns:repeat(2,1fr)}
+    }
+    @media(max-width:800px){
+      .sidebar{transform:translateX(-100%);transition:.25s}.sidebar.open{transform:none}
+      .main{margin-left:0}.mobile-menu{display:grid;place-items:center}
+      .topbar{padding:0 16px}.content{padding:22px 16px 40px}
+      .page-head{align-items:flex-start;flex-direction:column}.head-actions{width:100%}
+      .head-actions button{flex:1}.command{display:none}
+      .kpis{grid-template-columns:1fr 1fr}
+    }
+    @media(max-width:520px){
+      .kpis{grid-template-columns:1fr}
+      .page-head h1{font-size:30px}
+      .top-actions .primary{display:none}
+      .pipeline{grid-template-columns:repeat(5,180px)}
+      .drawer{padding:18px}
+    }
+  </style>
 </head>
+
 <body>
+<div class="app">
 
-<div class="container">
-  <a href="index.html" class="back-link">← Return to Homepage</a>
-  <div class="top-bar">
-    <div>
-      <h1 class="title">Workforce CRM & Operations</h1>
-      <p style="font-size: 13px; color: var(--slate);">Internal operations dashboard for buyer lead pipelines and title verification dispatch.</p>
+  <aside class="sidebar" id="sidebar">
+    <div class="brand">
+      <div class="brand-mark">B</div>
+      <div class="brand-copy">
+        <div class="brand-name">BELOVEETH</div>
+        <div class="brand-sub">Workforce</div>
+      </div>
     </div>
-  </div>
 
-  <div class="stats-grid">
-    <div class="stat-card">
-      <small>Active Buyer Inquiries</small>
-      <strong>48 Leads</strong>
-    </div>
-    <div class="stat-card">
-      <small>Pending Site Inspections</small>
-      <strong>12 Scheduled</strong>
-    </div>
-    <div class="stat-card">
-      <small>Title Verifications Pending</small>
-      <strong>7 In Progress</strong>
-    </div>
-    <div class="stat-card">
-      <small>Pipeline Conversion Rate</small>
-      <strong>34.8%</strong>
-    </div>
-  </div>
+    <nav class="nav">
+      <div class="nav-label">Workspace</div>
+      <button class="nav-btn active"><span class="nav-icon">⌂</span>Overview</button>
+      <button class="nav-btn" onclick="toast('Leads workspace is ready for Supabase data.')"><span class="nav-icon">◎</span>Leads</button>
+      <button class="nav-btn"><span class="nav-icon">▦</span>Pipeline</button>
+      <button class="nav-btn"><span class="nav-icon">⌂</span>Properties</button>
+      <button class="nav-btn"><span class="nav-icon">◷</span>Viewings</button>
+      <button class="nav-btn"><span class="nav-icon">✓</span>Tasks & Follow-ups</button>
 
-  <div class="card">
-    <h3>Active Client Leads & Pipeline Workflows</h3>
-    <table class="crm-table">
-      <thead>
-        <tr>
-          <th>Client Name</th>
-          <th>Interest / Region</th>
-          <th>Status Stage</th>
-          <th>Assigned Agent</th>
-          <th>Action</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td><strong>Dr. Olanrewaju K.</strong></td>
-          <td>Eko Atlantic Tower B (Diaspora)</td>
-          <td><span class="badge badge-inspection">Inspection Scheduled</span></td>
-          <td>Agent Tunde V.</td>
-          <td><button class="action-btn" onclick="alert('Opening Lead Record...')">Manage Lead</button></td>
-        </tr>
-        <tr>
-          <td><strong>Chief Emeka N.</strong></td>
-          <td>Guzape Heights (Abuja)</td>
-          <td><span class="badge badge-lead">New Lead</span></td>
-          <td>Unassigned</td>
-          <td><button class="action-btn" onclick="alert('Assigning Lead...')">Assign</button></td>
-        </tr>
-        <tr>
-          <td><strong>Amina B.</strong></td>
-          <td>Ibeju-Lekki Commercial Plot</td>
-          <td><span class="badge badge-verified">Verification Complete</span></td>
-          <td>Agent Bisi O.</td>
-          <td><button class="action-btn" onclick="alert('Opening Lead Record...')">Manage Lead</button></td>
-        </tr>
-      </tbody>
-    </table>
-  </div>
+      <div class="nav-label">Operations</div>
+      <button class="nav-btn"><span class="nav-icon">♧</span>Partners</button>
+      <button class="nav-btn"><span class="nav-icon">▤</span>Transactions</button>
+      <button class="nav-btn"><span class="nav-icon">□</span>Documents</button>
+      <button class="nav-btn"><span class="nav-icon">✓</span>Verification</button>
+
+      <div class="nav-label">Intelligence</div>
+      <button class="nav-btn" onclick="toast('Pulse is connected here as the market-intelligence layer.')"><span class="nav-icon">⌁</span>Market Intelligence</button>
+      <button class="nav-btn"><span class="nav-icon">◒</span>Reports</button>
+      <button class="nav-btn" onclick="openProp()"><span class="nav-icon">✦</span>Prop</button>
+
+      <div class="nav-label">Performance</div>
+      <button class="nav-btn"><span class="nav-icon">↗</span>Team Performance</button>
+      <button class="nav-btn"><span class="nav-icon">◫</span>QA & Analytics</button>
+
+      <div class="nav-label">Administration</div>
+      <button class="nav-btn"><span class="nav-icon">●</span>Notifications</button>
+      <button class="nav-btn"><span class="nav-icon">◌</span>Audit Trail</button>
+      <button class="nav-btn"><span class="nav-icon">⚙</span>Settings</button>
+    </nav>
+
+    <div class="sidebar-bottom">
+      <div class="profile-mini">
+        <div class="avatar">PD</div>
+        <div><strong>Philip Dare-Johnson</strong><span>Founder & CEO</span></div>
+      </div>
+    </div>
+  </aside>
+
+  <main class="main">
+    <header class="topbar">
+      <button class="icon-btn mobile-menu" onclick="toggleSidebar()">☰</button>
+      <div class="command">⌕ <input id="globalSearch" placeholder="Search leads, properties, clients, documents..." /></div>
+      <div class="top-actions">
+        <button class="icon-btn" title="Notifications">♢<span class="dot"></span></button>
+        <button class="icon-btn" title="Help">?</button>
+        <button class="primary" onclick="openProp()">Ask Prop ✦</button>
+      </div>
+    </header>
+
+    <section class="content">
+      <div class="page-head">
+        <div>
+          <div class="eyebrow">Beloveeth Operations</div>
+          <h1>Workforce Command Center</h1>
+          <p>One operational view of the journey from <strong>Lead → Property → Viewing → Negotiation → Documentation → Transaction.</strong></p>
+        </div>
+        <div class="head-actions">
+          <button class="secondary" onclick="toast('Report export hook ready.')">Export Report</button>
+          <button class="primary" onclick="toast('New lead workflow opened.')">+ New Lead</button>
+        </div>
+      </div>
+
+      <div class="kpis">
+        <div class="kpi"><div class="kpi-top"><span class="kpi-label">Active Leads</span><span class="kpi-icon">◎</span></div><div class="kpi-value">48</div><div class="kpi-foot"><span class="up">+8</span> this week</div></div>
+        <div class="kpi"><div class="kpi-top"><span class="kpi-label">Upcoming Viewings</span><span class="kpi-icon">◷</span></div><div class="kpi-value">12</div><div class="kpi-foot">Next 7 days</div></div>
+        <div class="kpi"><div class="kpi-top"><span class="kpi-label">Pending Verification</span><span class="kpi-icon">✓</span></div><div class="kpi-value">7</div><div class="kpi-foot"><span class="caution">3 require attention</span></div></div>
+        <div class="kpi"><div class="kpi-top"><span class="kpi-label">Pipeline Value</span><span class="kpi-icon">₦</span></div><div class="kpi-value">₦—</div><div class="kpi-foot">Connect transaction data to calculate</div></div>
+      </div>
+
+      <div class="grid-main">
+        <section class="panel">
+          <div class="panel-head">
+            <div><div class="panel-title">Lead Pipeline</div><div class="panel-sub">Current operational stage distribution</div></div>
+            <button class="secondary" onclick="toast('Pipeline filters opened.')">Filter</button>
+          </div>
+          <div class="panel-body">
+            <div class="pipeline">
+              <div class="stage"><div class="stage-head"><span class="stage-name">New Lead</span><span class="stage-count">8</span></div>
+                <div class="lead" onclick="openLead('New Lead')"><strong>Amina B.</strong><div class="property">Commercial plot • Ibeju-Lekki</div><div class="lead-foot"><span>Today</span><span class="status amber">Unassigned</span></div></div>
+                <div class="lead"><strong>Chief Emeka N.</strong><div class="property">Apartment • Abuja</div><div class="lead-foot"><span>2h ago</span><span class="status amber">New</span></div></div>
+              </div>
+              <div class="stage"><div class="stage-head"><span class="stage-name">Qualified</span><span class="stage-count">11</span></div>
+                <div class="lead" onclick="openLead('Qualified')"><strong>Dr. Olanrewaju K.</strong><div class="property">Diaspora buyer • Lagos</div><div class="lead-foot"><span>1d ago</span><span class="status maroon">Qualified</span></div></div>
+                <div class="lead"><strong>Sarah A.</strong><div class="property">3-bed • Ikeja</div><div class="lead-foot"><span>1d ago</span><span class="status maroon">Qualified</span></div></div>
+              </div>
+              <div class="stage"><div class="stage-head"><span class="stage-name">Property Match</span><span class="stage-count">9</span></div>
+                <div class="lead"><strong>David O.</strong><div class="property">Land • Abeokuta</div><div class="lead-foot"><span>Today</span><span class="status blue">Matched</span></div></div>
+                <div class="lead"><strong>Grace C.</strong><div class="property">2-bed • Yaba</div><div class="lead-foot"><span>2d ago</span><span class="status blue">Matched</span></div></div>
+              </div>
+              <div class="stage"><div class="stage-head"><span class="stage-name">Viewing</span><span class="stage-count">12</span></div>
+                <div class="lead"><strong>Michael P.</strong><div class="property">New development • Lekki</div><div class="lead-foot"><span>Tomorrow</span><span class="status maroon">Scheduled</span></div></div>
+                <div class="lead"><strong>Joy E.</strong><div class="property">4-bed • Abuja</div><div class="lead-foot"><span>Fri</span><span class="status maroon">Scheduled</span></div></div>
+              </div>
+              <div class="stage"><div class="stage-head"><span class="stage-name">Negotiation</span><span class="stage-count">5</span></div>
+                <div class="lead"><strong>Kunle T.</strong><div class="property">Terrace • Ikoyi</div><div class="lead-foot"><span>3d ago</span><span class="status green">Active</span></div></div>
+                <div class="lead"><strong>Fatima R.</strong><div class="property">Land • Abuja</div><div class="lead-foot"><span>4d ago</span><span class="status green">Active</span></div></div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <div class="side-stack">
+          <section class="panel prop-panel">
+            <div class="panel-head"><div><div class="panel-title">Prop Intelligence</div><div class="panel-sub">Contextual AI, not a generic chatbot</div></div><span class="status maroon">LIVE</span></div>
+            <div class="panel-body">
+              <div class="prop-orb">✦</div>
+              <h3>Prop noticed something.</h3>
+              <p>Six leads interested in Lagos properties have no recorded follow-up in the last 48 hours.</p>
+              <div class="prop-note"><strong>Suggested action:</strong> review the affected leads, identify the assigned agents and create follow-up tasks. No action is taken automatically.</div>
+              <div class="prop-actions"><button onclick="openProp()">Review with Prop</button><button onclick="toast('Follow-up queue opened.')">Open Queue</button></div>
+            </div>
+          </section>
+
+          <section class="panel">
+            <div class="panel-head"><div><div class="panel-title">Verification Queue</div><div class="panel-sub">Property trust workflow</div></div><button class="link-btn">View all</button></div>
+            <div class="panel-body">
+              <div class="verification-row"><div><strong>Ibeju-Lekki Commercial Plot</strong><span>Survey plan • reviewer required</span></div><span class="pill pending">Review</span></div>
+              <div class="verification-row"><div><strong>Guzape Heights</strong><span>Title documentation</span></div><span class="pill pending">Pending</span></div>
+              <div class="verification-row"><div><strong>Ikoyi Terrace</strong><span>Documents checked</span></div><span class="pill ok">Verified</span></div>
+            </div>
+          </section>
+        </div>
+      </div>
+
+      <div class="lower">
+        <section class="panel">
+          <div class="panel-head"><div><div class="panel-title">Client Activity</div><div class="panel-sub">Recent operational events</div></div><button class="link-btn">Open CRM</button></div>
+          <div class="panel-body">
+            <div class="table-wrap">
+              <table>
+                <thead><tr><th>Client</th><th>Interest</th><th>Stage</th><th>Assigned Agent</th><th>Next Action</th><th></th></tr></thead>
+                <tbody>
+                  <tr><td><div class="client"><div class="client-avatar">OK</div><div><strong>Dr. Olanrewaju K.</strong><span>Diaspora client</span></div></div></td><td>Eko Atlantic / Lagos</td><td><span class="status maroon">Viewing</span></td><td>Tunde V.</td><td>Confirm Friday</td><td><button class="link-btn" onclick="openLead('Dr. Olanrewaju K.')">Manage</button></td></tr>
+                  <tr><td><div class="client"><div class="client-avatar">EN</div><div><strong>Chief Emeka N.</strong><span>Buyer</span></div></div></td><td>Guzape / Abuja</td><td><span class="status amber">New Lead</span></td><td>Unassigned</td><td>Assign agent</td><td><button class="link-btn" onclick="openLead('Chief Emeka N.')">Manage</button></td></tr>
+                  <tr><td><div class="client"><div class="client-avatar">AB</div><div><strong>Amina B.</strong><span>Investor</span></div></div></td><td>Ibeju-Lekki land</td><td><span class="status green">Verified</span></td><td>Bisi O.</td><td>Send report</td><td><button class="link-btn" onclick="openLead('Amina B.')">Manage</button></td></tr>
+                  <tr><td><div class="client"><div class="client-avatar">FT</div><div><strong>Fatima R.</strong><span>Investor</span></div></div></td><td>Abuja land</td><td><span class="status green">Negotiation</span></td><td>Daniel A.</td><td>Review offer</td><td><button class="link-btn" onclick="openLead('Fatima R.')">Manage</button></td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </section>
+
+        <section class="panel">
+          <div class="panel-head"><div><div class="panel-title">Beloveeth Pulse</div><div class="panel-sub">Market signals for the team</div></div><a class="link-btn" href="pulse.html">Open Pulse</a></div>
+          <div class="panel-body">
+            <div class="signal"><div class="signal-main"><strong>Lagos demand activity</strong><span>Beloveeth platform activity</span></div><div class="signal-value positive">↑ Rising</div></div>
+            <div class="signal"><div class="signal-main"><strong>Abuja development activity</strong><span>Current internal observation</span></div><div class="signal-value positive">↑ Active</div></div>
+            <div class="signal"><div class="signal-main"><strong>Verification workload</strong><span>Open review queue</span></div><div class="signal-value caution">7 pending</div></div>
+            <div class="signal"><div class="signal-main"><strong>External market data</strong><span>Requires connected source</span></div><div class="signal-value">—</div></div>
+          </div>
+        </section>
+      </div>
+
+      <div class="demo-strip">ⓘ <strong>Interface mode:</strong> this replacement is intentionally ready for Supabase wiring. The visible sample records are interface data, not claimed live business metrics. Replace them with authorized database queries before production use.</div>
+    </section>
+  </main>
 </div>
 
+<div class="overlay" id="drawerOverlay" onclick="closeDrawer(event)">
+  <aside class="drawer" onclick="event.stopPropagation()">
+    <div class="drawer-head">
+      <div><div class="eyebrow">Workforce Record</div><h2 id="drawerTitle">Lead</h2></div>
+      <button class="close" onclick="closeDrawer()">×</button>
+    </div>
+    <div class="detail-grid">
+      <div class="detail"><label>Intent</label><strong>Buyer / Investor</strong></div>
+      <div class="detail"><label>Priority</label><strong>High attention</strong></div>
+      <div class="detail"><label>Location</label><strong>Lagos / Abuja</strong></div>
+      <div class="detail"><label>Assigned agent</label><strong>Pending assignment</strong></div>
+    </div>
+    <h3 style="font-size:13px;margin-top:20px">Operational timeline</h3>
+    <div class="timeline">
+      <div class="event"><strong>Lead created</strong><p>Initial enquiry captured through the Beloveeth platform.</p></div>
+      <div class="event"><strong>Requirement qualified</strong><p>Budget, location and property intent recorded.</p></div>
+      <div class="event"><strong>Next action</strong><p>Assign agent, match property and schedule the appropriate follow-up.</p></div>
+    </div>
+    <button class="primary" style="width:100%" onclick="toast('Production action hook ready.');closeDrawer()">Open full record</button>
+  </aside>
+</div>
+
+<script>
+  const overlay = document.getElementById('drawerOverlay');
+
+  function openLead(name){
+    document.getElementById('drawerTitle').textContent = name;
+    overlay.classList.add('show');
+  }
+  function openProp(){
+    document.getElementById('drawerTitle').textContent = 'Prop — Workforce Intelligence';
+    overlay.classList.add('show');
+  }
+  function closeDrawer(){ overlay.classList.remove('show'); }
+  function closeDrawer(e){ if(e && e.target !== overlay) return; overlay.classList.remove('show'); }
+
+  function toggleSidebar(){
+    document.getElementById('sidebar').classList.toggle('open');
+  }
+
+  function toast(message){
+    let el=document.getElementById('toast');
+    if(!el){
+      el=document.createElement('div');
+      el.id='toast';
+      el.style.cssText='position:fixed;right:20px;bottom:20px;background:#20252B;color:#fff;padding:11px 14px;border-radius:9px;font-size:11px;z-index:100;box-shadow:0 12px 30px rgba(0,0,0,.2)';
+      document.body.appendChild(el);
+    }
+    el.textContent=message;
+    el.style.opacity='1';
+    clearTimeout(window.__toast);
+    window.__toast=setTimeout(()=>el.style.opacity='0',2600);
+  }
+
+  document.getElementById('globalSearch').addEventListener('keydown',e=>{
+    if(e.key==='Enter'){
+      const q=e.target.value.trim();
+      if(q) toast('Search hook ready for: '+q);
+    }
+  });
+
+  document.querySelectorAll('.nav-btn').forEach(btn=>{
+    btn.addEventListener('click',()=>{
+      document.querySelectorAll('.nav-btn').forEach(x=>x.classList.remove('active'));
+      btn.classList.add('active');
+    });
+  });
+</script>
 </body>
 </html>
