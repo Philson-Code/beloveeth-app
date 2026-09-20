@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="theme-color" content="#090d16" />
+  <meta name="theme-color" content="#f8f3ec" />
 
   <title>Beloveeth | PropTech Intelligence</title>
 
@@ -25,149 +25,97 @@
 
   <style>
     :root {
+      /* Brand */
       --maroon: #4a101d;
       --maroon-2: #681d31;
       --maroon-3: #8a3048;
+      --rose: #c86b85;
+      --gold: #b8912a;
 
-      --ink: #090d16;
-      --ink-2: #0e1420;
-      --ink-3: #141c29;
+      /* Warm light surfaces (replaces the old black) */
+      --ivory: #f8f3ec;
+      --paper: #fffdfa;
+      --sand: #efe5d8;
 
-      --white: #ffffff;
-      --muted: #8e99aa;
-      --muted-2: #647084;
+      /* Text */
+      --ink: #2b1218;
+      --muted: #7b6b6e;
+      --muted-2: #a29396;
 
-      --line: rgba(255,255,255,.09);
-      --glass: rgba(255,255,255,.055);
-      --glass-strong: rgba(255,255,255,.085);
+      --line: rgba(74, 16, 29, .11);
+      --line-strong: rgba(74, 16, 29, .18);
 
-      --blue: #72cfff;
-      --blue-2: #318dff;
-      --cyan: #b5efff;
+      --green: #1f9d6b;
+      --red: #c9364d;
+      --sky: #5a9fd8;
 
-      --gold: #d4af37;
-      --green: #43d6a1;
-      --red: #ff6e7f;
-
-      --radius: 22px;
+      --radius: 24px;
       --radius-sm: 14px;
+
+      --shadow: 0 18px 50px rgba(74, 16, 29, .08);
+      --shadow-lg: 0 30px 80px rgba(74, 16, 29, .16);
 
       --font-display: "Sora", sans-serif;
       --font-body: "Manrope", sans-serif;
     }
 
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
 
-    html,
-    body {
-      width: 100%;
-      height: 100%;
-      overflow: hidden;
-    }
+    html { scroll-behavior: smooth; }
 
     body {
+      min-height: 100vh;
       font-family: var(--font-body);
-      color: var(--white);
+      color: var(--ink);
       background:
-        radial-gradient(
-          circle at 75% 15%,
-          rgba(75, 24, 42, .34),
-          transparent 32%
-        ),
-        radial-gradient(
-          circle at 18% 85%,
-          rgba(49, 141, 255, .08),
-          transparent 28%
-        ),
-        var(--ink);
+        radial-gradient(900px 520px at 88% -6%, rgba(104, 29, 49, .17), transparent 62%),
+        radial-gradient(760px 520px at -4% 58%, rgba(184, 145, 42, .11), transparent 60%),
+        radial-gradient(640px 420px at 55% 105%, rgba(200, 107, 133, .12), transparent 60%),
+        var(--ivory);
+      background-attachment: fixed;
+      -webkit-font-smoothing: antialiased;
     }
 
-    button,
-    input {
-      font: inherit;
+    button, input, select, textarea { font: inherit; color: inherit; }
+    button { border: 0; cursor: pointer; background: none; }
+    a { color: inherit; text-decoration: none; }
+
+    :focus-visible {
+      outline: 2px solid var(--maroon-3);
+      outline-offset: 2px;
     }
 
-    button {
-      border: 0;
-      cursor: pointer;
-    }
-
-    a {
-      color: inherit;
-      text-decoration: none;
-    }
-
-    /* =========================================================
-       APP SHELL
-    ========================================================= */
-
-    .app {
-      position: relative;
-      width: 100%;
-      height: 100vh;
-      overflow: hidden;
-    }
-
+    /* faint dotted texture, fixed so it never scrolls */
     .ambient {
-      position: absolute;
+      position: fixed;
       inset: 0;
       pointer-events: none;
-      overflow: hidden;
+      z-index: 0;
+      background-image: radial-gradient(rgba(74,16,29,.07) 1px, transparent 1px);
+      background-size: 30px 30px;
+      -webkit-mask-image: linear-gradient(180deg, #000 0%, transparent 55%);
+      mask-image: linear-gradient(180deg, #000 0%, transparent 55%);
     }
 
-    .ambient::before {
-      content: "";
-      position: absolute;
-      width: 520px;
-      height: 520px;
-      top: -220px;
-      right: 10%;
-      border-radius: 50%;
-      background: radial-gradient(
-        circle,
-        rgba(106, 34, 55, .24),
-        transparent 70%
-      );
-      filter: blur(20px);
-    }
-
-    .ambient::after {
-      content: "";
-      position: absolute;
-      width: 420px;
-      height: 420px;
-      bottom: -240px;
-      left: 5%;
-      border-radius: 50%;
-      background: radial-gradient(
-        circle,
-        rgba(50, 140, 255, .10),
-        transparent 70%
-      );
-      filter: blur(20px);
-    }
+    .app { position: relative; z-index: 1; }
 
     /* =========================================================
-       HEADER
+       HEADER + NAV + MEGA MENUS
     ========================================================= */
 
     .topbar {
-      position: relative;
-      z-index: 20;
-      height: 76px;
-      padding: 0 34px;
-
+      position: sticky;
+      top: 0;
+      z-index: 60;
+      height: 74px;
+      padding: 0 36px;
       display: flex;
       align-items: center;
       justify-content: space-between;
-
+      gap: 20px;
+      background: rgba(248, 243, 236, .8);
+      backdrop-filter: blur(22px) saturate(140%);
       border-bottom: 1px solid var(--line);
-      background: rgba(9, 13, 22, .72);
-      backdrop-filter: blur(24px);
     }
 
     .brand {
@@ -178,81 +126,232 @@
     }
 
     .brand-mark {
-      width: 35px;
-      height: 35px;
-      border-radius: 11px;
-      background:
-        linear-gradient(145deg, #741f36, #3c0b17);
+      width: 38px;
+      height: 38px;
+      border-radius: 12px;
       display: grid;
       place-items: center;
-      box-shadow:
-        0 7px 30px rgba(93, 22, 44, .28);
+      color: #fff;
+      background: linear-gradient(145deg, var(--maroon-3), var(--maroon));
+      box-shadow: 0 8px 24px rgba(74, 16, 29, .28);
     }
 
     .brand-mark span {
       font-family: var(--font-display);
-      font-size: 13px;
+      font-size: 15px;
       font-weight: 800;
-      letter-spacing: -.04em;
     }
 
     .brand-copy strong {
       display: block;
       font-family: var(--font-display);
-      font-size: 13px;
-      letter-spacing: .13em;
+      font-size: 15px;
+      letter-spacing: .12em;
+      color: var(--maroon);
     }
 
     .brand-copy small {
+      display: block;
+      margin-top: 1px;
       color: var(--muted);
-      font-size: 8px;
-      letter-spacing: .15em;
-      text-transform: uppercase;
+      font-size: 10px;
+      letter-spacing: .08em;
     }
 
     .nav {
+      height: 100%;
       display: flex;
       align-items: center;
-      gap: 5px;
+      gap: 2px;
     }
 
-    .nav button {
-      position: relative;
-      color: #aeb7c6;
-      background: transparent;
-      padding: 9px 14px;
-      border-radius: 10px;
-      font-size: 12px;
+    .nav-item {
+      height: 100%;
+      display: flex;
+      align-items: center;
+    }
+
+    .nav-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 10px 15px;
+      border-radius: 11px;
+      color: #6b5a5e;
+      font-size: 13.5px;
       font-weight: 700;
-      transition: .25s ease;
+      transition: color .2s ease, background .2s ease;
     }
 
-    .nav button:hover {
-      color: white;
-      background: rgba(255,255,255,.055);
+    .nav-link .caret {
+      width: 6px;
+      height: 6px;
+      border-right: 1.6px solid currentColor;
+      border-bottom: 1.6px solid currentColor;
+      transform: rotate(45deg) translateY(-2px);
+      opacity: .6;
     }
 
-    .nav button.active {
-      color: white;
-      background: rgba(255,255,255,.075);
+    .nav-link:hover,
+    .nav-item:hover > .nav-link {
+      color: var(--maroon);
+      background: rgba(74, 16, 29, .06);
     }
 
-    .nav button.active::after {
-      content: "";
+    .nav-link.active {
+      color: var(--maroon);
+      background: rgba(74, 16, 29, .09);
+    }
+
+    .m-only { display: none; }
+
+    /* mega menu */
+    .mega {
       position: absolute;
-      bottom: -17px;
+      top: 100%;
       left: 50%;
-      width: 22px;
-      height: 2px;
-      transform: translateX(-50%);
+      width: min(960px, 94vw);
+      padding: 24px;
+      display: grid;
+      gap: 24px;
+      border: 1px solid var(--line);
+      border-top: 0;
+      border-radius: 0 0 28px 28px;
+      background: rgba(255, 253, 250, .97);
+      backdrop-filter: blur(24px);
+      box-shadow: var(--shadow-lg);
+      opacity: 0;
+      visibility: hidden;
+      transform: translate(-50%, 8px);
+      transition: opacity .22s ease, transform .22s ease, visibility .22s;
+    }
+
+    .nav-item:hover .mega,
+    .nav-item:focus-within .mega {
+      opacity: 1;
+      visibility: visible;
+      transform: translate(-50%, 0);
+    }
+
+    .mega-props { grid-template-columns: 230px 1fr; }
+    .mega-explore { grid-template-columns: 1fr 1fr 1.05fr; }
+
+    .mega h4 {
+      margin-bottom: 10px;
+      font-family: var(--font-display);
+      font-size: 12px;
+      color: var(--muted);
+      font-weight: 600;
+    }
+
+    .mega-links { display: grid; gap: 2px; }
+
+    .mega-links button {
+      width: 100%;
+      text-align: left;
+      padding: 10px 12px;
+      border-radius: 11px;
+      font-size: 13.5px;
+      font-weight: 700;
+      color: var(--ink);
+      transition: background .2s ease;
+    }
+
+    .mega-links button small {
+      display: block;
+      margin-top: 2px;
+      color: var(--muted);
+      font-size: 11.5px;
+      font-weight: 500;
+    }
+
+    .mega-links button:hover { background: rgba(74, 16, 29, .06); }
+
+    .mega-cards {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+    }
+
+    .mini-prop {
+      text-align: left;
+      border-radius: 16px;
+      overflow: hidden;
+      background: #fff;
+      border: 1px solid var(--line);
+      transition: transform .25s ease, box-shadow .25s ease;
+    }
+
+    .mini-prop:hover {
+      transform: translateY(-3px);
+      box-shadow: var(--shadow);
+    }
+
+    .mini-prop .mp-img {
+      height: 92px;
+      background-size: cover;
+      background-position: center;
+      background-color: var(--sand);
+    }
+
+    .mini-prop .mp-body { padding: 10px 12px 12px; }
+
+    .mini-prop small { color: var(--muted); font-size: 11px; }
+
+    .mini-prop strong {
+      display: block;
+      margin-top: 3px;
+      font-size: 12.5px;
+      line-height: 1.3;
+    }
+
+    .mini-prop em {
+      display: block;
+      margin-top: 5px;
+      font-style: normal;
+      font-family: var(--font-display);
+      font-size: 13px;
+      color: var(--maroon);
+    }
+
+    .mega-promo {
+      padding: 20px;
+      border-radius: 20px;
+      color: #fff;
+      background:
+        radial-gradient(circle at 85% 0%, rgba(200,107,133,.55), transparent 55%),
+        linear-gradient(150deg, var(--maroon-2), var(--maroon));
+    }
+
+    .mega-promo strong {
+      display: block;
+      font-family: var(--font-display);
+      font-size: 18px;
+      line-height: 1.25;
+      letter-spacing: -.03em;
+    }
+
+    .mega-promo p {
+      margin-top: 9px;
+      color: rgba(255,255,255,.75);
+      font-size: 12.5px;
+      line-height: 1.6;
+    }
+
+    .mega-promo button {
+      margin-top: 16px;
+      padding: 10px 15px;
       border-radius: 10px;
-      background: var(--gold);
+      background: #fff;
+      color: var(--maroon);
+      font-size: 12.5px;
+      font-weight: 800;
     }
 
     .header-actions {
       display: flex;
       align-items: center;
-      gap: 10px;
+      gap: 14px;
       min-width: 210px;
       justify-content: flex-end;
     }
@@ -260,219 +359,110 @@
     .status {
       display: flex;
       align-items: center;
-      gap: 7px;
+      gap: 8px;
       color: var(--muted);
-      font-size: 10px;
+      font-size: 12px;
+      font-weight: 600;
     }
 
     .status-dot {
-      width: 6px;
-      height: 6px;
+      width: 8px;
+      height: 8px;
       border-radius: 50%;
       background: var(--green);
-      box-shadow: 0 0 12px rgba(67,214,161,.65);
+      box-shadow: 0 0 0 4px rgba(31, 157, 107, .16);
     }
 
     .login {
-      padding: 10px 17px;
-      border-radius: 10px;
-      background: white;
-      color: #10131a;
-      font-size: 11px;
+      padding: 11px 18px;
+      border-radius: 12px;
+      color: #fff;
+      background: linear-gradient(135deg, var(--maroon-2), var(--maroon));
+      box-shadow: 0 10px 26px rgba(74, 16, 29, .24);
+      font-size: 13px;
       font-weight: 800;
-      transition: .25s ease;
+      transition: transform .2s ease, box-shadow .2s ease;
     }
 
     .login:hover {
       transform: translateY(-1px);
-      box-shadow: 0 10px 28px rgba(255,255,255,.08);
+      box-shadow: 0 14px 32px rgba(74, 16, 29, .3);
     }
 
-    /* =========================================================
-       WORKSPACE
-    ========================================================= */
-
-    .workspace {
-      position: relative;
-      z-index: 2;
-      height: calc(100vh - 76px);
-      padding: 22px 30px 34px;
-
-      display: grid;
-      grid-template-columns: minmax(360px, .86fr) minmax(580px, 1.5fr);
-      gap: 20px;
-
-      overflow: hidden;
-    }
-
-    .view {
+    .menu-btn {
       display: none;
-      width: 100%;
-      height: 100%;
-      animation: viewIn .35s ease;
-    }
-
-    .view.active {
-      display: grid;
-    }
-
-    @keyframes viewIn {
-      from {
-        opacity: 0;
-        transform: translateY(5px);
-      }
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
+      width: 42px;
+      height: 42px;
+      border-radius: 12px;
+      background: rgba(74,16,29,.07);
+      color: var(--maroon);
+      font-size: 20px;
     }
 
     /* =========================================================
-       LEFT HERO
+       SHARED BUTTONS / TYPE
     ========================================================= */
-
-    .hero-panel {
-      position: relative;
-      height: 100%;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      padding: 22px 8px 40px 10px;
-    }
-
-    .eyebrow {
-      display: flex;
-      align-items: center;
-      gap: 9px;
-      color: #a9b2c1;
-      font-size: 9px;
-      font-weight: 800;
-      letter-spacing: .17em;
-      text-transform: uppercase;
-      margin-bottom: 18px;
-    }
-
-    .eyebrow i {
-      width: 23px;
-      height: 1px;
-      background: var(--gold);
-    }
-
-    .hero-title {
-      max-width: 610px;
-      font-family: var(--font-display);
-      font-size: clamp(42px, 4.2vw, 70px);
-      line-height: .99;
-      letter-spacing: -.075em;
-      font-weight: 700;
-    }
-
-    .hero-title span {
-      color: transparent;
-      background:
-        linear-gradient(
-          110deg,
-          #fff 15%,
-          #bcdfff 50%,
-          #6bbdff 80%
-        );
-      -webkit-background-clip: text;
-      background-clip: text;
-    }
-
-    .hero-copy {
-      max-width: 490px;
-      margin-top: 21px;
-      color: #9aa5b5;
-      font-size: 13px;
-      line-height: 1.75;
-    }
-
-    .hero-actions {
-      display: flex;
-      gap: 10px;
-      margin-top: 27px;
-    }
 
     .primary-btn,
     .secondary-btn {
-      padding: 12px 17px;
-      border-radius: 11px;
-      font-size: 11px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      padding: 14px 20px;
+      border-radius: 13px;
+      font-size: 13.5px;
       font-weight: 800;
-      transition: .25s ease;
+      transition: transform .2s ease, box-shadow .2s ease, background .2s ease;
     }
 
     .primary-btn {
-      color: white;
-      background: linear-gradient(135deg, #7b243f, #4b101f);
-      box-shadow: 0 12px 34px rgba(92, 23, 45, .26);
+      color: #fff;
+      background: linear-gradient(135deg, var(--maroon-2), var(--maroon));
+      box-shadow: 0 12px 30px rgba(74, 16, 29, .24);
     }
 
     .secondary-btn {
-      color: #d5dbe5;
-      background: rgba(255,255,255,.05);
-      border: 1px solid var(--line);
+      color: var(--maroon);
+      background: rgba(255, 255, 255, .7);
+      border: 1px solid var(--line-strong);
     }
 
     .primary-btn:hover,
-    .secondary-btn:hover {
-      transform: translateY(-2px);
+    .secondary-btn:hover { transform: translateY(-2px); }
+
+    .secondary-btn:hover { background: #fff; }
+
+    .card-label {
+      color: var(--muted);
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: .04em;
     }
 
-    .ecosystem-line {
-      display: flex;
-      align-items: center;
-      gap: 9px;
-      margin-top: 34px;
-      color: #697486;
-      font-size: 9px;
-      text-transform: uppercase;
-      letter-spacing: .13em;
-    }
-
-    .ecosystem-line::before {
-      content: "";
-      width: 38px;
-      height: 1px;
-      background: rgba(255,255,255,.14);
-    }
-
-    .hero-metrics {
-      display: flex;
-      gap: 30px;
-      margin-top: 20px;
-    }
-
-    .metric strong {
-      display: block;
+    .card-title {
+      margin-top: 4px;
       font-family: var(--font-display);
-      font-size: 18px;
-      letter-spacing: -.04em;
+      font-size: 17px;
+      font-weight: 600;
+      letter-spacing: -.035em;
+      color: var(--ink);
     }
 
-    .metric span {
-      display: block;
-      color: #697486;
-      font-size: 8px;
-      margin-top: 3px;
-      text-transform: uppercase;
-      letter-spacing: .1em;
+    .pill {
+      padding: 6px 10px;
+      border-radius: 100px;
+      color: var(--maroon-2);
+      background: rgba(104, 29, 49, .07);
+      border: 1px solid rgba(104, 29, 49, .12);
+      font-size: 10px;
+      font-weight: 800;
+      letter-spacing: .06em;
+      white-space: nowrap;
     }
 
-    /* =========================================================
-       RIGHT INTELLIGENCE GRID
-    ========================================================= */
-
-    .intelligence-grid {
-      height: 100%;
-      min-height: 0;
-
-      display: grid;
-      grid-template-columns: 1.18fr .82fr;
-      grid-template-rows: 1.12fr .88fr;
-      gap: 14px;
-    }
+    .positive { color: var(--green) !important; }
+    .negative { color: var(--red) !important; }
 
     .card {
       position: relative;
@@ -480,186 +470,237 @@
       overflow: hidden;
       border: 1px solid var(--line);
       border-radius: var(--radius);
-      background:
-        linear-gradient(
-          145deg,
-          rgba(255,255,255,.075),
-          rgba(255,255,255,.028)
-        );
-      backdrop-filter: blur(22px);
-      box-shadow:
-        0 20px 60px rgba(0,0,0,.18),
-        inset 0 1px 0 rgba(255,255,255,.035);
+      background: linear-gradient(150deg, rgba(255,255,255,.92), rgba(255,253,250,.7));
+      backdrop-filter: blur(20px);
+      box-shadow: var(--shadow), inset 0 1px 0 #fff;
+      transition: border-color .25s ease, box-shadow .25s ease;
     }
 
-    .card:hover {
-      border-color: rgba(255,255,255,.13);
-    }
+    .card:hover { border-color: var(--line-strong); }
 
     .card-head {
       position: relative;
       z-index: 2;
-      padding: 17px 18px 0;
+      padding: 20px 22px 0;
       display: flex;
-      align-items: center;
+      align-items: flex-start;
       justify-content: space-between;
-    }
-
-    .card-label {
-      color: #7f8b9d;
-      font-size: 8px;
-      font-weight: 800;
-      letter-spacing: .16em;
-      text-transform: uppercase;
-    }
-
-    .card-title {
-      margin-top: 4px;
-      font-family: var(--font-display);
-      font-size: 14px;
-      font-weight: 600;
-      letter-spacing: -.035em;
-    }
-
-    .pill {
-      padding: 5px 8px;
-      border-radius: 100px;
-      color: #8fd9ff;
-      background: rgba(85,184,255,.08);
-      border: 1px solid rgba(85,184,255,.13);
-      font-size: 7px;
-      font-weight: 800;
-      letter-spacing: .08em;
+      gap: 10px;
     }
 
     /* =========================================================
-       PULSE GRAPH
+       VIEWS
     ========================================================= */
 
-    .pulse-card {
-      grid-row: 1 / 2;
-      grid-column: 1 / 2;
+    .workspace {
+      position: relative;
+      z-index: 2;
+      max-width: 1500px;
+      margin: 0 auto;
+      padding: 34px 36px 60px;
+      min-height: calc(100vh - 74px);
     }
 
-    .pulse-controls {
+    .view { display: none; animation: viewIn .35s ease; }
+    .view.active { display: block; }
+
+    @keyframes viewIn {
+      from { opacity: 0; transform: translateY(6px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* =========================================================
+       HOME — TOP (HERO + INTELLIGENCE)
+    ========================================================= */
+
+    .home-top {
+      display: grid;
+      grid-template-columns: minmax(340px, .88fr) minmax(0, 1.55fr);
+      gap: 34px;
+      align-items: center;
+    }
+
+    .hero-panel { padding: 10px 0; }
+
+    .eyebrow {
       display: flex;
       align-items: center;
-      gap: 7px;
+      gap: 10px;
+      margin-bottom: 20px;
+      color: var(--muted);
+      font-size: 12.5px;
+      font-weight: 700;
     }
 
+    .eyebrow i {
+      width: 26px;
+      height: 2px;
+      border-radius: 2px;
+      background: var(--gold);
+    }
+
+    .hero-title {
+      font-family: var(--font-display);
+      font-size: clamp(44px, 4.6vw, 78px);
+      line-height: .98;
+      letter-spacing: -.075em;
+      font-weight: 700;
+      color: var(--maroon);
+    }
+
+    .hero-title span {
+      color: transparent;
+      background: linear-gradient(105deg, var(--maroon-2) 10%, var(--rose) 62%, var(--gold) 100%);
+      -webkit-background-clip: text;
+      background-clip: text;
+    }
+
+    .hero-copy {
+      max-width: 500px;
+      margin-top: 24px;
+      color: #6b5a5e;
+      font-size: 16px;
+      line-height: 1.75;
+    }
+
+    .hero-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-top: 30px;
+    }
+
+    .ecosystem-line {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-top: 38px;
+      color: var(--muted);
+      font-size: 12.5px;
+      font-weight: 600;
+    }
+
+    .ecosystem-line::before {
+      content: "";
+      width: 40px;
+      height: 1px;
+      background: var(--line-strong);
+    }
+
+    .hero-metrics {
+      display: flex;
+      gap: 34px;
+      margin-top: 22px;
+    }
+
+    .metric strong {
+      display: block;
+      font-family: var(--font-display);
+      font-size: 24px;
+      letter-spacing: -.05em;
+      color: var(--maroon);
+    }
+
+    .metric span {
+      display: block;
+      margin-top: 3px;
+      color: var(--muted);
+      font-size: 11.5px;
+      font-weight: 600;
+    }
+
+    .intelligence-grid {
+      display: grid;
+      grid-template-columns: 1.16fr .84fr;
+      grid-template-rows: 352px 236px;
+      gap: 16px;
+    }
+
+    /* Pulse */
+    .pulse-card {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .pulse-controls { display: flex; gap: 6px; }
+
     .select {
-      color: #c4ccd7;
-      background: rgba(255,255,255,.045);
-      border: 1px solid rgba(255,255,255,.08);
-      border-radius: 8px;
-      padding: 6px 8px;
-      font-size: 8px;
+      padding: 7px 9px;
+      border-radius: 9px;
+      color: var(--ink);
+      background: #fff;
+      border: 1px solid var(--line);
+      font-size: 12px;
+      font-weight: 600;
       outline: none;
     }
 
     .pulse-stats {
       display: flex;
-      gap: 24px;
-      padding: 18px 18px 3px;
+      gap: 30px;
+      padding: 16px 22px 0;
     }
 
     .pulse-stat strong {
       font-family: var(--font-display);
-      font-size: 18px;
-      letter-spacing: -.045em;
+      font-size: 24px;
+      letter-spacing: -.05em;
+      color: var(--maroon);
     }
 
     .pulse-stat span {
       display: block;
       margin-top: 2px;
-      color: #687487;
-      font-size: 7px;
-      text-transform: uppercase;
-      letter-spacing: .1em;
-    }
-
-    .positive {
-      color: var(--green) !important;
-    }
-
-    .negative {
-      color: var(--red) !important;
+      color: var(--muted);
+      font-size: 11px;
+      font-weight: 600;
     }
 
     .chart-wrap {
-      position: absolute;
-      left: 16px;
-      right: 16px;
-      top: 115px;
-      bottom: 49px;
-    }
-
-    .chart-wrap canvas {
-      width: 100% !important;
-      height: 100% !important;
+      position: relative;
+      flex: 1;
+      min-height: 0;
+      margin: 8px 18px 0;
     }
 
     .prop-note {
-      position: absolute;
-      left: 17px;
-      right: 17px;
-      bottom: 13px;
-
       display: flex;
       align-items: center;
-      gap: 8px;
-
-      padding: 8px 10px;
-      border-radius: 10px;
-
-      background: rgba(49,141,255,.055);
-      border: 1px solid rgba(100,190,255,.10);
+      gap: 10px;
+      margin: 8px 16px 16px;
+      padding: 10px 12px;
+      border-radius: 12px;
+      background: rgba(104, 29, 49, .05);
+      border: 1px solid rgba(104, 29, 49, .09);
     }
 
     .prop-note-dot {
-      width: 7px;
-      height: 7px;
+      width: 9px;
+      height: 9px;
       flex: 0 0 auto;
       border-radius: 50%;
-      background: #78d4ff;
-      box-shadow: 0 0 13px #3caaff;
+      background: radial-gradient(circle, #fff, var(--rose) 60%, var(--maroon-2));
+      box-shadow: 0 0 12px rgba(200, 107, 133, .8);
     }
 
-    .prop-note span {
-      color: #91a2b7;
-      font-size: 8px;
-      line-height: 1.35;
+    .prop-note span:last-child {
+      color: #6b5a5e;
+      font-size: 12px;
+      line-height: 1.45;
     }
 
-    .prop-note strong {
-      color: #c9eeff;
-      font-weight: 800;
-    }
+    .prop-note strong { color: var(--maroon); font-weight: 800; }
 
-    /* =========================================================
-       NEWS BROADCAST
-    ========================================================= */
-
-    .broadcast-card {
-      grid-column: 2;
-      grid-row: 1;
-      padding-bottom: 14px;
-    }
-
+    /* Broadcast */
     .broadcast-visual {
       position: absolute;
       left: 14px;
       right: 14px;
-      top: 70px;
+      top: 76px;
       bottom: 14px;
-      border-radius: 15px;
+      border-radius: 17px;
       overflow: hidden;
-      background:
-        linear-gradient(
-          145deg,
-          #182130,
-          #0e141f
-        );
+      background: linear-gradient(145deg, var(--maroon-2), var(--maroon));
     }
 
     .broadcast-image {
@@ -667,100 +708,97 @@
       inset: 0;
       background-size: cover;
       background-position: center;
-      opacity: .57;
-      transition:
-        opacity .45s ease,
-        transform 1s ease;
+      opacity: .7;
+      transition: opacity .45s ease;
     }
 
     .broadcast-visual::after {
       content: "";
       position: absolute;
       inset: 0;
-      background:
-        linear-gradient(
-          180deg,
-          rgba(6,10,16,.04),
-          rgba(6,10,16,.92)
-        );
+      background: linear-gradient(180deg, rgba(40, 8, 17, .05) 5%, rgba(40, 8, 17, .93) 92%);
     }
 
     .broadcast-content {
       position: absolute;
       z-index: 2;
-      left: 15px;
-      right: 15px;
-      bottom: 13px;
+      left: 16px;
+      right: 16px;
+      bottom: 16px;
+      color: #fff;
     }
 
     .broadcast-category {
       display: inline-flex;
-      padding: 5px 7px;
-      border-radius: 5px;
-      color: #d8edff;
-      background: rgba(42,126,206,.18);
-      border: 1px solid rgba(119,207,255,.14);
-      font-size: 6px;
+      padding: 5px 9px;
+      border-radius: 6px;
+      color: #fff;
+      background: rgba(200, 107, 133, .5);
+      border: 1px solid rgba(255,255,255,.22);
+      font-size: 10px;
       font-weight: 800;
-      letter-spacing: .12em;
+      letter-spacing: .08em;
       text-transform: uppercase;
     }
 
     .broadcast-headline {
-      margin-top: 9px;
+      margin-top: 10px;
       font-family: var(--font-display);
-      font-size: 13px;
-      line-height: 1.35;
+      font-size: 16px;
+      line-height: 1.32;
       letter-spacing: -.035em;
     }
 
     .broadcast-meta {
-      margin-top: 7px;
-      color: #8c98a8;
-      font-size: 7px;
+      margin-top: 8px;
+      color: rgba(255,255,255,.65);
+      font-size: 11px;
     }
 
     .broadcast-prop {
-      margin-top: 8px;
-      padding-top: 8px;
-      border-top: 1px solid rgba(255,255,255,.10);
-      color: #b4c1d0;
-      font-size: 7px;
-      line-height: 1.45;
+      margin-top: 10px;
+      padding-top: 10px;
+      border-top: 1px solid rgba(255,255,255,.18);
+      color: rgba(255,255,255,.85);
+      font-size: 12px;
+      line-height: 1.5;
     }
 
-    .broadcast-prop b {
-      color: #9be0ff;
-    }
+    .broadcast-prop b { color: #ffc9d6; }
 
     .broadcast-controls {
       position: absolute;
       z-index: 4;
-      top: 16px;
-      right: 16px;
+      top: 14px;
+      right: 14px;
       display: flex;
-      gap: 4px;
+      gap: 5px;
     }
 
     .broadcast-controls button {
-      width: 22px;
-      height: 22px;
+      width: 30px;
+      height: 30px;
       display: grid;
       place-items: center;
-      border-radius: 7px;
-      color: #c5cfdb;
-      background: rgba(255,255,255,.07);
-      border: 1px solid rgba(255,255,255,.08);
+      border-radius: 9px;
+      color: #fff;
+      font-size: 16px;
+      background: rgba(255,255,255,.16);
+      border: 1px solid rgba(255,255,255,.22);
+      backdrop-filter: blur(6px);
+      transition: background .2s ease;
     }
+
+    .broadcast-controls button:hover { background: rgba(255,255,255,.3); }
 
     .broadcast-progress {
       position: absolute;
       z-index: 4;
-      left: 15px;
-      right: 15px;
+      left: 16px;
+      right: 16px;
       bottom: 7px;
-      height: 2px;
-      background: rgba(255,255,255,.10);
+      height: 3px;
+      background: rgba(255,255,255,.18);
       border-radius: 10px;
       overflow: hidden;
     }
@@ -769,632 +807,577 @@
       display: block;
       height: 100%;
       width: 0;
-      background: #82d9ff;
+      background: #ffc9d6;
     }
 
-    /* =========================================================
-       LOWER WIDGETS
-    ========================================================= */
-
-    .stats-card {
-      grid-column: 1;
-      grid-row: 2;
-    }
-
+    /* Stats */
     .stats-grid {
       display: grid;
       grid-template-columns: repeat(2, 1fr);
-      height: calc(100% - 55px);
-      padding: 13px 16px 16px;
-      gap: 8px;
+      gap: 10px;
+      padding: 16px 18px 18px;
     }
 
+    .stats-card .stats-grid { height: calc(100% - 62px); }
+
     .mini-stat {
-      padding: 13px;
-      border-radius: 14px;
-      background: rgba(255,255,255,.035);
-      border: 1px solid rgba(255,255,255,.055);
-      transition: .25s ease;
+      padding: 14px;
+      border-radius: 16px;
+      background: rgba(255, 255, 255, .8);
+      border: 1px solid var(--line);
+      transition: transform .25s ease, box-shadow .25s ease;
     }
 
     .mini-stat:hover {
       transform: translateY(-2px);
-      background: rgba(255,255,255,.055);
+      box-shadow: var(--shadow);
     }
 
     .mini-stat span {
-      color: #718093;
       display: block;
-      font-size: 7px;
-      text-transform: uppercase;
-      letter-spacing: .1em;
+      color: var(--muted);
+      font-size: 11px;
+      font-weight: 700;
     }
 
     .mini-stat strong {
       display: block;
-      margin-top: 7px;
+      margin-top: 6px;
       font-family: var(--font-display);
-      font-size: 18px;
+      font-size: 24px;
       letter-spacing: -.05em;
+      color: var(--maroon);
     }
 
     .mini-stat small {
       display: block;
-      margin-top: 4px;
-      color: #69778a;
-      font-size: 7px;
+      margin-top: 3px;
+      color: var(--muted-2);
+      font-size: 11px;
     }
 
-    /* =========================================================
-       PROPERTY WIDGET
-    ========================================================= */
-
-    .property-card {
-      grid-column: 2;
-      grid-row: 2;
-    }
-
+    /* Featured widget */
     .property-main {
       display: flex;
-      gap: 12px;
-      padding: 15px;
+      gap: 14px;
+      padding: 16px 20px;
+      text-align: left;
+      width: 100%;
     }
 
     .property-image {
-      width: 110px;
-      height: 110px;
-      flex: 0 0 110px;
-      border-radius: 14px;
-      background:
-        linear-gradient(
-          145deg,
-          rgba(111,38,61,.5),
-          rgba(21,29,41,.9)
-        ),
-        url("https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?auto=format&fit=crop&w=500&q=80")
-        center / cover;
-      border: 1px solid rgba(255,255,255,.08);
+      width: 118px;
+      height: 118px;
+      flex: 0 0 118px;
+      border-radius: 16px;
+      background-size: cover;
+      background-position: center;
+      background-color: var(--sand);
+      border: 1px solid var(--line);
     }
 
-    .property-info {
-      min-width: 0;
-      padding-top: 2px;
-    }
+    .property-info { min-width: 0; }
 
     .property-info .tag {
-      color: #9be2ff;
-      font-size: 7px;
+      color: var(--maroon-3);
+      font-size: 11px;
       font-weight: 800;
-      text-transform: uppercase;
-      letter-spacing: .1em;
     }
 
     .property-info h3 {
-      margin-top: 7px;
+      margin-top: 5px;
       font-family: var(--font-display);
-      font-size: 14px;
-      line-height: 1.25;
+      font-size: 17px;
+      line-height: 1.22;
       letter-spacing: -.04em;
     }
 
     .property-info p {
-      margin-top: 5px;
-      color: #778397;
-      font-size: 8px;
+      margin-top: 4px;
+      color: var(--muted);
+      font-size: 12px;
     }
 
     .property-price {
-      margin-top: 10px;
+      margin-top: 8px;
       font-family: var(--font-display);
-      font-size: 14px;
+      font-size: 18px;
+      color: var(--maroon);
     }
 
     .property-price small {
-      color: #788598;
+      color: var(--muted);
       font-family: var(--font-body);
-      font-size: 7px;
-    }
-
-    .property-actions {
-      display: flex;
-      gap: 6px;
-      margin-top: 8px;
-    }
-
-    .property-actions button {
-      padding: 6px 8px;
-      border-radius: 7px;
-      color: #b8c5d5;
-      background: rgba(255,255,255,.05);
-      border: 1px solid rgba(255,255,255,.06);
-      font-size: 7px;
-      font-weight: 800;
-    }
-
-    /* =========================================================
-       PROP ORB
-    ========================================================= */
-
-    .prop-trigger {
-      position: fixed;
-      z-index: 100;
-      left: 50%;
-      bottom: 17px;
-      transform: translateX(-50%);
-
-      width: 55px;
-      height: 55px;
-
-      display: grid;
-      place-items: center;
-
-      border-radius: 50%;
-
-      background:
-        radial-gradient(
-          circle at 45% 35%,
-          rgba(220,250,255,.95),
-          rgba(99,202,255,.48) 18%,
-          rgba(48,125,255,.19) 40%,
-          rgba(14,43,89,.08) 65%,
-          transparent 75%
-        );
-
-      border: 1px solid rgba(170,232,255,.23);
-
-      box-shadow:
-        0 0 18px rgba(73,180,255,.18),
-        0 0 60px rgba(34,126,255,.16),
-        inset 0 0 18px rgba(170,239,255,.15);
-
-      backdrop-filter: blur(10px);
-
-      transition:
-        width .4s cubic-bezier(.2,.8,.2,1),
-        height .4s cubic-bezier(.2,.8,.2,1),
-        box-shadow .4s ease,
-        transform .3s ease;
-    }
-
-    .prop-trigger:hover {
-      transform: translateX(-50%) scale(1.06);
-    }
-
-    .prop-energy {
-      position: absolute;
-      inset: -7px;
-      border-radius: 50%;
-      border: 1px solid rgba(110,208,255,.11);
-      animation: propBreath 3.5s ease-in-out infinite;
-    }
-
-    .prop-energy::before,
-    .prop-energy::after {
-      content: "";
-      position: absolute;
-      inset: 6px;
-      border-radius: 50%;
-      border: 1px solid rgba(96,191,255,.10);
-    }
-
-    .prop-energy::after {
-      inset: -1px;
-      border-color: rgba(119,215,255,.07);
-      animation: propRotate 8s linear infinite;
-    }
-
-    .prop-core {
-      position: relative;
-      width: 20px;
-      height: 20px;
-      border-radius: 50%;
-
-      background:
-        radial-gradient(
-          circle at 50% 40%,
-          #ffffff,
-          #b9efff 17%,
-          #62caff 38%,
-          #247aff 65%,
-          transparent 73%
-        );
-
-      filter: blur(.15px);
-
-      box-shadow:
-        0 0 13px #80dcff,
-        0 0 32px rgba(50,156,255,.7),
-        0 0 60px rgba(50,126,255,.3);
-
-      animation: coreFloat 2.8s ease-in-out infinite;
-    }
-
-    .prop-core::before,
-    .prop-core::after {
-      content: "";
-      position: absolute;
-      inset: -8px;
-      border-radius: 50%;
-      border: 1px solid rgba(130,221,255,.11);
-    }
-
-    .prop-core::after {
-      inset: -14px;
-      border-color: rgba(71,155,255,.055);
-    }
-
-    @keyframes propBreath {
-      0%, 100% {
-        transform: scale(.96);
-        opacity: .55;
-      }
-      50% {
-        transform: scale(1.06);
-        opacity: 1;
-      }
-    }
-
-    @keyframes propRotate {
-      from { transform: rotate(0); }
-      to { transform: rotate(360deg); }
-    }
-
-    @keyframes coreFloat {
-      0%,100% {
-        transform: scale(.92);
-      }
-      50% {
-        transform: scale(1.08);
-      }
-    }
-
-    /* listening */
-    .prop-trigger.listening {
-      box-shadow:
-        0 0 24px rgba(78,186,255,.42),
-        0 0 90px rgba(35,125,255,.30);
-    }
-
-    .prop-trigger.listening .prop-energy {
-      animation:
-        propBreath 1s ease-in-out infinite,
-        propRotate 3s linear infinite;
-    }
-
-    .prop-trigger.thinking .prop-core {
-      animation:
-        coreFloat 1s ease-in-out infinite,
-        coreSpin 2s linear infinite;
-    }
-
-    @keyframes coreSpin {
-      to { transform: rotate(360deg) scale(1.08); }
-    }
-
-    .prop-caption {
-      position: fixed;
-      z-index: 99;
-      left: 50%;
-      bottom: 3px;
-      transform: translateX(-50%);
-      color: rgba(194,222,238,.45);
-      font-size: 7px;
-      letter-spacing: .15em;
-      text-transform: uppercase;
-      pointer-events: none;
-    }
-
-    /* =========================================================
-       PROP GLASS CHAT
-    ========================================================= */
-
-    .prop-panel {
-      position: fixed;
-      z-index: 90;
-
-      left: 50%;
-      bottom: 84px;
-
-      width: min(390px, calc(100vw - 28px));
-      max-height: 430px;
-
-      transform:
-        translate(-50%, 20px)
-        scale(.95);
-
-      opacity: 0;
-      pointer-events: none;
-
-      border-radius: 23px;
-
-      background:
-        linear-gradient(
-          145deg,
-          rgba(14,25,40,.72),
-          rgba(10,17,29,.60)
-        );
-
-      border: 1px solid rgba(137,218,255,.13);
-
-      box-shadow:
-        0 30px 100px rgba(0,0,0,.42),
-        0 0 80px rgba(40,142,255,.08),
-        inset 0 1px 0 rgba(255,255,255,.07);
-
-      backdrop-filter: blur(30px) saturate(135%);
-
-      transition:
-        opacity .35s ease,
-        transform .35s cubic-bezier(.2,.8,.2,1);
-    }
-
-    .prop-panel.open {
-      opacity: 1;
-      pointer-events: auto;
-      transform:
-        translate(-50%, 0)
-        scale(1);
-    }
-
-    .prop-panel::before {
-      content: "";
-      position: absolute;
-      width: 170px;
-      height: 170px;
-      top: -90px;
-      right: -55px;
-      border-radius: 50%;
-      background: radial-gradient(
-        circle,
-        rgba(72,176,255,.15),
-        transparent 68%
-      );
-      pointer-events: none;
-    }
-
-    .prop-panel-head {
-      position: relative;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 16px 17px 12px;
-      border-bottom: 1px solid rgba(255,255,255,.07);
-    }
-
-    .prop-identity {
-      display: flex;
-      align-items: center;
-      gap: 9px;
-    }
-
-    .mini-orb {
-      width: 25px;
-      height: 25px;
-      border-radius: 50%;
-      background:
-        radial-gradient(
-          circle,
-          white 4%,
-          #a6ecff 20%,
-          #359aff 45%,
-          rgba(48,116,255,.05) 70%
-        );
-      box-shadow:
-        0 0 17px rgba(70,184,255,.55);
-    }
-
-    .prop-identity strong {
-      display: block;
-      font-family: var(--font-display);
       font-size: 11px;
     }
 
-    .prop-identity span {
-      display: block;
-      margin-top: 2px;
-      color: #708196;
-      font-size: 7px;
-    }
+    .property-actions { display: flex; gap: 7px; margin-top: 9px; }
 
-    .prop-close {
-      width: 25px;
-      height: 25px;
-      border-radius: 8px;
-      color: #9aa9ba;
-      background: rgba(255,255,255,.045);
-    }
-
-    .prop-messages {
-      position: relative;
-      padding: 15px;
-      max-height: 265px;
-      overflow-y: auto;
-    }
-
-    .prop-message {
-      max-width: 91%;
-      margin-bottom: 11px;
-      padding: 10px 11px;
-      border-radius: 13px;
-      font-size: 9px;
-      line-height: 1.55;
-    }
-
-    .prop-message.ai {
-      color: #c5d3df;
-      background: rgba(86,181,255,.055);
-      border: 1px solid rgba(105,198,255,.08);
-      border-top-left-radius: 5px;
-    }
-
-    .prop-message.user {
-      margin-left: auto;
-      color: #e9edf3;
-      background: rgba(255,255,255,.075);
-      border: 1px solid rgba(255,255,255,.07);
-      border-top-right-radius: 5px;
-    }
-
-    .prop-message small {
-      display: block;
-      margin-bottom: 4px;
-      color: #73cfff;
-      font-size: 6px;
+    .property-actions button {
+      padding: 7px 11px;
+      border-radius: 9px;
+      color: var(--maroon);
+      background: rgba(104, 29, 49, .07);
+      border: 1px solid rgba(104, 29, 49, .1);
+      font-size: 11.5px;
       font-weight: 800;
-      letter-spacing: .12em;
-      text-transform: uppercase;
+      transition: background .2s ease;
     }
 
-    .prop-suggestions {
+    .property-actions button:hover { background: rgba(104, 29, 49, .13); }
+
+    /* =========================================================
+       PROPERTY SWIPER
+    ========================================================= */
+
+    .section-head {
       display: flex;
-      gap: 5px;
+      align-items: flex-end;
+      justify-content: space-between;
+      gap: 16px;
+      margin: 56px 0 18px;
+    }
+
+    .section-head small {
+      color: var(--muted);
+      font-size: 12px;
+      font-weight: 700;
+    }
+
+    .section-head h2 {
+      margin-top: 6px;
+      font-family: var(--font-display);
+      font-size: clamp(26px, 2.6vw, 38px);
+      letter-spacing: -.06em;
+      color: var(--maroon);
+    }
+
+    .section-tools { display: flex; align-items: center; gap: 8px; }
+
+    .round-btn {
+      width: 44px;
+      height: 44px;
+      display: grid;
+      place-items: center;
+      border-radius: 50%;
+      color: var(--maroon);
+      background: #fff;
+      border: 1px solid var(--line-strong);
+      font-size: 18px;
+      transition: transform .2s ease, background .2s ease, color .2s ease;
+    }
+
+    .round-btn:hover {
+      transform: translateY(-2px);
+      color: #fff;
+      background: var(--maroon);
+    }
+
+    .swiper {
+      position: relative;
+      margin: 0 -36px;
+    }
+
+    .swiper-track {
+      display: flex;
+      gap: 18px;
+      padding: 8px 36px 26px;
       overflow-x: auto;
-      padding: 0 15px 10px;
+      scroll-snap-type: x proximity;
+      scroll-padding: 0 36px;
       scrollbar-width: none;
+      cursor: grab;
+      -webkit-overflow-scrolling: touch;
     }
 
-    .prop-suggestions button {
-      flex: 0 0 auto;
-      padding: 7px 9px;
-      color: #8fb4cb;
-      background: rgba(92,186,255,.055);
-      border: 1px solid rgba(98,190,255,.09);
-      border-radius: 9px;
-      font-size: 7px;
+    .swiper-track::-webkit-scrollbar { display: none; }
+
+    .swiper-track.dragging {
+      cursor: grabbing;
+      scroll-snap-type: none;
+      user-select: none;
     }
 
-    .prop-input {
+    .pcard {
+      flex: 0 0 306px;
+      scroll-snap-align: start;
+      overflow: hidden;
+      text-align: left;
+      border-radius: 24px;
+      background: var(--paper);
+      border: 1px solid var(--line);
+      box-shadow: var(--shadow);
+      cursor: pointer;
+      transition: transform .3s cubic-bezier(.2,.8,.2,1), box-shadow .3s ease;
+    }
+
+    .pcard:hover {
+      transform: translateY(-6px);
+      box-shadow: var(--shadow-lg);
+    }
+
+    .pcard-img {
+      position: relative;
+      height: 206px;
+      background-size: cover;
+      background-position: center;
+      background-color: var(--sand);
+    }
+
+    .pcard-img::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(180deg, rgba(40,8,17,.28), transparent 38%);
+    }
+
+    .chip {
+      position: absolute;
+      z-index: 2;
+      top: 14px;
+      left: 14px;
+      padding: 6px 10px;
+      border-radius: 100px;
+      color: var(--maroon);
+      background: rgba(255,253,250,.92);
+      font-size: 11px;
+      font-weight: 800;
+    }
+
+    .save {
+      position: absolute;
+      z-index: 2;
+      top: 10px;
+      right: 10px;
+      width: 34px;
+      height: 34px;
+      display: grid;
+      place-items: center;
+      border-radius: 50%;
+      color: var(--maroon);
+      background: rgba(255,253,250,.92);
+      font-size: 16px;
+      transition: transform .2s ease;
+    }
+
+    .save:hover { transform: scale(1.1); }
+    .save.on { color: #fff; background: var(--maroon-2); }
+
+    .pcard-body { padding: 16px 18px 18px; }
+
+    .pcard-body small {
+      color: var(--maroon-3);
+      font-size: 12px;
+      font-weight: 700;
+    }
+
+    .pcard-body h3 {
+      margin-top: 5px;
+      font-family: var(--font-display);
+      font-size: 18px;
+      line-height: 1.22;
+      letter-spacing: -.045em;
+    }
+
+    .pcard-body p {
+      margin-top: 6px;
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .pcard-foot {
       display: flex;
-      gap: 7px;
-      margin: 0 12px 12px;
-      padding: 6px;
-      border-radius: 13px;
-      background: rgba(255,255,255,.045);
-      border: 1px solid rgba(255,255,255,.075);
+      align-items: center;
+      justify-content: space-between;
+      margin-top: 14px;
+      padding-top: 13px;
+      border-top: 1px solid var(--line);
     }
 
-    .prop-input input {
-      flex: 1;
-      min-width: 0;
-      padding: 8px 7px;
-      outline: none;
-      border: 0;
-      color: #e9f1f8;
-      background: transparent;
-      font-size: 9px;
+    .pcard-foot strong {
+      font-family: var(--font-display);
+      font-size: 19px;
+      letter-spacing: -.04em;
+      color: var(--maroon);
     }
 
-    .prop-input input::placeholder {
-      color: #647489;
+    .pcard-foot span {
+      padding: 5px 9px;
+      border-radius: 100px;
+      color: var(--green);
+      background: rgba(31,157,107,.09);
+      font-size: 11px;
+      font-weight: 800;
     }
 
-    .prop-send {
-      width: 31px;
-      height: 31px;
-      border-radius: 9px;
-      color: white;
+    .pcard-foot span.neutral { color: var(--muted); background: rgba(74,16,29,.06); }
+
+    .pcard-more {
+      flex: 0 0 280px;
+      scroll-snap-align: start;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      gap: 14px;
+      padding: 28px;
+      border-radius: 24px;
+      color: #fff;
+      text-align: left;
       background:
-        linear-gradient(135deg, #398fff, #185bc7);
-      box-shadow: 0 5px 18px rgba(32,111,220,.25);
+        radial-gradient(circle at 90% 8%, rgba(200,107,133,.55), transparent 55%),
+        linear-gradient(155deg, var(--maroon-2), var(--maroon));
+      box-shadow: var(--shadow-lg);
+      cursor: pointer;
+      transition: transform .3s ease;
+    }
+
+    .pcard-more:hover { transform: translateY(-6px); }
+
+    .pcard-more strong {
+      font-family: var(--font-display);
+      font-size: 24px;
+      line-height: 1.15;
+      letter-spacing: -.05em;
+    }
+
+    .pcard-more p { color: rgba(255,255,255,.75); font-size: 13.5px; line-height: 1.6; }
+
+    .pcard-more span {
+      align-self: flex-start;
+      padding: 10px 15px;
+      border-radius: 11px;
+      background: #fff;
+      color: var(--maroon);
+      font-size: 13px;
+      font-weight: 800;
+    }
+
+    .swiper-progress {
+      height: 3px;
+      margin: 0 36px;
+      border-radius: 4px;
+      background: rgba(74,16,29,.10);
+      overflow: hidden;
+    }
+
+    .swiper-progress span {
+      display: block;
+      height: 100%;
+      width: 20%;
+      border-radius: 4px;
+      background: linear-gradient(90deg, var(--maroon-2), var(--rose));
+      transition: width .15s linear;
     }
 
     /* =========================================================
-       OTHER WORKSPACES
+       PROPERTY DETAIL MODAL
     ========================================================= */
 
-    .full-workspace {
-      grid-column: 1 / -1;
-      height: 100%;
-      overflow: hidden;
+    .modal {
+      position: fixed;
+      inset: 0;
+      z-index: 80;
+      display: grid;
+      place-items: center;
+      padding: 24px;
+      background: rgba(43, 18, 24, .42);
+      backdrop-filter: blur(10px);
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity .3s ease, visibility .3s;
     }
+
+    .modal.open { opacity: 1; visibility: visible; }
+
+    .modal-box {
+      position: relative;
+      width: min(980px, 100%);
+      max-height: calc(100vh - 48px);
+      overflow: auto;
+      display: grid;
+      grid-template-columns: 1.05fr 1fr;
+      border-radius: 30px;
+      background: var(--paper);
+      box-shadow: var(--shadow-lg);
+      transform: translateY(18px) scale(.98);
+      transition: transform .35s cubic-bezier(.2,.8,.2,1);
+    }
+
+    .modal.open .modal-box { transform: translateY(0) scale(1); }
+
+    .modal-img {
+      min-height: 420px;
+      background-size: cover;
+      background-position: center;
+      background-color: var(--sand);
+    }
+
+    .modal-info { padding: 34px 34px 30px; }
+
+    .modal-info small { color: var(--maroon-3); font-size: 13px; font-weight: 700; }
+
+    .modal-info h2 {
+      margin-top: 7px;
+      font-family: var(--font-display);
+      font-size: 30px;
+      line-height: 1.1;
+      letter-spacing: -.06em;
+      color: var(--maroon);
+    }
+
+    .modal-price {
+      margin-top: 14px;
+      font-family: var(--font-display);
+      font-size: 28px;
+      letter-spacing: -.05em;
+    }
+
+    .modal-price small { color: var(--muted); font-family: var(--font-body); font-size: 12px; font-weight: 500; }
+
+    .spec-row {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 8px;
+      margin-top: 18px;
+    }
+
+    .spec {
+      padding: 12px;
+      border-radius: 14px;
+      background: var(--ivory);
+      border: 1px solid var(--line);
+    }
+
+    .spec span { display: block; color: var(--muted); font-size: 11px; font-weight: 600; }
+    .spec strong { display: block; margin-top: 4px; font-family: var(--font-display); font-size: 16px; }
+
+    .modal-desc {
+      margin-top: 18px;
+      color: #6b5a5e;
+      font-size: 14px;
+      line-height: 1.7;
+    }
+
+    .modal-prop {
+      display: flex;
+      gap: 10px;
+      margin-top: 18px;
+      padding: 14px;
+      border-radius: 16px;
+      background: rgba(104, 29, 49, .05);
+      border: 1px solid rgba(104, 29, 49, .1);
+      color: #6b5a5e;
+      font-size: 13px;
+      line-height: 1.55;
+    }
+
+    .modal-prop b { color: var(--maroon); }
+
+    .modal-actions { display: flex; flex-wrap: wrap; gap: 9px; margin-top: 20px; }
+
+    .modal-nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 22px;
+      padding-top: 18px;
+      border-top: 1px solid var(--line);
+    }
+
+    .modal-nav button {
+      color: var(--maroon);
+      font-size: 13px;
+      font-weight: 800;
+    }
+
+    .modal-close {
+      position: absolute;
+      z-index: 3;
+      top: 14px;
+      right: 14px;
+      width: 38px;
+      height: 38px;
+      border-radius: 50%;
+      color: var(--maroon);
+      background: rgba(255,253,250,.94);
+      font-size: 20px;
+      box-shadow: var(--shadow);
+    }
+
+    /* =========================================================
+       SECONDARY VIEWS
+    ========================================================= */
 
     .workspace-heading {
       display: flex;
       align-items: flex-end;
       justify-content: space-between;
-      margin-bottom: 15px;
+      gap: 16px;
+      margin-bottom: 22px;
     }
 
     .workspace-heading small {
-      color: #7b8798;
-      font-size: 8px;
-      text-transform: uppercase;
-      letter-spacing: .14em;
+      color: var(--muted);
+      font-size: 12.5px;
+      font-weight: 700;
     }
 
     .workspace-heading h2 {
       margin-top: 6px;
       font-family: var(--font-display);
-      font-size: 28px;
-      letter-spacing: -.055em;
+      font-size: clamp(30px, 3.4vw, 46px);
+      letter-spacing: -.065em;
+      color: var(--maroon);
     }
 
     .workspace-content {
-      height: calc(100% - 62px);
       display: grid;
-      grid-template-columns: 1.3fr .7fr;
-      gap: 15px;
+      grid-template-columns: 1.4fr .7fr;
+      gap: 16px;
+      align-items: start;
     }
 
-    .large-card {
-      padding: 20px;
+    .large-card { padding: 26px; }
+
+    .large-card p.lead {
+      margin-top: 12px;
+      color: #6b5a5e;
+      font-size: 14px;
+      line-height: 1.75;
+    }
+
+    .filters { display: flex; flex-wrap: wrap; gap: 8px; margin: 18px 0 4px; }
+
+    .filters button,
+    .location-buttons button {
+      padding: 9px 14px;
+      border-radius: 100px;
+      color: #6b5a5e;
+      background: #fff;
+      border: 1px solid var(--line);
+      font-size: 12.5px;
+      font-weight: 700;
+      transition: all .2s ease;
+    }
+
+    .filters button:hover,
+    .location-buttons button:hover { border-color: var(--line-strong); color: var(--maroon); }
+
+    .filters button.active,
+    .location-buttons button.active {
+      color: #fff;
+      background: var(--maroon);
+      border-color: var(--maroon);
     }
 
     .property-grid {
       display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 11px;
-      margin-top: 15px;
+      grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+      gap: 16px;
+      margin-top: 18px;
     }
 
-    .listing {
-      min-width: 0;
-      border: 1px solid var(--line);
-      background: rgba(255,255,255,.04);
-      border-radius: 16px;
-      overflow: hidden;
-      transition: .25s ease;
-    }
-
-    .listing:hover {
-      transform: translateY(-3px);
-      border-color: rgba(255,255,255,.15);
-    }
-
-    .listing-img {
-      height: 135px;
-      background-size: cover;
-      background-position: center;
-    }
-
-    .listing-info {
-      padding: 12px;
-    }
-
-    .listing-info small {
-      color: #76cbf7;
-      font-size: 7px;
-      text-transform: uppercase;
-      letter-spacing: .1em;
-    }
-
-    .listing-info h3 {
-      margin-top: 5px;
-      font-family: var(--font-display);
-      font-size: 12px;
-    }
-
-    .listing-info p {
-      margin-top: 4px;
-      color: #748195;
-      font-size: 8px;
-    }
-
-    .listing-info strong {
-      display: block;
-      margin-top: 9px;
-      font-size: 11px;
-    }
+    .property-grid .pcard { flex: initial; }
 
     .market-grid {
       display: grid;
@@ -1403,171 +1386,690 @@
     }
 
     .market-box {
-      padding: 15px;
-      border-radius: 15px;
-      background: rgba(255,255,255,.045);
+      padding: 16px;
+      border-radius: 16px;
+      background: #fff;
       border: 1px solid var(--line);
     }
 
-    .market-box span {
-      color: #748195;
-      font-size: 7px;
-      text-transform: uppercase;
-      letter-spacing: .1em;
-    }
+    .market-box span { color: var(--muted); font-size: 11.5px; font-weight: 700; }
 
     .market-box strong {
       display: block;
       margin-top: 7px;
       font-family: var(--font-display);
-      font-size: 19px;
+      font-size: 26px;
+      letter-spacing: -.05em;
+      color: var(--maroon);
     }
 
-    .market-box small {
+    .market-box small { display: block; margin-top: 4px; color: var(--green); font-size: 11.5px; font-weight: 700; }
+
+    .location-buttons { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 14px; }
+
+    .scenario {
+      margin-top: 22px;
+      padding: 22px;
+      border-radius: 20px;
+      background: #fff;
+      border: 1px solid var(--line);
+    }
+
+    .scenario-row { display: flex; justify-content: space-between; align-items: baseline; margin-top: 10px; }
+
+    .scenario-row strong {
+      font-family: var(--font-display);
+      font-size: 28px;
+      letter-spacing: -.05em;
+      color: var(--maroon);
+    }
+
+    .scenario-row span { color: var(--muted); font-size: 12px; }
+
+    .scenario input[type=range] { width: 100%; margin-top: 14px; accent-color: var(--maroon-2); }
+
+    .range-legend {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 6px;
+      color: var(--muted);
+      font-size: 11.5px;
+    }
+
+    .scenario-result {
+      margin-top: 18px;
+      padding-top: 16px;
+      border-top: 1px solid var(--line);
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 10px;
+    }
+
+    .scenario-result div span { display: block; color: var(--muted); font-size: 11.5px; font-weight: 600; }
+
+    .scenario-result div strong {
       display: block;
       margin-top: 4px;
-      color: var(--green);
-      font-size: 7px;
+      font-family: var(--font-display);
+      font-size: 20px;
+      color: var(--maroon-2);
     }
 
-    .location-buttons {
+    .map-placeholder {
+      margin-top: 20px;
+      height: 270px;
+      display: grid;
+      place-items: center;
+      border-radius: 20px;
+      background:
+        radial-gradient(circle at 48% 42%, rgba(200,107,133,.22), transparent 30%),
+        rgba(255,255,255,.6);
+      border: 1px solid var(--line);
+      text-align: center;
+    }
+
+    .map-placeholder b {
+      display: block;
+      font-family: var(--font-display);
+      font-size: 54px;
+      letter-spacing: -.06em;
+      color: var(--maroon-2);
+    }
+
+    .map-placeholder span { display: block; margin-top: 6px; color: var(--muted); font-size: 12.5px; }
+
+    .list-cards { display: grid; gap: 14px; margin-top: 16px; }
+
+    .insight-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+
+    .insight {
+      padding: 24px;
+      text-align: left;
+      border-radius: 22px;
+      background: #fff;
+      border: 1px solid var(--line);
+      transition: transform .25s ease, box-shadow .25s ease;
+    }
+
+    .insight:hover { transform: translateY(-4px); box-shadow: var(--shadow); }
+
+    .insight small { color: var(--maroon-3); font-size: 12px; font-weight: 800; }
+
+    .insight h3 {
+      margin-top: 10px;
+      font-family: var(--font-display);
+      font-size: 19px;
+      line-height: 1.25;
+      letter-spacing: -.045em;
+    }
+
+    .insight p { margin-top: 10px; color: var(--muted); font-size: 13.5px; line-height: 1.65; }
+
+    .role {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 14px;
+      padding: 18px 20px;
+      border-radius: 18px;
+      background: #fff;
+      border: 1px solid var(--line);
+    }
+
+    .role strong { display: block; font-family: var(--font-display); font-size: 16px; letter-spacing: -.03em; }
+    .role span { display: block; margin-top: 4px; color: var(--muted); font-size: 12.5px; }
+
+    .form-grid { display: grid; gap: 12px; margin-top: 18px; }
+    .form-grid.two { grid-template-columns: 1fr 1fr; }
+
+    .field label { display: block; margin-bottom: 6px; color: var(--muted); font-size: 12px; font-weight: 700; }
+
+    .field input,
+    .field select,
+    .field textarea {
+      width: 100%;
+      padding: 13px 14px;
+      border-radius: 12px;
+      background: #fff;
+      border: 1px solid var(--line-strong);
+      font-size: 14px;
+      outline: none;
+      transition: border-color .2s ease, box-shadow .2s ease;
+    }
+
+    .field textarea { min-height: 120px; resize: vertical; }
+
+    .field input:focus,
+    .field select:focus,
+    .field textarea:focus {
+      border-color: var(--maroon-3);
+      box-shadow: 0 0 0 4px rgba(138, 48, 72, .12);
+    }
+
+    .form-ok {
+      display: none;
+      margin-top: 14px;
+      padding: 12px 14px;
+      border-radius: 12px;
+      color: var(--green);
+      background: rgba(31,157,107,.09);
+      font-size: 13.5px;
+      font-weight: 700;
+    }
+
+    .contact-lines { display: grid; gap: 14px; margin-top: 16px; }
+    .contact-lines b { display: block; font-size: 12px; color: var(--muted); font-weight: 700; }
+    .contact-lines span { display: block; margin-top: 3px; font-size: 14.5px; font-weight: 600; }
+
+    .legal-body h3 {
+      margin-top: 22px;
+      font-family: var(--font-display);
+      font-size: 17px;
+      letter-spacing: -.03em;
+    }
+
+    .legal-body p { margin-top: 8px; color: #6b5a5e; font-size: 14px; line-height: 1.75; max-width: 760px; }
+
+    .about-pillars { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-top: 22px; }
+
+    .about-pillars div {
+      padding: 18px;
+      border-radius: 18px;
+      background: #fff;
+      border: 1px solid var(--line);
+    }
+
+    .about-pillars strong { display: block; font-family: var(--font-display); font-size: 16px; color: var(--maroon); }
+    .about-pillars span { display: block; margin-top: 6px; color: var(--muted); font-size: 13px; line-height: 1.6; }
+
+    /* =========================================================
+       FOOTER
+    ========================================================= */
+
+    .footer {
+      position: relative;
+      z-index: 2;
+      margin-top: 30px;
+      padding: 62px 36px 118px;
+      color: #f3e6e9;
+      background:
+        radial-gradient(700px 300px at 90% 0%, rgba(200,107,133,.28), transparent 60%),
+        linear-gradient(180deg, var(--maroon-2), var(--maroon) 70%);
+      border-radius: 40px 40px 0 0;
+    }
+
+    .footer-inner { max-width: 1428px; margin: 0 auto; }
+
+    .footer-top {
+      display: grid;
+      grid-template-columns: 1.5fr repeat(3, 1fr) 1.3fr;
+      gap: 36px;
+    }
+
+    .footer .brand-mark { background: #fff; color: var(--maroon); box-shadow: none; }
+    .footer .brand-copy strong { color: #fff; }
+    .footer .brand-copy small { color: rgba(255,255,255,.6); }
+
+    .footer-about {
+      margin-top: 18px;
+      max-width: 320px;
+      color: rgba(255,255,255,.7);
+      font-size: 13.5px;
+      line-height: 1.7;
+    }
+
+    .footer h5 {
+      margin-bottom: 16px;
+      font-family: var(--font-display);
+      font-size: 14px;
+      color: #fff;
+    }
+
+    .footer-links { display: grid; gap: 11px; }
+
+    .footer-links button,
+    .footer-links a {
+      text-align: left;
+      color: rgba(255,255,255,.72);
+      font-size: 13.5px;
+      transition: color .2s ease, transform .2s ease;
+    }
+
+    .footer-links button:hover,
+    .footer-links a:hover { color: #fff; transform: translateX(3px); }
+
+    .newsletter {
+      display: flex;
+      gap: 6px;
+      margin-top: 4px;
+      padding: 6px;
+      border-radius: 14px;
+      background: rgba(255,255,255,.1);
+      border: 1px solid rgba(255,255,255,.16);
+    }
+
+    .newsletter input {
+      flex: 1;
+      min-width: 0;
+      padding: 9px 10px;
+      color: #fff;
+      background: transparent;
+      border: 0;
+      outline: none;
+      font-size: 13px;
+    }
+
+    .newsletter input::placeholder { color: rgba(255,255,255,.5); }
+
+    .newsletter button {
+      padding: 9px 14px;
+      border-radius: 10px;
+      color: var(--maroon);
+      background: #fff;
+      font-size: 12.5px;
+      font-weight: 800;
+    }
+
+    .newsletter-note { margin-top: 10px; color: rgba(255,255,255,.7); font-size: 12.5px; min-height: 18px; }
+
+    .socials { display: flex; gap: 8px; margin-top: 16px; }
+
+    .socials a {
+      width: 36px;
+      height: 36px;
+      display: grid;
+      place-items: center;
+      border-radius: 11px;
+      color: #fff;
+      background: rgba(255,255,255,.1);
+      border: 1px solid rgba(255,255,255,.14);
+      font-size: 12px;
+      font-weight: 800;
+      transition: background .2s ease;
+    }
+
+    .socials a:hover { background: rgba(255,255,255,.22); }
+
+    .footer-bottom {
       display: flex;
       flex-wrap: wrap;
-      gap: 7px;
-      margin-top: 13px;
+      align-items: center;
+      justify-content: space-between;
+      gap: 14px;
+      margin-top: 44px;
+      padding-top: 22px;
+      border-top: 1px solid rgba(255,255,255,.16);
+      color: rgba(255,255,255,.65);
+      font-size: 12.5px;
     }
 
-    .location-buttons button {
-      padding: 8px 11px;
-      border-radius: 9px;
-      color: #9aa7b8;
-      background: rgba(255,255,255,.045);
-      border: 1px solid var(--line);
-      font-size: 8px;
+    .footer-bottom nav { display: flex; flex-wrap: wrap; gap: 20px; }
+
+    .footer-bottom button { color: rgba(255,255,255,.75); font-size: 12.5px; }
+    .footer-bottom button:hover { color: #fff; }
+
+    .disclaimer { margin-top: 12px; color: rgba(255,255,255,.5); font-size: 11.5px; line-height: 1.6; max-width: 900px; }
+
+    /* =========================================================
+       PROP — AMBIENT LIGHT
+    ========================================================= */
+
+    .prop-trigger {
+      position: fixed;
+      z-index: 100;
+      left: 50%;
+      bottom: 34px;
+      transform: translateX(-50%);
+      width: 64px;
+      height: 64px;
+      padding: 0;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, .3);
+      border: 1px solid rgba(255, 255, 255, .85);
+      box-shadow:
+        0 10px 36px rgba(104, 29, 49, .28),
+        0 0 56px rgba(200, 107, 133, .4),
+        inset 0 0 20px rgba(255, 255, 255, .8);
+      backdrop-filter: blur(8px);
+      transition: transform .3s ease, box-shadow .4s ease;
     }
 
-    .location-buttons button.active {
-      color: white;
-      background: rgba(112,204,255,.09);
-      border-color: rgba(112,204,255,.20);
+    .prop-trigger:hover { transform: translateX(-50%) scale(1.07); }
+
+    .orb-spin {
+      position: absolute;
+      inset: 0;
+      border-radius: 50%;
+      overflow: hidden;
+      animation: orbSpin 10s linear infinite;
+    }
+
+    .orb-spin i {
+      position: absolute;
+      border-radius: 50%;
+      filter: blur(9px);
+      opacity: .92;
+    }
+
+    .orb-spin .b1 { width: 46px; height: 46px; left: -8px; top: -6px; background: #dc7594; animation: drift1 5s ease-in-out infinite; }
+    .orb-spin .b2 { width: 40px; height: 40px; right: -9px; bottom: -6px; background: #7a2138; animation: drift2 6.5s ease-in-out infinite; }
+    .orb-spin .b3 { width: 34px; height: 34px; left: 16px; bottom: -13px; background: #f4b968; animation: drift3 4.6s ease-in-out infinite; }
+    .orb-spin .b4 { width: 32px; height: 32px; right: 4px; top: -11px; background: #86bdff; animation: drift4 7.4s ease-in-out infinite; }
+
+    .orb-glass {
+      position: absolute;
+      inset: 0;
+      border-radius: 50%;
+      pointer-events: none;
+      background:
+        radial-gradient(circle at 34% 26%, rgba(255,255,255,.95), transparent 34%),
+        radial-gradient(circle at 60% 68%, rgba(255,255,255,.25), transparent 50%);
+    }
+
+    .prop-ring {
+      position: absolute;
+      inset: -8px;
+      border-radius: 50%;
+      border: 1px solid rgba(200, 107, 133, .35);
+      animation: ringBreath 3.6s ease-in-out infinite;
+      pointer-events: none;
+    }
+
+    @keyframes orbSpin { to { transform: rotate(360deg); } }
+
+    @keyframes ringBreath {
+      0%, 100% { transform: scale(.94); opacity: .5; }
+      50% { transform: scale(1.12); opacity: 1; }
+    }
+
+    @keyframes drift1 { 0%,100% { transform: translate(0,0) scale(1); } 50% { transform: translate(14px,12px) scale(1.15); } }
+    @keyframes drift2 { 0%,100% { transform: translate(0,0) scale(1); } 50% { transform: translate(-13px,-10px) scale(.9); } }
+    @keyframes drift3 { 0%,100% { transform: translate(0,0) scale(1); } 50% { transform: translate(10px,-14px) scale(1.2); } }
+    @keyframes drift4 { 0%,100% { transform: translate(0,0) scale(1); } 50% { transform: translate(-12px,13px) scale(1.1); } }
+
+    .prop-trigger.listening {
+      box-shadow:
+        0 10px 36px rgba(104, 29, 49, .3),
+        0 0 80px rgba(200, 107, 133, .7),
+        inset 0 0 20px rgba(255, 255, 255, .8);
+    }
+
+    .prop-trigger.listening .prop-ring { animation-duration: 1s; }
+
+    .prop-trigger.thinking .orb-spin { animation-duration: 1.6s; }
+    .prop-trigger.thinking .prop-ring { animation-duration: .8s; }
+
+    .prop-caption {
+      position: fixed;
+      z-index: 99;
+      left: 50%;
+      bottom: 12px;
+      transform: translateX(-50%);
+      color: var(--maroon-3);
+      opacity: .7;
+      font-size: 10.5px;
+      font-weight: 700;
+      letter-spacing: .1em;
+      pointer-events: none;
+    }
+
+    /* Prop chat — small, glassy, conversational */
+    .prop-panel {
+      position: fixed;
+      z-index: 90;
+      left: 50%;
+      bottom: 118px;
+      width: min(380px, calc(100vw - 28px));
+      max-height: 480px;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+      border-radius: 26px;
+      background: linear-gradient(150deg, rgba(255, 252, 248, .72), rgba(250, 238, 240, .6));
+      border: 1px solid rgba(255, 255, 255, .8);
+      box-shadow:
+        0 30px 80px rgba(74, 16, 29, .22),
+        0 0 70px rgba(200, 107, 133, .16),
+        inset 0 1px 0 #fff;
+      backdrop-filter: blur(30px) saturate(150%);
+      opacity: 0;
+      pointer-events: none;
+      transform: translate(-50%, 20px) scale(.95);
+      transition: opacity .35s ease, transform .35s cubic-bezier(.2,.8,.2,1);
+    }
+
+    .prop-panel.open {
+      opacity: 1;
+      pointer-events: auto;
+      transform: translate(-50%, 0) scale(1);
+    }
+
+    .prop-panel::before {
+      content: "";
+      position: absolute;
+      width: 200px;
+      height: 200px;
+      top: -110px;
+      right: -60px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(200, 107, 133, .35), transparent 68%);
+      pointer-events: none;
+    }
+
+    .prop-panel-head {
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 16px 18px 12px;
+    }
+
+    .prop-identity { display: flex; align-items: center; gap: 10px; }
+
+    .mini-orb {
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      background:
+        radial-gradient(circle at 35% 30%, #fff 4%, #ffd0dc 25%, #c86b85 55%, #7a2138 95%);
+      box-shadow: 0 0 18px rgba(200, 107, 133, .65);
+    }
+
+    .prop-identity strong { display: block; font-family: var(--font-display); font-size: 14px; color: var(--maroon); }
+    .prop-identity span { display: block; margin-top: 1px; color: var(--muted); font-size: 11px; }
+
+    .prop-close {
+      width: 30px;
+      height: 30px;
+      border-radius: 10px;
+      color: var(--maroon);
+      background: rgba(74, 16, 29, .07);
+      font-size: 17px;
+    }
+
+    .prop-messages {
+      position: relative;
+      flex: 1;
+      min-height: 120px;
+      padding: 6px 16px 10px;
+      overflow-y: auto;
+      scrollbar-width: thin;
+    }
+
+    .prop-message {
+      max-width: 90%;
+      margin-bottom: 10px;
+      padding: 11px 13px;
+      border-radius: 17px;
+      font-size: 13.5px;
+      line-height: 1.55;
+      animation: msgIn .3s ease;
+    }
+
+    @keyframes msgIn { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: none; } }
+
+    .prop-message.ai {
+      color: var(--ink);
+      background: rgba(255, 255, 255, .78);
+      border: 1px solid rgba(255, 255, 255, .9);
+      border-top-left-radius: 6px;
+      box-shadow: 0 4px 14px rgba(74, 16, 29, .05);
+    }
+
+    .prop-message.user {
+      margin-left: auto;
+      color: #fff;
+      background: linear-gradient(135deg, var(--maroon-3), var(--maroon));
+      border-top-right-radius: 6px;
+    }
+
+    .prop-message small { display: block; margin-bottom: 4px; color: var(--maroon-3); font-size: 10.5px; font-weight: 800; letter-spacing: .06em; }
+
+    .typing { display: inline-flex; gap: 4px; padding: 14px 16px; }
+    .typing i { width: 6px; height: 6px; border-radius: 50%; background: var(--rose); animation: dot 1s ease-in-out infinite; }
+    .typing i:nth-child(2) { animation-delay: .15s; }
+    .typing i:nth-child(3) { animation-delay: .3s; }
+    @keyframes dot { 0%,100% { opacity: .3; transform: translateY(0); } 50% { opacity: 1; transform: translateY(-3px); } }
+
+    .prop-suggestions {
+      display: flex;
+      gap: 6px;
+      overflow-x: auto;
+      padding: 0 16px 10px;
+      scrollbar-width: none;
+    }
+
+    .prop-suggestions button {
+      flex: 0 0 auto;
+      padding: 8px 12px;
+      color: var(--maroon-2);
+      background: rgba(255, 255, 255, .7);
+      border: 1px solid rgba(104, 29, 49, .12);
+      border-radius: 100px;
+      font-size: 12px;
+      font-weight: 700;
+      transition: background .2s ease;
+    }
+
+    .prop-suggestions button:hover { background: #fff; }
+
+    .prop-input {
+      display: flex;
+      gap: 8px;
+      margin: 0 12px 12px;
+      padding: 6px;
+      border-radius: 18px;
+      background: rgba(255, 255, 255, .8);
+      border: 1px solid rgba(255, 255, 255, .95);
+      box-shadow: 0 4px 16px rgba(74, 16, 29, .06);
+    }
+
+    .prop-input input {
+      flex: 1;
+      min-width: 0;
+      padding: 9px 10px;
+      color: var(--ink);
+      background: transparent;
+      border: 0;
+      outline: none;
+      font-size: 14px;
+    }
+
+    .prop-input input::placeholder { color: var(--muted-2); }
+
+    .prop-send {
+      width: 38px;
+      height: 38px;
+      border-radius: 13px;
+      color: #fff;
+      background: linear-gradient(135deg, var(--maroon-3), var(--maroon));
+      box-shadow: 0 6px 16px rgba(74, 16, 29, .25);
+      font-size: 16px;
     }
 
     /* =========================================================
-       MOBILE
+       RESPONSIVE
     ========================================================= */
 
-    @media (max-width: 1000px) {
-      html,
-      body {
-        overflow: auto;
-      }
-
-      .app {
-        min-height: 100vh;
-        height: auto;
-      }
-
-      .topbar {
-        padding: 0 15px;
-      }
-
-      .nav {
-        display: none;
-      }
-
-      .header-actions {
-        min-width: auto;
-      }
-
-      .status {
-        display: none;
-      }
-
-      .workspace {
-        height: auto;
-        min-height: calc(100vh - 76px);
-        grid-template-columns: 1fr;
-        padding: 18px 15px 90px;
-        overflow: visible;
-      }
-
-      .hero-panel {
-        min-height: 390px;
-      }
-
-      .intelligence-grid {
-        height: 690px;
-      }
-
-      .full-workspace {
-        min-height: 690px;
-      }
-
-      .property-grid {
-        grid-template-columns: repeat(2, 1fr);
-      }
+    @media (max-width: 1240px) {
+      .footer-top { grid-template-columns: 1.3fr 1fr 1fr; }
+      .footer-top > :nth-child(4),
+      .footer-top > :nth-child(5) { grid-column: span 1; }
+      .status { display: none; }
     }
 
-    @media (max-width: 620px) {
-      .brand-copy small {
+    @media (max-width: 1100px) {
+      .topbar { padding: 0 18px; }
+      .menu-btn { display: grid; place-items: center; }
+      .header-actions { min-width: 0; }
+      .brand { min-width: 0; }
+
+      .nav {
+        position: fixed;
+        top: 74px;
+        left: 0;
+        right: 0;
+        height: auto;
+        max-height: calc(100vh - 74px);
+        overflow-y: auto;
         display: none;
+        flex-direction: column;
+        align-items: stretch;
+        padding: 12px 16px 20px;
+        background: rgba(255, 253, 250, .98);
+        backdrop-filter: blur(20px);
+        border-bottom: 1px solid var(--line);
+        box-shadow: var(--shadow-lg);
       }
 
-      .workspace {
-        display: block;
-      }
+      .nav.open { display: flex; }
+      .nav-item { height: auto; }
+      .nav-link { width: 100%; padding: 13px 14px; font-size: 15px; }
+      .nav-link .caret { display: none; }
+      .mega { display: none; }
+      .m-only { display: flex; }
 
-      .hero-title {
-        font-size: 43px;
-      }
+      .workspace { padding: 22px 18px 50px; }
+      .home-top { grid-template-columns: 1fr; gap: 28px; }
+      .swiper { margin: 0 -18px; }
+      .swiper-track { padding: 8px 18px 24px; scroll-padding: 0 18px; }
+      .swiper-progress { margin: 0 18px; }
+      .workspace-content { grid-template-columns: 1fr; }
+      .insight-grid { grid-template-columns: 1fr; }
+      .modal-box { grid-template-columns: 1fr; }
+      .modal-img { min-height: 240px; }
+      .footer { padding: 46px 20px 118px; }
+      .footer-top { grid-template-columns: 1fr 1fr; }
+      .footer-top > :first-child { grid-column: 1 / -1; }
+      .footer-top > :last-child { grid-column: 1 / -1; }
+    }
+
+    @media (max-width: 640px) {
+      .brand-copy small { display: none; }
+      .login { padding: 10px 13px; font-size: 12px; }
+      .hero-title { font-size: 44px; }
+      .hero-metrics { gap: 22px; }
 
       .intelligence-grid {
-        height: 920px;
         grid-template-columns: 1fr;
-        grid-template-rows: 360px 320px 220px;
+        grid-template-rows: 380px 400px 240px 190px;
       }
 
-      .pulse-card {
-        grid-column: 1;
-        grid-row: 1;
-      }
-
-      .broadcast-card {
-        grid-column: 1;
-        grid-row: 2;
-      }
-
-      .stats-card {
-        grid-column: 1;
-        grid-row: 3;
-      }
-
-      .property-card {
-        display: none;
-      }
-
-      .workspace-content {
-        display: block;
-        overflow: auto;
-      }
-
-      .property-grid {
-        grid-template-columns: 1fr;
-      }
-
-      .market-grid {
-        grid-template-columns: repeat(2, 1fr);
-      }
-
-      .hero-panel {
-        min-height: 420px;
-      }
+      .pulse-stats { gap: 18px; }
+      .pulse-controls { flex-direction: column; }
+      .market-grid { grid-template-columns: repeat(2, 1fr); }
+      .about-pillars { grid-template-columns: 1fr; }
+      .form-grid.two { grid-template-columns: 1fr; }
+      .pcard { flex-basis: 268px; }
+      .pcard-more { flex-basis: 240px; }
+      .modal-info { padding: 24px 20px; }
+      .spec-row { grid-template-columns: 1fr 1fr 1fr; }
+      .section-tools .round-btn { display: none; }
+      .property-image { width: 92px; height: 92px; flex-basis: 92px; }
     }
 
     @media (prefers-reduced-motion: reduce) {
-      *,
-      *::before,
-      *::after {
+      *, *::before, *::after {
         animation-duration: .01ms !important;
         animation-iteration-count: 1 !important;
         scroll-behavior: auto !important;
@@ -1579,9 +2081,9 @@
 
 <body>
 
-<div class="app">
+<div class="ambient"></div>
 
-  <div class="ambient"></div>
+<div class="app">
 
   <!-- =======================================================
        HEADER
@@ -1589,374 +2091,286 @@
 
   <header class="topbar">
 
-    <a href="#" class="brand">
-      <div class="brand-mark">
-        <span>B</span>
-      </div>
-
+    <a href="#" class="brand" onclick="switchView('home'); return false;">
+      <div class="brand-mark"><span>B</span></div>
       <div class="brand-copy">
         <strong>BELOVEETH</strong>
-        <small>Realty & PropTech</small>
+        <small>Realty &amp; PropTech</small>
       </div>
     </a>
 
-    <nav class="nav" id="mainNav">
-      <button class="active" data-view="home">Home</button>
-      <button data-view="properties">Properties</button>
-      <button data-view="investment">Investment</button>
-      <button data-view="pulse">Pulse</button>
-      <button data-view="locations">Locations</button>
-      <button data-view="partners">Partners</button>
+    <nav class="nav" id="mainNav" aria-label="Main">
+
+      <div class="nav-item">
+        <button class="nav-link active" data-view="home">Home</button>
+      </div>
+
+      <!-- Properties mega menu -->
+      <div class="nav-item">
+        <button class="nav-link" data-view="properties">Properties <span class="caret"></span></button>
+
+        <div class="mega mega-props">
+          <div>
+            <h4>Browse</h4>
+            <div class="mega-links">
+              <button onclick="switchView('properties')">All properties<small>Homes, land and commercial</small></button>
+              <button onclick="filterAndGo('Residential')">Residential<small>Houses and apartments</small></button>
+              <button onclick="filterAndGo('Land')">Land and development<small>Plots and opportunities</small></button>
+              <button onclick="filterAndGo('Off-plan')">Off-plan<small>Buy before it's built</small></button>
+              <button onclick="filterAndGo('Commercial')">Commercial<small>Offices and retail</small></button>
+            </div>
+          </div>
+          <div>
+            <h4>Featured now</h4>
+            <div class="mega-cards" id="megaProps"></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="nav-item"><button class="nav-link" data-view="investment">Investment</button></div>
+      <div class="nav-item"><button class="nav-link" data-view="pulse">Pulse</button></div>
+      <div class="nav-item"><button class="nav-link" data-view="insights">Market Insights</button></div>
+
+      <!-- Explore mega menu -->
+      <div class="nav-item">
+        <button class="nav-link" id="exploreLink">Explore <span class="caret"></span></button>
+
+        <div class="mega mega-explore">
+          <div>
+            <h4>Company</h4>
+            <div class="mega-links">
+              <button onclick="switchView('about')">About us<small>Who we are and what we're building</small></button>
+              <button onclick="switchView('careers')">Careers<small>Join the Beloveeth team</small></button>
+              <button onclick="switchView('partners')">Partners<small>Developers, owners, professionals</small></button>
+            </div>
+          </div>
+          <div>
+            <h4>Intelligence</h4>
+            <div class="mega-links">
+              <button onclick="switchView('locations')">Locations<small>Markets across Nigeria</small></button>
+              <button onclick="switchView('insights')">Market insights<small>Reads from the Pulse desk</small></button>
+              <button onclick="switchView('contact')">Contact us<small>Talk to the team</small></button>
+            </div>
+          </div>
+          <div class="mega-promo">
+            <strong>Ask Prop before you decide.</strong>
+            <p>Prop reads the price, location and market signals behind a property in plain language.</p>
+            <button onclick="openProp()">Talk to Prop</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- mobile-only shortcuts -->
+      <div class="nav-item m-only"><button class="nav-link" data-view="locations">Locations</button></div>
+      <div class="nav-item m-only"><button class="nav-link" data-view="partners">Partners</button></div>
+      <div class="nav-item m-only"><button class="nav-link" data-view="about">About us</button></div>
+      <div class="nav-item m-only"><button class="nav-link" data-view="careers">Careers</button></div>
+      <div class="nav-item m-only"><button class="nav-link" data-view="contact">Contact us</button></div>
+
     </nav>
 
     <div class="header-actions">
-      <div class="status">
-        <span class="status-dot"></span>
-        Intelligence online
-      </div>
+      <div class="status"><span class="status-dot"></span>Intelligence online</div>
 
-      <button class="login" onclick="window.location.href='client.html'">
-        Enter Platform
-      </button>
+      <button class="login" onclick="window.location.href='client.html'">Enter Platform</button>
+
+      <button class="menu-btn" id="menuBtn" aria-label="Open menu" aria-expanded="false">☰</button>
     </div>
 
   </header>
 
 
-  <!-- =======================================================
-       HOME
-  ======================================================== -->
-
   <main class="workspace">
+
+    <!-- =====================================================
+         HOME
+    ====================================================== -->
 
     <section class="view active" id="view-home">
 
-      <div class="hero-panel">
+      <div class="home-top">
 
-        <div class="eyebrow">
-          <i></i>
-          Nigeria's connected property intelligence ecosystem
-        </div>
+        <div class="hero-panel">
 
-        <h1 class="hero-title">
-          Real estate,<br>
-          <span>with intelligence.</span>
-        </h1>
-
-        <p class="hero-copy">
-          Discover property, understand the market and evaluate opportunities
-          through one connected PropTech ecosystem built for the way Nigeria's
-          property market actually moves.
-        </p>
-
-        <div class="hero-actions">
-          <button
-            class="primary-btn"
-            onclick="switchView('properties')"
-          >
-            Explore Properties
-          </button>
-
-          <button
-            class="secondary-btn"
-            onclick="switchView('pulse')"
-          >
-            Explore Market Intelligence
-          </button>
-        </div>
-
-        <div class="ecosystem-line">
-          Property · Intelligence · Investment · Infrastructure
-        </div>
-
-        <div class="hero-metrics">
-
-          <div class="metric">
-            <strong>01</strong>
-            <span>Property ecosystem</span>
+          <div class="eyebrow">
+            <i></i>
+            Nigeria's connected property intelligence ecosystem
           </div>
 
-          <div class="metric">
-            <strong>AI</strong>
-            <span>Prop intelligence</span>
+          <h1 class="hero-title">
+            Real estate,<br>
+            <span>with intelligence.</span>
+          </h1>
+
+          <p class="hero-copy">
+            Discover property, understand the market and evaluate opportunities
+            through one connected PropTech ecosystem built for the way Nigeria's
+            property market actually moves.
+          </p>
+
+          <div class="hero-actions">
+            <button class="primary-btn" onclick="switchView('properties')">Explore properties</button>
+            <button class="secondary-btn" onclick="switchView('pulse')">Explore market intelligence</button>
           </div>
 
-          <div class="metric">
-            <strong>NG</strong>
-            <span>Market focus</span>
+          <div class="ecosystem-line">
+            Property, intelligence, investment and infrastructure
           </div>
+
+          <div class="hero-metrics">
+            <div class="metric"><strong>01</strong><span>Property ecosystem</span></div>
+            <div class="metric"><strong>AI</strong><span>Prop intelligence</span></div>
+            <div class="metric"><strong>NG</strong><span>Market focus</span></div>
+          </div>
+
+        </div>
+
+
+        <div class="intelligence-grid">
+
+          <!-- PULSE -->
+          <article class="card pulse-card">
+
+            <div class="card-head">
+              <div>
+                <div class="card-label">Beloveeth Pulse</div>
+                <div class="card-title">Market intelligence</div>
+              </div>
+
+              <div class="pulse-controls">
+                <select class="select" id="locationSelect" aria-label="Location">
+                  <option>Ikoyi</option>
+                  <option>Lekki</option>
+                  <option>Ikeja</option>
+                  <option>Yaba</option>
+                  <option>Abuja</option>
+                </select>
+                <select class="select" id="metricSelect" aria-label="Metric">
+                  <option value="price">Price / m²</option>
+                  <option value="demand">Demand</option>
+                  <option value="supply">Supply</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="pulse-stats">
+              <div class="pulse-stat">
+                <strong id="pulseValue">₦1.42m</strong>
+                <span>Current indicator</span>
+              </div>
+              <div class="pulse-stat">
+                <strong class="positive" id="pulseChange">+8.4%</strong>
+                <span>Model movement</span>
+              </div>
+              <div class="pulse-stat">
+                <strong id="pulseDemand">High</strong>
+                <span>Demand</span>
+              </div>
+            </div>
+
+            <div class="chart-wrap"><canvas id="pulseChart"></canvas></div>
+
+            <div class="prop-note">
+              <span class="prop-note-dot"></span>
+              <span>
+                <strong>Prop:</strong> under the current model assumptions,
+                this location is showing sustained price momentum.
+              </span>
+            </div>
+
+          </article>
+
+
+          <!-- NEWS -->
+          <article class="card broadcast-card">
+
+            <div class="card-head">
+              <div>
+                <div class="card-label">Beloveeth Pulse</div>
+                <div class="card-title">Market broadcast</div>
+              </div>
+              <span class="pill">DEMO FEED</span>
+            </div>
+
+            <div class="broadcast-visual">
+              <div class="broadcast-image" id="broadcastImage"></div>
+
+              <div class="broadcast-content">
+                <span class="broadcast-category" id="broadcastCategory">Construction</span>
+                <h3 class="broadcast-headline" id="broadcastHeadline"></h3>
+                <div class="broadcast-meta" id="broadcastMeta"></div>
+                <div class="broadcast-prop" id="broadcastProp"></div>
+              </div>
+
+              <div class="broadcast-controls">
+                <button onclick="previousNews()" aria-label="Previous story">‹</button>
+                <button onclick="nextNews()" aria-label="Next story">›</button>
+              </div>
+
+              <div class="broadcast-progress"><span id="broadcastProgress"></span></div>
+            </div>
+
+          </article>
+
+
+          <!-- STATS -->
+          <article class="card stats-card">
+
+            <div class="card-head">
+              <div>
+                <div class="card-label">Market snapshot</div>
+                <div class="card-title">Signals worth watching</div>
+              </div>
+              <span class="pill">DATA LAYER</span>
+            </div>
+
+            <div class="stats-grid">
+              <div class="mini-stat"><span>Residential demand</span><strong>↑</strong><small>Model signal</small></div>
+              <div class="mini-stat"><span>Supply pressure</span><strong>→</strong><small>Market balance</small></div>
+              <div class="mini-stat"><span>Development</span><strong>↑</strong><small>Activity indicator</small></div>
+              <div class="mini-stat"><span>Rental yield</span><strong>8.7%</strong><small>Illustrative scenario</small></div>
+            </div>
+
+          </article>
+
+
+          <!-- FEATURED PROPERTY -->
+          <article class="card property-card">
+
+            <div class="card-head">
+              <div>
+                <div class="card-label">Property intelligence</div>
+                <div class="card-title">Opportunity in focus</div>
+              </div>
+              <span class="pill">FEATURED</span>
+            </div>
+
+            <div class="property-main" id="featuredWidget"></div>
+
+          </article>
 
         </div>
 
       </div>
 
 
-      <div class="intelligence-grid">
-
-        <!-- ================= PULSE ================= -->
-
-        <article class="card pulse-card">
-
-          <div class="card-head">
-
-            <div>
-              <div class="card-label">Beloveeth Pulse</div>
-              <div class="card-title">Market intelligence</div>
-            </div>
-
-            <div class="pulse-controls">
-
-              <select class="select" id="locationSelect">
-                <option>Ikoyi</option>
-                <option>Lekki</option>
-                <option>Ikeja</option>
-                <option>Yaba</option>
-                <option>Abuja</option>
-              </select>
-
-              <select class="select" id="metricSelect">
-                <option value="price">Price / m²</option>
-                <option value="demand">Demand</option>
-                <option value="supply">Supply</option>
-              </select>
-
-            </div>
-
-          </div>
-
-
-          <div class="pulse-stats">
-
-            <div class="pulse-stat">
-              <strong id="pulseValue">₦1.42m</strong>
-              <span>Current indicator</span>
-            </div>
-
-            <div class="pulse-stat">
-              <strong class="positive" id="pulseChange">+8.4%</strong>
-              <span>Model movement</span>
-            </div>
-
-            <div class="pulse-stat">
-              <strong id="pulseDemand">High</strong>
-              <span>Demand</span>
-            </div>
-
-          </div>
-
-
-          <div class="chart-wrap">
-            <canvas id="pulseChart"></canvas>
-          </div>
-
-
-          <div class="prop-note">
-
-            <span class="prop-note-dot"></span>
-
-            <span>
-              <strong>PROP</strong>
-              · Under the current model assumptions,
-              this location is showing sustained price momentum.
-            </span>
-
-          </div>
-
-        </article>
-
-
-        <!-- ================= NEWS ================= -->
-
-        <article class="card broadcast-card">
-
-          <div class="card-head">
-
-            <div>
-              <div class="card-label">Beloveeth Pulse</div>
-              <div class="card-title">Market broadcast</div>
-            </div>
-
-            <span class="pill">
-              DEMO FEED
-            </span>
-
-          </div>
-
-
-          <div class="broadcast-visual">
-
-            <div
-              class="broadcast-image"
-              id="broadcastImage"
-            ></div>
-
-            <div class="broadcast-content">
-
-              <span
-                class="broadcast-category"
-                id="broadcastCategory"
-              >
-                CONSTRUCTION
-              </span>
-
-              <h3
-                class="broadcast-headline"
-                id="broadcastHeadline"
-              >
-                Cement prices remain an important construction-cost signal.
-              </h3>
-
-              <div
-                class="broadcast-meta"
-                id="broadcastMeta"
-              >
-                Demonstration story · Source/date displayed in production
-              </div>
-
-              <div
-                class="broadcast-prop"
-                id="broadcastProp"
-              >
-                <b>PROP</b>
-                · Material-cost movement can influence development budgets,
-                project economics and future asking prices.
-              </div>
-
-            </div>
-
-            <div class="broadcast-controls">
-
-              <button onclick="previousNews()">
-                ‹
-              </button>
-
-              <button onclick="nextNews()">
-                ›
-              </button>
-
-            </div>
-
-            <div class="broadcast-progress">
-              <span id="broadcastProgress"></span>
-            </div>
-
-          </div>
-
-        </article>
-
-
-        <!-- ================= MARKET STATS ================= -->
-
-        <article class="card stats-card">
-
-          <div class="card-head">
-
-            <div>
-              <div class="card-label">Market snapshot</div>
-              <div class="card-title">Signals worth watching</div>
-            </div>
-
-            <span class="pill">
-              DATA LAYER
-            </span>
-
-          </div>
-
-
-          <div class="stats-grid">
-
-            <div class="mini-stat">
-              <span>Residential demand</span>
-              <strong>↑</strong>
-              <small>Model signal</small>
-            </div>
-
-            <div class="mini-stat">
-              <span>Supply pressure</span>
-              <strong>→</strong>
-              <small>Market balance</small>
-            </div>
-
-            <div class="mini-stat">
-              <span>Development</span>
-              <strong>↑</strong>
-              <small>Activity indicator</small>
-            </div>
-
-            <div class="mini-stat">
-              <span>Rental yield</span>
-              <strong>8.7%</strong>
-              <small>Illustrative scenario</small>
-            </div>
-
-          </div>
-
-        </article>
-
-
-        <!-- ================= PROPERTY ================= -->
-
-        <article class="card property-card">
-
-          <div class="card-head">
-
-            <div>
-              <div class="card-label">Property intelligence</div>
-              <div class="card-title">Opportunity in focus</div>
-            </div>
-
-            <span class="pill">
-              FEATURED
-            </span>
-
-          </div>
-
-
-          <div class="property-main">
-
-            <div class="property-image"></div>
-
-            <div class="property-info">
-
-              <div class="tag">
-                Residential · Ikoyi
-              </div>
-
-              <h3>
-                Modern 3-Bed Residence
-              </h3>
-
-              <p>
-                Lagos · Verified listing workflow
-              </p>
-
-              <div class="property-price">
-                ₦420m
-                <small> indicative</small>
-              </div>
-
-              <div class="property-actions">
-
-                <button
-                  onclick="openProp('Analyze this property')"
-                >
-                  Ask Prop
-                </button>
-
-                <button
-                  onclick="switchView('properties')"
-                >
-                  Explore
-                </button>
-
-              </div>
-
-            </div>
-
-          </div>
-
-        </article>
-
+      <!-- PROPERTY SWIPER -->
+      <div class="section-head">
+        <div>
+          <small>Handpicked for the intelligence layer</small>
+          <h2>Featured properties</h2>
+        </div>
+
+        <div class="section-tools">
+          <button class="secondary-btn" onclick="switchView('properties')">View all</button>
+          <button class="round-btn" aria-label="Scroll left" onclick="swipe(-1)">‹</button>
+          <button class="round-btn" aria-label="Scroll right" onclick="swipe(1)">›</button>
+        </div>
+      </div>
+
+      <div class="swiper">
+        <div class="swiper-track" id="swiperTrack"></div>
+        <div class="swiper-progress"><span id="swiperBar"></span></div>
       </div>
 
     </section>
@@ -1968,128 +2382,43 @@
 
     <section class="view" id="view-properties">
 
-      <div class="full-workspace">
+      <div class="workspace-heading">
+        <div>
+          <small>Beloveeth Property Intelligence</small>
+          <h2>Explore properties.</h2>
+        </div>
+        <button class="secondary-btn" onclick="openProp('Help me find a property')">Ask Prop</button>
+      </div>
 
-        <div class="workspace-heading">
+      <div class="workspace-content">
 
-          <div>
-            <small>Beloveeth Property Intelligence</small>
-            <h2>Explore properties.</h2>
+        <div class="card large-card">
+          <div class="card-label">Nigeria · demo listings</div>
+          <div class="card-title">Property discovery</div>
+
+          <div class="filters" id="filters">
+            <button class="active" data-filter="All">All</button>
+            <button data-filter="Residential">Residential</button>
+            <button data-filter="Land">Land</button>
+            <button data-filter="Off-plan">Off-plan</button>
+            <button data-filter="Commercial">Commercial</button>
           </div>
 
-          <button
-            class="secondary-btn"
-            onclick="openProp('Help me find a property')"
-          >
-            Ask Prop
-          </button>
-
+          <div class="property-grid" id="propertyGrid"></div>
         </div>
 
-
-        <div class="workspace-content">
-
-          <div class="card large-card">
-
-            <div class="card-head" style="padding:0">
-              <div>
-                <div class="card-label">Nigeria</div>
-                <div class="card-title">
-                  Property discovery
-                </div>
-              </div>
-            </div>
-
-
-            <div class="property-grid">
-
-              <div class="listing">
-
-                <div
-                  class="listing-img"
-                  style="background-image:url('https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=800&q=80')"
-                ></div>
-
-                <div class="listing-info">
-                  <small>Lagos · Lekki</small>
-                  <h3>Contemporary Residence</h3>
-                  <p>4 bed · 5 bath · residential</p>
-                  <strong>₦280m</strong>
-                </div>
-
-              </div>
-
-
-              <div class="listing">
-
-                <div
-                  class="listing-img"
-                  style="background-image:url('https://images.unsplash.com/photo-1600566753190-17f0baa2a6c3?auto=format&fit=crop&w=800&q=80')"
-                ></div>
-
-                <div class="listing-info">
-                  <small>Abuja</small>
-                  <h3>Premium Family Home</h3>
-                  <p>5 bed · residential</p>
-                  <strong>₦195m</strong>
-                </div>
-
-              </div>
-
-
-              <div class="listing">
-
-                <div
-                  class="listing-img"
-                  style="background-image:url('https://images.unsplash.com/photo-1600607687920-4e2a09cf159d?auto=format&fit=crop&w=800&q=80')"
-                ></div>
-
-                <div class="listing-info">
-                  <small>Ogun</small>
-                  <h3>Development Opportunity</h3>
-                  <p>Land · development</p>
-                  <strong>₦75m</strong>
-                </div>
-
-              </div>
-
-            </div>
-
-          </div>
-
-
-          <div class="card large-card">
-
-            <div class="card-label">
-              Property intelligence
-            </div>
-
-            <div class="card-title">
-              Don't just find it.
-              Understand it.
-            </div>
-
-            <p style="
-              margin-top:13px;
-              color:#7e8a9c;
-              font-size:10px;
-              line-height:1.7;
-            ">
-              Beloveeth can connect a property with location,
-              market conditions, comparables, rental economics
-              and verification information.
-            </p>
-
-            <button
-              class="primary-btn"
-              style="margin-top:18px"
-              onclick="openProp('What should I consider before buying property?')"
-            >
-              Analyze with Prop
-            </button>
-
-          </div>
-
+        <div class="card large-card">
+          <div class="card-label">Property intelligence</div>
+          <div class="card-title">Don't just find it. Understand it.</div>
+          <p class="lead">
+            Beloveeth can connect a property with location,
+            market conditions, comparables, rental economics
+            and verification information.
+          </p>
+          <button class="primary-btn" style="margin-top:20px"
+            onclick="openProp('What should I consider before buying property?')">
+            Analyze with Prop
+          </button>
         </div>
 
       </div>
@@ -2103,172 +2432,61 @@
 
     <section class="view" id="view-investment">
 
-      <div class="full-workspace">
+      <div class="workspace-heading">
+        <div>
+          <small>Investment Intelligence</small>
+          <h2>Understand the economics.</h2>
+        </div>
+      </div>
 
-        <div class="workspace-heading">
+      <div class="workspace-content">
 
-          <div>
-            <small>Investment Intelligence</small>
-            <h2>Understand the economics.</h2>
+        <div class="card large-card">
+
+          <div class="market-grid">
+            <div class="market-box"><span>Illustrative yield</span><strong>8.7%</strong><small>Scenario</small></div>
+            <div class="market-box"><span>Price movement</span><strong>+8.4%</strong><small>Modelled</small></div>
+            <div class="market-box"><span>Rental demand</span><strong>High</strong><small>Signal</small></div>
+            <div class="market-box"><span>Supply</span><strong>Stable</strong><small>Signal</small></div>
+          </div>
+
+          <div class="scenario">
+            <div class="card-label">Scenario engine</div>
+
+            <div class="scenario-row">
+              <strong id="invAmtLabel">₦250m</strong>
+              <span>Example acquisition</span>
+            </div>
+            <input id="invAmt" type="range" min="50000000" max="1000000000" step="10000000" value="250000000" aria-label="Acquisition price">
+            <div class="range-legend"><span>₦50m</span><span>₦1bn</span></div>
+
+            <div class="scenario-row" style="margin-top:22px">
+              <strong id="invYieldLabel">8.7%</strong>
+              <span>Assumed gross yield</span>
+            </div>
+            <input id="invYield" type="range" min="3" max="14" step="0.1" value="8.7" aria-label="Gross yield">
+            <div class="range-legend"><span>3%</span><span>14%</span></div>
+
+            <div class="scenario-result">
+              <div><span>Annual rental income</span><strong id="invAnnual">₦21.75m</strong></div>
+              <div><span>Monthly equivalent</span><strong id="invMonthly">₦1.81m</strong></div>
+            </div>
           </div>
 
         </div>
 
-
-        <div class="workspace-content">
-
-          <div class="card large-card">
-
-            <div class="market-grid">
-
-              <div class="market-box">
-                <span>Illustrative yield</span>
-                <strong>8.7%</strong>
-                <small>Scenario</small>
-              </div>
-
-              <div class="market-box">
-                <span>Price movement</span>
-                <strong>+8.4%</strong>
-                <small>Modelled</small>
-              </div>
-
-              <div class="market-box">
-                <span>Rental demand</span>
-                <strong>High</strong>
-                <small>Signal</small>
-              </div>
-
-              <div class="market-box">
-                <span>Supply</span>
-                <strong>Stable</strong>
-                <small>Signal</small>
-              </div>
-
-            </div>
-
-
-            <div style="
-              margin-top:25px;
-              padding:20px;
-              border-radius:17px;
-              background:rgba(255,255,255,.035);
-              border:1px solid rgba(255,255,255,.06);
-            ">
-
-              <div class="card-label">
-                Scenario engine
-              </div>
-
-              <div
-                style="
-                  display:flex;
-                  justify-content:space-between;
-                  align-items:center;
-                  margin-top:10px;
-                "
-              >
-                <strong
-                  style="
-                    font-family:var(--font-display);
-                    font-size:22px;
-                  "
-                >
-                  ₦250m
-                </strong>
-
-                <span
-                  style="
-                    color:#778598;
-                    font-size:8px;
-                  "
-                >
-                  Example acquisition
-                </span>
-              </div>
-
-              <input
-                id="investmentInput"
-                type="range"
-                min="50000000"
-                max="1000000000"
-                step="10000000"
-                value="250000000"
-                style="
-                  width:100%;
-                  margin-top:18px;
-                  accent-color:#55bfff;
-                "
-                oninput="updateInvestment(this.value)"
-              >
-
-              <div
-                style="
-                  display:flex;
-                  justify-content:space-between;
-                  margin-top:10px;
-                  color:#708096;
-                  font-size:8px;
-                "
-              >
-                <span>₦50m</span>
-                <span>₦1bn</span>
-              </div>
-
-              <div
-                id="investmentResult"
-                style="
-                  margin-top:16px;
-                  color:#b7c5d5;
-                  font-size:9px;
-                  line-height:1.6;
-                "
-              >
-                Illustrative annual rental income:
-                <strong style="color:#8fddff">
-                  ₦21.75m
-                </strong>
-              </div>
-
-            </div>
-
-          </div>
-
-
-          <div class="card large-card">
-
-            <div class="card-label">
-              Prop's lens
-            </div>
-
-            <div
-              class="card-title"
-              style="font-size:19px; margin-top:7px"
-            >
-              Investment isn't just price.
-            </div>
-
-            <p style="
-              margin-top:14px;
-              color:#7e8a9c;
-              font-size:10px;
-              line-height:1.75;
-            ">
-              Beloveeth's intelligence layer is designed to connect
-              acquisition price with rental economics, market movement,
-              location conditions, supply, demand and comparable assets.
-            </p>
-
-            <button
-              class="secondary-btn"
-              style="margin-top:18px"
-              onclick="openProp('Explain the investment signals on this page')"
-            >
-              Discuss with Prop
-            </button>
-
-          </div>
-
+        <div class="card large-card">
+          <div class="card-label">Prop's lens</div>
+          <div class="card-title" style="font-size:21px;margin-top:7px">Investment isn't just price.</div>
+          <p class="lead">
+            Beloveeth's intelligence layer is designed to connect acquisition price
+            with rental economics, market movement, location conditions, supply,
+            demand and comparable assets.
+          </p>
+          <button class="secondary-btn" style="margin-top:20px"
+            onclick="openProp('Explain the investment signals on this page')">
+            Discuss with Prop
+          </button>
         </div>
 
       </div>
@@ -2282,134 +2500,105 @@
 
     <section class="view" id="view-pulse">
 
-      <div class="full-workspace">
-
-        <div class="workspace-heading">
-
-          <div>
-            <small>Beloveeth Pulse</small>
-            <h2>The market, interpreted.</h2>
-          </div>
-
-          <span class="pill">
-            MODEL / DATA LAYER
-          </span>
-
+      <div class="workspace-heading">
+        <div>
+          <small>Beloveeth Pulse</small>
+          <h2>The market, interpreted.</h2>
         </div>
+        <span class="pill">MODEL / DATA LAYER</span>
+      </div>
 
+      <div class="workspace-content">
 
-        <div class="workspace-content">
+        <div class="card large-card">
 
-          <div class="card large-card">
-
-            <div class="market-grid">
-
-              <div class="market-box">
-                <span>Price</span>
-                <strong>₦1.42m</strong>
-                <small>+8.4%</small>
-              </div>
-
-              <div class="market-box">
-                <span>Demand</span>
-                <strong>↑</strong>
-                <small>Positive signal</small>
-              </div>
-
-              <div class="market-box">
-                <span>Supply</span>
-                <strong>→</strong>
-                <small>Stable signal</small>
-              </div>
-
-              <div class="market-box">
-                <span>Development</span>
-                <strong>↑</strong>
-                <small>Activity signal</small>
-              </div>
-
-            </div>
-
-            <div style="
-              height:280px;
-              margin-top:18px;
-            ">
-              <canvas id="pulseLargeChart"></canvas>
-            </div>
-
+          <div class="market-grid">
+            <div class="market-box"><span>Index</span><strong data-s="index">124</strong><small data-s="move">+8.4%</small></div>
+            <div class="market-box"><span>Demand</span><strong data-s="demand">↑</strong><small data-s="demandLabel">Positive signal</small></div>
+            <div class="market-box"><span>Supply</span><strong data-s="supply">→</strong><small data-s="supplyLabel">Stable signal</small></div>
+            <div class="market-box"><span>Development</span><strong data-s="dev">↑</strong><small data-s="devLabel">Activity signal</small></div>
           </div>
 
-
-          <div class="card large-card">
-
-            <div class="card-label">
-              Locations
-            </div>
-
-            <div class="card-title">
-              Nigeria market matrix
-            </div>
-
-            <div class="location-buttons">
-
-              <button class="active">
-                Lagos
-              </button>
-
-              <button>
-                Abuja
-              </button>
-
-              <button>
-                Ogun
-              </button>
-
-              <button>
-                Oyo
-              </button>
-
-              <button>
-                Rivers
-              </button>
-
-              <button>
-                Enugu
-              </button>
-
-              <button>
-                Kano
-              </button>
-
-            </div>
-
-            <div style="
-              margin-top:25px;
-              padding-top:17px;
-              border-top:1px solid var(--line);
-            ">
-
-              <div class="card-label">
-                Intelligence principle
-              </div>
-
-              <p style="
-                margin-top:10px;
-                color:#8b98aa;
-                font-size:9px;
-                line-height:1.7;
-              ">
-                Beloveeth should distinguish verified internal data,
-                calculated intelligence, approved external data and
-                AI interpretation rather than presenting every number
-                as fact.
-              </p>
-
-            </div>
-
+          <div style="height:290px;margin-top:20px;position:relative">
+            <canvas id="pulseLargeChart"></canvas>
           </div>
 
         </div>
 
+        <div class="card large-card">
+          <div class="card-label">Locations</div>
+          <div class="card-title">Nigeria market matrix</div>
+
+          <div class="location-buttons state-btns">
+            <button class="active" data-state="Lagos">Lagos</button>
+            <button data-state="Abuja">Abuja</button>
+            <button data-state="Ogun">Ogun</button>
+            <button data-state="Oyo">Oyo</button>
+            <button data-state="Rivers">Rivers</button>
+            <button data-state="Enugu">Enugu</button>
+            <button data-state="Kano">Kano</button>
+          </div>
+
+          <div style="margin-top:26px;padding-top:18px;border-top:1px solid var(--line)">
+            <div class="card-label">Intelligence principle</div>
+            <p class="lead" style="font-size:13.5px">
+              Beloveeth should distinguish verified internal data, calculated
+              intelligence, approved external data and AI interpretation rather
+              than presenting every number as fact. Figures here are illustrative.
+            </p>
+          </div>
+        </div>
+
+      </div>
+
+    </section>
+
+
+    <!-- =====================================================
+         INSIGHTS
+    ====================================================== -->
+
+    <section class="view" id="view-insights">
+
+      <div class="workspace-heading">
+        <div>
+          <small>Market Insights</small>
+          <h2>Reads from the Pulse desk.</h2>
+        </div>
+        <span class="pill">DEMO ARTICLES</span>
+      </div>
+
+      <div class="insight-grid">
+        <button class="insight" onclick="openProp('Explain how construction costs affect property prices')">
+          <small>Construction</small>
+          <h3>How building-material costs reach the asking price</h3>
+          <p>Cement, steel and logistics feed into development budgets long before a buyer sees a price tag.</p>
+        </button>
+        <button class="insight" onclick="openProp('Explain property yield')">
+          <small>Investment</small>
+          <h3>Yield is the start of the conversation, not the end</h3>
+          <p>Vacancy, service charges and comparable rents decide whether a headline yield holds up.</p>
+        </button>
+        <button class="insight" onclick="openProp('How does infrastructure change property demand?')">
+          <small>Infrastructure</small>
+          <h3>Why a new road can move a whole neighbourhood</h3>
+          <p>Travel time is a hidden price factor. Here is how connectivity reshapes demand along a corridor.</p>
+        </button>
+        <button class="insight" onclick="openProp('What is happening in the market?')">
+          <small>Market</small>
+          <h3>Reading demand and supply together</h3>
+          <p>A rising price with rising supply says something different from a rising price with shrinking supply.</p>
+        </button>
+        <button class="insight" onclick="openProp('What should I consider before buying property?')">
+          <small>Buying guide</small>
+          <h3>Five checks before you pay a deposit</h3>
+          <p>Title, survey, approvals, service charges and the surrounding supply picture.</p>
+        </button>
+        <button class="insight" onclick="openProp('What is happening with construction costs?')">
+          <small>Finance</small>
+          <h3>Financing conditions and who can actually buy</h3>
+          <p>Mortgage access shapes the pool of active buyers and how quickly homes move.</p>
+        </button>
       </div>
 
     </section>
@@ -2421,119 +2610,46 @@
 
     <section class="view" id="view-locations">
 
-      <div class="full-workspace">
+      <div class="workspace-heading">
+        <div>
+          <small>Location Intelligence</small>
+          <h2>Markets across Nigeria.</h2>
+        </div>
+      </div>
 
-        <div class="workspace-heading">
+      <div class="workspace-content">
 
-          <div>
-            <small>Location Intelligence</small>
-            <h2>Markets across Nigeria.</h2>
+        <div class="card large-card">
+          <div class="card-label">Select a market</div>
+
+          <div class="location-buttons state-btns">
+            <button class="active" data-state="Lagos">Lagos</button>
+            <button data-state="Abuja">Abuja</button>
+            <button data-state="Ogun">Ogun</button>
+            <button data-state="Oyo">Oyo</button>
+            <button data-state="Rivers">Rivers</button>
+            <button data-state="Enugu">Enugu</button>
+            <button data-state="Kano">Kano</button>
           </div>
 
+          <div class="map-placeholder">
+            <div>
+              <b data-s="name">Lagos</b>
+              <span>Nigeria location intelligence</span>
+            </div>
+          </div>
         </div>
 
+        <div class="card large-card">
+          <div class="card-label" data-s="name">Lagos</div>
+          <div class="card-title">Market signal</div>
 
-        <div class="workspace-content">
-
-          <div class="card large-card">
-
-            <div class="card-label">
-              Select a market
-            </div>
-
-            <div class="location-buttons">
-
-              <button class="active">Lagos</button>
-              <button>Abuja</button>
-              <button>Ogun</button>
-              <button>Oyo</button>
-              <button>Rivers</button>
-              <button>Enugu</button>
-              <button>Kano</button>
-
-            </div>
-
-            <div style="
-              margin-top:22px;
-              height:270px;
-              border-radius:18px;
-              background:
-                radial-gradient(circle at 48% 42%, rgba(72,176,255,.13), transparent 28%),
-                rgba(255,255,255,.025);
-              border:1px solid rgba(255,255,255,.06);
-              display:grid;
-              place-items:center;
-            ">
-
-              <div style="
-                text-align:center;
-              ">
-
-                <div style="
-                  font-family:var(--font-display);
-                  font-size:42px;
-                  opacity:.8;
-                ">
-                  NG
-                </div>
-
-                <div style="
-                  margin-top:8px;
-                  color:#728094;
-                  font-size:8px;
-                  letter-spacing:.13em;
-                  text-transform:uppercase;
-                ">
-                  Nigeria location intelligence
-                </div>
-
-              </div>
-
-            </div>
-
+          <div class="stats-grid" style="padding:18px 0 0">
+            <div class="mini-stat"><span>Demand</span><strong data-s="demand">↑</strong><small data-s="demandLabel">Positive</small></div>
+            <div class="mini-stat"><span>Supply</span><strong data-s="supply">→</strong><small data-s="supplyLabel">Stable</small></div>
+            <div class="mini-stat"><span>Pricing</span><strong data-s="price">↑</strong><small data-s="priceLabel">Momentum</small></div>
+            <div class="mini-stat"><span>Activity</span><strong data-s="dev">↑</strong><small data-s="devLabel">Development</small></div>
           </div>
-
-
-          <div class="card large-card">
-
-            <div class="card-label">
-              Lagos
-            </div>
-
-            <div class="card-title">
-              Market signal
-            </div>
-
-            <div class="stats-grid" style="padding:18px 0 0">
-
-              <div class="mini-stat">
-                <span>Demand</span>
-                <strong>↑</strong>
-                <small>Positive</small>
-              </div>
-
-              <div class="mini-stat">
-                <span>Supply</span>
-                <strong>→</strong>
-                <small>Stable</small>
-              </div>
-
-              <div class="mini-stat">
-                <span>Pricing</span>
-                <strong>↑</strong>
-                <small>Momentum</small>
-              </div>
-
-              <div class="mini-stat">
-                <span>Activity</span>
-                <strong>↑</strong>
-                <small>Development</small>
-              </div>
-
-            </div>
-
-          </div>
-
         </div>
 
       </div>
@@ -2547,90 +2663,176 @@
 
     <section class="view" id="view-partners">
 
-      <div class="full-workspace">
+      <div class="workspace-heading">
+        <div>
+          <small>Beloveeth Partner Ecosystem</small>
+          <h2>Built beyond listings.</h2>
+        </div>
+      </div>
 
-        <div class="workspace-heading">
+      <div class="workspace-content">
 
-          <div>
-            <small>Beloveeth Partner Ecosystem</small>
-            <h2>Built beyond listings.</h2>
+        <div class="card large-card">
+
+          <div class="market-grid">
+            <div class="market-box"><span>Developers</span><strong>01</strong><small>Supply</small></div>
+            <div class="market-box"><span>Property owners</span><strong>02</strong><small>Assets</small></div>
+            <div class="market-box"><span>Professionals</span><strong>03</strong><small>Services</small></div>
+            <div class="market-box"><span>Investors</span><strong>04</strong><small>Capital</small></div>
           </div>
+
+          <p class="lead" style="max-width:620px;margin-top:24px">
+            Beloveeth is designed as a connected ecosystem where property supply,
+            clients, partners, operations and intelligence can eventually operate
+            through one digital infrastructure.
+          </p>
 
         </div>
 
-
-        <div class="workspace-content">
-
-          <div class="card large-card">
-
-            <div class="market-grid">
-
-              <div class="market-box">
-                <span>Developers</span>
-                <strong>01</strong>
-                <small>Supply</small>
-              </div>
-
-              <div class="market-box">
-                <span>Property owners</span>
-                <strong>02</strong>
-                <small>Assets</small>
-              </div>
-
-              <div class="market-box">
-                <span>Professionals</span>
-                <strong>03</strong>
-                <small>Services</small>
-              </div>
-
-              <div class="market-box">
-                <span>Investors</span>
-                <strong>04</strong>
-                <small>Capital</small>
-              </div>
-
-            </div>
-
-            <p style="
-              margin-top:24px;
-              max-width:600px;
-              color:#818da0;
-              font-size:10px;
-              line-height:1.8;
-            ">
-              Beloveeth is designed as a connected ecosystem where
-              property supply, clients, partners, operations and
-              intelligence can eventually operate through one
-              digital infrastructure.
-            </p>
-
+        <div class="card large-card">
+          <div class="card-label">Partner with Beloveeth</div>
+          <div class="card-title">Bring the asset. Bring the expertise.</div>
+          <div style="display:flex;flex-wrap:wrap;gap:10px;margin-top:20px">
+            <button class="primary-btn" onclick="openProp('How can I become a Beloveeth partner?')">Ask Prop</button>
+            <button class="secondary-btn" onclick="prefillContact('Partnership enquiry')">Contact us</button>
           </div>
-
-
-          <div class="card large-card">
-
-            <div class="card-label">
-              Partner with Beloveeth
-            </div>
-
-            <div class="card-title">
-              Bring the asset.
-              Bring the expertise.
-            </div>
-
-            <button
-              class="primary-btn"
-              style="margin-top:20px"
-              onclick="openProp('How can I become a Beloveeth partner?')"
-            >
-              Ask Prop
-            </button>
-
-          </div>
-
         </div>
 
       </div>
+
+    </section>
+
+
+    <!-- =====================================================
+         ABOUT
+    ====================================================== -->
+
+    <section class="view" id="view-about">
+
+      <div class="workspace-heading">
+        <div>
+          <small>About Beloveeth</small>
+          <h2>Property, with the thinking built in.</h2>
+        </div>
+      </div>
+
+      <div class="card large-card">
+        <p class="lead" style="max-width:760px;margin-top:0;font-size:16px">
+          Beloveeth Realty &amp; PropTech brings property discovery, market intelligence
+          and investment insight into one connected platform, built for the way
+          Nigeria's property market actually moves.
+        </p>
+
+        <div class="about-pillars">
+          <div><strong>Discover</strong><span>Verified property workflows across residential, land, off-plan and commercial.</span></div>
+          <div><strong>Understand</strong><span>Prop and Beloveeth Pulse explain price, demand, supply and construction signals in plain language.</span></div>
+          <div><strong>Invest</strong><span>Scenario tools connect acquisition price to rental economics and market movement.</span></div>
+        </div>
+
+        <div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:24px">
+          <button class="primary-btn" onclick="switchView('careers')">See careers</button>
+          <button class="secondary-btn" onclick="switchView('contact')">Contact us</button>
+        </div>
+      </div>
+
+    </section>
+
+
+    <!-- =====================================================
+         CAREERS
+    ====================================================== -->
+
+    <section class="view" id="view-careers">
+
+      <div class="workspace-heading">
+        <div>
+          <small>Careers</small>
+          <h2>Build Nigeria's property intelligence.</h2>
+        </div>
+        <span class="pill">SAMPLE ROLES</span>
+      </div>
+
+      <div class="workspace-content">
+        <div class="list-cards" style="margin-top:0">
+          <div class="role"><div><strong>PropTech Engineer</strong><span>Product and platform · Lagos or remote</span></div><button class="secondary-btn" onclick="prefillContact('Career: PropTech Engineer')">Apply</button></div>
+          <div class="role"><div><strong>Market Intelligence Analyst</strong><span>Data and research · Lagos</span></div><button class="secondary-btn" onclick="prefillContact('Career: Market Intelligence Analyst')">Apply</button></div>
+          <div class="role"><div><strong>Property Advisor</strong><span>Client success · Lagos, Abuja</span></div><button class="secondary-btn" onclick="prefillContact('Career: Property Advisor')">Apply</button></div>
+          <div class="role"><div><strong>Partnerships Manager</strong><span>Developers and owners · Lagos</span></div><button class="secondary-btn" onclick="prefillContact('Career: Partnerships Manager')">Apply</button></div>
+        </div>
+
+        <div class="card large-card">
+          <div class="card-label">Don't see your role?</div>
+          <div class="card-title">Tell us what you'd build.</div>
+          <button class="primary-btn" style="margin-top:18px" onclick="prefillContact('Career: open application')">Send an open application</button>
+        </div>
+      </div>
+
+    </section>
+
+
+    <!-- =====================================================
+         CONTACT
+    ====================================================== -->
+
+    <section class="view" id="view-contact">
+
+      <div class="workspace-heading">
+        <div>
+          <small>Contact us</small>
+          <h2>Talk to the Beloveeth team.</h2>
+        </div>
+      </div>
+
+      <div class="workspace-content">
+
+        <div class="card large-card">
+          <div class="card-title">Send a message</div>
+
+          <form class="form-grid" id="contactForm" onsubmit="submitContact(event)">
+            <div class="form-grid two" style="margin-top:0">
+              <div class="field"><label for="cName">Full name</label><input id="cName" required autocomplete="name"></div>
+              <div class="field"><label for="cEmail">Email</label><input id="cEmail" type="email" required autocomplete="email"></div>
+            </div>
+            <div class="field">
+              <label for="cSubject">Subject</label>
+              <input id="cSubject" placeholder="What is this about?" required>
+            </div>
+            <div class="field"><label for="cMsg">Message</label><textarea id="cMsg" required></textarea></div>
+            <div><button class="primary-btn" type="submit">Send message</button></div>
+            <div class="form-ok" id="formOk">Thanks. This is a demo form, so connect it to your email or CRM before launch.</div>
+          </form>
+        </div>
+
+        <div class="card large-card">
+          <div class="card-label">Reach us</div>
+          <div class="contact-lines">
+            <!-- Replace with real details -->
+            <div><b>Email</b><span>hello@beloveeth.com</span></div>
+            <div><b>Phone</b><span>+234 000 000 0000</span></div>
+            <div><b>Office</b><span>Lagos, Nigeria</span></div>
+            <div><b>Hours</b><span>Monday to Friday, 9am to 5pm</span></div>
+          </div>
+        </div>
+
+      </div>
+
+    </section>
+
+
+    <!-- =====================================================
+         LEGAL (privacy / terms / cookies)
+    ====================================================== -->
+
+    <section class="view" id="view-legal">
+
+      <div class="workspace-heading">
+        <div>
+          <small>Legal</small>
+          <h2 id="legalTitle">Privacy Policy</h2>
+        </div>
+      </div>
+
+      <div class="card large-card legal-body" id="legalBody"></div>
 
     </section>
 
@@ -2638,374 +2840,709 @@
 
 
   <!-- =======================================================
-       PROP
+       FOOTER
   ======================================================== -->
 
-  <button
-    class="prop-trigger"
-    id="propTrigger"
-    aria-label="Open Prop AI"
-    aria-expanded="false"
-    onclick="toggleProp()"
-  >
-    <span class="prop-energy"></span>
-    <span class="prop-core"></span>
-  </button>
+  <footer class="footer">
+    <div class="footer-inner">
 
-  <div class="prop-caption">
-    prop intelligence
-  </div>
-
-
-  <aside
-    class="prop-panel"
-    id="propPanel"
-    aria-hidden="true"
-  >
-
-    <div class="prop-panel-head">
-
-      <div class="prop-identity">
-
-        <div class="mini-orb"></div>
+      <div class="footer-top">
 
         <div>
-          <strong>Prop</strong>
-          <span>Beloveeth intelligence layer</span>
+          <div class="brand">
+            <div class="brand-mark"><span>B</span></div>
+            <div class="brand-copy">
+              <strong>BELOVEETH</strong>
+              <small>Realty &amp; PropTech</small>
+            </div>
+          </div>
+
+          <p class="footer-about">
+            Property discovery, market intelligence and investment insight in one
+            connected ecosystem, built for Nigeria.
+          </p>
+
+          <div class="socials">
+            <a href="#" aria-label="LinkedIn">in</a>
+            <a href="#" aria-label="X">X</a>
+            <a href="#" aria-label="Instagram">ig</a>
+            <a href="#" aria-label="YouTube">yt</a>
+          </div>
+        </div>
+
+        <div>
+          <h5>Explore</h5>
+          <div class="footer-links">
+            <button onclick="switchView('properties')">Properties</button>
+            <button onclick="switchView('investment')">Investment</button>
+            <button onclick="switchView('pulse')">Beloveeth Pulse</button>
+            <button onclick="switchView('locations')">Locations</button>
+          </div>
+        </div>
+
+        <div>
+          <h5>Company</h5>
+          <div class="footer-links">
+            <button onclick="switchView('about')">About us</button>
+            <button onclick="switchView('careers')">Careers</button>
+            <button onclick="switchView('partners')">Partners</button>
+            <button onclick="switchView('insights')">Market insights</button>
+          </div>
+        </div>
+
+        <div>
+          <h5>Support</h5>
+          <div class="footer-links">
+            <button onclick="switchView('contact')">Contact us</button>
+            <button onclick="openProp()">Ask Prop</button>
+            <button onclick="showLegal('privacy')">Privacy Policy</button>
+            <button onclick="showLegal('terms')">Terms of Use</button>
+          </div>
+        </div>
+
+        <div>
+          <h5>Get market updates</h5>
+          <form class="newsletter" onsubmit="subscribe(event)">
+            <input type="email" id="newsEmail" placeholder="Your email" required aria-label="Email address">
+            <button type="submit">Subscribe</button>
+          </form>
+          <div class="newsletter-note" id="newsNote"></div>
         </div>
 
       </div>
 
-      <button
-        class="prop-close"
-        onclick="closeProp()"
-        aria-label="Close Prop"
-      >
-        ×
-      </button>
-
-    </div>
-
-
-    <div
-      class="prop-messages"
-      id="propMessages"
-    >
-
-      <div class="prop-message ai">
-
-        <small>Prop</small>
-
-        I'm here. Ask me about a property, market,
-        location, investment scenario or the signals
-        you're seeing on this page.
-
+      <div class="footer-bottom">
+        <span>© <span id="year">2026</span> Beloveeth Realty &amp; PropTech. All rights reserved.</span>
+        <nav>
+          <button onclick="showLegal('privacy')">Privacy Policy</button>
+          <button onclick="showLegal('terms')">Terms</button>
+          <button onclick="showLegal('cookies')">Cookies</button>
+          <button onclick="switchView('contact')">Contact</button>
+        </nav>
       </div>
 
+      <p class="disclaimer">
+        Property listings, prices, yields and market figures on this site are illustrative demonstration data.
+        Nothing here is investment, legal or financial advice. Verify all property details independently before making a decision.
+      </p>
+
+    </div>
+  </footer>
+
+
+  <!-- =======================================================
+       PROPERTY DETAIL MODAL
+  ======================================================== -->
+
+  <div class="modal" id="propertyModal" aria-hidden="true" onclick="if(event.target===this)closeProperty()">
+    <div class="modal-box" role="dialog" aria-modal="true" aria-labelledby="mTitle">
+      <button class="modal-close" onclick="closeProperty()" aria-label="Close">×</button>
+
+      <div class="modal-img" id="mImg"></div>
+
+      <div class="modal-info">
+        <small id="mArea"></small>
+        <h2 id="mTitle"></h2>
+        <div class="modal-price"><span id="mPrice"></span> <small>indicative</small></div>
+
+        <div class="spec-row" id="mSpecs"></div>
+
+        <p class="modal-desc" id="mDesc"></p>
+
+        <div class="modal-prop">
+          <span class="prop-note-dot" style="margin-top:5px"></span>
+          <span><b>Prop:</b> <span id="mProp"></span></span>
+        </div>
+
+        <div class="modal-actions">
+          <button class="primary-btn" onclick="askAboutProperty()">Ask Prop about this</button>
+          <button class="secondary-btn" onclick="bookInspection()">Book inspection</button>
+          <button class="secondary-btn" onclick="closeProperty();switchView('properties')">See more properties</button>
+        </div>
+
+        <div class="modal-nav">
+          <button onclick="stepProperty(-1)">‹ Previous</button>
+          <button onclick="stepProperty(1)">Next ›</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- =======================================================
+       PROP
+  ======================================================== -->
+
+  <button class="prop-trigger" id="propTrigger" aria-label="Open Prop" aria-expanded="false" onclick="toggleProp()">
+    <span class="prop-ring"></span>
+    <span class="orb-spin"><i class="b1"></i><i class="b2"></i><i class="b3"></i><i class="b4"></i></span>
+    <span class="orb-glass"></span>
+  </button>
+
+  <div class="prop-caption">prop intelligence</div>
+
+  <aside class="prop-panel" id="propPanel" aria-hidden="true">
+
+    <div class="prop-panel-head">
+      <div class="prop-identity">
+        <div class="mini-orb"></div>
+        <div>
+          <strong>Prop</strong>
+          <span>Beloveeth intelligence layer</span>
+        </div>
+      </div>
+      <button class="prop-close" onclick="closeProp()" aria-label="Close Prop">×</button>
     </div>
 
+    <div class="prop-messages" id="propMessages">
+      <div class="prop-message ai">
+        <small>Prop</small>
+        I'm here. Ask me about a property, market, location, investment scenario
+        or the signals you're seeing on this page.
+      </div>
+    </div>
 
     <div class="prop-suggestions">
-
-      <button onclick="askSuggestion('What is happening in the market?')">
-        Market
-      </button>
-
-      <button onclick="askSuggestion('Explain property yield')">
-        Yield
-      </button>
-
-      <button onclick="askSuggestion('What should I look for in a property?')">
-        Property
-      </button>
-
-      <button onclick="askSuggestion('What is happening with construction costs?')">
-        Materials
-      </button>
-
+      <button onclick="askSuggestion('What is happening in the market?')">Market</button>
+      <button onclick="askSuggestion('Explain property yield')">Yield</button>
+      <button onclick="askSuggestion('What should I look for in a property?')">Property</button>
+      <button onclick="askSuggestion('What is happening with construction costs?')">Materials</button>
     </div>
 
-
-    <form
-      class="prop-input"
-      onsubmit="sendProp(event)"
-    >
-
-      <input
-        id="propInput"
-        autocomplete="off"
-        placeholder="Ask Prop something..."
-      />
-
-      <button
-        class="prop-send"
-        type="submit"
-        aria-label="Send"
-      >
-        ↑
-      </button>
-
+    <form class="prop-input" onsubmit="sendProp(event)">
+      <input id="propInput" autocomplete="off" placeholder="Ask Prop something..." />
+      <button class="prop-send" type="submit" aria-label="Send">↑</button>
     </form>
 
   </aside>
-
 
 </div>
 
 
 <script>
   /* =========================================================
+     DATA — swap with your real listings / API later
+  ========================================================= */
+
+  const IMG = id => `https://images.unsplash.com/${id}?auto=format&fit=crop&w=900&q=80`;
+
+  const properties = [
+    { id: "p1", title: "Modern 3-Bed Residence", area: "Ikoyi", city: "Lagos", type: "Residential", price: 420, beds: 3, baths: 4, size: "310 m²", tag: "Verified", yield: 6.8,
+      img: IMG("photo-1600607687939-ce8a6c25118c"),
+      desc: "A clean-lined three-bedroom home in one of Lagos's most established addresses, with generous living space, a private terrace and secure parking." },
+    { id: "p2", title: "Contemporary Residence", area: "Lekki", city: "Lagos", type: "Residential", price: 280, beds: 4, baths: 5, size: "360 m²", tag: "New", yield: 7.4,
+      img: IMG("photo-1600585154340-be6161a56a0c"),
+      desc: "A four-bedroom contemporary home with en-suite rooms, open-plan living and a compact garden in a fast-growing corridor." },
+    { id: "p3", title: "Premium Family Home", area: "Maitama", city: "Abuja", type: "Residential", price: 195, beds: 5, baths: 5, size: "420 m²", tag: "Verified", yield: 6.1,
+      img: IMG("photo-1600566753190-17f0baa2a6c3"),
+      desc: "A five-bedroom family home with a boys' quarters, large compound and quiet streets, close to Abuja's diplomatic district." },
+    { id: "p4", title: "Development Opportunity", area: "Ogun", city: "Ogun State", type: "Land", price: 75, beds: null, baths: null, size: "1,200 m²", tag: "Land", yield: null,
+      img: IMG("photo-1600607687920-4e2a09cf159d"),
+      desc: "A titled plot positioned for residential development, with road access and utilities nearby. Suited to a small estate or phased build." },
+    { id: "p5", title: "Executive Terrace", area: "Ikeja GRA", city: "Lagos", type: "Residential", price: 165, beds: 4, baths: 4, size: "290 m²", tag: "Verified", yield: 7.0,
+      img: IMG("photo-1512917774080-9991f1c4c750"),
+      desc: "A four-bedroom terrace in a leafy, well-serviced neighbourhood, minutes from the airport and business districts." },
+    { id: "p6", title: "Smart Apartments", area: "Yaba", city: "Lagos", type: "Off-plan", price: 68, beds: 2, baths: 2, size: "96 m²", tag: "Off-plan", yield: 9.2,
+      img: IMG("photo-1560448204-e02f11c3d0e2"),
+      desc: "Two-bedroom apartments in a planned tech-corridor development, with staged payment options and completion milestones." },
+    { id: "p7", title: "Waterfront Villa", area: "Lekki", city: "Lagos", type: "Residential", price: 550, beds: 5, baths: 6, size: "520 m²", tag: "Premium", yield: 5.9,
+      img: IMG("photo-1613490493576-7fde63acd811"),
+      desc: "A five-bedroom villa with water views, pool, cinema room and staff quarters in a gated estate." },
+    { id: "p8", title: "Grade-A Office Floor", area: "Victoria Island", city: "Lagos", type: "Commercial", price: 640, beds: null, baths: null, size: "780 m²", tag: "Commercial", yield: 8.3,
+      img: IMG("photo-1486406146926-c627a92ad1ab"),
+      desc: "A full office floor in a modern tower with backup power, high-speed lifts and on-site parking in the business district." }
+  ];
+
+  const fmtP = n => n >= 1000 ? `₦${(n / 1000).toFixed(2)}bn` : `₦${n}m`;
+  const fmtN = x => x >= 1e9 ? `₦${(x / 1e9).toFixed(2)}bn` : `₦${(x / 1e6).toFixed(2)}m`;
+  const byId = id => properties.find(p => p.id === id);
+  const specLine = p => p.beds ? `${p.beds} bed · ${p.baths} bath · ${p.size}` : `${p.type} · ${p.size}`;
+
+  let currentProperty = properties[0];
+
+
+  /* =========================================================
      VIEW NAVIGATION
   ========================================================= */
 
-  const navButtons = document.querySelectorAll("#mainNav button");
   const views = document.querySelectorAll(".view");
+  const navButtons = document.querySelectorAll("#mainNav .nav-link[data-view]");
+  const exploreViews = ["about", "careers", "partners", "locations", "contact"];
+  const nav = document.getElementById("mainNav");
+  const menuBtn = document.getElementById("menuBtn");
 
-  function switchView(viewName) {
+  function switchView(name) {
+    views.forEach(v => v.classList.remove("active"));
 
-    views.forEach(view => {
-      view.classList.remove("active");
-    });
+    const target = document.getElementById(`view-${name}`);
+    if (target) target.classList.add("active");
 
-    const target = document.getElementById(`view-${viewName}`);
+    navButtons.forEach(b => b.classList.toggle("active", b.dataset.view === name));
+    document.getElementById("exploreLink").classList.toggle("active", exploreViews.includes(name));
 
-    if (target) {
-      target.classList.add("active");
-    }
-
-    navButtons.forEach(button => {
-      button.classList.toggle(
-        "active",
-        button.dataset.view === viewName
-      );
-    });
+    nav.classList.remove("open");
+    menuBtn.setAttribute("aria-expanded", "false");
+    window.scrollTo({ top: 0, behavior: "smooth" });
   }
 
-  navButtons.forEach(button => {
+  navButtons.forEach(b => b.addEventListener("click", () => switchView(b.dataset.view)));
 
-    button.addEventListener("click", () => {
-      switchView(button.dataset.view);
-    });
-
+  menuBtn.addEventListener("click", () => {
+    const open = nav.classList.toggle("open");
+    menuBtn.setAttribute("aria-expanded", open);
   });
 
 
   /* =========================================================
-     PULSE CHART
+     PROPERTY CARDS (swiper, grid, mega menu, featured widget)
   ========================================================= */
 
-  const marketData = {
+  function cardHTML(p) {
+    const yieldChip = p.yield
+      ? `<span>Est. yield ${p.yield}%</span>`
+      : `<span class="neutral">Development</span>`;
 
-    Ikoyi: {
-      price: [1.12, 1.17, 1.19, 1.24, 1.31, 1.42],
-      demand: [64, 67, 70, 74, 78, 82],
-      supply: [74, 72, 71, 70, 69, 68],
-      value: "₦1.42m",
-      change: "+8.4%",
-      demandLabel: "High"
-    },
+    return `
+      <article class="pcard" tabindex="0" role="button"
+        aria-label="${p.title}, ${p.area}, ${fmtP(p.price)}"
+        onclick="openProperty('${p.id}')"
+        onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();openProperty('${p.id}')}">
+        <div class="pcard-img" style="background-image:url('${p.img}')">
+          <span class="chip">${p.tag}</span>
+          <button class="save" aria-label="Save property"
+            onclick="event.stopPropagation();toggleSave(this)"
+            onkeydown="event.stopPropagation()">♡</button>
+        </div>
+        <div class="pcard-body">
+          <small>${p.area}, ${p.city}</small>
+          <h3>${p.title}</h3>
+          <p>${specLine(p)}</p>
+          <div class="pcard-foot"><strong>${fmtP(p.price)}</strong>${yieldChip}</div>
+        </div>
+      </article>`;
+  }
 
-    Lekki: {
-      price: [0.72, 0.76, 0.79, 0.83, 0.87, 0.91],
-      demand: [57, 61, 64, 69, 72, 76],
-      supply: [82, 80, 78, 77, 76, 75],
-      value: "₦910k",
-      change: "+5.2%",
-      demandLabel: "Rising"
-    },
+  function toggleSave(btn) {
+    const on = btn.classList.toggle("on");
+    btn.textContent = on ? "♥" : "♡";
+  }
 
-    Ikeja: {
-      price: [0.66, 0.69, 0.70, 0.74, 0.78, 0.81],
-      demand: [61, 63, 66, 69, 72, 74],
-      supply: [71, 70, 69, 68, 67, 66],
-      value: "₦810k",
-      change: "+4.7%",
-      demandLabel: "Healthy"
-    },
+  function renderSwiper() {
+    const track = document.getElementById("swiperTrack");
 
-    Yaba: {
-      price: [0.48, 0.51, 0.54, 0.57, 0.61, 0.64],
-      demand: [69, 72, 74, 77, 80, 84],
-      supply: [67, 66, 65, 64, 63, 62],
-      value: "₦640k",
-      change: "+7.1%",
-      demandLabel: "High"
-    },
+    track.innerHTML =
+      properties.map(cardHTML).join("") +
+      `<button class="pcard-more" onclick="switchView('properties')">
+         <strong>See every property</strong>
+         <p>Filter by residential, land, off-plan and commercial, then ask Prop to read the market behind each one.</p>
+         <span>Explore properties</span>
+       </button>`;
+  }
 
-    Abuja: {
-      price: [0.61, 0.64, 0.67, 0.69, 0.72, 0.75],
-      demand: [54, 57, 60, 63, 65, 69],
-      supply: [76, 75, 74, 73, 72, 71],
-      value: "₦750k",
-      change: "+4.3%",
-      demandLabel: "Growing"
-    }
+  let currentFilter = "All";
 
-  };
+  function renderGrid() {
+    const list = currentFilter === "All"
+      ? properties
+      : properties.filter(p => p.type === currentFilter);
 
+    document.getElementById("propertyGrid").innerHTML = list.map(cardHTML).join("");
 
-  const pulseCtx =
-    document.getElementById("pulseChart").getContext("2d");
+    document.querySelectorAll("#filters button").forEach(b =>
+      b.classList.toggle("active", b.dataset.filter === currentFilter));
+  }
 
-
-  const pulseChart = new Chart(pulseCtx, {
-
-    type: "line",
-
-    data: {
-
-      labels: [
-        "Apr",
-        "May",
-        "Jun",
-        "Jul",
-        "Aug",
-        "Sep"
-      ],
-
-      datasets: [{
-        data: marketData.Ikoyi.price,
-
-        borderColor: "#71cfff",
-        backgroundColor: "rgba(65,171,255,.08)",
-
-        borderWidth: 2,
-        pointRadius: 0,
-        pointHoverRadius: 4,
-
-        tension: .42,
-
-        fill: true
-      }]
-
-    },
-
-    options: {
-
-      responsive: true,
-      maintainAspectRatio: false,
-
-      interaction: {
-        intersect: false,
-        mode: "index"
-      },
-
-      plugins: {
-
-        legend: {
-          display: false
-        },
-
-        tooltip: {
-          backgroundColor: "rgba(9,14,23,.92)",
-          borderColor: "rgba(130,210,255,.16)",
-          borderWidth: 1,
-          titleFont: {
-            family: "Manrope",
-            size: 9
-          },
-          bodyFont: {
-            family: "Manrope",
-            size: 9
-          },
-          displayColors: false
-        }
-
-      },
-
-      scales: {
-
-        x: {
-          grid: {
-            display: false
-          },
-          ticks: {
-            color: "#5f6d80",
-            font: {
-              family: "Manrope",
-              size: 7
-            }
-          },
-          border: {
-            display: false
-          }
-        },
-
-        y: {
-
-          grid: {
-            color: "rgba(255,255,255,.045)"
-          },
-
-          ticks: {
-            color: "#5f6d80",
-            font: {
-              family: "Manrope",
-              size: 7
-            }
-          },
-
-          border: {
-            display: false
-          }
-        }
-
-      }
-
-    }
-
+  document.getElementById("filters").addEventListener("click", e => {
+    const b = e.target.closest("button[data-filter]");
+    if (!b) return;
+    currentFilter = b.dataset.filter;
+    renderGrid();
   });
 
+  function filterAndGo(type) {
+    currentFilter = type;
+    renderGrid();
+    switchView("properties");
+  }
 
-  function updatePulse() {
+  function renderMega() {
+    document.getElementById("megaProps").innerHTML = properties.slice(0, 3).map(p => `
+      <button class="mini-prop" onclick="openProperty('${p.id}')">
+        <div class="mp-img" style="background-image:url('${p.img}')"></div>
+        <div class="mp-body">
+          <small>${p.area}, ${p.city}</small>
+          <strong>${p.title}</strong>
+          <em>${fmtP(p.price)}</em>
+        </div>
+      </button>`).join("");
+  }
 
-    const location =
-      document.getElementById("locationSelect").value;
+  function renderFeatured() {
+    const p = properties[0];
 
-    const metric =
-      document.getElementById("metricSelect").value;
+    document.getElementById("featuredWidget").innerHTML = `
+      <div class="property-image" style="background-image:url('${p.img}')"></div>
+      <div class="property-info">
+        <div class="tag">${p.type} · ${p.area}</div>
+        <h3>${p.title}</h3>
+        <p>${p.city} · Verified listing workflow</p>
+        <div class="property-price">${fmtP(p.price)} <small>indicative</small></div>
+        <div class="property-actions">
+          <button onclick="currentProperty=byId('${p.id}');openProp('Analyze this property')">Ask Prop</button>
+          <button onclick="openProperty('${p.id}')">View details</button>
+        </div>
+      </div>`;
+  }
 
-    const data = marketData[location];
+  renderSwiper();
+  renderGrid();
+  renderMega();
+  renderFeatured();
 
-    let values = data.price;
 
-    if (metric === "demand") {
-      values = data.demand;
+  /* =========================================================
+     SWIPER BEHAVIOUR — arrows, drag, progress
+  ========================================================= */
+
+  const track = document.getElementById("swiperTrack");
+  const bar = document.getElementById("swiperBar");
+
+  function swipe(dir) {
+    track.scrollBy({ left: dir * 340, behavior: "smooth" });
+  }
+
+  function updateBar() {
+    const max = track.scrollWidth - track.clientWidth;
+    const seen = (track.scrollLeft + track.clientWidth) / track.scrollWidth;
+    bar.style.width = `${Math.max(12, Math.min(100, seen * 100))}%`;
+    if (max <= 0) bar.style.width = "100%";
+  }
+
+  track.addEventListener("scroll", updateBar, { passive: true });
+  window.addEventListener("resize", updateBar);
+  updateBar();
+
+  let dragging = false, startX = 0, startLeft = 0, moved = false;
+
+  track.addEventListener("pointerdown", e => {
+    if (e.pointerType !== "mouse") return;
+    dragging = true;
+    moved = false;
+    startX = e.clientX;
+    startLeft = track.scrollLeft;
+  });
+
+  window.addEventListener("pointermove", e => {
+    if (!dragging) return;
+    const dx = e.clientX - startX;
+    if (Math.abs(dx) > 6) {
+      moved = true;
+      track.classList.add("dragging");
     }
+    if (moved) track.scrollLeft = startLeft - dx;
+  });
 
-    if (metric === "supply") {
-      values = data.supply;
+  window.addEventListener("pointerup", () => {
+    dragging = false;
+    track.classList.remove("dragging");
+  });
+
+  // a drag should never count as a click on a card
+  track.addEventListener("click", e => {
+    if (moved) {
+      e.stopPropagation();
+      e.preventDefault();
+      moved = false;
     }
+  }, true);
 
-    pulseChart.data.datasets[0].data = values;
 
-    pulseChart.update();
+  /* =========================================================
+     PROPERTY DETAIL MODAL
+  ========================================================= */
 
-    document.getElementById("pulseValue").textContent =
-      metric === "price"
-        ? data.value
-        : values[values.length - 1];
+  const modal = document.getElementById("propertyModal");
 
-    document.getElementById("pulseChange").textContent =
-      metric === "price"
-        ? data.change
-        : metric === "demand"
-          ? "↑"
-          : "→";
+  function propInsight(p) {
+    if (p.yield) {
+      return `On the illustrative model, an estimated ${p.yield}% gross yield would mean roughly ${fmtN(p.price * 1e6 * p.yield / 100)} a year in rent. Treat it as a scenario, not a promise.`;
+    }
+    return "This is a development play, so value depends on title, approvals, access and what the surrounding supply looks like when you build.";
+  }
 
-    document.getElementById("pulseDemand").textContent =
-      data.demandLabel;
+  function openProperty(id) {
+    const p = byId(id);
+    if (!p) return;
 
+    currentProperty = p;
+
+    document.getElementById("mImg").style.backgroundImage = `url('${p.img}')`;
+    document.getElementById("mArea").textContent = `${p.type} · ${p.area}, ${p.city}`;
+    document.getElementById("mTitle").textContent = p.title;
+    document.getElementById("mPrice").textContent = fmtP(p.price);
+    document.getElementById("mDesc").textContent = p.desc;
+    document.getElementById("mProp").textContent = propInsight(p);
+
+    const specs = p.beds
+      ? [["Bedrooms", p.beds], ["Bathrooms", p.baths], ["Size", p.size]]
+      : [["Type", p.type], ["Size", p.size], ["Status", p.tag]];
+
+    document.getElementById("mSpecs").innerHTML = specs
+      .map(([k, v]) => `<div class="spec"><span>${k}</span><strong>${v}</strong></div>`)
+      .join("");
+
+    modal.classList.add("open");
+    modal.setAttribute("aria-hidden", "false");
+    document.body.style.overflow = "hidden";
+  }
+
+  function closeProperty() {
+    modal.classList.remove("open");
+    modal.setAttribute("aria-hidden", "true");
+    document.body.style.overflow = "";
+  }
+
+  function stepProperty(dir) {
+    const i = properties.indexOf(currentProperty);
+    openProperty(properties[(i + dir + properties.length) % properties.length].id);
+  }
+
+  function askAboutProperty() {
+    openProp(`Analyze ${currentProperty.title} in ${currentProperty.area}`);
+  }
+
+  function bookInspection() {
+    closeProperty();
+    prefillContact(`Inspection request: ${currentProperty.title}, ${currentProperty.area}`);
   }
 
 
-  document
-    .getElementById("locationSelect")
-    .addEventListener("change", updatePulse);
+  /* =========================================================
+     CONTACT / LEGAL / NEWSLETTER
+  ========================================================= */
 
-  document
-    .getElementById("metricSelect")
-    .addEventListener("change", updatePulse);
+  function prefillContact(subject) {
+    document.getElementById("cSubject").value = subject;
+    document.getElementById("formOk").style.display = "none";
+    switchView("contact");
+  }
+
+  function submitContact(e) {
+    e.preventDefault();
+    document.getElementById("formOk").style.display = "block";
+    e.target.reset();
+  }
+
+  function subscribe(e) {
+    e.preventDefault();
+    document.getElementById("newsNote").textContent = "Thanks. You're on the list (demo).";
+    e.target.reset();
+  }
+
+  const legal = {
+    privacy: {
+      title: "Privacy Policy",
+      sections: [
+        ["What we collect", "Information you give us directly, such as your name, email and enquiry details, plus basic usage data that helps us improve the platform."],
+        ["How we use it", "To respond to enquiries, provide property and market features, improve Prop's responses, and send updates you've asked for."],
+        ["Sharing", "We don't sell your personal information. We may share it with service providers who help us run the platform, under confidentiality obligations."],
+        ["Your choices", "You can ask us to access, correct or delete your information at any time through the Contact page."]
+      ]
+    },
+    terms: {
+      title: "Terms of Use",
+      sections: [
+        ["Using Beloveeth", "Use the platform lawfully and don't attempt to disrupt it or access it in ways we haven't intended."],
+        ["Information and advice", "Listings, prices, yields, market indicators and Prop's answers are for general information and are not investment, legal or financial advice."],
+        ["Property details", "Verify title, documentation and all listing details independently before entering any transaction."],
+        ["Changes", "We may update these terms as the platform evolves. Continued use means you accept the updated terms."]
+      ]
+    },
+    cookies: {
+      title: "Cookie Policy",
+      sections: [
+        ["What cookies do", "Cookies and similar storage help the site remember preferences and understand how it is used."],
+        ["Managing them", "You can control or clear cookies in your browser settings. Some features may not work as expected without them."]
+      ]
+    }
+  };
+
+  function showLegal(kind) {
+    const doc = legal[kind];
+    document.getElementById("legalTitle").textContent = doc.title;
+    document.getElementById("legalBody").innerHTML =
+      doc.sections.map(([h, t]) => `<h3>${h}</h3><p>${t}</p>`).join("") +
+      `<p style="margin-top:26px;color:var(--muted-2);font-size:12.5px">Placeholder text. Replace with your reviewed legal copy before launch.</p>`;
+    switchView("legal");
+  }
+
+  document.getElementById("year").textContent = new Date().getFullYear();
+
+
+  /* =========================================================
+     PULSE CHART (home)
+  ========================================================= */
+
+  const marketData = {
+    Ikoyi:  { price: [1.12, 1.17, 1.19, 1.24, 1.31, 1.42], demand: [64, 67, 70, 74, 78, 82], supply: [74, 72, 71, 70, 69, 68], value: "₦1.42m", change: "+8.4%", demandLabel: "High" },
+    Lekki:  { price: [0.72, 0.76, 0.79, 0.83, 0.87, 0.91], demand: [57, 61, 64, 69, 72, 76], supply: [82, 80, 78, 77, 76, 75], value: "₦910k", change: "+5.2%", demandLabel: "Rising" },
+    Ikeja:  { price: [0.66, 0.69, 0.70, 0.74, 0.78, 0.81], demand: [61, 63, 66, 69, 72, 74], supply: [71, 70, 69, 68, 67, 66], value: "₦810k", change: "+4.7%", demandLabel: "Healthy" },
+    Yaba:   { price: [0.48, 0.51, 0.54, 0.57, 0.61, 0.64], demand: [69, 72, 74, 77, 80, 84], supply: [67, 66, 65, 64, 63, 62], value: "₦640k", change: "+7.1%", demandLabel: "High" },
+    Abuja:  { price: [0.61, 0.64, 0.67, 0.69, 0.72, 0.75], demand: [54, 57, 60, 63, 65, 69], supply: [76, 75, 74, 73, 72, 71], value: "₦750k", change: "+4.3%", demandLabel: "Growing" }
+  };
+
+  const months = ["Apr", "May", "Jun", "Jul", "Aug", "Sep"];
+  let currentMetric = "price";
+
+  const axisFont = { family: "Manrope", size: 11 };
+
+  const pulseChart = new Chart(document.getElementById("pulseChart").getContext("2d"), {
+    type: "line",
+    data: {
+      labels: months,
+      datasets: [{
+        data: marketData.Ikoyi.price,
+        borderColor: "#681d31",
+        backgroundColor: "rgba(200,107,133,.16)",
+        borderWidth: 2.5,
+        pointRadius: 0,
+        pointHoverRadius: 5,
+        pointHoverBackgroundColor: "#681d31",
+        tension: .42,
+        fill: true
+      }]
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: false,
+      interaction: { intersect: false, mode: "index" },
+      plugins: {
+        legend: { display: false },
+        tooltip: {
+          backgroundColor: "rgba(74,16,29,.94)",
+          titleFont: { family: "Manrope", size: 12 },
+          bodyFont: { family: "Manrope", size: 12 },
+          displayColors: false,
+          padding: 10,
+          callbacks: {
+            label: c => currentMetric === "price" ? `₦${c.parsed.y}m per m²` : `${c.parsed.y} / 100`
+          }
+        }
+      },
+      scales: {
+        x: { grid: { display: false }, ticks: { color: "#a29396", font: axisFont }, border: { display: false } },
+        y: {
+          grid: { color: "rgba(74,16,29,.06)" },
+          ticks: {
+            color: "#a29396",
+            font: axisFont,
+            callback: v => currentMetric === "price" ? `₦${v}m` : v
+          },
+          border: { display: false }
+        }
+      }
+    }
+  });
+
+  function updatePulse() {
+    const location = document.getElementById("locationSelect").value;
+    currentMetric = document.getElementById("metricSelect").value;
+    const data = marketData[location];
+    const values = data[currentMetric];
+
+    pulseChart.data.datasets[0].data = values;
+    pulseChart.update();
+
+    const last = values[values.length - 1];
+
+    document.getElementById("pulseValue").textContent =
+      currentMetric === "price" ? data.value : `${last}/100`;
+
+    const change = document.getElementById("pulseChange");
+    change.textContent = currentMetric === "price" ? data.change : currentMetric === "demand" ? "↑" : "→";
+
+    document.getElementById("pulseDemand").textContent = data.demandLabel;
+  }
+
+  document.getElementById("locationSelect").addEventListener("change", updatePulse);
+  document.getElementById("metricSelect").addEventListener("change", updatePulse);
+
+
+  /* =========================================================
+     PULSE / LOCATIONS — state matrix
+  ========================================================= */
+
+  const stateData = {
+    Lagos:  { index: [100, 103, 108, 111, 117, 124], move: "+8.4%", demand: ["↑", "Positive"], supply: ["→", "Stable"],  price: ["↑", "Momentum"],  dev: ["↑", "Development"] },
+    Abuja:  { index: [100, 102, 105, 108, 111, 115], move: "+4.3%", demand: ["↑", "Growing"],  supply: ["→", "Stable"],  price: ["↑", "Steady"],    dev: ["↑", "Active"] },
+    Ogun:   { index: [100, 104, 109, 115, 118, 126], move: "+9.1%", demand: ["↑", "Rising"],   supply: ["↑", "Building"], price: ["↑", "Momentum"],  dev: ["↑", "Strong"] },
+    Oyo:    { index: [100, 101, 103, 105, 108, 110], move: "+3.2%", demand: ["→", "Balanced"], supply: ["→", "Stable"],  price: ["→", "Gradual"],   dev: ["→", "Moderate"] },
+    Rivers: { index: [100, 101, 102, 104, 105, 108], move: "+2.9%", demand: ["→", "Balanced"], supply: ["→", "Stable"],  price: ["→", "Gradual"],   dev: ["→", "Moderate"] },
+    Enugu:  { index: [100, 102, 104, 107, 109, 113], move: "+4.0%", demand: ["↑", "Growing"],  supply: ["→", "Stable"],  price: ["↑", "Steady"],    dev: ["↑", "Emerging"] },
+    Kano:   { index: [100, 101, 103, 104, 106, 109], move: "+3.0%", demand: ["→", "Balanced"], supply: ["→", "Stable"],  price: ["→", "Gradual"],   dev: ["→", "Moderate"] }
+  };
+
+  const largeChart = new Chart(document.getElementById("pulseLargeChart").getContext("2d"), {
+    type: "line",
+    data: {
+      labels: months,
+      datasets: [{
+        label: "Market index",
+        data: stateData.Lagos.index,
+        borderColor: "#681d31",
+        backgroundColor: "rgba(200,107,133,.16)",
+        fill: true,
+        tension: .4,
+        pointRadius: 0,
+        pointHoverRadius: 5,
+        borderWidth: 2.5
+      }]
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: false,
+      plugins: {
+        legend: { display: false },
+        tooltip: {
+          backgroundColor: "rgba(74,16,29,.94)",
+          displayColors: false,
+          padding: 10,
+          titleFont: { family: "Manrope", size: 12 },
+          bodyFont: { family: "Manrope", size: 12 }
+        }
+      },
+      scales: {
+        x: { grid: { display: false }, ticks: { color: "#a29396", font: axisFont }, border: { display: false } },
+        y: { grid: { color: "rgba(74,16,29,.06)" }, ticks: { color: "#a29396", font: axisFont }, border: { display: false } }
+      }
+    }
+  });
+
+  function setText(key, value) {
+    document.querySelectorAll(`[data-s="${key}"]`).forEach(el => el.textContent = value);
+  }
+
+  function setState(name) {
+    const s = stateData[name];
+    if (!s) return;
+
+    largeChart.data.datasets[0].data = s.index;
+    largeChart.update();
+
+    setText("name", name);
+    setText("index", s.index[s.index.length - 1]);
+    setText("move", s.move);
+    setText("demand", s.demand[0]);      setText("demandLabel", s.demand[1]);
+    setText("supply", s.supply[0]);      setText("supplyLabel", s.supply[1]);
+    setText("price", s.price[0]);        setText("priceLabel", s.price[1]);
+    setText("dev", s.dev[0]);            setText("devLabel", s.dev[1]);
+
+    document.querySelectorAll(".state-btns button").forEach(b =>
+      b.classList.toggle("active", b.dataset.state === name));
+  }
+
+  document.querySelectorAll(".state-btns button").forEach(b =>
+    b.addEventListener("click", () => setState(b.dataset.state)));
 
 
   /* =========================================================
@@ -3013,626 +3550,262 @@
   ========================================================= */
 
   const news = [
-
-    {
-      category: "Construction",
-      headline:
-        "Cement prices remain an important construction-cost signal.",
-      meta:
-        "DEMO STORY · Production version will display verified source + date.",
-      image:
-        "https://images.unsplash.com/photo-1518709268805-4e9042af9f23?auto=format&fit=crop&w=900&q=80",
-      prop:
-        "Material-cost movement can influence development budgets, project economics and future asking prices."
-    },
-
-    {
-      category: "Steel",
-      headline:
-        "Steel and reinforcement costs are another key input to monitor.",
-      meta:
-        "DEMO STORY · Production version will display verified source + date.",
-      image:
-        "https://images.unsplash.com/photo-1504307651254-35680f356dfd?auto=format&fit=crop&w=900&q=80",
-      prop:
-        "Rising structural-material costs can place pressure on construction margins and project delivery economics."
-    },
-
-    {
-      category: "Infrastructure",
-      headline:
-        "Infrastructure activity can reshape accessibility and property demand.",
-      meta:
-        "DEMO STORY · Production version will display verified source + date.",
-      image:
-        "https://images.unsplash.com/photo-1541888946425-d81bb19240f5?auto=format&fit=crop&w=900&q=80",
-      prop:
-        "Improved connectivity can change travel times, development attractiveness and demand around a corridor."
-    },
-
-    {
-      category: "Development",
-      headline:
-        "New development activity can change the supply picture in emerging corridors.",
-      meta:
-        "DEMO STORY · Production version will display verified source + date.",
-      image:
-        "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=900&q=80",
-      prop:
-        "Additional supply can affect pricing, rental competition and the positioning of existing properties."
-    },
-
-    {
-      category: "Finance",
-      headline:
-        "Mortgage and financing conditions remain important to property affordability.",
-      meta:
-        "DEMO STORY · Production version will display verified source + date.",
-      image:
-        "https://images.unsplash.com/photo-1556761175-b413da4baf72?auto=format&fit=crop&w=900&q=80",
-      prop:
-        "Financing conditions can influence purchasing power and the pool of active buyers."
-    }
-
+    { category: "Construction", headline: "Cement prices remain an important construction-cost signal.",
+      image: IMG("photo-1518709268805-4e9042af9f23"),
+      prop: "Material-cost movement can influence development budgets, project economics and future asking prices." },
+    { category: "Steel", headline: "Steel and reinforcement costs are another key input to monitor.",
+      image: IMG("photo-1504307651254-35680f356dfd"),
+      prop: "Rising structural-material costs can place pressure on construction margins and project delivery economics." },
+    { category: "Infrastructure", headline: "Infrastructure activity can reshape accessibility and property demand.",
+      image: IMG("photo-1541888946425-d81bb19240f5"),
+      prop: "Improved connectivity can change travel times, development attractiveness and demand around a corridor." },
+    { category: "Development", headline: "New development activity can change the supply picture in emerging corridors.",
+      image: IMG("photo-1486406146926-c627a92ad1ab"),
+      prop: "Additional supply can affect pricing, rental competition and the positioning of existing properties." },
+    { category: "Finance", headline: "Mortgage and financing conditions remain important to property affordability.",
+      image: IMG("photo-1556761175-b413da4baf72"),
+      prop: "Financing conditions can influence purchasing power and the pool of active buyers." }
   ];
 
-
+  const newsMeta = "Demonstration story. The live version will show a verified source and date.";
   let currentNews = 0;
   let newsTimer;
-  let newsProgressTimer;
-
 
   function renderNews(index) {
-
     const item = news[index];
-
-    const image =
-      document.getElementById("broadcastImage");
+    const image = document.getElementById("broadcastImage");
 
     image.style.opacity = "0";
 
     setTimeout(() => {
+      image.style.backgroundImage = `url("${item.image}")`;
+      image.style.opacity = ".7";
 
-      image.style.backgroundImage =
-        `url("${item.image}")`;
-
-      image.style.opacity = ".57";
-
-      document.getElementById(
-        "broadcastCategory"
-      ).textContent = item.category;
-
-      document.getElementById(
-        "broadcastHeadline"
-      ).textContent = item.headline;
-
-      document.getElementById(
-        "broadcastMeta"
-      ).textContent = item.meta;
-
-      document.getElementById(
-        "broadcastProp"
-      ).innerHTML =
-        `<b>PROP</b> · ${item.prop}`;
-
+      document.getElementById("broadcastCategory").textContent = item.category;
+      document.getElementById("broadcastHeadline").textContent = item.headline;
+      document.getElementById("broadcastMeta").textContent = newsMeta;
+      document.getElementById("broadcastProp").innerHTML = `<b>Prop:</b> ${item.prop}`;
     }, 180);
 
     startNewsProgress();
   }
 
-
-  function nextNews() {
-
-    currentNews =
-      (currentNews + 1) % news.length;
-
-    renderNews(currentNews);
-  }
-
-
-  function previousNews() {
-
-    currentNews =
-      (currentNews - 1 + news.length) % news.length;
-
-    renderNews(currentNews);
-  }
-
+  function nextNews() { currentNews = (currentNews + 1) % news.length; renderNews(currentNews); }
+  function previousNews() { currentNews = (currentNews - 1 + news.length) % news.length; renderNews(currentNews); }
 
   function startNewsProgress() {
-
     clearTimeout(newsTimer);
-    clearInterval(newsProgressTimer);
 
-    const progress =
-      document.getElementById("broadcastProgress");
-
+    const progress = document.getElementById("broadcastProgress");
     progress.style.transition = "none";
     progress.style.width = "0%";
 
-    requestAnimationFrame(() => {
-
-      progress.style.transition =
-        "width 6s linear";
-
+    requestAnimationFrame(() => requestAnimationFrame(() => {
+      progress.style.transition = "width 6s linear";
       progress.style.width = "100%";
+    }));
 
-    });
-
-    newsTimer = setTimeout(
-      nextNews,
-      6000
-    );
-
+    newsTimer = setTimeout(nextNews, 6000);
   }
-
 
   renderNews(0);
-
-
-  /* =========================================================
-     PROP
-  ========================================================= */
-
-  const propTrigger =
-    document.getElementById("propTrigger");
-
-  const propPanel =
-    document.getElementById("propPanel");
-
-  const propInput =
-    document.getElementById("propInput");
-
-  const propMessages =
-    document.getElementById("propMessages");
-
-
-  function toggleProp() {
-
-    if (
-      propPanel.classList.contains("open")
-    ) {
-      closeProp();
-    } else {
-      openProp();
-    }
-
-  }
-
-
-  function openProp(prompt = "") {
-
-    propPanel.classList.add("open");
-
-    propTrigger.setAttribute(
-      "aria-expanded",
-      "true"
-    );
-
-    propPanel.setAttribute(
-      "aria-hidden",
-      "false"
-    );
-
-    if (prompt) {
-
-      setTimeout(() => {
-
-        propInput.value = prompt;
-
-        sendProp(
-          new Event("submit")
-        );
-
-      }, 250);
-
-    } else {
-
-      setTimeout(() => {
-        propInput.focus();
-      }, 350);
-
-    }
-
-  }
-
-
-  function closeProp() {
-
-    propPanel.classList.remove("open");
-
-    propTrigger.setAttribute(
-      "aria-expanded",
-      "false"
-    );
-
-    propPanel.setAttribute(
-      "aria-hidden",
-      "true"
-    );
-
-    propTrigger.classList.remove(
-      "listening",
-      "thinking"
-    );
-
-  }
-
-
-  function askSuggestion(text) {
-
-    propInput.value = text;
-
-    sendProp(
-      new Event("submit")
-    );
-
-  }
-
-
-  function sendProp(event) {
-
-    if (event) {
-      event.preventDefault();
-    }
-
-    const text =
-      propInput.value.trim();
-
-    if (!text) {
-      return;
-    }
-
-    addPropMessage(
-      text,
-      "user"
-    );
-
-    propInput.value = "";
-
-    propTrigger.classList.add(
-      "listening"
-    );
-
-    setTimeout(() => {
-
-      propTrigger.classList.remove(
-        "listening"
-      );
-
-      propTrigger.classList.add(
-        "thinking"
-      );
-
-    }, 500);
-
-
-    setTimeout(() => {
-
-      propTrigger.classList.remove(
-        "thinking"
-      );
-
-      addPropMessage(
-        generatePropResponse(text),
-        "ai"
-      );
-
-    }, 1100);
-
-  }
-
-
-  function addPropMessage(text, type) {
-
-    const message =
-      document.createElement("div");
-
-    message.className =
-      `prop-message ${type}`;
-
-    if (type === "ai") {
-
-      message.innerHTML =
-        `<small>Prop</small>${text}`;
-
-    } else {
-
-      message.textContent = text;
-
-    }
-
-    propMessages.appendChild(message);
-
-    propMessages.scrollTop =
-      propMessages.scrollHeight;
-
-  }
-
-
-  function generatePropResponse(question) {
-
-    const q =
-      question.toLowerCase();
-
-
-    if (
-      q.includes("cement") ||
-      q.includes("steel") ||
-      q.includes("material")
-    ) {
-
-      return `
-        Construction materials are important signals to watch.
-        Changes in cement, steel, logistics and other inputs can
-        affect development budgets and ultimately influence the
-        economics behind new housing supply.
-        <br><br>
-        <span style="color:#71879b">
-        Production Prop will connect this interpretation to
-        verified Beloveeth data and dated external sources.
-        </span>
-      `;
-
-    }
-
-
-    if (
-      q.includes("yield") ||
-      q.includes("investment")
-    ) {
-
-      return `
-        Yield is only one part of the picture.
-        I would look at acquisition price, achievable rent,
-        vacancy assumptions, operating costs, location demand,
-        supply and comparable properties before interpreting
-        an investment scenario.
-      `;
-
-    }
-
-
-    if (
-      q.includes("market") ||
-      q.includes("price")
-    ) {
-
-      return `
-        The market view combines pricing, demand, supply and
-        development signals. On the current illustrative model,
-        the selected market is showing positive price momentum.
-        That's a scenario signal — not a guaranteed future price.
-      `;
-
-    }
-
-
-    if (
-      q.includes("property") ||
-      q.includes("buy")
-    ) {
-
-      return `
-        Start with the property itself, then widen the lens:
-        verification, location, comparable properties, pricing,
-        rental economics, infrastructure and the surrounding
-        supply picture.
-        <br><br>
-        I can eventually analyse those layers together.
-      `;
-
-    }
-
-
-    if (
-      q.includes("partner")
-    ) {
-
-      return `
-        Beloveeth is designed to connect developers,
-        property owners, professionals, investors and clients
-        through one operating ecosystem.
-      `;
-
-    }
-
-
-    return `
-      I can help interpret the property, market and investment
-      signals on this interface.
-      <br><br>
-      Try asking me about <b>price</b>, <b>yield</b>,
-      <b>construction costs</b>, <b>market demand</b>
-      or a specific location.
-    `;
-
-  }
 
 
   /* =========================================================
      INVESTMENT SCENARIO
   ========================================================= */
 
-  function updateInvestment(value) {
+  const invAmt = document.getElementById("invAmt");
+  const invYield = document.getElementById("invYield");
 
-    value = Number(value);
+  function updateInvestment() {
+    const value = Number(invAmt.value);
+    const y = Number(invYield.value);
+    const annual = value * y / 100;
 
-    const annual =
-      value * .087;
+    document.getElementById("invAmtLabel").textContent = fmtN(value).replace(".00", "");
+    document.getElementById("invYieldLabel").textContent = `${y.toFixed(1)}%`;
+    document.getElementById("invAnnual").textContent = fmtN(annual);
+    document.getElementById("invMonthly").textContent = fmtN(annual / 12);
+  }
 
-    document.getElementById(
-      "investmentResult"
-    ).innerHTML = `
-      Illustrative annual rental income:
-      <strong style="color:#8fddff">
-        ₦${annual.toLocaleString("en-NG", {
-          maximumFractionDigits: 0
-        })}
-      </strong>
-    `;
+  invAmt.addEventListener("input", updateInvestment);
+  invYield.addEventListener("input", updateInvestment);
+  updateInvestment();
 
+
+  /* =========================================================
+     PROP
+  ========================================================= */
+
+  const propTrigger = document.getElementById("propTrigger");
+  const propPanel = document.getElementById("propPanel");
+  const propInput = document.getElementById("propInput");
+  const propMessages = document.getElementById("propMessages");
+
+  let propJustOpened = false;
+
+  function toggleProp() {
+    propPanel.classList.contains("open") ? closeProp() : openProp();
+  }
+
+  function openProp(prompt = "") {
+    // stops the same click from being read as an "outside click" and closing the panel
+    propJustOpened = true;
+    setTimeout(() => (propJustOpened = false), 0);
+
+    propPanel.classList.add("open");
+    propTrigger.setAttribute("aria-expanded", "true");
+    propPanel.setAttribute("aria-hidden", "false");
+
+    if (prompt) {
+      setTimeout(() => {
+        propInput.value = prompt;
+        sendProp();
+      }, 250);
+    } else {
+      setTimeout(() => propInput.focus(), 350);
+    }
+  }
+
+  function closeProp() {
+    propPanel.classList.remove("open");
+    propTrigger.setAttribute("aria-expanded", "false");
+    propPanel.setAttribute("aria-hidden", "true");
+    propTrigger.classList.remove("listening", "thinking");
+  }
+
+  function askSuggestion(text) {
+    propInput.value = text;
+    sendProp();
+  }
+
+  function sendProp(event) {
+    if (event) event.preventDefault();
+
+    const text = propInput.value.trim();
+    if (!text) return;
+
+    addPropMessage(text, "user");
+    propInput.value = "";
+
+    propTrigger.classList.add("listening");
+
+    const typing = document.createElement("div");
+    typing.className = "prop-message ai typing";
+    typing.innerHTML = "<i></i><i></i><i></i>";
+
+    setTimeout(() => {
+      propTrigger.classList.remove("listening");
+      propTrigger.classList.add("thinking");
+      propMessages.appendChild(typing);
+      propMessages.scrollTop = propMessages.scrollHeight;
+    }, 450);
+
+    setTimeout(() => {
+      propTrigger.classList.remove("thinking");
+      typing.remove();
+      addPropMessage(generatePropResponse(text), "ai");
+    }, 1400);
+  }
+
+  function addPropMessage(text, type) {
+    const message = document.createElement("div");
+    message.className = `prop-message ${type}`;
+
+    if (type === "ai") message.innerHTML = `<small>Prop</small>${text}`;
+    else message.textContent = text;
+
+    propMessages.appendChild(message);
+    propMessages.scrollTop = propMessages.scrollHeight;
+  }
+
+  function generatePropResponse(question) {
+    const q = question.toLowerCase();
+    const p = currentProperty;
+
+    if (q.includes("analyze") || q.includes("analyse") || q.includes("this property")) {
+      const rent = p.yield
+        ? `On the illustrative model, a ${p.yield}% gross yield would imply roughly ${fmtN(p.price * 1e6 * p.yield / 100)} a year in rent.`
+        : "As a development opportunity, value depends more on what can be built and sold than on rent.";
+
+      return `
+        <b>${p.title}</b>, ${p.area}, ${p.city}, is listed at an indicative ${fmtP(p.price)}. ${rent}
+        <br><br>
+        Before treating any of that as real, I'd verify title and documentation, compare similar listings in ${p.area},
+        check vacancy and service-charge assumptions, and look at nearby infrastructure and supply.`;
+    }
+
+    if (q.includes("cement") || q.includes("steel") || q.includes("material") || q.includes("construction")) {
+      return `
+        Construction materials are important signals to watch. Changes in cement, steel, logistics and other inputs
+        can affect development budgets and ultimately the economics behind new housing supply.
+        <br><br>
+        <span style="color:var(--muted)">Production Prop will connect this to verified Beloveeth data and dated external sources.</span>`;
+    }
+
+    if (q.includes("yield") || q.includes("investment")) {
+      return `
+        Yield is only one part of the picture. I'd look at acquisition price, achievable rent, vacancy assumptions,
+        operating costs, location demand, supply and comparable properties before interpreting an investment scenario.`;
+    }
+
+    if (q.includes("infrastructure") || q.includes("road")) {
+      return `
+        Better connectivity changes travel times, and travel time is a hidden part of price. Areas that become easier
+        to reach often see stronger demand and more development interest along the corridor.`;
+    }
+
+    if (q.includes("market") || q.includes("price")) {
+      return `
+        The market view combines pricing, demand, supply and development signals. On the current illustrative model,
+        the selected market is showing positive price momentum. That's a scenario signal, not a guaranteed future price.`;
+    }
+
+    if (q.includes("property") || q.includes("buy") || q.includes("find")) {
+      return `
+        Start with the property itself, then widen the lens: verification, location, comparable properties, pricing,
+        rental economics, infrastructure and the surrounding supply picture.
+        <br><br>
+        You can also browse the <a href="#" onclick="switchView('properties');return false" style="color:var(--maroon-2);font-weight:700">properties page</a> and tap any card for details.`;
+    }
+
+    if (q.includes("partner")) {
+      return `
+        Beloveeth is designed to connect developers, property owners, professionals, investors and clients through one
+        operating ecosystem. You can start from the
+        <a href="#" onclick="switchView('partners');return false" style="color:var(--maroon-2);font-weight:700">Partners page</a>.`;
+    }
+
+    return `
+      I can help interpret the property, market and investment signals on this site.
+      <br><br>
+      Try asking about <b>price</b>, <b>yield</b>, <b>construction costs</b>, <b>market demand</b> or a specific location.`;
   }
 
 
   /* =========================================================
-     LARGE PULSE CHART
+     ESC / OUTSIDE CLICK
   ========================================================= */
 
-  const largeCanvas =
-    document.getElementById(
-      "pulseLargeChart"
-    );
+  document.addEventListener("keydown", e => {
+    if (e.key !== "Escape") return;
 
-  if (largeCanvas) {
+    if (propPanel.classList.contains("open")) closeProp();
+    else if (modal.classList.contains("open")) closeProperty();
+  });
 
-    new Chart(
-      largeCanvas.getContext("2d"),
-      {
+  document.addEventListener("click", e => {
+    if (propJustOpened) return;
 
-        type: "line",
-
-        data: {
-
-          labels: [
-            "Apr",
-            "May",
-            "Jun",
-            "Jul",
-            "Aug",
-            "Sep"
-          ],
-
-          datasets: [{
-
-            label: "Market index",
-
-            data: [
-              100,
-              103,
-              108,
-              111,
-              117,
-              124
-            ],
-
-            borderColor: "#70cfff",
-            backgroundColor:
-              "rgba(70,170,255,.07)",
-
-            fill: true,
-
-            tension: .4,
-
-            pointRadius: 0,
-
-            borderWidth: 2
-
-          }]
-
-        },
-
-        options: {
-
-          responsive: true,
-          maintainAspectRatio: false,
-
-          plugins: {
-
-            legend: {
-              display: false
-            }
-
-          },
-
-          scales: {
-
-            x: {
-              grid: {
-                display: false
-              },
-              ticks: {
-                color: "#667386",
-                font: {
-                  family: "Manrope",
-                  size: 8
-                }
-              },
-              border: {
-                display: false
-              }
-            },
-
-            y: {
-
-              grid: {
-                color:
-                  "rgba(255,255,255,.045)"
-              },
-
-              ticks: {
-                color: "#667386",
-                font: {
-                  family: "Manrope",
-                  size: 8
-                }
-              },
-
-              border: {
-                display: false
-              }
-
-            }
-
-          }
-
-        }
-
-      }
-
-    );
-
-  }
-
-
-  /* =========================================================
-     ESCAPE / OUTSIDE PROP
-  ========================================================= */
-
-  document.addEventListener(
-    "keydown",
-    event => {
-
-      if (
-        event.key === "Escape" &&
-        propPanel.classList.contains("open")
-      ) {
-
-        closeProp();
-
-      }
-
+    if (
+      propPanel.classList.contains("open") &&
+      !propPanel.contains(e.target) &&
+      !propTrigger.contains(e.target)
+    ) {
+      closeProp();
     }
-  );
-
-
-  document.addEventListener(
-    "click",
-    event => {
-
-      if (
-        propPanel.classList.contains("open") &&
-        !propPanel.contains(event.target) &&
-        !propTrigger.contains(event.target)
-      ) {
-
-        closeProp();
-
-      }
-
-    }
-  );
-
+  });
 </script>
 
 </body>
