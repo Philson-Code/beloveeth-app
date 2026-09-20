@@ -1,80 +1,89 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#090d16" />
 
-  <title>Beloveeth Realty & PropTech | Property Intelligence</title>
+  <title>Beloveeth | PropTech Intelligence</title>
 
   <meta
     name="description"
-    content="Beloveeth Realty & PropTech combines real estate, market intelligence, property data and AI-assisted decision making."
-  >
+    content="Beloveeth Realty & PropTech — property discovery, market intelligence and investment insight in one connected ecosystem."
+  />
 
+  <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-
   <link
-    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Playfair+Display:wght@600;700&display=swap"
+    href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Sora:wght@400;500;600;700;800&display=swap"
     rel="stylesheet"
-  >
+  />
 
+  <!-- Chart -->
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
   <style>
     :root {
-      --maroon: #541421;
-      --maroon-dark: #320b13;
-      --maroon-soft: #7c2a3a;
+      --maroon: #4a101d;
+      --maroon-2: #681d31;
+      --maroon-3: #8a3048;
 
-      --gold: #caa84b;
-      --gold-soft: #efe3b9;
+      --ink: #090d16;
+      --ink-2: #0e1420;
+      --ink-3: #141c29;
 
-      --ink: #12141a;
-      --slate: #59616d;
-      --muted: #8a929e;
-
-      --ivory: #f8f7f3;
       --white: #ffffff;
-      --surface: #f0efeb;
-      --line: #e4e1db;
+      --muted: #8e99aa;
+      --muted-2: #647084;
 
-      --green: #16805d;
-      --red: #b83a45;
-      --blue: #416b9d;
+      --line: rgba(255,255,255,.09);
+      --glass: rgba(255,255,255,.055);
+      --glass-strong: rgba(255,255,255,.085);
 
-      --radius-xl: 28px;
-      --radius-lg: 20px;
-      --radius-md: 14px;
+      --blue: #72cfff;
+      --blue-2: #318dff;
+      --cyan: #b5efff;
 
-      --shadow: 0 18px 60px rgba(22, 18, 18, .07);
-      --shadow-soft: 0 8px 30px rgba(22, 18, 18, .05);
+      --gold: #d4af37;
+      --green: #43d6a1;
+      --red: #ff6e7f;
 
-      --max: 1320px;
+      --radius: 22px;
+      --radius-sm: 14px;
+
+      --font-display: "Sora", sans-serif;
+      --font-body: "Manrope", sans-serif;
     }
 
     * {
+      box-sizing: border-box;
       margin: 0;
       padding: 0;
-      box-sizing: border-box;
     }
 
-    html {
-      scroll-behavior: smooth;
+    html,
+    body {
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
     }
 
     body {
-      font-family: "Inter", sans-serif;
-      background: var(--ivory);
-      color: var(--ink);
-      line-height: 1.6;
-      overflow-x: hidden;
-    }
-
-    a {
-      color: inherit;
-      text-decoration: none;
+      font-family: var(--font-body);
+      color: var(--white);
+      background:
+        radial-gradient(
+          circle at 75% 15%,
+          rgba(75, 24, 42, .34),
+          transparent 32%
+        ),
+        radial-gradient(
+          circle at 18% 85%,
+          rgba(49, 141, 255, .08),
+          transparent 28%
+        ),
+        var(--ink);
     }
 
     button,
@@ -82,1972 +91,1487 @@
       font: inherit;
     }
 
-    .container {
-      width: min(var(--max), calc(100% - 48px));
-      margin: 0 auto;
+    button {
+      border: 0;
+      cursor: pointer;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
     }
 
     /* =========================================================
-       NAVIGATION
+       APP SHELL
     ========================================================= */
 
-    .site-header {
-      position: sticky;
-      top: 0;
-      z-index: 1000;
-
-      background: rgba(248, 247, 243, .88);
-      backdrop-filter: blur(18px);
-
-      border-bottom: 1px solid rgba(228, 225, 219, .85);
+    .app {
+      position: relative;
+      width: 100%;
+      height: 100vh;
+      overflow: hidden;
     }
 
-    .nav {
-      min-height: 76px;
+    .ambient {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      overflow: hidden;
+    }
+
+    .ambient::before {
+      content: "";
+      position: absolute;
+      width: 520px;
+      height: 520px;
+      top: -220px;
+      right: 10%;
+      border-radius: 50%;
+      background: radial-gradient(
+        circle,
+        rgba(106, 34, 55, .24),
+        transparent 70%
+      );
+      filter: blur(20px);
+    }
+
+    .ambient::after {
+      content: "";
+      position: absolute;
+      width: 420px;
+      height: 420px;
+      bottom: -240px;
+      left: 5%;
+      border-radius: 50%;
+      background: radial-gradient(
+        circle,
+        rgba(50, 140, 255, .10),
+        transparent 70%
+      );
+      filter: blur(20px);
+    }
+
+    /* =========================================================
+       HEADER
+    ========================================================= */
+
+    .topbar {
+      position: relative;
+      z-index: 20;
+      height: 76px;
+      padding: 0 34px;
 
       display: flex;
       align-items: center;
       justify-content: space-between;
-      gap: 30px;
+
+      border-bottom: 1px solid var(--line);
+      background: rgba(9, 13, 22, .72);
+      backdrop-filter: blur(24px);
     }
 
     .brand {
       display: flex;
       align-items: center;
-      gap: 11px;
-
-      flex-shrink: 0;
+      gap: 12px;
+      min-width: 210px;
     }
 
     .brand-mark {
-      width: 38px;
-      height: 38px;
-
+      width: 35px;
+      height: 35px;
+      border-radius: 11px;
+      background:
+        linear-gradient(145deg, #741f36, #3c0b17);
       display: grid;
       place-items: center;
+      box-shadow:
+        0 7px 30px rgba(93, 22, 44, .28);
+    }
 
-      background: var(--maroon);
-      color: var(--gold);
-
-      border-radius: 11px;
-
-      font-family: "Playfair Display", serif;
-      font-size: 18px;
-      font-weight: 700;
+    .brand-mark span {
+      font-family: var(--font-display);
+      font-size: 13px;
+      font-weight: 800;
+      letter-spacing: -.04em;
     }
 
     .brand-copy strong {
       display: block;
-
-      color: var(--maroon);
-
-      font-family: "Playfair Display", serif;
-      font-size: 19px;
-      line-height: 1;
+      font-family: var(--font-display);
+      font-size: 13px;
+      letter-spacing: .13em;
     }
 
-    .brand-copy span {
-      display: block;
-
-      margin-top: 3px;
-
+    .brand-copy small {
       color: var(--muted);
-
       font-size: 8px;
-      font-weight: 800;
-      letter-spacing: 1.7px;
+      letter-spacing: .15em;
       text-transform: uppercase;
     }
 
-    .nav-links {
+    .nav {
       display: flex;
       align-items: center;
-      gap: 27px;
-
-      list-style: none;
+      gap: 5px;
     }
 
-    .nav-links a {
-      color: var(--slate);
-
+    .nav button {
+      position: relative;
+      color: #aeb7c6;
+      background: transparent;
+      padding: 9px 14px;
+      border-radius: 10px;
       font-size: 12px;
       font-weight: 700;
-
-      transition: color .2s ease;
+      transition: .25s ease;
     }
 
-    .nav-links a:hover {
-      color: var(--maroon);
+    .nav button:hover {
+      color: white;
+      background: rgba(255,255,255,.055);
     }
 
-    .nav-actions {
+    .nav button.active {
+      color: white;
+      background: rgba(255,255,255,.075);
+    }
+
+    .nav button.active::after {
+      content: "";
+      position: absolute;
+      bottom: -17px;
+      left: 50%;
+      width: 22px;
+      height: 2px;
+      transform: translateX(-50%);
+      border-radius: 10px;
+      background: var(--gold);
+    }
+
+    .header-actions {
       display: flex;
       align-items: center;
       gap: 10px;
+      min-width: 210px;
+      justify-content: flex-end;
     }
 
-    .nav-login {
-      padding: 10px 14px;
-
-      color: var(--slate);
-
-      font-size: 12px;
-      font-weight: 700;
-    }
-
-    .nav-cta {
-      padding: 11px 18px;
-
-      background: var(--maroon);
-      color: white;
-
-      border-radius: 999px;
-
-      font-size: 11px;
-      font-weight: 800;
-
-      box-shadow: 0 7px 20px rgba(84, 20, 33, .18);
-
-      transition:
-        transform .2s ease,
-        background .2s ease;
-    }
-
-    .nav-cta:hover {
-      transform: translateY(-2px);
-      background: var(--maroon-dark);
-    }
-
-    /* =========================================================
-       HERO
-    ========================================================= */
-
-    .hero {
-      position: relative;
-
-      padding: 82px 0 65px;
-
-      overflow: hidden;
-    }
-
-    .hero::before {
-      content: "";
-
-      position: absolute;
-
-      width: 620px;
-      height: 620px;
-
-      top: -240px;
-      right: -180px;
-
-      background:
-        radial-gradient(
-          circle,
-          rgba(202, 168, 75, .15),
-          transparent 68%
-        );
-
-      pointer-events: none;
-    }
-
-    .hero-grid {
-      display: grid;
-      grid-template-columns: 1.05fr .95fr;
-
-      gap: 65px;
-
-      align-items: center;
-    }
-
-    .eyebrow {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-
-      padding: 7px 12px;
-
-      border: 1px solid rgba(202, 168, 75, .35);
-      border-radius: 999px;
-
-      background: rgba(239, 227, 185, .38);
-
-      color: var(--maroon);
-
-      font-size: 9px;
-      font-weight: 800;
-      letter-spacing: 1.1px;
-      text-transform: uppercase;
-    }
-
-    .eyebrow-dot {
-      width: 6px;
-      height: 6px;
-
-      border-radius: 50%;
-
-      background: var(--green);
-    }
-
-    .hero h1 {
-      max-width: 720px;
-
-      margin-top: 21px;
-
-      font-family: "Playfair Display", serif;
-      font-size: clamp(47px, 6vw, 79px);
-      line-height: .99;
-      letter-spacing: -2.7px;
-    }
-
-    .hero h1 em {
-      color: var(--maroon);
-      font-weight: 600;
-    }
-
-    .hero-copy {
-      max-width: 620px;
-
-      margin-top: 25px;
-
-      color: var(--slate);
-
-      font-size: 16px;
-      line-height: 1.8;
-    }
-
-    .hero-actions {
+    .status {
       display: flex;
       align-items: center;
-      gap: 12px;
-
-      margin-top: 30px;
-    }
-
-    .primary-btn,
-    .secondary-btn {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      gap: 8px;
-
-      padding: 14px 20px;
-
-      border-radius: 999px;
-
-      font-size: 12px;
-      font-weight: 800;
-
-      transition: .2s ease;
-    }
-
-    .primary-btn {
-      background: var(--maroon);
-      color: white;
-
-      box-shadow: 0 10px 28px rgba(84, 20, 33, .18);
-    }
-
-    .primary-btn:hover {
-      transform: translateY(-2px);
-      background: var(--maroon-dark);
-    }
-
-    .secondary-btn {
-      border: 1px solid var(--line);
-      background: white;
-      color: var(--ink);
-    }
-
-    .secondary-btn:hover {
-      border-color: var(--maroon);
-      color: var(--maroon);
-    }
-
-    .hero-note {
-      margin-top: 20px;
-
+      gap: 7px;
       color: var(--muted);
-
       font-size: 10px;
-    }
-
-    /* =========================================================
-       PULSE PREVIEW
-    ========================================================= */
-
-    .pulse-card {
-      position: relative;
-
-      padding: 25px;
-
-      border-radius: var(--radius-xl);
-
-      background:
-        linear-gradient(
-          145deg,
-          #17131a,
-          #25161d
-        );
-
-      color: white;
-
-      box-shadow: 0 28px 70px rgba(38, 18, 23, .20);
-
-      overflow: hidden;
-    }
-
-    .pulse-card::after {
-      content: "";
-
-      position: absolute;
-
-      width: 260px;
-      height: 260px;
-
-      right: -110px;
-      top: -100px;
-
-      border-radius: 50%;
-
-      border: 1px solid rgba(202, 168, 75, .18);
-      box-shadow:
-        0 0 0 45px rgba(202, 168, 75, .025),
-        0 0 0 90px rgba(202, 168, 75, .02);
-
-      pointer-events: none;
-    }
-
-    .pulse-header {
-      position: relative;
-      z-index: 2;
-
-      display: flex;
-      justify-content: space-between;
-      align-items: flex-start;
-    }
-
-    .pulse-label {
-      color: var(--gold);
-
-      font-size: 9px;
-      font-weight: 800;
-      letter-spacing: 1.3px;
-      text-transform: uppercase;
-    }
-
-    .pulse-title {
-      margin-top: 5px;
-
-      font-family: "Playfair Display", serif;
-      font-size: 25px;
-    }
-
-    .pulse-status {
-      display: flex;
-      align-items: center;
-      gap: 6px;
-
-      padding: 6px 9px;
-
-      border-radius: 999px;
-
-      background: rgba(255,255,255,.06);
-
-      color: #d8dedb;
-
-      font-size: 9px;
-      font-weight: 700;
     }
 
     .status-dot {
       width: 6px;
       height: 6px;
-
       border-radius: 50%;
       background: var(--green);
+      box-shadow: 0 0 12px rgba(67,214,161,.65);
+    }
+
+    .login {
+      padding: 10px 17px;
+      border-radius: 10px;
+      background: white;
+      color: #10131a;
+      font-size: 11px;
+      font-weight: 800;
+      transition: .25s ease;
+    }
+
+    .login:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 10px 28px rgba(255,255,255,.08);
+    }
+
+    /* =========================================================
+       WORKSPACE
+    ========================================================= */
+
+    .workspace {
+      position: relative;
+      z-index: 2;
+      height: calc(100vh - 76px);
+      padding: 22px 30px 34px;
+
+      display: grid;
+      grid-template-columns: minmax(360px, .86fr) minmax(580px, 1.5fr);
+      gap: 20px;
+
+      overflow: hidden;
+    }
+
+    .view {
+      display: none;
+      width: 100%;
+      height: 100%;
+      animation: viewIn .35s ease;
+    }
+
+    .view.active {
+      display: grid;
+    }
+
+    @keyframes viewIn {
+      from {
+        opacity: 0;
+        transform: translateY(5px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    /* =========================================================
+       LEFT HERO
+    ========================================================= */
+
+    .hero-panel {
+      position: relative;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 22px 8px 40px 10px;
+    }
+
+    .eyebrow {
+      display: flex;
+      align-items: center;
+      gap: 9px;
+      color: #a9b2c1;
+      font-size: 9px;
+      font-weight: 800;
+      letter-spacing: .17em;
+      text-transform: uppercase;
+      margin-bottom: 18px;
+    }
+
+    .eyebrow i {
+      width: 23px;
+      height: 1px;
+      background: var(--gold);
+    }
+
+    .hero-title {
+      max-width: 610px;
+      font-family: var(--font-display);
+      font-size: clamp(42px, 4.2vw, 70px);
+      line-height: .99;
+      letter-spacing: -.075em;
+      font-weight: 700;
+    }
+
+    .hero-title span {
+      color: transparent;
+      background:
+        linear-gradient(
+          110deg,
+          #fff 15%,
+          #bcdfff 50%,
+          #6bbdff 80%
+        );
+      -webkit-background-clip: text;
+      background-clip: text;
+    }
+
+    .hero-copy {
+      max-width: 490px;
+      margin-top: 21px;
+      color: #9aa5b5;
+      font-size: 13px;
+      line-height: 1.75;
+    }
+
+    .hero-actions {
+      display: flex;
+      gap: 10px;
+      margin-top: 27px;
+    }
+
+    .primary-btn,
+    .secondary-btn {
+      padding: 12px 17px;
+      border-radius: 11px;
+      font-size: 11px;
+      font-weight: 800;
+      transition: .25s ease;
+    }
+
+    .primary-btn {
+      color: white;
+      background: linear-gradient(135deg, #7b243f, #4b101f);
+      box-shadow: 0 12px 34px rgba(92, 23, 45, .26);
+    }
+
+    .secondary-btn {
+      color: #d5dbe5;
+      background: rgba(255,255,255,.05);
+      border: 1px solid var(--line);
+    }
+
+    .primary-btn:hover,
+    .secondary-btn:hover {
+      transform: translateY(-2px);
+    }
+
+    .ecosystem-line {
+      display: flex;
+      align-items: center;
+      gap: 9px;
+      margin-top: 34px;
+      color: #697486;
+      font-size: 9px;
+      text-transform: uppercase;
+      letter-spacing: .13em;
+    }
+
+    .ecosystem-line::before {
+      content: "";
+      width: 38px;
+      height: 1px;
+      background: rgba(255,255,255,.14);
+    }
+
+    .hero-metrics {
+      display: flex;
+      gap: 30px;
+      margin-top: 20px;
+    }
+
+    .metric strong {
+      display: block;
+      font-family: var(--font-display);
+      font-size: 18px;
+      letter-spacing: -.04em;
+    }
+
+    .metric span {
+      display: block;
+      color: #697486;
+      font-size: 8px;
+      margin-top: 3px;
+      text-transform: uppercase;
+      letter-spacing: .1em;
+    }
+
+    /* =========================================================
+       RIGHT INTELLIGENCE GRID
+    ========================================================= */
+
+    .intelligence-grid {
+      height: 100%;
+      min-height: 0;
+
+      display: grid;
+      grid-template-columns: 1.18fr .82fr;
+      grid-template-rows: 1.12fr .88fr;
+      gap: 14px;
+    }
+
+    .card {
+      position: relative;
+      min-height: 0;
+      overflow: hidden;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background:
+        linear-gradient(
+          145deg,
+          rgba(255,255,255,.075),
+          rgba(255,255,255,.028)
+        );
+      backdrop-filter: blur(22px);
+      box-shadow:
+        0 20px 60px rgba(0,0,0,.18),
+        inset 0 1px 0 rgba(255,255,255,.035);
+    }
+
+    .card:hover {
+      border-color: rgba(255,255,255,.13);
+    }
+
+    .card-head {
+      position: relative;
+      z-index: 2;
+      padding: 17px 18px 0;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .card-label {
+      color: #7f8b9d;
+      font-size: 8px;
+      font-weight: 800;
+      letter-spacing: .16em;
+      text-transform: uppercase;
+    }
+
+    .card-title {
+      margin-top: 4px;
+      font-family: var(--font-display);
+      font-size: 14px;
+      font-weight: 600;
+      letter-spacing: -.035em;
+    }
+
+    .pill {
+      padding: 5px 8px;
+      border-radius: 100px;
+      color: #8fd9ff;
+      background: rgba(85,184,255,.08);
+      border: 1px solid rgba(85,184,255,.13);
+      font-size: 7px;
+      font-weight: 800;
+      letter-spacing: .08em;
+    }
+
+    /* =========================================================
+       PULSE GRAPH
+    ========================================================= */
+
+    .pulse-card {
+      grid-row: 1 / 2;
+      grid-column: 1 / 2;
+    }
+
+    .pulse-controls {
+      display: flex;
+      align-items: center;
+      gap: 7px;
+    }
+
+    .select {
+      color: #c4ccd7;
+      background: rgba(255,255,255,.045);
+      border: 1px solid rgba(255,255,255,.08);
+      border-radius: 8px;
+      padding: 6px 8px;
+      font-size: 8px;
+      outline: none;
     }
 
     .pulse-stats {
-      position: relative;
-      z-index: 2;
-
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-
-      gap: 8px;
-
-      margin-top: 23px;
+      display: flex;
+      gap: 24px;
+      padding: 18px 18px 3px;
     }
 
-    .pulse-stat {
-      padding: 11px;
-
-      border: 1px solid rgba(255,255,255,.07);
-      border-radius: 11px;
-
-      background: rgba(255,255,255,.035);
+    .pulse-stat strong {
+      font-family: var(--font-display);
+      font-size: 18px;
+      letter-spacing: -.045em;
     }
 
     .pulse-stat span {
       display: block;
-
-      color: #9b9da5;
-
-      font-size: 8px;
-      font-weight: 700;
+      margin-top: 2px;
+      color: #687487;
+      font-size: 7px;
       text-transform: uppercase;
-      letter-spacing: .5px;
-    }
-
-    .pulse-stat strong {
-      display: block;
-
-      margin-top: 4px;
-
-      font-size: 17px;
+      letter-spacing: .1em;
     }
 
     .positive {
-      color: #55c795;
+      color: var(--green) !important;
     }
 
     .negative {
-      color: #df707a;
+      color: var(--red) !important;
     }
 
-    .chart-area {
-      position: relative;
-      z-index: 2;
-
-      height: 225px;
-
-      margin-top: 19px;
-    }
-
-    .chart-caption {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-
-      margin-top: 9px;
-
-      color: #8f929b;
-
-      font-size: 9px;
-    }
-
-    .ai-signal {
-      position: relative;
-      z-index: 2;
-
-      display: flex;
-      align-items: flex-start;
-      gap: 10px;
-
-      margin-top: 16px;
-      padding: 12px 14px;
-
-      border-radius: 12px;
-
-      background: rgba(202,168,75,.08);
-      border: 1px solid rgba(202,168,75,.15);
-    }
-
-    .ai-cloud {
-      min-width: 27px;
-      height: 27px;
-
-      display: grid;
-      place-items: center;
-
-      border-radius: 50%;
-
-      background: var(--gold);
-      color: var(--maroon);
-
-      font-size: 10px;
-      font-weight: 900;
-    }
-
-    .ai-signal strong {
-      display: block;
-
-      color: var(--gold);
-
-      font-size: 8px;
-      letter-spacing: .6px;
-      text-transform: uppercase;
-    }
-
-    .ai-signal p {
-      margin-top: 2px;
-
-      color: #c5c6ca;
-
-      font-size: 10px;
-      line-height: 1.5;
-    }
-
-    .data-label {
-      margin-top: 12px;
-
-      color: #767a84;
-
-      font-size: 8px;
-    }
-
-    /* =========================================================
-       INTELLIGENCE STRIP
-    ========================================================= */
-
-    .intelligence-strip {
-      border-top: 1px solid var(--line);
-      border-bottom: 1px solid var(--line);
-
-      background: white;
-    }
-
-    .strip-grid {
-      display: grid;
-      grid-template-columns: repeat(5, 1fr);
-    }
-
-    .strip-item {
-      padding: 20px 18px;
-
-      border-right: 1px solid var(--line);
-    }
-
-    .strip-item:first-child {
-      border-left: 1px solid var(--line);
-    }
-
-    .strip-item span {
-      display: block;
-
-      color: var(--muted);
-
-      font-size: 8px;
-      font-weight: 800;
-      letter-spacing: .8px;
-      text-transform: uppercase;
-    }
-
-    .strip-item strong {
-      display: block;
-
-      margin-top: 4px;
-
-      color: var(--maroon);
-
-      font-size: 18px;
-    }
-
-    .strip-item small {
-      color: var(--slate);
-
-      font-size: 8px;
-    }
-
-    /* =========================================================
-       SECTION COMMON
-    ========================================================= */
-
-    section {
-      scroll-margin-top: 95px;
-    }
-
-    .section {
-      padding: 100px 0;
-    }
-
-    .section-kicker {
-      color: var(--maroon);
-
-      font-size: 9px;
-      font-weight: 800;
-      letter-spacing: 1.5px;
-      text-transform: uppercase;
-    }
-
-    .section-heading {
-      max-width: 730px;
-
-      margin-top: 10px;
-
-      font-family: "Playfair Display", serif;
-      font-size: clamp(35px, 4vw, 53px);
-      line-height: 1.06;
-      letter-spacing: -1.5px;
-    }
-
-    .section-intro {
-      max-width: 650px;
-
-      margin-top: 15px;
-
-      color: var(--slate);
-
-      font-size: 14px;
-      line-height: 1.8;
-    }
-
-    /* =========================================================
-       PULSE DEEP DIVE
-    ========================================================= */
-
-    .pulse-section {
-      background: var(--surface);
-    }
-
-    .pulse-layout {
-      display: grid;
-      grid-template-columns: .8fr 1.2fr;
-
-      gap: 50px;
-
-      margin-top: 45px;
-    }
-
-    .pulse-index-card {
-      padding: 30px;
-
-      background: var(--maroon);
-      color: white;
-
-      border-radius: var(--radius-xl);
-
-      box-shadow: var(--shadow);
-    }
-
-    .index-top {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
-
-    .index-top span {
-      color: var(--gold);
-
-      font-size: 9px;
-      font-weight: 800;
-      letter-spacing: 1px;
-      text-transform: uppercase;
-    }
-
-    .index-number {
-      margin-top: 25px;
-
-      font-family: "Playfair Display", serif;
-      font-size: 64px;
-      line-height: 1;
-    }
-
-    .index-change {
-      margin-top: 8px;
-
-      color: #7ce0b8;
-
-      font-size: 13px;
-      font-weight: 800;
-    }
-
-    .index-description {
-      margin-top: 30px;
-
-      color: #d9cfd1;
-
-      font-size: 12px;
-      line-height: 1.8;
-    }
-
-    .index-breakdown {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-
-      gap: 10px;
-
-      margin-top: 27px;
-    }
-
-    .index-breakdown div {
-      padding: 12px;
-
-      border: 1px solid rgba(255,255,255,.1);
-      border-radius: 11px;
-
-      background: rgba(255,255,255,.04);
-    }
-
-    .index-breakdown span {
-      display: block;
-
-      color: #bcaeb1;
-
-      font-size: 8px;
-      text-transform: uppercase;
-    }
-
-    .index-breakdown strong {
-      display: block;
-
-      margin-top: 4px;
-
-      font-size: 14px;
-    }
-
-    .analytics-panel {
-      padding: 28px;
-
-      background: white;
-
-      border: 1px solid var(--line);
-      border-radius: var(--radius-xl);
-
-      box-shadow: var(--shadow-soft);
-    }
-
-    .analytics-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-
-      padding-bottom: 17px;
-
-      border-bottom: 1px solid var(--line);
-    }
-
-    .analytics-header h3 {
-      font-size: 15px;
-    }
-
-    .period-tabs {
-      display: flex;
-      gap: 5px;
-    }
-
-    .period-tabs button {
-      border: 1px solid var(--line);
-      background: white;
-
-      padding: 6px 9px;
-
-      border-radius: 7px;
-
-      color: var(--slate);
-
-      font-size: 8px;
-      font-weight: 700;
-
-      cursor: pointer;
-    }
-
-    .period-tabs button.active {
-      background: var(--maroon);
-      border-color: var(--maroon);
-      color: white;
-    }
-
-    .large-chart {
-      height: 315px;
-
-      margin-top: 20px;
-    }
-
-    .signal-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-
-      gap: 10px;
-
-      margin-top: 20px;
-    }
-
-    .signal {
-      padding: 13px;
-
-      border-radius: 11px;
-
-      background: var(--ivory);
-    }
-
-    .signal span {
-      display: block;
-
-      color: var(--muted);
-
-      font-size: 8px;
-      text-transform: uppercase;
-      font-weight: 800;
-    }
-
-    .signal strong {
-      display: block;
-
-      margin-top: 4px;
-
-      font-size: 13px;
-    }
-
-    /* =========================================================
-       PROPERTIES
-    ========================================================= */
-
-    .properties-section {
-      background: white;
-    }
-
-    .section-top {
-      display: flex;
-      justify-content: space-between;
-      align-items: flex-end;
-
-      gap: 25px;
-    }
-
-    .property-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-
-      gap: 20px;
-
-      margin-top: 45px;
-    }
-
-    .property-card {
-      overflow: hidden;
-
-      background: white;
-
-      border: 1px solid var(--line);
-      border-radius: var(--radius-lg);
-
-      box-shadow: var(--shadow-soft);
-
-      transition: transform .25s ease, box-shadow .25s ease;
-    }
-
-    .property-card:hover {
-      transform: translateY(-5px);
-      box-shadow: var(--shadow);
-    }
-
-    .property-image {
-      position: relative;
-
-      height: 245px;
-
-      overflow: hidden;
-    }
-
-    .property-image img {
-      width: 100%;
-      height: 100%;
-
-      object-fit: cover;
-
-      transition: transform .5s ease;
-    }
-
-    .property-card:hover .property-image img {
-      transform: scale(1.04);
-    }
-
-    .property-status {
+    .chart-wrap {
       position: absolute;
-
-      top: 14px;
-      left: 14px;
-
-      padding: 6px 9px;
-
-      border-radius: 999px;
-
-      background: rgba(255,255,255,.92);
-
-      color: var(--maroon);
-
-      font-size: 8px;
-      font-weight: 800;
-      letter-spacing: .5px;
-      text-transform: uppercase;
+      left: 16px;
+      right: 16px;
+      top: 115px;
+      bottom: 49px;
     }
 
-    .property-content {
-      padding: 21px;
+    .chart-wrap canvas {
+      width: 100% !important;
+      height: 100% !important;
     }
 
-    .property-type {
-      color: var(--muted);
-
-      font-size: 8px;
-      font-weight: 800;
-      letter-spacing: .8px;
-      text-transform: uppercase;
-    }
-
-    .property-title {
-      margin-top: 5px;
-
-      font-size: 17px;
-      font-weight: 800;
-    }
-
-    .property-location {
-      margin-top: 4px;
-
-      color: var(--slate);
-
-      font-size: 10px;
-    }
-
-    .property-bottom {
-      display: flex;
-      justify-content: space-between;
-      align-items: flex-end;
-
-      margin-top: 17px;
-    }
-
-    .property-price {
-      color: var(--maroon);
-
-      font-size: 18px;
-      font-weight: 800;
-    }
-
-    .property-price small {
-      display: block;
-
-      color: var(--muted);
-
-      font-size: 8px;
-      font-weight: 500;
-    }
-
-    .property-action {
-      padding: 8px 11px;
-
-      border: 1px solid var(--line);
-      border-radius: 8px;
-
-      color: var(--maroon);
-
-      font-size: 9px;
-      font-weight: 800;
-    }
-
-    /* =========================================================
-       NIGERIA MAP / LOCATIONS
-    ========================================================= */
-
-    .locations-section {
-      background: var(--ivory);
-    }
-
-    .locations-layout {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-
-      gap: 45px;
-
-      margin-top: 48px;
-
-      align-items: center;
-    }
-
-    .map-card {
-      position: relative;
-
-      min-height: 480px;
-
-      display: grid;
-      place-items: center;
-
-      overflow: hidden;
-
-      background:
-        radial-gradient(
-          circle at center,
-          rgba(202,168,75,.13),
-          transparent 56%
-        ),
-        white;
-
-      border: 1px solid var(--line);
-      border-radius: var(--radius-xl);
-
-      box-shadow: var(--shadow);
-    }
-
-    /*
-      Placeholder geography silhouette.
-      Replace with an SVG/Mapbox/MapLibre implementation
-      when the geographic data layer is connected.
-    */
-
-    .nigeria-shape {
-      width: 270px;
-      height: 340px;
-
-      position: relative;
-
-      background: var(--maroon);
-
-      clip-path: polygon(
-        28% 0%,
-        60% 7%,
-        79% 17%,
-        88% 38%,
-        81% 58%,
-        93% 72%,
-        72% 87%,
-        57% 100%,
-        38% 90%,
-        24% 79%,
-        7% 70%,
-        14% 53%,
-        4% 38%,
-        17% 23%
-      );
-
-      opacity: .93;
-
-      filter: drop-shadow(0 25px 25px rgba(84,20,33,.17));
-    }
-
-    .map-point {
+    .prop-note {
       position: absolute;
-
-      width: 13px;
-      height: 13px;
-
-      border-radius: 50%;
-
-      background: var(--gold);
-
-      border: 3px solid white;
-
-      box-shadow: 0 0 0 7px rgba(202,168,75,.17);
-
-      cursor: pointer;
-
-      transition: transform .2s ease;
-    }
-
-    .map-point:hover {
-      transform: scale(1.3);
-    }
-
-    .lagos {
-      left: 43%;
-      bottom: 22%;
-    }
-
-    .ogun {
-      left: 39%;
-      bottom: 28%;
-    }
-
-    .abuja {
-      left: 55%;
-      top: 47%;
-    }
-
-    .oyo {
-      left: 31%;
-      top: 36%;
-    }
-
-    .rivers {
-      left: 63%;
-      bottom: 20%;
-    }
-
-    .enugu {
-      left: 65%;
-      bottom: 31%;
-    }
-
-    .kano {
-      left: 45%;
-      top: 17%;
-    }
-
-    .map-legend {
-      position: absolute;
-
-      bottom: 18px;
-      left: 18px;
+      left: 17px;
+      right: 17px;
+      bottom: 13px;
 
       display: flex;
       align-items: center;
-      gap: 7px;
+      gap: 8px;
 
       padding: 8px 10px;
+      border-radius: 10px;
 
-      background: rgba(255,255,255,.9);
+      background: rgba(49,141,255,.055);
+      border: 1px solid rgba(100,190,255,.10);
+    }
 
-      border: 1px solid var(--line);
-      border-radius: 8px;
+    .prop-note-dot {
+      width: 7px;
+      height: 7px;
+      flex: 0 0 auto;
+      border-radius: 50%;
+      background: #78d4ff;
+      box-shadow: 0 0 13px #3caaff;
+    }
 
+    .prop-note span {
+      color: #91a2b7;
       font-size: 8px;
-      font-weight: 700;
-    }
-
-    .location-list {
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
-    }
-
-    .location-row {
-      display: grid;
-      grid-template-columns: 1fr auto auto;
-
-      gap: 18px;
-      align-items: center;
-
-      padding: 16px 17px;
-
-      background: white;
-
-      border: 1px solid var(--line);
-      border-radius: 13px;
-
-      transition: .2s ease;
-    }
-
-    .location-row:hover {
-      border-color: rgba(84,20,33,.3);
-      transform: translateX(3px);
-    }
-
-    .location-name {
-      font-size: 12px;
-      font-weight: 800;
-    }
-
-    .location-name small {
-      display: block;
-
-      color: var(--muted);
-
-      font-size: 8px;
-      font-weight: 500;
-    }
-
-    .location-value {
-      text-align: right;
-
-      font-size: 10px;
-      font-weight: 800;
-    }
-
-    .location-change {
-      min-width: 52px;
-
-      padding: 5px 7px;
-
-      border-radius: 6px;
-
-      text-align: center;
-
-      background: rgba(22,128,93,.08);
-
-      color: var(--green);
-
-      font-size: 8px;
-      font-weight: 800;
-    }
-
-    /* =========================================================
-       INVESTMENT
-    ========================================================= */
-
-    .investment-section {
-      background: var(--maroon-dark);
-      color: white;
-    }
-
-    .investment-section .section-kicker {
-      color: var(--gold);
-    }
-
-    .investment-section .section-heading {
-      color: white;
-    }
-
-    .investment-section .section-intro {
-      color: #c7bdc0;
-    }
-
-    .investment-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr 1fr;
-
-      gap: 15px;
-
-      margin-top: 45px;
-    }
-
-    .investment-card {
-      padding: 25px;
-
-      border: 1px solid rgba(255,255,255,.09);
-      border-radius: var(--radius-lg);
-
-      background: rgba(255,255,255,.045);
-    }
-
-    .investment-card .number {
-      color: var(--gold);
-
-      font-family: "Playfair Display", serif;
-      font-size: 37px;
-    }
-
-    .investment-card h3 {
-      margin-top: 12px;
-
-      font-size: 14px;
-    }
-
-    .investment-card p {
-      margin-top: 8px;
-
-      color: #aaa0a4;
-
-      font-size: 10px;
-      line-height: 1.7;
-    }
-
-    /* =========================================================
-       NEWS
-    ========================================================= */
-
-    .insights-section {
-      background: white;
-    }
-
-    .news-layout {
-      display: grid;
-      grid-template-columns: 1.2fr .8fr;
-
-      gap: 20px;
-
-      margin-top: 45px;
-    }
-
-    .featured-news {
-      position: relative;
-
-      min-height: 400px;
-
-      overflow: hidden;
-
-      border-radius: var(--radius-xl);
-    }
-
-    .featured-news img {
-      width: 100%;
-      height: 100%;
-
-      position: absolute;
-      inset: 0;
-
-      object-fit: cover;
-    }
-
-    .featured-overlay {
-      position: absolute;
-      inset: 0;
-
-      padding: 30px;
-
-      display: flex;
-      flex-direction: column;
-      justify-content: flex-end;
-
-      background:
-        linear-gradient(
-          transparent 25%,
-          rgba(20,10,13,.88)
-        );
-    }
-
-    .news-tag {
-      align-self: flex-start;
-
-      padding: 5px 8px;
-
-      border-radius: 5px;
-
-      background: var(--gold);
-
-      color: var(--maroon);
-
-      font-size: 8px;
-      font-weight: 800;
-      text-transform: uppercase;
-    }
-
-    .featured-overlay h3 {
-      max-width: 650px;
-
-      margin-top: 10px;
-
-      color: white;
-
-      font-family: "Playfair Display", serif;
-      font-size: 29px;
-      line-height: 1.15;
-    }
-
-    .featured-overlay p {
-      max-width: 600px;
-
-      margin-top: 8px;
-
-      color: #d3d0d1;
-
-      font-size: 10px;
-    }
-
-    .news-list {
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
-    }
-
-    .news-item {
-      display: grid;
-      grid-template-columns: 105px 1fr;
-
-      gap: 13px;
-
-      padding: 11px;
-
-      border: 1px solid var(--line);
-      border-radius: 13px;
-
-      background: var(--ivory);
-    }
-
-    .news-thumb {
-      width: 105px;
-      height: 82px;
-
-      overflow: hidden;
-
-      border-radius: 9px;
-    }
-
-    .news-thumb img {
-      width: 100%;
-      height: 100%;
-
-      object-fit: cover;
-    }
-
-    .news-meta {
-      color: var(--maroon);
-
-      font-size: 7px;
-      font-weight: 800;
-      letter-spacing: .7px;
-      text-transform: uppercase;
-    }
-
-    .news-item h4 {
-      margin-top: 5px;
-
-      font-size: 11px;
       line-height: 1.35;
     }
 
-    .news-item p {
-      margin-top: 4px;
+    .prop-note strong {
+      color: #c9eeff;
+      font-weight: 800;
+    }
 
-      color: var(--slate);
+    /* =========================================================
+       NEWS BROADCAST
+    ========================================================= */
 
-      font-size: 8px;
+    .broadcast-card {
+      grid-column: 2;
+      grid-row: 1;
+      padding-bottom: 14px;
+    }
+
+    .broadcast-visual {
+      position: absolute;
+      left: 14px;
+      right: 14px;
+      top: 70px;
+      bottom: 14px;
+      border-radius: 15px;
+      overflow: hidden;
+      background:
+        linear-gradient(
+          145deg,
+          #182130,
+          #0e141f
+        );
+    }
+
+    .broadcast-image {
+      position: absolute;
+      inset: 0;
+      background-size: cover;
+      background-position: center;
+      opacity: .57;
+      transition:
+        opacity .45s ease,
+        transform 1s ease;
+    }
+
+    .broadcast-visual::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background:
+        linear-gradient(
+          180deg,
+          rgba(6,10,16,.04),
+          rgba(6,10,16,.92)
+        );
+    }
+
+    .broadcast-content {
+      position: absolute;
+      z-index: 2;
+      left: 15px;
+      right: 15px;
+      bottom: 13px;
+    }
+
+    .broadcast-category {
+      display: inline-flex;
+      padding: 5px 7px;
+      border-radius: 5px;
+      color: #d8edff;
+      background: rgba(42,126,206,.18);
+      border: 1px solid rgba(119,207,255,.14);
+      font-size: 6px;
+      font-weight: 800;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+    }
+
+    .broadcast-headline {
+      margin-top: 9px;
+      font-family: var(--font-display);
+      font-size: 13px;
+      line-height: 1.35;
+      letter-spacing: -.035em;
+    }
+
+    .broadcast-meta {
+      margin-top: 7px;
+      color: #8c98a8;
+      font-size: 7px;
+    }
+
+    .broadcast-prop {
+      margin-top: 8px;
+      padding-top: 8px;
+      border-top: 1px solid rgba(255,255,255,.10);
+      color: #b4c1d0;
+      font-size: 7px;
       line-height: 1.45;
     }
 
+    .broadcast-prop b {
+      color: #9be0ff;
+    }
+
+    .broadcast-controls {
+      position: absolute;
+      z-index: 4;
+      top: 16px;
+      right: 16px;
+      display: flex;
+      gap: 4px;
+    }
+
+    .broadcast-controls button {
+      width: 22px;
+      height: 22px;
+      display: grid;
+      place-items: center;
+      border-radius: 7px;
+      color: #c5cfdb;
+      background: rgba(255,255,255,.07);
+      border: 1px solid rgba(255,255,255,.08);
+    }
+
+    .broadcast-progress {
+      position: absolute;
+      z-index: 4;
+      left: 15px;
+      right: 15px;
+      bottom: 7px;
+      height: 2px;
+      background: rgba(255,255,255,.10);
+      border-radius: 10px;
+      overflow: hidden;
+    }
+
+    .broadcast-progress span {
+      display: block;
+      height: 100%;
+      width: 0;
+      background: #82d9ff;
+    }
+
     /* =========================================================
-       DIASPORA + PARTNERS
+       LOWER WIDGETS
     ========================================================= */
 
-    .ecosystem-section {
-      background: var(--surface);
+    .stats-card {
+      grid-column: 1;
+      grid-row: 2;
     }
 
-    .ecosystem-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-
-      gap: 20px;
-
-      margin-top: 45px;
-    }
-
-    .ecosystem-card {
-      padding: 34px;
-
-      background: white;
-
-      border: 1px solid var(--line);
-      border-radius: var(--radius-xl);
-
-      box-shadow: var(--shadow-soft);
-    }
-
-    .ecosystem-card.dark {
-      background: var(--maroon);
-      color: white;
-      border-color: var(--maroon);
-    }
-
-    .ecosystem-card h3 {
-      font-family: "Playfair Display", serif;
-      font-size: 29px;
-    }
-
-    .ecosystem-card p {
-      max-width: 510px;
-
-      margin-top: 10px;
-
-      color: var(--slate);
-
-      font-size: 11px;
-      line-height: 1.7;
-    }
-
-    .ecosystem-card.dark p {
-      color: #d0c5c8;
-    }
-
-    .ecosystem-items {
+    .stats-grid {
       display: grid;
       grid-template-columns: repeat(2, 1fr);
-
+      height: calc(100% - 55px);
+      padding: 13px 16px 16px;
       gap: 8px;
-
-      margin-top: 23px;
     }
 
-    .ecosystem-item {
-      padding: 11px;
-
-      border: 1px solid var(--line);
-      border-radius: 9px;
-
-      font-size: 9px;
-      font-weight: 700;
-    }
-
-    .dark .ecosystem-item {
-      border-color: rgba(255,255,255,.1);
+    .mini-stat {
+      padding: 13px;
+      border-radius: 14px;
       background: rgba(255,255,255,.035);
+      border: 1px solid rgba(255,255,255,.055);
+      transition: .25s ease;
+    }
+
+    .mini-stat:hover {
+      transform: translateY(-2px);
+      background: rgba(255,255,255,.055);
+    }
+
+    .mini-stat span {
+      color: #718093;
+      display: block;
+      font-size: 7px;
+      text-transform: uppercase;
+      letter-spacing: .1em;
+    }
+
+    .mini-stat strong {
+      display: block;
+      margin-top: 7px;
+      font-family: var(--font-display);
+      font-size: 18px;
+      letter-spacing: -.05em;
+    }
+
+    .mini-stat small {
+      display: block;
+      margin-top: 4px;
+      color: #69778a;
+      font-size: 7px;
     }
 
     /* =========================================================
-       PROP FLOATING INTERFACE
+       PROPERTY WIDGET
     ========================================================= */
 
-    .prop-launcher {
-      position: fixed;
-
-      right: 25px;
-      bottom: 25px;
-
-      z-index: 2000;
+    .property-card {
+      grid-column: 2;
+      grid-row: 2;
     }
 
-    .prop-button {
-      width: 59px;
-      height: 59px;
+    .property-main {
+      display: flex;
+      gap: 12px;
+      padding: 15px;
+    }
 
-      border: 0;
+    .property-image {
+      width: 110px;
+      height: 110px;
+      flex: 0 0 110px;
+      border-radius: 14px;
+      background:
+        linear-gradient(
+          145deg,
+          rgba(111,38,61,.5),
+          rgba(21,29,41,.9)
+        ),
+        url("https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?auto=format&fit=crop&w=500&q=80")
+        center / cover;
+      border: 1px solid rgba(255,255,255,.08);
+    }
+
+    .property-info {
+      min-width: 0;
+      padding-top: 2px;
+    }
+
+    .property-info .tag {
+      color: #9be2ff;
+      font-size: 7px;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: .1em;
+    }
+
+    .property-info h3 {
+      margin-top: 7px;
+      font-family: var(--font-display);
+      font-size: 14px;
+      line-height: 1.25;
+      letter-spacing: -.04em;
+    }
+
+    .property-info p {
+      margin-top: 5px;
+      color: #778397;
+      font-size: 8px;
+    }
+
+    .property-price {
+      margin-top: 10px;
+      font-family: var(--font-display);
+      font-size: 14px;
+    }
+
+    .property-price small {
+      color: #788598;
+      font-family: var(--font-body);
+      font-size: 7px;
+    }
+
+    .property-actions {
+      display: flex;
+      gap: 6px;
+      margin-top: 8px;
+    }
+
+    .property-actions button {
+      padding: 6px 8px;
+      border-radius: 7px;
+      color: #b8c5d5;
+      background: rgba(255,255,255,.05);
+      border: 1px solid rgba(255,255,255,.06);
+      font-size: 7px;
+      font-weight: 800;
+    }
+
+    /* =========================================================
+       PROP ORB
+    ========================================================= */
+
+    .prop-trigger {
+      position: fixed;
+      z-index: 100;
+      left: 50%;
+      bottom: 17px;
+      transform: translateX(-50%);
+
+      width: 55px;
+      height: 55px;
 
       display: grid;
       place-items: center;
 
       border-radius: 50%;
 
-      background: var(--maroon);
+      background:
+        radial-gradient(
+          circle at 45% 35%,
+          rgba(220,250,255,.95),
+          rgba(99,202,255,.48) 18%,
+          rgba(48,125,255,.19) 40%,
+          rgba(14,43,89,.08) 65%,
+          transparent 75%
+        );
 
-      color: white;
+      border: 1px solid rgba(170,232,255,.23);
 
       box-shadow:
-        0 13px 35px rgba(50,11,19,.28),
-        0 0 0 7px rgba(202,168,75,.12);
+        0 0 18px rgba(73,180,255,.18),
+        0 0 60px rgba(34,126,255,.16),
+        inset 0 0 18px rgba(170,239,255,.15);
 
-      cursor: pointer;
+      backdrop-filter: blur(10px);
 
-      transition: transform .2s ease;
+      transition:
+        width .4s cubic-bezier(.2,.8,.2,1),
+        height .4s cubic-bezier(.2,.8,.2,1),
+        box-shadow .4s ease,
+        transform .3s ease;
     }
 
-    .prop-button:hover {
-      transform: scale(1.06);
+    .prop-trigger:hover {
+      transform: translateX(-50%) scale(1.06);
     }
 
-    .prop-symbol {
-      width: 30px;
-      height: 30px;
-
-      display: grid;
-      place-items: center;
-
-      border: 1px solid rgba(255,255,255,.25);
-      border-radius: 10px;
-
-      color: var(--gold);
-
-      font-family: "Playfair Display", serif;
-      font-size: 17px;
-      font-weight: 700;
+    .prop-energy {
+      position: absolute;
+      inset: -7px;
+      border-radius: 50%;
+      border: 1px solid rgba(110,208,255,.11);
+      animation: propBreath 3.5s ease-in-out infinite;
     }
+
+    .prop-energy::before,
+    .prop-energy::after {
+      content: "";
+      position: absolute;
+      inset: 6px;
+      border-radius: 50%;
+      border: 1px solid rgba(96,191,255,.10);
+    }
+
+    .prop-energy::after {
+      inset: -1px;
+      border-color: rgba(119,215,255,.07);
+      animation: propRotate 8s linear infinite;
+    }
+
+    .prop-core {
+      position: relative;
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+
+      background:
+        radial-gradient(
+          circle at 50% 40%,
+          #ffffff,
+          #b9efff 17%,
+          #62caff 38%,
+          #247aff 65%,
+          transparent 73%
+        );
+
+      filter: blur(.15px);
+
+      box-shadow:
+        0 0 13px #80dcff,
+        0 0 32px rgba(50,156,255,.7),
+        0 0 60px rgba(50,126,255,.3);
+
+      animation: coreFloat 2.8s ease-in-out infinite;
+    }
+
+    .prop-core::before,
+    .prop-core::after {
+      content: "";
+      position: absolute;
+      inset: -8px;
+      border-radius: 50%;
+      border: 1px solid rgba(130,221,255,.11);
+    }
+
+    .prop-core::after {
+      inset: -14px;
+      border-color: rgba(71,155,255,.055);
+    }
+
+    @keyframes propBreath {
+      0%, 100% {
+        transform: scale(.96);
+        opacity: .55;
+      }
+      50% {
+        transform: scale(1.06);
+        opacity: 1;
+      }
+    }
+
+    @keyframes propRotate {
+      from { transform: rotate(0); }
+      to { transform: rotate(360deg); }
+    }
+
+    @keyframes coreFloat {
+      0%,100% {
+        transform: scale(.92);
+      }
+      50% {
+        transform: scale(1.08);
+      }
+    }
+
+    /* listening */
+    .prop-trigger.listening {
+      box-shadow:
+        0 0 24px rgba(78,186,255,.42),
+        0 0 90px rgba(35,125,255,.30);
+    }
+
+    .prop-trigger.listening .prop-energy {
+      animation:
+        propBreath 1s ease-in-out infinite,
+        propRotate 3s linear infinite;
+    }
+
+    .prop-trigger.thinking .prop-core {
+      animation:
+        coreFloat 1s ease-in-out infinite,
+        coreSpin 2s linear infinite;
+    }
+
+    @keyframes coreSpin {
+      to { transform: rotate(360deg) scale(1.08); }
+    }
+
+    .prop-caption {
+      position: fixed;
+      z-index: 99;
+      left: 50%;
+      bottom: 3px;
+      transform: translateX(-50%);
+      color: rgba(194,222,238,.45);
+      font-size: 7px;
+      letter-spacing: .15em;
+      text-transform: uppercase;
+      pointer-events: none;
+    }
+
+    /* =========================================================
+       PROP GLASS CHAT
+    ========================================================= */
 
     .prop-panel {
-      position: absolute;
+      position: fixed;
+      z-index: 90;
 
-      right: 0;
-      bottom: 75px;
+      left: 50%;
+      bottom: 84px;
 
-      width: 365px;
-
-      overflow: hidden;
-
-      border: 1px solid var(--line);
-      border-radius: 20px;
-
-      background: white;
-
-      box-shadow: 0 25px 70px rgba(22,18,18,.18);
-
-      opacity: 0;
-      visibility: hidden;
+      width: min(390px, calc(100vw - 28px));
+      max-height: 430px;
 
       transform:
-        translateY(12px)
-        scale(.97);
+        translate(-50%, 20px)
+        scale(.95);
 
-      transform-origin: bottom right;
+      opacity: 0;
+      pointer-events: none;
 
-      transition: .22s ease;
+      border-radius: 23px;
+
+      background:
+        linear-gradient(
+          145deg,
+          rgba(14,25,40,.72),
+          rgba(10,17,29,.60)
+        );
+
+      border: 1px solid rgba(137,218,255,.13);
+
+      box-shadow:
+        0 30px 100px rgba(0,0,0,.42),
+        0 0 80px rgba(40,142,255,.08),
+        inset 0 1px 0 rgba(255,255,255,.07);
+
+      backdrop-filter: blur(30px) saturate(135%);
+
+      transition:
+        opacity .35s ease,
+        transform .35s cubic-bezier(.2,.8,.2,1);
     }
 
     .prop-panel.open {
       opacity: 1;
-      visibility: visible;
-
+      pointer-events: auto;
       transform:
-        translateY(0)
+        translate(-50%, 0)
         scale(1);
     }
 
-    .prop-panel-header {
-      padding: 17px 18px;
-
-      background: var(--maroon);
-
-      color: white;
+    .prop-panel::before {
+      content: "";
+      position: absolute;
+      width: 170px;
+      height: 170px;
+      top: -90px;
+      right: -55px;
+      border-radius: 50%;
+      background: radial-gradient(
+        circle,
+        rgba(72,176,255,.15),
+        transparent 68%
+      );
+      pointer-events: none;
     }
 
-    .prop-panel-header-top {
+    .prop-panel-head {
+      position: relative;
       display: flex;
-      justify-content: space-between;
       align-items: center;
+      justify-content: space-between;
+      padding: 16px 17px 12px;
+      border-bottom: 1px solid rgba(255,255,255,.07);
     }
 
-    .prop-name {
-      font-family: "Playfair Display", serif;
-      font-size: 21px;
+    .prop-identity {
+      display: flex;
+      align-items: center;
+      gap: 9px;
     }
 
-    .prop-source {
+    .mini-orb {
+      width: 25px;
+      height: 25px;
+      border-radius: 50%;
+      background:
+        radial-gradient(
+          circle,
+          white 4%,
+          #a6ecff 20%,
+          #359aff 45%,
+          rgba(48,116,255,.05) 70%
+        );
+      box-shadow:
+        0 0 17px rgba(70,184,255,.55);
+    }
+
+    .prop-identity strong {
+      display: block;
+      font-family: var(--font-display);
+      font-size: 11px;
+    }
+
+    .prop-identity span {
+      display: block;
       margin-top: 2px;
-
-      color: #d7c9cc;
-
-      font-size: 8px;
+      color: #708196;
+      font-size: 7px;
     }
 
     .prop-close {
-      border: 0;
-      background: none;
-      color: white;
+      width: 25px;
+      height: 25px;
+      border-radius: 8px;
+      color: #9aa9ba;
+      background: rgba(255,255,255,.045);
+    }
 
-      cursor: pointer;
-
-      font-size: 17px;
+    .prop-messages {
+      position: relative;
+      padding: 15px;
+      max-height: 265px;
+      overflow-y: auto;
     }
 
     .prop-message {
-      padding: 18px;
-
-      color: var(--slate);
-
-      font-size: 10px;
-      line-height: 1.7;
+      max-width: 91%;
+      margin-bottom: 11px;
+      padding: 10px 11px;
+      border-radius: 13px;
+      font-size: 9px;
+      line-height: 1.55;
     }
 
-    .prop-context {
-      margin: 0 18px 12px;
-      padding: 10px;
+    .prop-message.ai {
+      color: #c5d3df;
+      background: rgba(86,181,255,.055);
+      border: 1px solid rgba(105,198,255,.08);
+      border-top-left-radius: 5px;
+    }
 
+    .prop-message.user {
+      margin-left: auto;
+      color: #e9edf3;
+      background: rgba(255,255,255,.075);
+      border: 1px solid rgba(255,255,255,.07);
+      border-top-right-radius: 5px;
+    }
+
+    .prop-message small {
+      display: block;
+      margin-bottom: 4px;
+      color: #73cfff;
+      font-size: 6px;
+      font-weight: 800;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+    }
+
+    .prop-suggestions {
+      display: flex;
+      gap: 5px;
+      overflow-x: auto;
+      padding: 0 15px 10px;
+      scrollbar-width: none;
+    }
+
+    .prop-suggestions button {
+      flex: 0 0 auto;
+      padding: 7px 9px;
+      color: #8fb4cb;
+      background: rgba(92,186,255,.055);
+      border: 1px solid rgba(98,190,255,.09);
       border-radius: 9px;
-
-      background: var(--ivory);
-
-      color: var(--muted);
-
-      font-size: 8px;
+      font-size: 7px;
     }
 
     .prop-input {
       display: flex;
       gap: 7px;
-
-      padding: 0 18px 18px;
+      margin: 0 12px 12px;
+      padding: 6px;
+      border-radius: 13px;
+      background: rgba(255,255,255,.045);
+      border: 1px solid rgba(255,255,255,.075);
     }
 
     .prop-input input {
       flex: 1;
-
       min-width: 0;
-
-      padding: 11px 12px;
-
-      border: 1px solid var(--line);
-      border-radius: 9px;
-
+      padding: 8px 7px;
       outline: none;
-
-      font-size: 10px;
-    }
-
-    .prop-input input:focus {
-      border-color: var(--maroon);
-    }
-
-    .prop-send {
-      width: 38px;
-
       border: 0;
-      border-radius: 9px;
-
-      background: var(--maroon);
-      color: white;
-
-      cursor: pointer;
-    }
-
-    /* =========================================================
-       FINAL CTA
-    ========================================================= */
-
-    .final-section {
-      padding: 110px 0;
-
-      background:
-        linear-gradient(
-          135deg,
-          var(--maroon-dark),
-          var(--maroon)
-        );
-
-      color: white;
-
-      text-align: center;
-    }
-
-    .final-section .section-kicker {
-      color: var(--gold);
-    }
-
-    .final-section h2 {
-      max-width: 850px;
-
-      margin: 12px auto 0;
-
-      font-family: "Playfair Display", serif;
-      font-size: clamp(40px, 5vw, 66px);
-      line-height: 1.04;
-      letter-spacing: -1.8px;
-    }
-
-    .final-section p {
-      max-width: 600px;
-
-      margin: 17px auto 0;
-
-      color: #d2c7ca;
-
-      font-size: 13px;
-    }
-
-    .final-actions {
-      display: flex;
-      justify-content: center;
-      gap: 10px;
-
-      margin-top: 28px;
-    }
-
-    .final-primary {
-      background: white;
-      color: var(--maroon);
-
-      padding: 14px 22px;
-
-      border-radius: 999px;
-
-      font-size: 11px;
-      font-weight: 800;
-    }
-
-    .final-secondary {
-      padding: 14px 22px;
-
-      border: 1px solid rgba(255,255,255,.2);
-      border-radius: 999px;
-
-      font-size: 11px;
-      font-weight: 800;
-    }
-
-    /* =========================================================
-       FOOTER
-    ========================================================= */
-
-    footer {
-      padding: 55px 0 25px;
-
-      background: #16080c;
-
-      color: white;
-    }
-
-    .footer-grid {
-      display: grid;
-      grid-template-columns: 1.7fr repeat(3, 1fr);
-
-      gap: 40px;
-    }
-
-    .footer-brand h3 {
-      font-family: "Playfair Display", serif;
-      font-size: 22px;
-
-      color: var(--gold);
-    }
-
-    .footer-brand p {
-      max-width: 300px;
-
-      margin-top: 9px;
-
-      color: #9e9296;
-
-      font-size: 10px;
-      line-height: 1.7;
-    }
-
-    .footer-col h4 {
-      font-size: 10px;
-      text-transform: uppercase;
-      letter-spacing: .8px;
-    }
-
-    .footer-col ul {
-      display: flex;
-      flex-direction: column;
-      gap: 8px;
-
-      margin-top: 12px;
-
-      list-style: none;
-    }
-
-    .footer-col a {
-      color: #93888c;
-
+      color: #e9f1f8;
+      background: transparent;
       font-size: 9px;
     }
 
-    .footer-col a:hover {
-      color: var(--gold);
+    .prop-input input::placeholder {
+      color: #647489;
     }
 
-    .footer-bottom {
-      margin-top: 45px;
-      padding-top: 18px;
-
-      border-top: 1px solid rgba(255,255,255,.07);
-
-      color: #6f6468;
-
-      font-size: 8px;
-      text-align: center;
+    .prop-send {
+      width: 31px;
+      height: 31px;
+      border-radius: 9px;
+      color: white;
+      background:
+        linear-gradient(135deg, #398fff, #185bc7);
+      box-shadow: 0 5px 18px rgba(32,111,220,.25);
     }
 
     /* =========================================================
-       RESPONSIVE
+       OTHER WORKSPACES
     ========================================================= */
 
-    @media (max-width: 1050px) {
+    .full-workspace {
+      grid-column: 1 / -1;
+      height: 100%;
+      overflow: hidden;
+    }
 
-      .nav-links {
+    .workspace-heading {
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      margin-bottom: 15px;
+    }
+
+    .workspace-heading small {
+      color: #7b8798;
+      font-size: 8px;
+      text-transform: uppercase;
+      letter-spacing: .14em;
+    }
+
+    .workspace-heading h2 {
+      margin-top: 6px;
+      font-family: var(--font-display);
+      font-size: 28px;
+      letter-spacing: -.055em;
+    }
+
+    .workspace-content {
+      height: calc(100% - 62px);
+      display: grid;
+      grid-template-columns: 1.3fr .7fr;
+      gap: 15px;
+    }
+
+    .large-card {
+      padding: 20px;
+    }
+
+    .property-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 11px;
+      margin-top: 15px;
+    }
+
+    .listing {
+      min-width: 0;
+      border: 1px solid var(--line);
+      background: rgba(255,255,255,.04);
+      border-radius: 16px;
+      overflow: hidden;
+      transition: .25s ease;
+    }
+
+    .listing:hover {
+      transform: translateY(-3px);
+      border-color: rgba(255,255,255,.15);
+    }
+
+    .listing-img {
+      height: 135px;
+      background-size: cover;
+      background-position: center;
+    }
+
+    .listing-info {
+      padding: 12px;
+    }
+
+    .listing-info small {
+      color: #76cbf7;
+      font-size: 7px;
+      text-transform: uppercase;
+      letter-spacing: .1em;
+    }
+
+    .listing-info h3 {
+      margin-top: 5px;
+      font-family: var(--font-display);
+      font-size: 12px;
+    }
+
+    .listing-info p {
+      margin-top: 4px;
+      color: #748195;
+      font-size: 8px;
+    }
+
+    .listing-info strong {
+      display: block;
+      margin-top: 9px;
+      font-size: 11px;
+    }
+
+    .market-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 10px;
+    }
+
+    .market-box {
+      padding: 15px;
+      border-radius: 15px;
+      background: rgba(255,255,255,.045);
+      border: 1px solid var(--line);
+    }
+
+    .market-box span {
+      color: #748195;
+      font-size: 7px;
+      text-transform: uppercase;
+      letter-spacing: .1em;
+    }
+
+    .market-box strong {
+      display: block;
+      margin-top: 7px;
+      font-family: var(--font-display);
+      font-size: 19px;
+    }
+
+    .market-box small {
+      display: block;
+      margin-top: 4px;
+      color: var(--green);
+      font-size: 7px;
+    }
+
+    .location-buttons {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 7px;
+      margin-top: 13px;
+    }
+
+    .location-buttons button {
+      padding: 8px 11px;
+      border-radius: 9px;
+      color: #9aa7b8;
+      background: rgba(255,255,255,.045);
+      border: 1px solid var(--line);
+      font-size: 8px;
+    }
+
+    .location-buttons button.active {
+      color: white;
+      background: rgba(112,204,255,.09);
+      border-color: rgba(112,204,255,.20);
+    }
+
+    /* =========================================================
+       MOBILE
+    ========================================================= */
+
+    @media (max-width: 1000px) {
+      html,
+      body {
+        overflow: auto;
+      }
+
+      .app {
+        min-height: 100vh;
+        height: auto;
+      }
+
+      .topbar {
+        padding: 0 15px;
+      }
+
+      .nav {
         display: none;
       }
 
-      .hero-grid {
-        grid-template-columns: 1fr;
+      .header-actions {
+        min-width: auto;
       }
 
-      .hero-copy {
-        max-width: 700px;
+      .status {
+        display: none;
       }
 
-      .pulse-layout {
+      .workspace {
+        height: auto;
+        min-height: calc(100vh - 76px);
         grid-template-columns: 1fr;
+        padding: 18px 15px 90px;
+        overflow: visible;
       }
 
-      .locations-layout {
-        grid-template-columns: 1fr;
+      .hero-panel {
+        min-height: 390px;
+      }
+
+      .intelligence-grid {
+        height: 690px;
+      }
+
+      .full-workspace {
+        min-height: 690px;
       }
 
       .property-grid {
         grid-template-columns: repeat(2, 1fr);
       }
-
-      .news-layout {
-        grid-template-columns: 1fr;
-      }
-
-      .ecosystem-grid {
-        grid-template-columns: 1fr;
-      }
     }
 
-    @media (max-width: 700px) {
-
-      .container {
-        width: min(var(--max), calc(100% - 30px));
-      }
-
-      .nav {
-        min-height: 68px;
-      }
-
-      .brand-copy span {
+    @media (max-width: 620px) {
+      .brand-copy small {
         display: none;
       }
 
-      .nav-login {
+      .workspace {
+        display: block;
+      }
+
+      .hero-title {
+        font-size: 43px;
+      }
+
+      .intelligence-grid {
+        height: 920px;
+        grid-template-columns: 1fr;
+        grid-template-rows: 360px 320px 220px;
+      }
+
+      .pulse-card {
+        grid-column: 1;
+        grid-row: 1;
+      }
+
+      .broadcast-card {
+        grid-column: 1;
+        grid-row: 2;
+      }
+
+      .stats-card {
+        grid-column: 1;
+        grid-row: 3;
+      }
+
+      .property-card {
         display: none;
       }
 
-      .hero {
-        padding-top: 55px;
-      }
-
-      .hero h1 {
-        font-size: 47px;
-        letter-spacing: -1.8px;
-      }
-
-      .hero-actions {
-        flex-direction: column;
-        align-items: stretch;
-      }
-
-      .hero-actions a {
-        text-align: center;
-      }
-
-      .pulse-stats {
-        grid-template-columns: 1fr 1fr;
-      }
-
-      .strip-grid {
-        grid-template-columns: 1fr 1fr;
-      }
-
-      .strip-item:nth-child(5) {
-        grid-column: span 2;
-      }
-
-      .section {
-        padding: 75px 0;
+      .workspace-content {
+        display: block;
+        overflow: auto;
       }
 
       .property-grid {
         grid-template-columns: 1fr;
       }
 
-      .investment-grid {
-        grid-template-columns: 1fr;
+      .market-grid {
+        grid-template-columns: repeat(2, 1fr);
       }
 
-      .large-chart {
-        height: 240px;
+      .hero-panel {
+        min-height: 420px;
       }
+    }
 
-      .signal-grid {
-        grid-template-columns: 1fr;
-      }
-
-      .section-top {
-        display: block;
-      }
-
-      .locations-layout {
-        margin-top: 30px;
-      }
-
-      .map-card {
-        min-height: 400px;
-      }
-
-      .news-item {
-        grid-template-columns: 85px 1fr;
-      }
-
-      .news-thumb {
-        width: 85px;
-      }
-
-      .prop-panel {
-        width: calc(100vw - 30px);
-        right: -5px;
-      }
-
-      .prop-launcher {
-        right: 15px;
-        bottom: 15px;
-      }
-
-      .footer-grid {
-        grid-template-columns: 1fr 1fr;
-      }
-
-      .footer-brand {
-        grid-column: span 2;
-      }
-
-      .final-actions {
-        flex-direction: column;
-        align-items: stretch;
-
-        width: min(300px, 100%);
-        margin-left: auto;
-        margin-right: auto;
+    @media (prefers-reduced-motion: reduce) {
+      *,
+      *::before,
+      *::after {
+        animation-duration: .01ms !important;
+        animation-iteration-count: 1 !important;
+        scroll-behavior: auto !important;
+        transition-duration: .01ms !important;
       }
     }
   </style>
@@ -2055,1426 +1579,1316 @@
 
 <body>
 
-<!-- =========================================================
-     NAVIGATION
-========================================================= -->
+<div class="app">
 
-<header class="site-header">
-  <div class="container nav">
+  <div class="ambient"></div>
+
+  <!-- =======================================================
+       HEADER
+  ======================================================== -->
+
+  <header class="topbar">
 
     <a href="#" class="brand">
-      <div class="brand-mark">B</div>
+      <div class="brand-mark">
+        <span>B</span>
+      </div>
 
       <div class="brand-copy">
-        <strong>Beloveeth</strong>
-        <span>Realty & PropTech</span>
+        <strong>BELOVEETH</strong>
+        <small>Realty & PropTech</small>
       </div>
     </a>
 
-    <ul class="nav-links">
-      <li><a href="#properties">Properties</a></li>
-      <li><a href="#investment">Investment</a></li>
-      <li><a href="#pulse">Market Intelligence</a></li>
-      <li><a href="#locations">Locations</a></li>
-      <li><a href="#insights">Insights</a></li>
-    </ul>
+    <nav class="nav" id="mainNav">
+      <button class="active" data-view="home">Home</button>
+      <button data-view="properties">Properties</button>
+      <button data-view="investment">Investment</button>
+      <button data-view="pulse">Pulse</button>
+      <button data-view="locations">Locations</button>
+      <button data-view="partners">Partners</button>
+    </nav>
 
-    <div class="nav-actions">
-      <a href="#" class="nav-login">Sign in</a>
-      <a href="#properties" class="nav-cta">Explore Beloveeth →</a>
+    <div class="header-actions">
+      <div class="status">
+        <span class="status-dot"></span>
+        Intelligence online
+      </div>
+
+      <button class="login" onclick="window.location.href='client.html'">
+        Enter Platform
+      </button>
     </div>
 
-  </div>
-</header>
+  </header>
 
 
-<!-- =========================================================
-     HERO
-========================================================= -->
+  <!-- =======================================================
+       HOME
+  ======================================================== -->
 
-<main>
+  <main class="workspace">
 
-<section class="hero">
+    <section class="view active" id="view-home">
 
-  <div class="container hero-grid">
+      <div class="hero-panel">
 
-    <div>
+        <div class="eyebrow">
+          <i></i>
+          Nigeria's connected property intelligence ecosystem
+        </div>
 
-      <span class="eyebrow">
-        <span class="eyebrow-dot"></span>
-        Nigerian Real Estate Intelligence
-      </span>
+        <h1 class="hero-title">
+          Real estate,<br>
+          <span>with intelligence.</span>
+        </h1>
 
-      <h1>
-        Property is more than a place.
-        <em>It's a decision.</em>
-      </h1>
+        <p class="hero-copy">
+          Discover property, understand the market and evaluate opportunities
+          through one connected PropTech ecosystem built for the way Nigeria's
+          property market actually moves.
+        </p>
 
-      <p class="hero-copy">
-        Beloveeth connects property opportunities with market
-        intelligence, investment analysis and technology designed
-        to help people make better property decisions.
-      </p>
+        <div class="hero-actions">
+          <button
+            class="primary-btn"
+            onclick="switchView('properties')"
+          >
+            Explore Properties
+          </button>
 
-      <div class="hero-actions">
+          <button
+            class="secondary-btn"
+            onclick="switchView('pulse')"
+          >
+            Explore Market Intelligence
+          </button>
+        </div>
 
-        <a href="#properties" class="primary-btn">
-          Explore Properties →
-        </a>
+        <div class="ecosystem-line">
+          Property · Intelligence · Investment · Infrastructure
+        </div>
 
-        <a href="#pulse" class="secondary-btn">
-          Explore Market Intelligence
-        </a>
+        <div class="hero-metrics">
+
+          <div class="metric">
+            <strong>01</strong>
+            <span>Property ecosystem</span>
+          </div>
+
+          <div class="metric">
+            <strong>AI</strong>
+            <span>Prop intelligence</span>
+          </div>
+
+          <div class="metric">
+            <strong>NG</strong>
+            <span>Market focus</span>
+          </div>
+
+        </div>
 
       </div>
 
-      <p class="hero-note">
-        Property sourcing • Intelligence • Investment • Digital infrastructure
-      </p>
 
-    </div>
+      <div class="intelligence-grid">
+
+        <!-- ================= PULSE ================= -->
+
+        <article class="card pulse-card">
+
+          <div class="card-head">
+
+            <div>
+              <div class="card-label">Beloveeth Pulse</div>
+              <div class="card-title">Market intelligence</div>
+            </div>
+
+            <div class="pulse-controls">
+
+              <select class="select" id="locationSelect">
+                <option>Ikoyi</option>
+                <option>Lekki</option>
+                <option>Ikeja</option>
+                <option>Yaba</option>
+                <option>Abuja</option>
+              </select>
+
+              <select class="select" id="metricSelect">
+                <option value="price">Price / m²</option>
+                <option value="demand">Demand</option>
+                <option value="supply">Supply</option>
+              </select>
+
+            </div>
+
+          </div>
 
 
-    <!-- PULSE PREVIEW -->
+          <div class="pulse-stats">
 
-    <div class="pulse-card">
+            <div class="pulse-stat">
+              <strong id="pulseValue">₦1.42m</strong>
+              <span>Current indicator</span>
+            </div>
 
-      <div class="pulse-header">
+            <div class="pulse-stat">
+              <strong class="positive" id="pulseChange">+8.4%</strong>
+              <span>Model movement</span>
+            </div>
+
+            <div class="pulse-stat">
+              <strong id="pulseDemand">High</strong>
+              <span>Demand</span>
+            </div>
+
+          </div>
+
+
+          <div class="chart-wrap">
+            <canvas id="pulseChart"></canvas>
+          </div>
+
+
+          <div class="prop-note">
+
+            <span class="prop-note-dot"></span>
+
+            <span>
+              <strong>PROP</strong>
+              · Under the current model assumptions,
+              this location is showing sustained price momentum.
+            </span>
+
+          </div>
+
+        </article>
+
+
+        <!-- ================= NEWS ================= -->
+
+        <article class="card broadcast-card">
+
+          <div class="card-head">
+
+            <div>
+              <div class="card-label">Beloveeth Pulse</div>
+              <div class="card-title">Market broadcast</div>
+            </div>
+
+            <span class="pill">
+              DEMO FEED
+            </span>
+
+          </div>
+
+
+          <div class="broadcast-visual">
+
+            <div
+              class="broadcast-image"
+              id="broadcastImage"
+            ></div>
+
+            <div class="broadcast-content">
+
+              <span
+                class="broadcast-category"
+                id="broadcastCategory"
+              >
+                CONSTRUCTION
+              </span>
+
+              <h3
+                class="broadcast-headline"
+                id="broadcastHeadline"
+              >
+                Cement prices remain an important construction-cost signal.
+              </h3>
+
+              <div
+                class="broadcast-meta"
+                id="broadcastMeta"
+              >
+                Demonstration story · Source/date displayed in production
+              </div>
+
+              <div
+                class="broadcast-prop"
+                id="broadcastProp"
+              >
+                <b>PROP</b>
+                · Material-cost movement can influence development budgets,
+                project economics and future asking prices.
+              </div>
+
+            </div>
+
+            <div class="broadcast-controls">
+
+              <button onclick="previousNews()">
+                ‹
+              </button>
+
+              <button onclick="nextNews()">
+                ›
+              </button>
+
+            </div>
+
+            <div class="broadcast-progress">
+              <span id="broadcastProgress"></span>
+            </div>
+
+          </div>
+
+        </article>
+
+
+        <!-- ================= MARKET STATS ================= -->
+
+        <article class="card stats-card">
+
+          <div class="card-head">
+
+            <div>
+              <div class="card-label">Market snapshot</div>
+              <div class="card-title">Signals worth watching</div>
+            </div>
+
+            <span class="pill">
+              DATA LAYER
+            </span>
+
+          </div>
+
+
+          <div class="stats-grid">
+
+            <div class="mini-stat">
+              <span>Residential demand</span>
+              <strong>↑</strong>
+              <small>Model signal</small>
+            </div>
+
+            <div class="mini-stat">
+              <span>Supply pressure</span>
+              <strong>→</strong>
+              <small>Market balance</small>
+            </div>
+
+            <div class="mini-stat">
+              <span>Development</span>
+              <strong>↑</strong>
+              <small>Activity indicator</small>
+            </div>
+
+            <div class="mini-stat">
+              <span>Rental yield</span>
+              <strong>8.7%</strong>
+              <small>Illustrative scenario</small>
+            </div>
+
+          </div>
+
+        </article>
+
+
+        <!-- ================= PROPERTY ================= -->
+
+        <article class="card property-card">
+
+          <div class="card-head">
+
+            <div>
+              <div class="card-label">Property intelligence</div>
+              <div class="card-title">Opportunity in focus</div>
+            </div>
+
+            <span class="pill">
+              FEATURED
+            </span>
+
+          </div>
+
+
+          <div class="property-main">
+
+            <div class="property-image"></div>
+
+            <div class="property-info">
+
+              <div class="tag">
+                Residential · Ikoyi
+              </div>
+
+              <h3>
+                Modern 3-Bed Residence
+              </h3>
+
+              <p>
+                Lagos · Verified listing workflow
+              </p>
+
+              <div class="property-price">
+                ₦420m
+                <small> indicative</small>
+              </div>
+
+              <div class="property-actions">
+
+                <button
+                  onclick="openProp('Analyze this property')"
+                >
+                  Ask Prop
+                </button>
+
+                <button
+                  onclick="switchView('properties')"
+                >
+                  Explore
+                </button>
+
+              </div>
+
+            </div>
+
+          </div>
+
+        </article>
+
+      </div>
+
+    </section>
+
+
+    <!-- =====================================================
+         PROPERTIES
+    ====================================================== -->
+
+    <section class="view" id="view-properties">
+
+      <div class="full-workspace">
+
+        <div class="workspace-heading">
+
+          <div>
+            <small>Beloveeth Property Intelligence</small>
+            <h2>Explore properties.</h2>
+          </div>
+
+          <button
+            class="secondary-btn"
+            onclick="openProp('Help me find a property')"
+          >
+            Ask Prop
+          </button>
+
+        </div>
+
+
+        <div class="workspace-content">
+
+          <div class="card large-card">
+
+            <div class="card-head" style="padding:0">
+              <div>
+                <div class="card-label">Nigeria</div>
+                <div class="card-title">
+                  Property discovery
+                </div>
+              </div>
+            </div>
+
+
+            <div class="property-grid">
+
+              <div class="listing">
+
+                <div
+                  class="listing-img"
+                  style="background-image:url('https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=800&q=80')"
+                ></div>
+
+                <div class="listing-info">
+                  <small>Lagos · Lekki</small>
+                  <h3>Contemporary Residence</h3>
+                  <p>4 bed · 5 bath · residential</p>
+                  <strong>₦280m</strong>
+                </div>
+
+              </div>
+
+
+              <div class="listing">
+
+                <div
+                  class="listing-img"
+                  style="background-image:url('https://images.unsplash.com/photo-1600566753190-17f0baa2a6c3?auto=format&fit=crop&w=800&q=80')"
+                ></div>
+
+                <div class="listing-info">
+                  <small>Abuja</small>
+                  <h3>Premium Family Home</h3>
+                  <p>5 bed · residential</p>
+                  <strong>₦195m</strong>
+                </div>
+
+              </div>
+
+
+              <div class="listing">
+
+                <div
+                  class="listing-img"
+                  style="background-image:url('https://images.unsplash.com/photo-1600607687920-4e2a09cf159d?auto=format&fit=crop&w=800&q=80')"
+                ></div>
+
+                <div class="listing-info">
+                  <small>Ogun</small>
+                  <h3>Development Opportunity</h3>
+                  <p>Land · development</p>
+                  <strong>₦75m</strong>
+                </div>
+
+              </div>
+
+            </div>
+
+          </div>
+
+
+          <div class="card large-card">
+
+            <div class="card-label">
+              Property intelligence
+            </div>
+
+            <div class="card-title">
+              Don't just find it.
+              Understand it.
+            </div>
+
+            <p style="
+              margin-top:13px;
+              color:#7e8a9c;
+              font-size:10px;
+              line-height:1.7;
+            ">
+              Beloveeth can connect a property with location,
+              market conditions, comparables, rental economics
+              and verification information.
+            </p>
+
+            <button
+              class="primary-btn"
+              style="margin-top:18px"
+              onclick="openProp('What should I consider before buying property?')"
+            >
+              Analyze with Prop
+            </button>
+
+          </div>
+
+        </div>
+
+      </div>
+
+    </section>
+
+
+    <!-- =====================================================
+         INVESTMENT
+    ====================================================== -->
+
+    <section class="view" id="view-investment">
+
+      <div class="full-workspace">
+
+        <div class="workspace-heading">
+
+          <div>
+            <small>Investment Intelligence</small>
+            <h2>Understand the economics.</h2>
+          </div>
+
+        </div>
+
+
+        <div class="workspace-content">
+
+          <div class="card large-card">
+
+            <div class="market-grid">
+
+              <div class="market-box">
+                <span>Illustrative yield</span>
+                <strong>8.7%</strong>
+                <small>Scenario</small>
+              </div>
+
+              <div class="market-box">
+                <span>Price movement</span>
+                <strong>+8.4%</strong>
+                <small>Modelled</small>
+              </div>
+
+              <div class="market-box">
+                <span>Rental demand</span>
+                <strong>High</strong>
+                <small>Signal</small>
+              </div>
+
+              <div class="market-box">
+                <span>Supply</span>
+                <strong>Stable</strong>
+                <small>Signal</small>
+              </div>
+
+            </div>
+
+
+            <div style="
+              margin-top:25px;
+              padding:20px;
+              border-radius:17px;
+              background:rgba(255,255,255,.035);
+              border:1px solid rgba(255,255,255,.06);
+            ">
+
+              <div class="card-label">
+                Scenario engine
+              </div>
+
+              <div
+                style="
+                  display:flex;
+                  justify-content:space-between;
+                  align-items:center;
+                  margin-top:10px;
+                "
+              >
+                <strong
+                  style="
+                    font-family:var(--font-display);
+                    font-size:22px;
+                  "
+                >
+                  ₦250m
+                </strong>
+
+                <span
+                  style="
+                    color:#778598;
+                    font-size:8px;
+                  "
+                >
+                  Example acquisition
+                </span>
+              </div>
+
+              <input
+                id="investmentInput"
+                type="range"
+                min="50000000"
+                max="1000000000"
+                step="10000000"
+                value="250000000"
+                style="
+                  width:100%;
+                  margin-top:18px;
+                  accent-color:#55bfff;
+                "
+                oninput="updateInvestment(this.value)"
+              >
+
+              <div
+                style="
+                  display:flex;
+                  justify-content:space-between;
+                  margin-top:10px;
+                  color:#708096;
+                  font-size:8px;
+                "
+              >
+                <span>₦50m</span>
+                <span>₦1bn</span>
+              </div>
+
+              <div
+                id="investmentResult"
+                style="
+                  margin-top:16px;
+                  color:#b7c5d5;
+                  font-size:9px;
+                  line-height:1.6;
+                "
+              >
+                Illustrative annual rental income:
+                <strong style="color:#8fddff">
+                  ₦21.75m
+                </strong>
+              </div>
+
+            </div>
+
+          </div>
+
+
+          <div class="card large-card">
+
+            <div class="card-label">
+              Prop's lens
+            </div>
+
+            <div
+              class="card-title"
+              style="font-size:19px; margin-top:7px"
+            >
+              Investment isn't just price.
+            </div>
+
+            <p style="
+              margin-top:14px;
+              color:#7e8a9c;
+              font-size:10px;
+              line-height:1.75;
+            ">
+              Beloveeth's intelligence layer is designed to connect
+              acquisition price with rental economics, market movement,
+              location conditions, supply, demand and comparable assets.
+            </p>
+
+            <button
+              class="secondary-btn"
+              style="margin-top:18px"
+              onclick="openProp('Explain the investment signals on this page')"
+            >
+              Discuss with Prop
+            </button>
+
+          </div>
+
+        </div>
+
+      </div>
+
+    </section>
+
+
+    <!-- =====================================================
+         PULSE
+    ====================================================== -->
+
+    <section class="view" id="view-pulse">
+
+      <div class="full-workspace">
+
+        <div class="workspace-heading">
+
+          <div>
+            <small>Beloveeth Pulse</small>
+            <h2>The market, interpreted.</h2>
+          </div>
+
+          <span class="pill">
+            MODEL / DATA LAYER
+          </span>
+
+        </div>
+
+
+        <div class="workspace-content">
+
+          <div class="card large-card">
+
+            <div class="market-grid">
+
+              <div class="market-box">
+                <span>Price</span>
+                <strong>₦1.42m</strong>
+                <small>+8.4%</small>
+              </div>
+
+              <div class="market-box">
+                <span>Demand</span>
+                <strong>↑</strong>
+                <small>Positive signal</small>
+              </div>
+
+              <div class="market-box">
+                <span>Supply</span>
+                <strong>→</strong>
+                <small>Stable signal</small>
+              </div>
+
+              <div class="market-box">
+                <span>Development</span>
+                <strong>↑</strong>
+                <small>Activity signal</small>
+              </div>
+
+            </div>
+
+            <div style="
+              height:280px;
+              margin-top:18px;
+            ">
+              <canvas id="pulseLargeChart"></canvas>
+            </div>
+
+          </div>
+
+
+          <div class="card large-card">
+
+            <div class="card-label">
+              Locations
+            </div>
+
+            <div class="card-title">
+              Nigeria market matrix
+            </div>
+
+            <div class="location-buttons">
+
+              <button class="active">
+                Lagos
+              </button>
+
+              <button>
+                Abuja
+              </button>
+
+              <button>
+                Ogun
+              </button>
+
+              <button>
+                Oyo
+              </button>
+
+              <button>
+                Rivers
+              </button>
+
+              <button>
+                Enugu
+              </button>
+
+              <button>
+                Kano
+              </button>
+
+            </div>
+
+            <div style="
+              margin-top:25px;
+              padding-top:17px;
+              border-top:1px solid var(--line);
+            ">
+
+              <div class="card-label">
+                Intelligence principle
+              </div>
+
+              <p style="
+                margin-top:10px;
+                color:#8b98aa;
+                font-size:9px;
+                line-height:1.7;
+              ">
+                Beloveeth should distinguish verified internal data,
+                calculated intelligence, approved external data and
+                AI interpretation rather than presenting every number
+                as fact.
+              </p>
+
+            </div>
+
+          </div>
+
+        </div>
+
+      </div>
+
+    </section>
+
+
+    <!-- =====================================================
+         LOCATIONS
+    ====================================================== -->
+
+    <section class="view" id="view-locations">
+
+      <div class="full-workspace">
+
+        <div class="workspace-heading">
+
+          <div>
+            <small>Location Intelligence</small>
+            <h2>Markets across Nigeria.</h2>
+          </div>
+
+        </div>
+
+
+        <div class="workspace-content">
+
+          <div class="card large-card">
+
+            <div class="card-label">
+              Select a market
+            </div>
+
+            <div class="location-buttons">
+
+              <button class="active">Lagos</button>
+              <button>Abuja</button>
+              <button>Ogun</button>
+              <button>Oyo</button>
+              <button>Rivers</button>
+              <button>Enugu</button>
+              <button>Kano</button>
+
+            </div>
+
+            <div style="
+              margin-top:22px;
+              height:270px;
+              border-radius:18px;
+              background:
+                radial-gradient(circle at 48% 42%, rgba(72,176,255,.13), transparent 28%),
+                rgba(255,255,255,.025);
+              border:1px solid rgba(255,255,255,.06);
+              display:grid;
+              place-items:center;
+            ">
+
+              <div style="
+                text-align:center;
+              ">
+
+                <div style="
+                  font-family:var(--font-display);
+                  font-size:42px;
+                  opacity:.8;
+                ">
+                  NG
+                </div>
+
+                <div style="
+                  margin-top:8px;
+                  color:#728094;
+                  font-size:8px;
+                  letter-spacing:.13em;
+                  text-transform:uppercase;
+                ">
+                  Nigeria location intelligence
+                </div>
+
+              </div>
+
+            </div>
+
+          </div>
+
+
+          <div class="card large-card">
+
+            <div class="card-label">
+              Lagos
+            </div>
+
+            <div class="card-title">
+              Market signal
+            </div>
+
+            <div class="stats-grid" style="padding:18px 0 0">
+
+              <div class="mini-stat">
+                <span>Demand</span>
+                <strong>↑</strong>
+                <small>Positive</small>
+              </div>
+
+              <div class="mini-stat">
+                <span>Supply</span>
+                <strong>→</strong>
+                <small>Stable</small>
+              </div>
+
+              <div class="mini-stat">
+                <span>Pricing</span>
+                <strong>↑</strong>
+                <small>Momentum</small>
+              </div>
+
+              <div class="mini-stat">
+                <span>Activity</span>
+                <strong>↑</strong>
+                <small>Development</small>
+              </div>
+
+            </div>
+
+          </div>
+
+        </div>
+
+      </div>
+
+    </section>
+
+
+    <!-- =====================================================
+         PARTNERS
+    ====================================================== -->
+
+    <section class="view" id="view-partners">
+
+      <div class="full-workspace">
+
+        <div class="workspace-heading">
+
+          <div>
+            <small>Beloveeth Partner Ecosystem</small>
+            <h2>Built beyond listings.</h2>
+          </div>
+
+        </div>
+
+
+        <div class="workspace-content">
+
+          <div class="card large-card">
+
+            <div class="market-grid">
+
+              <div class="market-box">
+                <span>Developers</span>
+                <strong>01</strong>
+                <small>Supply</small>
+              </div>
+
+              <div class="market-box">
+                <span>Property owners</span>
+                <strong>02</strong>
+                <small>Assets</small>
+              </div>
+
+              <div class="market-box">
+                <span>Professionals</span>
+                <strong>03</strong>
+                <small>Services</small>
+              </div>
+
+              <div class="market-box">
+                <span>Investors</span>
+                <strong>04</strong>
+                <small>Capital</small>
+              </div>
+
+            </div>
+
+            <p style="
+              margin-top:24px;
+              max-width:600px;
+              color:#818da0;
+              font-size:10px;
+              line-height:1.8;
+            ">
+              Beloveeth is designed as a connected ecosystem where
+              property supply, clients, partners, operations and
+              intelligence can eventually operate through one
+              digital infrastructure.
+            </p>
+
+          </div>
+
+
+          <div class="card large-card">
+
+            <div class="card-label">
+              Partner with Beloveeth
+            </div>
+
+            <div class="card-title">
+              Bring the asset.
+              Bring the expertise.
+            </div>
+
+            <button
+              class="primary-btn"
+              style="margin-top:20px"
+              onclick="openProp('How can I become a Beloveeth partner?')"
+            >
+              Ask Prop
+            </button>
+
+          </div>
+
+        </div>
+
+      </div>
+
+    </section>
+
+  </main>
+
+
+  <!-- =======================================================
+       PROP
+  ======================================================== -->
+
+  <button
+    class="prop-trigger"
+    id="propTrigger"
+    aria-label="Open Prop AI"
+    aria-expanded="false"
+    onclick="toggleProp()"
+  >
+    <span class="prop-energy"></span>
+    <span class="prop-core"></span>
+  </button>
+
+  <div class="prop-caption">
+    prop intelligence
+  </div>
+
+
+  <aside
+    class="prop-panel"
+    id="propPanel"
+    aria-hidden="true"
+  >
+
+    <div class="prop-panel-head">
+
+      <div class="prop-identity">
+
+        <div class="mini-orb"></div>
 
         <div>
-          <div class="pulse-label">Beloveeth Pulse</div>
-          <div class="pulse-title">Market Intelligence</div>
-        </div>
-
-        <div class="pulse-status">
-          <span class="status-dot"></span>
-          Intelligence Preview
+          <strong>Prop</strong>
+          <span>Beloveeth intelligence layer</span>
         </div>
 
       </div>
-
-
-      <div class="pulse-stats">
-
-        <div class="pulse-stat">
-          <span>Market Index</span>
-          <strong>—</strong>
-        </div>
-
-        <div class="pulse-stat">
-          <span>Price Trend</span>
-          <strong class="positive">↑</strong>
-        </div>
-
-        <div class="pulse-stat">
-          <span>Demand</span>
-          <strong>—</strong>
-        </div>
-
-        <div class="pulse-stat">
-          <span>Supply</span>
-          <strong>—</strong>
-        </div>
-
-      </div>
-
-
-      <div class="chart-area">
-        <canvas id="heroPulseChart"></canvas>
-      </div>
-
-      <div class="chart-caption">
-        <span>Illustrative interface — data source pending</span>
-        <span>Market movement</span>
-      </div>
-
-
-      <div class="ai-signal">
-
-        <div class="ai-cloud">P</div>
-
-        <div>
-          <strong>Prop interpretation</strong>
-
-          <p>
-            When connected to verified Beloveeth data, Prop will
-            explain the movement shown here and identify the
-            underlying signals.
-          </p>
-        </div>
-
-      </div>
-
-      <div class="data-label">
-        Data classification: DEMO / ILLUSTRATIVE
-      </div>
-
-    </div>
-
-  </div>
-
-</section>
-
-
-<!-- =========================================================
-     MARKET STRIP
-========================================================= -->
-
-<section class="intelligence-strip">
-
-  <div class="container strip-grid">
-
-    <div class="strip-item">
-      <span>Property Prices</span>
-      <strong>—</strong>
-      <small>Awaiting connected data</small>
-    </div>
-
-    <div class="strip-item">
-      <span>Rental Trends</span>
-      <strong>—</strong>
-      <small>Awaiting connected data</small>
-    </div>
-
-    <div class="strip-item">
-      <span>Demand</span>
-      <strong>—</strong>
-      <small>Awaiting connected data</small>
-    </div>
-
-    <div class="strip-item">
-      <span>Supply</span>
-      <strong>—</strong>
-      <small>Awaiting connected data</small>
-    </div>
-
-    <div class="strip-item">
-      <span>Active Markets</span>
-      <strong>Nigeria</strong>
-      <small>Lagos • Abuja • Ogun • Oyo • More</small>
-    </div>
-
-  </div>
-
-</section>
-
-
-<!-- =========================================================
-     PULSE
-========================================================= -->
-
-<section class="section pulse-section" id="pulse">
-
-  <div class="container">
-
-    <div class="section-kicker">
-      Beloveeth Pulse
-    </div>
-
-    <h2 class="section-heading">
-      See the market behind the property.
-    </h2>
-
-    <p class="section-intro">
-      Pulse is the intelligence layer of the Beloveeth ecosystem.
-      It is designed to bring property prices, demand, supply,
-      location activity, investment indicators, historical
-      movement and research into one analytical environment.
-    </p>
-
-
-    <div class="pulse-layout">
-
-      <div class="pulse-index-card">
-
-        <div class="index-top">
-          <span>Beloveeth Market Index</span>
-          <span>Preview</span>
-        </div>
-
-        <div class="index-number">—</div>
-
-        <div class="index-change">
-          Data connection required
-        </div>
-
-        <p class="index-description">
-          The production index will be calculated from approved
-          Beloveeth data sources and defined methodology rather
-          than arbitrary frontend numbers.
-        </p>
-
-        <div class="index-breakdown">
-
-          <div>
-            <span>Price</span>
-            <strong>—</strong>
-          </div>
-
-          <div>
-            <span>Demand</span>
-            <strong>—</strong>
-          </div>
-
-          <div>
-            <span>Supply</span>
-            <strong>—</strong>
-          </div>
-
-          <div>
-            <span>Activity</span>
-            <strong>—</strong>
-          </div>
-
-        </div>
-
-      </div>
-
-
-      <div class="analytics-panel">
-
-        <div class="analytics-header">
-
-          <h3>Market movement</h3>
-
-          <div class="period-tabs">
-
-            <button class="active">6M</button>
-            <button>1Y</button>
-            <button>3Y</button>
-            <button>5Y</button>
-
-          </div>
-
-        </div>
-
-        <div class="large-chart">
-          <canvas id="marketChart"></canvas>
-        </div>
-
-        <div class="signal-grid">
-
-          <div class="signal">
-            <span>Price movement</span>
-            <strong>Pending data</strong>
-          </div>
-
-          <div class="signal">
-            <span>Demand signal</span>
-            <strong>Pending data</strong>
-          </div>
-
-          <div class="signal">
-            <span>Investment signal</span>
-            <strong>Pending data</strong>
-          </div>
-
-        </div>
-
-      </div>
-
-    </div>
-
-  </div>
-
-</section>
-
-
-<!-- =========================================================
-     PROPERTIES
-========================================================= -->
-
-<section class="section properties-section" id="properties">
-
-  <div class="container">
-
-    <div class="section-top">
-
-      <div>
-
-        <div class="section-kicker">
-          Property Intelligence
-        </div>
-
-        <h2 class="section-heading">
-          Opportunities with context.
-        </h2>
-
-        <p class="section-intro">
-          Beloveeth properties are intended to become intelligence
-          objects — connecting the physical property with market,
-          location, investment and verification information.
-        </p>
-
-      </div>
-
-      <a href="#" class="secondary-btn">
-        View all properties →
-      </a>
-
-    </div>
-
-
-    <div class="property-grid">
-
-      <article class="property-card">
-
-        <div class="property-image">
-
-          <img
-            src="https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?auto=format&fit=crop&w=1000&q=85"
-            alt="Modern residential property"
-          >
-
-          <span class="property-status">
-            Verification pending
-          </span>
-
-        </div>
-
-        <div class="property-content">
-
-          <div class="property-type">
-            Residential • Demo Listing
-          </div>
-
-          <h3 class="property-title">
-            Residential Estate Opportunity
-          </h3>
-
-          <div class="property-location">
-            Ogun State, Nigeria
-          </div>
-
-          <div class="property-bottom">
-
-            <div class="property-price">
-              —
-              <small>Price data pending verification</small>
-            </div>
-
-            <a href="#" class="property-action">
-              View
-            </a>
-
-          </div>
-
-        </div>
-
-      </article>
-
-
-      <article class="property-card">
-
-        <div class="property-image">
-
-          <img
-            src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=1000&q=85"
-            alt="Contemporary Nigerian-style property"
-          >
-
-          <span class="property-status">
-            Verification pending
-          </span>
-
-        </div>
-
-        <div class="property-content">
-
-          <div class="property-type">
-            Land • Demo Listing
-          </div>
-
-          <h3 class="property-title">
-            Development Land Opportunity
-          </h3>
-
-          <div class="property-location">
-            Lagos Corridor, Nigeria
-          </div>
-
-          <div class="property-bottom">
-
-            <div class="property-price">
-              —
-              <small>Price data pending verification</small>
-            </div>
-
-            <a href="#" class="property-action">
-              View
-            </a>
-
-          </div>
-
-        </div>
-
-      </article>
-
-
-      <article class="property-card">
-
-        <div class="property-image">
-
-          <img
-            src="https://images.unsplash.com/photo-1512917774080-9991f1c4c750?auto=format&fit=crop&w=1000&q=85"
-            alt="Luxury property"
-          >
-
-          <span class="property-status">
-            Verification pending
-          </span>
-
-        </div>
-
-        <div class="property-content">
-
-          <div class="property-type">
-            Investment • Demo Listing
-          </div>
-
-          <h3 class="property-title">
-            Income Property Opportunity
-          </h3>
-
-          <div class="property-location">
-            Abuja, Nigeria
-          </div>
-
-          <div class="property-bottom">
-
-            <div class="property-price">
-              —
-              <small>Price data pending verification</small>
-            </div>
-
-            <a href="#" class="property-action">
-              View
-            </a>
-
-          </div>
-
-        </div>
-
-      </article>
-
-    </div>
-
-  </div>
-
-</section>
-
-
-<!-- =========================================================
-     LOCATIONS
-========================================================= -->
-
-<section class="section locations-section" id="locations">
-
-  <div class="container">
-
-    <div class="section-kicker">
-      Nigeria Location Intelligence
-    </div>
-
-    <h2 class="section-heading">
-      One country. Many property markets.
-    </h2>
-
-    <p class="section-intro">
-      Beloveeth is designed to understand Nigerian property
-      markets as distinct geographic environments rather than
-      treating the country as a single market.
-    </p>
-
-
-    <div class="locations-layout">
-
-      <div class="map-card">
-
-        <div class="nigeria-shape">
-
-          <span class="map-point lagos" title="Lagos"></span>
-          <span class="map-point ogun" title="Ogun"></span>
-          <span class="map-point abuja" title="Abuja"></span>
-          <span class="map-point oyo" title="Oyo"></span>
-          <span class="map-point rivers" title="Rivers"></span>
-          <span class="map-point enugu" title="Enugu"></span>
-          <span class="map-point kano" title="Kano"></span>
-
-        </div>
-
-        <div class="map-legend">
-          <span class="status-dot"></span>
-          Active intelligence markets
-        </div>
-
-      </div>
-
-
-      <div class="location-list">
-
-        <div class="location-row">
-
-          <div class="location-name">
-            Lagos
-            <small>Residential • Commercial • Land</small>
-          </div>
-
-          <div class="location-value">
-            —
-          </div>
-
-          <div class="location-change">
-            Data
-          </div>
-
-        </div>
-
-
-        <div class="location-row">
-
-          <div class="location-name">
-            Ogun
-            <small>Growth corridors • Land • Development</small>
-          </div>
-
-          <div class="location-value">
-            —
-          </div>
-
-          <div class="location-change">
-            Data
-          </div>
-
-        </div>
-
-
-        <div class="location-row">
-
-          <div class="location-name">
-            Abuja
-            <small>Residential • Commercial • Investment</small>
-          </div>
-
-          <div class="location-value">
-            —
-          </div>
-
-          <div class="location-change">
-            Data
-          </div>
-
-        </div>
-
-
-        <div class="location-row">
-
-          <div class="location-name">
-            Oyo
-            <small>Land • Residential • Development</small>
-          </div>
-
-          <div class="location-value">
-            —
-          </div>
-
-          <div class="location-change">
-            Data
-          </div>
-
-        </div>
-
-
-        <div class="location-row">
-
-          <div class="location-name">
-            Rivers
-            <small>Residential • Commercial • Energy economy</small>
-          </div>
-
-          <div class="location-value">
-            —
-          </div>
-
-          <div class="location-change">
-            Data
-          </div>
-
-        </div>
-
-
-        <div class="location-row">
-
-          <div class="location-name">
-            Enugu
-            <small>Residential • Land • Development</small>
-          </div>
-
-          <div class="location-value">
-            —
-          </div>
-
-          <div class="location-change">
-            Data
-          </div>
-
-        </div>
-
-
-        <div class="location-row">
-
-          <div class="location-name">
-            Kano
-            <small>Commercial • Residential • Land</small>
-          </div>
-
-          <div class="location-value">
-            —
-          </div>
-
-          <div class="location-change">
-            Data
-          </div>
-
-        </div>
-
-      </div>
-
-    </div>
-
-  </div>
-
-</section>
-
-
-<!-- =========================================================
-     INVESTMENT
-========================================================= -->
-
-<section class="section investment-section" id="investment">
-
-  <div class="container">
-
-    <div class="section-kicker">
-      Investment Intelligence
-    </div>
-
-    <h2 class="section-heading">
-      Capital decisions need more than a price tag.
-    </h2>
-
-    <p class="section-intro">
-      Beloveeth is designed to connect property opportunities
-      with the financial and market context required to evaluate
-      them responsibly.
-    </p>
-
-
-    <div class="investment-grid">
-
-      <div class="investment-card">
-
-        <div class="number">01</div>
-
-        <h3>Rental Economics</h3>
-
-        <p>
-          Estimate rental income, gross yield and price-to-rent
-          relationships when sufficient verified data exists.
-        </p>
-
-      </div>
-
-
-      <div class="investment-card">
-
-        <div class="number">02</div>
-
-        <h3>Scenario Analysis</h3>
-
-        <p>
-          Examine different assumptions around price movement,
-          income and holding periods rather than relying on one
-          projected outcome.
-        </p>
-
-      </div>
-
-
-      <div class="investment-card">
-
-        <div class="number">03</div>
-
-        <h3>Market Context</h3>
-
-        <p>
-          Compare opportunities against location trends,
-          comparable properties, supply, demand and available
-          market intelligence.
-        </p>
-
-      </div>
-
-    </div>
-
-  </div>
-
-</section>
-
-
-<!-- =========================================================
-     NEWS / INSIGHTS
-========================================================= -->
-
-<section class="section insights-section" id="insights">
-
-  <div class="container">
-
-    <div class="section-kicker">
-      Market Research & Insights
-    </div>
-
-    <h2 class="section-heading">
-      What is happening around the market?
-    </h2>
-
-    <p class="section-intro">
-      The future Beloveeth intelligence layer will connect
-      market research, property information, economic signals,
-      construction inputs and relevant developments into a
-      structured insight feed.
-    </p>
-
-
-    <div class="news-layout">
-
-      <article class="featured-news">
-
-        <img
-          src="https://images.unsplash.com/photo-1541888946425-d0fbb186a5b7?auto=format&fit=crop&w=1400&q=85"
-          alt="Construction and property development"
-        >
-
-        <div class="featured-overlay">
-
-          <span class="news-tag">
-            Intelligence Feed
-          </span>
-
-          <h3>
-            From property prices to the forces moving them.
-          </h3>
-
-          <p>
-            This interface is prepared for Beloveeth's
-            structured news and research pipeline. Production
-            headlines will come from approved sources rather
-            than fabricated frontend content.
-          </p>
-
-        </div>
-
-      </article>
-
-
-      <div class="news-list">
-
-        <article class="news-item">
-
-          <div class="news-thumb">
-            <img
-              src="https://images.unsplash.com/photo-1600607687920-4e2a09cf159d?auto=format&fit=crop&w=500&q=80"
-              alt="Interior property"
-            >
-          </div>
-
-          <div>
-            <div class="news-meta">
-              Property Market
-            </div>
-
-            <h4>
-              Residential pricing intelligence
-            </h4>
-
-            <p>
-              Awaiting verified market feed.
-            </p>
-          </div>
-
-        </article>
-
-
-        <article class="news-item">
-
-          <div class="news-thumb">
-            <img
-              src="https://images.unsplash.com/photo-1504307651254-35680f356dfd?auto=format&fit=crop&w=500&q=80"
-              alt="Construction site"
-            >
-          </div>
-
-          <div>
-            <div class="news-meta">
-              Construction
-            </div>
-
-            <h4>
-              Building material intelligence
-            </h4>
-
-            <p>
-              Designed for regional material price tracking.
-            </p>
-          </div>
-
-        </article>
-
-
-        <article class="news-item">
-
-          <div class="news-thumb">
-            <img
-              src="https://images.unsplash.com/photo-1560518883-ce09059eeffa?auto=format&fit=crop&w=500&q=80"
-              alt="Real estate consultation"
-            >
-          </div>
-
-          <div>
-            <div class="news-meta">
-              Investment
-            </div>
-
-            <h4>
-              Property investment research
-            </h4>
-
-            <p>
-              Structured reports will live here.
-            </p>
-          </div>
-
-        </article>
-
-
-        <article class="news-item">
-
-          <div class="news-thumb">
-            <img
-              src="https://images.unsplash.com/photo-1448630360428-65456885c650?auto=format&fit=crop&w=500&q=80"
-              alt="City development"
-            >
-          </div>
-
-          <div>
-            <div class="news-meta">
-              Location
-            </div>
-
-            <h4>
-              Infrastructure and development signals
-            </h4>
-
-            <p>
-              Designed for location intelligence.
-            </p>
-          </div>
-
-        </article>
-
-      </div>
-
-    </div>
-
-  </div>
-
-</section>
-
-
-<!-- =========================================================
-     ECOSYSTEM
-========================================================= -->
-
-<section class="section ecosystem-section">
-
-  <div class="container">
-
-    <div class="section-kicker">
-      The Beloveeth Ecosystem
-    </div>
-
-    <h2 class="section-heading">
-      One platform. Different participants.
-    </h2>
-
-    <div class="ecosystem-grid">
-
-      <div class="ecosystem-card dark">
-
-        <h3>
-          Nigeria is home.
-          Invest from anywhere.
-        </h3>
-
-        <p>
-          Beloveeth is designed to give diaspora and remote
-          buyers greater visibility into property opportunities,
-          viewings, reports, documents and transaction progress.
-        </p>
-
-        <div class="ecosystem-items">
-
-          <div class="ecosystem-item">Virtual Viewings</div>
-          <div class="ecosystem-item">Market Reports</div>
-          <div class="ecosystem-item">Documents</div>
-          <div class="ecosystem-item">Transaction Tracking</div>
-
-        </div>
-
-      </div>
-
-
-      <div class="ecosystem-card">
-
-        <h3>
-          Built with the property ecosystem.
-        </h3>
-
-        <p>
-          The partner layer will connect developers, property
-          owners, realtors, surveyors, legal professionals,
-          financial partners and other service providers.
-        </p>
-
-        <div class="ecosystem-items">
-
-          <div class="ecosystem-item">Developers</div>
-          <div class="ecosystem-item">Property Owners</div>
-          <div class="ecosystem-item">Realtors</div>
-          <div class="ecosystem-item">Surveyors</div>
-          <div class="ecosystem-item">Legal</div>
-          <div class="ecosystem-item">Financial</div>
-
-        </div>
-
-      </div>
-
-    </div>
-
-  </div>
-
-</section>
-
-
-<!-- =========================================================
-     FINAL CTA
-========================================================= -->
-
-<section class="final-section">
-
-  <div class="container">
-
-    <div class="section-kicker">
-      Beloveeth Realty & PropTech
-    </div>
-
-    <h2>
-      Your next property move should be an informed one.
-    </h2>
-
-    <p>
-      Explore property opportunities, understand the market
-      and discover the intelligence layer being built behind
-      the Beloveeth ecosystem.
-    </p>
-
-    <div class="final-actions">
-
-      <a href="#properties" class="final-primary">
-        Explore Properties →
-      </a>
-
-      <a href="#pulse" class="final-secondary">
-        Explore Pulse
-      </a>
-
-    </div>
-
-  </div>
-
-</section>
-
-</main>
-
-
-<!-- =========================================================
-     FOOTER
-========================================================= -->
-
-<footer>
-
-  <div class="container">
-
-    <div class="footer-grid">
-
-      <div class="footer-brand">
-
-        <h3>
-          BELOVEETH
-        </h3>
-
-        <p>
-          Transforming Properties into Prosperity through
-          real estate, technology, data and intelligent
-          decision infrastructure.
-        </p>
-
-      </div>
-
-
-      <div class="footer-col">
-
-        <h4>Platform</h4>
-
-        <ul>
-          <li><a href="#properties">Properties</a></li>
-          <li><a href="#investment">Investment</a></li>
-          <li><a href="#pulse">Market Intelligence</a></li>
-          <li><a href="#locations">Locations</a></li>
-        </ul>
-
-      </div>
-
-
-      <div class="footer-col">
-
-        <h4>Ecosystem</h4>
-
-        <ul>
-          <li><a href="#">Client Platform</a></li>
-          <li><a href="#">Partner Platform</a></li>
-          <li><a href="#">Workforce / CRM</a></li>
-          <li><a href="#">Management</a></li>
-        </ul>
-
-      </div>
-
-
-      <div class="footer-col">
-
-        <h4>Company</h4>
-
-        <ul>
-          <li><a href="#">About Beloveeth</a></li>
-          <li><a href="#">Insights</a></li>
-          <li><a href="#">Partners</a></li>
-          <li><a href="#">Contact</a></li>
-        </ul>
-
-      </div>
-
-    </div>
-
-
-    <div class="footer-bottom">
-
-      © 2026 Beloveeth Realty & PropTech.
-      Transforming Properties into Prosperity.
-
-    </div>
-
-  </div>
-
-</footer>
-
-
-<!-- =========================================================
-     PROP
-========================================================= -->
-
-<div class="prop-launcher">
-
-  <div class="prop-panel" id="propPanel">
-
-    <div class="prop-panel-header">
-
-      <div class="prop-panel-header-top">
-
-        <div>
-          <div class="prop-name">Prop</div>
-
-          <div class="prop-source">
-            Beloveeth intelligence interface
-          </div>
-        </div>
-
-        <button
-          class="prop-close"
-          id="propClose"
-          aria-label="Close Prop"
-        >
-          ×
-        </button>
-
-      </div>
-
-    </div>
-
-
-    <div class="prop-message" id="propMessage">
-
-      I can help you understand properties, locations,
-      market intelligence and investment information.
-
-      <br><br>
-
-      My production version will prioritize Beloveeth's
-      verified data before using external sources.
-
-    </div>
-
-
-    <div class="prop-context">
-      Source hierarchy:
-      Beloveeth data → calculated intelligence →
-      approved external data → web research.
-    </div>
-
-
-    <div class="prop-input">
-
-      <input
-        id="propInput"
-        type="text"
-        placeholder="Ask about a property or market..."
-      >
 
       <button
-        class="prop-send"
-        id="propSend"
-        aria-label="Ask Prop"
+        class="prop-close"
+        onclick="closeProp()"
+        aria-label="Close Prop"
       >
-        ↑
+        ×
       </button>
 
     </div>
 
-  </div>
+
+    <div
+      class="prop-messages"
+      id="propMessages"
+    >
+
+      <div class="prop-message ai">
+
+        <small>Prop</small>
+
+        I'm here. Ask me about a property, market,
+        location, investment scenario or the signals
+        you're seeing on this page.
+
+      </div>
+
+    </div>
 
 
-  <button
-    class="prop-button"
-    id="propButton"
-    aria-label="Open Prop"
-  >
-    <span class="prop-symbol">P</span>
-  </button>
+    <div class="prop-suggestions">
+
+      <button onclick="askSuggestion('What is happening in the market?')">
+        Market
+      </button>
+
+      <button onclick="askSuggestion('Explain property yield')">
+        Yield
+      </button>
+
+      <button onclick="askSuggestion('What should I look for in a property?')">
+        Property
+      </button>
+
+      <button onclick="askSuggestion('What is happening with construction costs?')">
+        Materials
+      </button>
+
+    </div>
+
+
+    <form
+      class="prop-input"
+      onsubmit="sendProp(event)"
+    >
+
+      <input
+        id="propInput"
+        autocomplete="off"
+        placeholder="Ask Prop something..."
+      />
+
+      <button
+        class="prop-send"
+        type="submit"
+        aria-label="Send"
+      >
+        ↑
+      </button>
+
+    </form>
+
+  </aside>
+
 
 </div>
 
 
-<!-- =========================================================
-     JAVASCRIPT
-========================================================= -->
-
 <script>
-
   /* =========================================================
-     PULSE CHART
-     ---------------------------------------------------------
-     IMPORTANT:
-     These values are deliberately illustrative.
-     Production values must come from Supabase / approved
-     market data sources.
+     VIEW NAVIGATION
   ========================================================= */
 
-  const heroCtx =
-    document
-      .getElementById("heroPulseChart")
-      .getContext("2d");
+  const navButtons = document.querySelectorAll("#mainNav button");
+  const views = document.querySelectorAll(".view");
 
-  const heroGradient =
-    heroCtx.createLinearGradient(0, 0, 0, 220);
+  function switchView(viewName) {
 
-  heroGradient.addColorStop(
-    0,
-    "rgba(202,168,75,.30)"
-  );
+    views.forEach(view => {
+      view.classList.remove("active");
+    });
 
-  heroGradient.addColorStop(
-    1,
-    "rgba(202,168,75,0)"
-  );
+    const target = document.getElementById(`view-${viewName}`);
 
-
-  new Chart(heroCtx, {
-
-    type: "line",
-
-    data: {
-
-      labels: [
-        "Jan",
-        "Feb",
-        "Mar",
-        "Apr",
-        "May",
-        "Jun"
-      ],
-
-      datasets: [
-
-        {
-          label: "Illustrative Market Movement",
-
-          data: [
-            100,
-            104,
-            102,
-            109,
-            115,
-            121
-          ],
-
-          borderColor: "#CAA84B",
-
-          backgroundColor: heroGradient,
-
-          borderWidth: 2,
-
-          pointRadius: 0,
-
-          tension: .42,
-
-          fill: true
-        }
-
-      ]
-
-    },
-
-    options: {
-
-      responsive: true,
-
-      maintainAspectRatio: false,
-
-      plugins: {
-        legend: {
-          display: false
-        },
-
-        tooltip: {
-          enabled: true,
-
-          callbacks: {
-
-            label: function(context) {
-
-              return "Illustrative: " +
-                context.parsed.y;
-
-            }
-
-          }
-
-        }
-
-      },
-
-      scales: {
-
-        x: {
-          display: false,
-
-          grid: {
-            display: false
-          }
-        },
-
-        y: {
-          display: false,
-
-          grid: {
-            display: false
-          }
-        }
-
-      }
-
+    if (target) {
+      target.classList.add("active");
     }
+
+    navButtons.forEach(button => {
+      button.classList.toggle(
+        "active",
+        button.dataset.view === viewName
+      );
+    });
+  }
+
+  navButtons.forEach(button => {
+
+    button.addEventListener("click", () => {
+      switchView(button.dataset.view);
+    });
 
   });
 
 
   /* =========================================================
-     MARKET INTELLIGENCE CHART
+     PULSE CHART
   ========================================================= */
 
-  const marketCtx =
-    document
-      .getElementById("marketChart")
-      .getContext("2d");
+  const marketData = {
+
+    Ikoyi: {
+      price: [1.12, 1.17, 1.19, 1.24, 1.31, 1.42],
+      demand: [64, 67, 70, 74, 78, 82],
+      supply: [74, 72, 71, 70, 69, 68],
+      value: "₦1.42m",
+      change: "+8.4%",
+      demandLabel: "High"
+    },
+
+    Lekki: {
+      price: [0.72, 0.76, 0.79, 0.83, 0.87, 0.91],
+      demand: [57, 61, 64, 69, 72, 76],
+      supply: [82, 80, 78, 77, 76, 75],
+      value: "₦910k",
+      change: "+5.2%",
+      demandLabel: "Rising"
+    },
+
+    Ikeja: {
+      price: [0.66, 0.69, 0.70, 0.74, 0.78, 0.81],
+      demand: [61, 63, 66, 69, 72, 74],
+      supply: [71, 70, 69, 68, 67, 66],
+      value: "₦810k",
+      change: "+4.7%",
+      demandLabel: "Healthy"
+    },
+
+    Yaba: {
+      price: [0.48, 0.51, 0.54, 0.57, 0.61, 0.64],
+      demand: [69, 72, 74, 77, 80, 84],
+      supply: [67, 66, 65, 64, 63, 62],
+      value: "₦640k",
+      change: "+7.1%",
+      demandLabel: "High"
+    },
+
+    Abuja: {
+      price: [0.61, 0.64, 0.67, 0.69, 0.72, 0.75],
+      demand: [54, 57, 60, 63, 65, 69],
+      supply: [76, 75, 74, 73, 72, 71],
+      value: "₦750k",
+      change: "+4.3%",
+      demandLabel: "Growing"
+    }
+
+  };
 
 
-  new Chart(marketCtx, {
+  const pulseCtx =
+    document.getElementById("pulseChart").getContext("2d");
+
+
+  const pulseChart = new Chart(pulseCtx, {
 
     type: "line",
 
     data: {
 
       labels: [
-        "Jan",
-        "Feb",
-        "Mar",
         "Apr",
         "May",
         "Jun",
         "Jul",
-        "Aug"
+        "Aug",
+        "Sep"
       ],
 
-      datasets: [
+      datasets: [{
+        data: marketData.Ikoyi.price,
 
-        {
-          label: "Illustrative Price Movement",
+        borderColor: "#71cfff",
+        backgroundColor: "rgba(65,171,255,.08)",
 
-          data: [
-            100,
-            102,
-            101,
-            105,
-            109,
-            108,
-            114,
-            118
-          ],
+        borderWidth: 2,
+        pointRadius: 0,
+        pointHoverRadius: 4,
 
-          borderColor: "#541421",
+        tension: .42,
 
-          backgroundColor:
-            "rgba(84,20,33,.06)",
-
-          borderWidth: 2,
-
-          pointRadius: 3,
-
-          pointBackgroundColor: "#CAA84B",
-
-          tension: .35,
-
-          fill: true
-        }
-
-      ]
+        fill: true
+      }]
 
     },
 
     options: {
 
       responsive: true,
-
       maintainAspectRatio: false,
+
+      interaction: {
+        intersect: false,
+        mode: "index"
+      },
 
       plugins: {
 
@@ -3483,18 +2897,18 @@
         },
 
         tooltip: {
-
-          callbacks: {
-
-            label: function(context) {
-
-              return "Illustrative index: " +
-                context.parsed.y;
-
-            }
-
-          }
-
+          backgroundColor: "rgba(9,14,23,.92)",
+          borderColor: "rgba(130,210,255,.16)",
+          borderWidth: 1,
+          titleFont: {
+            family: "Manrope",
+            size: 9
+          },
+          bodyFont: {
+            family: "Manrope",
+            size: 9
+          },
+          displayColors: false
         }
 
       },
@@ -3502,33 +2916,38 @@
       scales: {
 
         x: {
-
           grid: {
             display: false
           },
-
           ticks: {
-            color: "#8A929E",
+            color: "#5f6d80",
             font: {
-              size: 9
+              family: "Manrope",
+              size: 7
             }
+          },
+          border: {
+            display: false
           }
-
         },
 
         y: {
 
           grid: {
-            color: "#ECEAE5"
+            color: "rgba(255,255,255,.045)"
           },
 
           ticks: {
-            color: "#8A929E",
+            color: "#5f6d80",
             font: {
-              size: 9
+              family: "Manrope",
+              size: 7
             }
-          }
+          },
 
+          border: {
+            display: false
+          }
         }
 
       }
@@ -3538,34 +2957,282 @@
   });
 
 
+  function updatePulse() {
+
+    const location =
+      document.getElementById("locationSelect").value;
+
+    const metric =
+      document.getElementById("metricSelect").value;
+
+    const data = marketData[location];
+
+    let values = data.price;
+
+    if (metric === "demand") {
+      values = data.demand;
+    }
+
+    if (metric === "supply") {
+      values = data.supply;
+    }
+
+    pulseChart.data.datasets[0].data = values;
+
+    pulseChart.update();
+
+    document.getElementById("pulseValue").textContent =
+      metric === "price"
+        ? data.value
+        : values[values.length - 1];
+
+    document.getElementById("pulseChange").textContent =
+      metric === "price"
+        ? data.change
+        : metric === "demand"
+          ? "↑"
+          : "→";
+
+    document.getElementById("pulseDemand").textContent =
+      data.demandLabel;
+
+  }
+
+
+  document
+    .getElementById("locationSelect")
+    .addEventListener("change", updatePulse);
+
+  document
+    .getElementById("metricSelect")
+    .addEventListener("change", updatePulse);
+
+
   /* =========================================================
-     PROP INTERFACE
+     NEWS BROADCAST
   ========================================================= */
 
-  const propButton =
-    document.getElementById("propButton");
+  const news = [
+
+    {
+      category: "Construction",
+      headline:
+        "Cement prices remain an important construction-cost signal.",
+      meta:
+        "DEMO STORY · Production version will display verified source + date.",
+      image:
+        "https://images.unsplash.com/photo-1518709268805-4e9042af9f23?auto=format&fit=crop&w=900&q=80",
+      prop:
+        "Material-cost movement can influence development budgets, project economics and future asking prices."
+    },
+
+    {
+      category: "Steel",
+      headline:
+        "Steel and reinforcement costs are another key input to monitor.",
+      meta:
+        "DEMO STORY · Production version will display verified source + date.",
+      image:
+        "https://images.unsplash.com/photo-1504307651254-35680f356dfd?auto=format&fit=crop&w=900&q=80",
+      prop:
+        "Rising structural-material costs can place pressure on construction margins and project delivery economics."
+    },
+
+    {
+      category: "Infrastructure",
+      headline:
+        "Infrastructure activity can reshape accessibility and property demand.",
+      meta:
+        "DEMO STORY · Production version will display verified source + date.",
+      image:
+        "https://images.unsplash.com/photo-1541888946425-d81bb19240f5?auto=format&fit=crop&w=900&q=80",
+      prop:
+        "Improved connectivity can change travel times, development attractiveness and demand around a corridor."
+    },
+
+    {
+      category: "Development",
+      headline:
+        "New development activity can change the supply picture in emerging corridors.",
+      meta:
+        "DEMO STORY · Production version will display verified source + date.",
+      image:
+        "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=900&q=80",
+      prop:
+        "Additional supply can affect pricing, rental competition and the positioning of existing properties."
+    },
+
+    {
+      category: "Finance",
+      headline:
+        "Mortgage and financing conditions remain important to property affordability.",
+      meta:
+        "DEMO STORY · Production version will display verified source + date.",
+      image:
+        "https://images.unsplash.com/photo-1556761175-b413da4baf72?auto=format&fit=crop&w=900&q=80",
+      prop:
+        "Financing conditions can influence purchasing power and the pool of active buyers."
+    }
+
+  ];
+
+
+  let currentNews = 0;
+  let newsTimer;
+  let newsProgressTimer;
+
+
+  function renderNews(index) {
+
+    const item = news[index];
+
+    const image =
+      document.getElementById("broadcastImage");
+
+    image.style.opacity = "0";
+
+    setTimeout(() => {
+
+      image.style.backgroundImage =
+        `url("${item.image}")`;
+
+      image.style.opacity = ".57";
+
+      document.getElementById(
+        "broadcastCategory"
+      ).textContent = item.category;
+
+      document.getElementById(
+        "broadcastHeadline"
+      ).textContent = item.headline;
+
+      document.getElementById(
+        "broadcastMeta"
+      ).textContent = item.meta;
+
+      document.getElementById(
+        "broadcastProp"
+      ).innerHTML =
+        `<b>PROP</b> · ${item.prop}`;
+
+    }, 180);
+
+    startNewsProgress();
+  }
+
+
+  function nextNews() {
+
+    currentNews =
+      (currentNews + 1) % news.length;
+
+    renderNews(currentNews);
+  }
+
+
+  function previousNews() {
+
+    currentNews =
+      (currentNews - 1 + news.length) % news.length;
+
+    renderNews(currentNews);
+  }
+
+
+  function startNewsProgress() {
+
+    clearTimeout(newsTimer);
+    clearInterval(newsProgressTimer);
+
+    const progress =
+      document.getElementById("broadcastProgress");
+
+    progress.style.transition = "none";
+    progress.style.width = "0%";
+
+    requestAnimationFrame(() => {
+
+      progress.style.transition =
+        "width 6s linear";
+
+      progress.style.width = "100%";
+
+    });
+
+    newsTimer = setTimeout(
+      nextNews,
+      6000
+    );
+
+  }
+
+
+  renderNews(0);
+
+
+  /* =========================================================
+     PROP
+  ========================================================= */
+
+  const propTrigger =
+    document.getElementById("propTrigger");
 
   const propPanel =
     document.getElementById("propPanel");
 
-  const propClose =
-    document.getElementById("propClose");
-
   const propInput =
     document.getElementById("propInput");
 
-  const propSend =
-    document.getElementById("propSend");
-
-  const propMessage =
-    document.getElementById("propMessage");
+  const propMessages =
+    document.getElementById("propMessages");
 
 
-  function openProp() {
+  function toggleProp() {
+
+    if (
+      propPanel.classList.contains("open")
+    ) {
+      closeProp();
+    } else {
+      openProp();
+    }
+
+  }
+
+
+  function openProp(prompt = "") {
 
     propPanel.classList.add("open");
 
-    propInput.focus();
+    propTrigger.setAttribute(
+      "aria-expanded",
+      "true"
+    );
+
+    propPanel.setAttribute(
+      "aria-hidden",
+      "false"
+    );
+
+    if (prompt) {
+
+      setTimeout(() => {
+
+        propInput.value = prompt;
+
+        sendProp(
+          new Event("submit")
+        );
+
+      }, 250);
+
+    } else {
+
+      setTimeout(() => {
+        propInput.focus();
+      }, 350);
+
+    }
 
   }
 
@@ -3574,153 +3241,399 @@
 
     propPanel.classList.remove("open");
 
+    propTrigger.setAttribute(
+      "aria-expanded",
+      "false"
+    );
+
+    propPanel.setAttribute(
+      "aria-hidden",
+      "true"
+    );
+
+    propTrigger.classList.remove(
+      "listening",
+      "thinking"
+    );
+
   }
 
 
-  propButton.addEventListener(
-    "click",
-    openProp
-  );
+  function askSuggestion(text) {
+
+    propInput.value = text;
+
+    sendProp(
+      new Event("submit")
+    );
+
+  }
 
 
-  propClose.addEventListener(
-    "click",
-    closeProp
-  );
+  function sendProp(event) {
 
+    if (event) {
+      event.preventDefault();
+    }
 
-  function askProp() {
-
-    const question =
+    const text =
       propInput.value.trim();
 
-    if (!question) {
+    if (!text) {
       return;
     }
 
-
-    /*
-      THIS IS INTENTIONALLY NOT A FAKE AI RESPONSE.
-
-      In production this function should call something
-      similar to:
-
-      /api/prop
-
-      which then performs:
-
-      1. authenticated context check
-      2. permission check
-      3. Beloveeth database retrieval
-      4. calculated intelligence retrieval
-      5. approved external data lookup
-      6. AI interpretation
-      7. uncertainty/source classification
-    */
-
-
-    propMessage.innerHTML = `
-      <strong style="color:#541421;">
-        Prop received your question.
-      </strong>
-      <br><br>
-      "${escapeHtml(question)}"
-      <br><br>
-      The intelligence engine is not connected in this
-      frontend prototype yet. Production Prop will answer
-      from Beloveeth's verified data hierarchy rather than
-      inventing an answer.
-    `;
+    addPropMessage(
+      text,
+      "user"
+    );
 
     propInput.value = "";
+
+    propTrigger.classList.add(
+      "listening"
+    );
+
+    setTimeout(() => {
+
+      propTrigger.classList.remove(
+        "listening"
+      );
+
+      propTrigger.classList.add(
+        "thinking"
+      );
+
+    }, 500);
+
+
+    setTimeout(() => {
+
+      propTrigger.classList.remove(
+        "thinking"
+      );
+
+      addPropMessage(
+        generatePropResponse(text),
+        "ai"
+      );
+
+    }, 1100);
 
   }
 
 
-  propSend.addEventListener(
-    "click",
-    askProp
-  );
+  function addPropMessage(text, type) {
+
+    const message =
+      document.createElement("div");
+
+    message.className =
+      `prop-message ${type}`;
+
+    if (type === "ai") {
+
+      message.innerHTML =
+        `<small>Prop</small>${text}`;
+
+    } else {
+
+      message.textContent = text;
+
+    }
+
+    propMessages.appendChild(message);
+
+    propMessages.scrollTop =
+      propMessages.scrollHeight;
+
+  }
 
 
-  propInput.addEventListener(
+  function generatePropResponse(question) {
+
+    const q =
+      question.toLowerCase();
+
+
+    if (
+      q.includes("cement") ||
+      q.includes("steel") ||
+      q.includes("material")
+    ) {
+
+      return `
+        Construction materials are important signals to watch.
+        Changes in cement, steel, logistics and other inputs can
+        affect development budgets and ultimately influence the
+        economics behind new housing supply.
+        <br><br>
+        <span style="color:#71879b">
+        Production Prop will connect this interpretation to
+        verified Beloveeth data and dated external sources.
+        </span>
+      `;
+
+    }
+
+
+    if (
+      q.includes("yield") ||
+      q.includes("investment")
+    ) {
+
+      return `
+        Yield is only one part of the picture.
+        I would look at acquisition price, achievable rent,
+        vacancy assumptions, operating costs, location demand,
+        supply and comparable properties before interpreting
+        an investment scenario.
+      `;
+
+    }
+
+
+    if (
+      q.includes("market") ||
+      q.includes("price")
+    ) {
+
+      return `
+        The market view combines pricing, demand, supply and
+        development signals. On the current illustrative model,
+        the selected market is showing positive price momentum.
+        That's a scenario signal — not a guaranteed future price.
+      `;
+
+    }
+
+
+    if (
+      q.includes("property") ||
+      q.includes("buy")
+    ) {
+
+      return `
+        Start with the property itself, then widen the lens:
+        verification, location, comparable properties, pricing,
+        rental economics, infrastructure and the surrounding
+        supply picture.
+        <br><br>
+        I can eventually analyse those layers together.
+      `;
+
+    }
+
+
+    if (
+      q.includes("partner")
+    ) {
+
+      return `
+        Beloveeth is designed to connect developers,
+        property owners, professionals, investors and clients
+        through one operating ecosystem.
+      `;
+
+    }
+
+
+    return `
+      I can help interpret the property, market and investment
+      signals on this interface.
+      <br><br>
+      Try asking me about <b>price</b>, <b>yield</b>,
+      <b>construction costs</b>, <b>market demand</b>
+      or a specific location.
+    `;
+
+  }
+
+
+  /* =========================================================
+     INVESTMENT SCENARIO
+  ========================================================= */
+
+  function updateInvestment(value) {
+
+    value = Number(value);
+
+    const annual =
+      value * .087;
+
+    document.getElementById(
+      "investmentResult"
+    ).innerHTML = `
+      Illustrative annual rental income:
+      <strong style="color:#8fddff">
+        ₦${annual.toLocaleString("en-NG", {
+          maximumFractionDigits: 0
+        })}
+      </strong>
+    `;
+
+  }
+
+
+  /* =========================================================
+     LARGE PULSE CHART
+  ========================================================= */
+
+  const largeCanvas =
+    document.getElementById(
+      "pulseLargeChart"
+    );
+
+  if (largeCanvas) {
+
+    new Chart(
+      largeCanvas.getContext("2d"),
+      {
+
+        type: "line",
+
+        data: {
+
+          labels: [
+            "Apr",
+            "May",
+            "Jun",
+            "Jul",
+            "Aug",
+            "Sep"
+          ],
+
+          datasets: [{
+
+            label: "Market index",
+
+            data: [
+              100,
+              103,
+              108,
+              111,
+              117,
+              124
+            ],
+
+            borderColor: "#70cfff",
+            backgroundColor:
+              "rgba(70,170,255,.07)",
+
+            fill: true,
+
+            tension: .4,
+
+            pointRadius: 0,
+
+            borderWidth: 2
+
+          }]
+
+        },
+
+        options: {
+
+          responsive: true,
+          maintainAspectRatio: false,
+
+          plugins: {
+
+            legend: {
+              display: false
+            }
+
+          },
+
+          scales: {
+
+            x: {
+              grid: {
+                display: false
+              },
+              ticks: {
+                color: "#667386",
+                font: {
+                  family: "Manrope",
+                  size: 8
+                }
+              },
+              border: {
+                display: false
+              }
+            },
+
+            y: {
+
+              grid: {
+                color:
+                  "rgba(255,255,255,.045)"
+              },
+
+              ticks: {
+                color: "#667386",
+                font: {
+                  family: "Manrope",
+                  size: 8
+                }
+              },
+
+              border: {
+                display: false
+              }
+
+            }
+
+          }
+
+        }
+
+      }
+
+    );
+
+  }
+
+
+  /* =========================================================
+     ESCAPE / OUTSIDE PROP
+  ========================================================= */
+
+  document.addEventListener(
     "keydown",
-    function(event) {
+    event => {
 
-      if (event.key === "Enter") {
-        askProp();
+      if (
+        event.key === "Escape" &&
+        propPanel.classList.contains("open")
+      ) {
+
+        closeProp();
+
       }
 
     }
   );
 
 
-  function escapeHtml(value) {
+  document.addEventListener(
+    "click",
+    event => {
 
-    const div =
-      document.createElement("div");
+      if (
+        propPanel.classList.contains("open") &&
+        !propPanel.contains(event.target) &&
+        !propTrigger.contains(event.target)
+      ) {
 
-    div.textContent = value;
+        closeProp();
 
-    return div.innerHTML;
+      }
 
-  }
-
-
-  /* =========================================================
-     PERIOD BUTTONS
-  ========================================================= */
-
-  document
-    .querySelectorAll(".period-tabs button")
-    .forEach(button => {
-
-      button.addEventListener(
-        "click",
-        function() {
-
-          document
-            .querySelectorAll(".period-tabs button")
-            .forEach(btn =>
-              btn.classList.remove("active")
-            );
-
-          this.classList.add("active");
-
-          /*
-            Later this will request the corresponding
-            historical range from the market intelligence API.
-          */
-
-        }
-      );
-
-    });
-
-
-  /* =========================================================
-     FUTURE DATA ARCHITECTURE
-     ---------------------------------------------------------
-
-     The UI should eventually receive objects resembling:
-
-     {
-       source: "beloveeth",
-       type: "market_index",
-       location: "Lagos",
-       period: "2026-Q3",
-       value: 123.4,
-       confidence: 0.91,
-       updatedAt: "...",
-       methodology: "..."
-     }
-
-     rather than hard-coded values in HTML.
-
-  ========================================================= */
+    }
+  );
 
 </script>
 
 </body>
 </html>
-```
