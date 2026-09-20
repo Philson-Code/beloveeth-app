@@ -14,11 +14,6 @@
 
 <style>
 
-/* =========================================================
-   BELOVEETH CLIENT PLATFORM
-   PropTech Intelligence Interface
-   ========================================================= */
-
 :root {
     --maroon: #4A101D;
     --maroon-2: #671A2C;
@@ -45,11 +40,8 @@
 
     --border: rgba(18,19,26,.08);
 
-    --shadow:
-        0 20px 50px rgba(31, 18, 22, .07);
-
-    --shadow-small:
-        0 8px 25px rgba(31,18,22,.06);
+    --shadow: 0 20px 50px rgba(31, 18, 22, .07);
+    --shadow-small: 0 8px 25px rgba(31,18,22,.06);
 
     --radius-xl: 26px;
     --radius-lg: 20px;
@@ -58,2029 +50,532 @@
     --sidebar-width: 250px;
 }
 
-* {
-    box-sizing: border-box;
-    margin: 0;
-    padding: 0;
-}
-
-html {
-    scroll-behavior: smooth;
-}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
 
 body {
     font-family: Inter, sans-serif;
     background:
-        radial-gradient(
-            circle at 75% 10%,
-            rgba(103,26,44,.07),
-            transparent 30%
-        ),
+        radial-gradient(circle at 75% 10%, rgba(103,26,44,.07), transparent 30%),
         var(--bg);
-
     color: var(--ink);
     min-height: 100vh;
     overflow-x: hidden;
 }
 
-button,
-input {
-    font-family: inherit;
-}
+button, input { font-family: inherit; }
+button { cursor: pointer; border: none; }
 
-button {
-    cursor: pointer;
-    border: none;
-}
+.app { display: flex; min-height: 100vh; }
 
-/* =========================================================
-   APP SHELL
-   ========================================================= */
-
-.app {
-    display: flex;
-    min-height: 100vh;
-}
-
-/* =========================================================
-   SIDEBAR
-   ========================================================= */
+/* ---------- SIDEBAR ---------- */
 
 .sidebar {
     width: var(--sidebar-width);
-    background:
-        linear-gradient(
-            180deg,
-            #3A0B16,
-            #4A101D 65%,
-            #340912
-        );
-
+    background: linear-gradient(180deg, #3A0B16, #4A101D 65%, #340912);
     color: white;
     position: fixed;
     inset: 0 auto 0 0;
     z-index: 100;
-
     padding: 24px 15px;
-
     display: flex;
     flex-direction: column;
-
     box-shadow: 10px 0 40px rgba(45,8,17,.12);
+    overflow-y: auto;
 }
 
-.brand {
-    display: flex;
-    align-items: center;
-    gap: 11px;
-
-    padding: 5px 10px 28px;
-}
+.brand { display: flex; align-items: center; gap: 11px; padding: 5px 10px 28px; }
 
 .brand-mark {
-    width: 38px;
-    height: 38px;
-
-    border-radius: 12px;
-
-    background:
-        linear-gradient(
-            135deg,
-            #fff,
-            #D4AF37
-        );
-
+    width: 38px; height: 38px; border-radius: 12px;
+    background: linear-gradient(135deg, #fff, #D4AF37);
     color: var(--maroon);
-
-    display: grid;
-    place-items: center;
-
-    font-family: "Playfair Display", serif;
-    font-weight: 700;
+    display: grid; place-items: center;
+    font-family: "Playfair Display", serif; font-weight: 700;
 }
 
-.brand-text strong {
-    display: block;
-    font-size: 14px;
-}
+.brand-text strong { display: block; font-size: 14px; }
+.brand-text span { font-size: 9px; opacity: .6; letter-spacing: .13em; }
 
-.brand-text span {
-    font-size: 9px;
-    opacity: .6;
-    letter-spacing: .13em;
-}
+.nav-section { margin: 14px 7px 8px; font-size: 9px; text-transform: uppercase; letter-spacing: .14em; opacity: .45; }
+.nav-section:first-of-type { margin-top: 10px; }
 
-.nav-section {
-    margin: 10px 7px 8px;
-
-    font-size: 9px;
-    text-transform: uppercase;
-    letter-spacing: .14em;
-
-    opacity: .45;
-}
-
-.nav {
-    display: flex;
-    flex-direction: column;
-    gap: 5px;
-}
+.nav { display: flex; flex-direction: column; gap: 5px; }
 
 .nav button {
-    width: 100%;
-
-    display: flex;
-    align-items: center;
-    gap: 12px;
-
-    color: rgba(255,255,255,.68);
-
-    background: transparent;
-
-    padding: 11px 12px;
-
-    border-radius: 12px;
-
-    text-align: left;
-
-    transition:
-        .25s ease;
+    width: 100%; display: flex; align-items: center; gap: 12px;
+    color: rgba(255,255,255,.68); background: transparent;
+    padding: 11px 12px; border-radius: 12px; text-align: left;
+    transition: .25s ease; font-size: 12.5px;
 }
 
-.nav button:hover {
-    color: white;
-    background: rgba(255,255,255,.07);
-    transform: translateX(2px);
-}
+.nav button:hover { color: white; background: rgba(255,255,255,.07); transform: translateX(2px); }
 
 .nav button.active {
     color: white;
-
-    background:
-        linear-gradient(
-            90deg,
-            rgba(255,255,255,.14),
-            rgba(255,255,255,.05)
-        );
-
-    box-shadow:
-        inset 3px 0 0 var(--gold);
+    background: linear-gradient(90deg, rgba(255,255,255,.14), rgba(255,255,255,.05));
+    box-shadow: inset 3px 0 0 var(--gold);
 }
 
-.nav-icon {
-    width: 18px;
-    text-align: center;
-    opacity: .9;
-}
+.nav-icon { width: 18px; text-align: center; opacity: .9; }
 
-.sidebar-bottom {
-    margin-top: auto;
-}
+.sidebar-bottom { margin-top: auto; padding-top: 12px; }
 
 .prop-sidebar-card {
-    position: relative;
-
-    padding: 15px;
-
-    border-radius: 18px;
-
-    background:
-        linear-gradient(
-            135deg,
-            rgba(255,255,255,.13),
-            rgba(255,255,255,.04)
-        );
-
+    position: relative; padding: 15px; border-radius: 18px;
+    background: linear-gradient(135deg, rgba(255,255,255,.13), rgba(255,255,255,.04));
     border: 1px solid rgba(255,255,255,.08);
-
     overflow: hidden;
 }
 
 .prop-sidebar-card::before {
-    content: "";
-
-    position: absolute;
-
-    width: 80px;
-    height: 80px;
-
-    background: var(--gold);
-
-    filter: blur(50px);
-
-    opacity: .25;
-
-    right: -20px;
-    bottom: -20px;
+    content: ""; position: absolute; width: 80px; height: 80px;
+    background: var(--gold); filter: blur(50px); opacity: .25;
+    right: -20px; bottom: -20px;
 }
 
-.prop-mini {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-}
+.prop-mini { display: flex; align-items: center; gap: 10px; }
 
 .prop-orb-small {
-    width: 34px;
-    height: 34px;
-
-    border-radius: 50%;
-
-    background:
-        radial-gradient(
-            circle at 35% 30%,
-            white,
-            #D4AF37 35%,
-            #6B1A2C 75%
-        );
-
-    box-shadow:
-        0 0 20px rgba(212,175,55,.35);
+    width: 34px; height: 34px; border-radius: 50%;
+    background: radial-gradient(circle at 35% 30%, white, #D4AF37 35%, #6B1A2C 75%);
+    box-shadow: 0 0 20px rgba(212,175,55,.35);
 }
 
-.prop-sidebar-card strong {
-    font-size: 12px;
-}
+.prop-sidebar-card strong { font-size: 12px; }
+.prop-sidebar-card p { font-size: 9px; opacity: .6; margin-top: 2px; }
 
-.prop-sidebar-card p {
-    font-size: 9px;
-    opacity: .6;
-    margin-top: 2px;
-}
+/* ---------- MAIN ---------- */
 
-/* =========================================================
-   MAIN
-   ========================================================= */
-
-.main {
-    margin-left: var(--sidebar-width);
-    width: calc(100% - var(--sidebar-width));
-}
-
-/* =========================================================
-   HEADER
-   ========================================================= */
+.main { margin-left: var(--sidebar-width); width: calc(100% - var(--sidebar-width)); }
 
 .header {
-    height: 76px;
-
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-
-    padding: 0 32px;
-
-    border-bottom: 1px solid var(--border);
-
-    background:
-        rgba(255,255,255,.72);
-
-    backdrop-filter:
-        blur(20px);
-
-    position: sticky;
-    top: 0;
-    z-index: 50;
+    height: 76px; display: flex; align-items: center; justify-content: space-between;
+    padding: 0 32px; border-bottom: 1px solid var(--border);
+    background: rgba(255,255,255,.72); backdrop-filter: blur(20px);
+    position: sticky; top: 0; z-index: 50;
 }
 
 .search {
-    width: min(430px, 40vw);
-
-    display: flex;
-    align-items: center;
-    gap: 10px;
-
-    background: rgba(255,255,255,.8);
-
-    border: 1px solid var(--border);
-
-    border-radius: 13px;
-
-    padding: 10px 13px;
+    width: min(430px, 40vw); display: flex; align-items: center; gap: 10px;
+    background: rgba(255,255,255,.8); border: 1px solid var(--border);
+    border-radius: 13px; padding: 10px 13px;
 }
 
-.search span {
-    opacity: .45;
-}
+.search span { opacity: .45; }
+.search input { border: none; outline: none; background: transparent; width: 100%; font-size: 12px; }
 
-.search input {
-    border: none;
-    outline: none;
-    background: transparent;
-
-    width: 100%;
-
-    font-size: 12px;
-}
-
-.header-actions {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-}
+.header-actions { display: flex; align-items: center; gap: 12px; }
 
 .icon-btn {
-    width: 38px;
-    height: 38px;
-
-    border-radius: 11px;
-
-    background: white;
-
-    border: 1px solid var(--border);
-
-    position: relative;
-
-    transition: .2s;
+    width: 38px; height: 38px; border-radius: 11px; background: white;
+    border: 1px solid var(--border); position: relative; transition: .2s;
 }
 
-.icon-btn:hover {
-    transform: translateY(-2px);
-    box-shadow: var(--shadow-small);
-}
+.icon-btn:hover { transform: translateY(-2px); box-shadow: var(--shadow-small); }
 
 .notification-dot {
-    width: 7px;
-    height: 7px;
-
-    border-radius: 50%;
-
-    background: var(--red);
-
-    position: absolute;
-
-    right: 8px;
-    top: 7px;
+    width: 7px; height: 7px; border-radius: 50%; background: var(--red);
+    position: absolute; right: 8px; top: 7px;
 }
 
-.profile-trigger {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-
-    padding: 5px 7px;
-
-    background: transparent;
-}
+.profile-trigger { display: flex; align-items: center; gap: 10px; padding: 5px 7px; background: transparent; }
 
 .avatar {
-    width: 36px;
-    height: 36px;
-
-    border-radius: 50%;
-
-    background:
-        linear-gradient(
-            135deg,
-            var(--maroon),
-            var(--maroon-3)
-        );
-
-    color: white;
-
-    display: grid;
-    place-items: center;
-
-    font-size: 12px;
-    font-weight: 700;
+    width: 36px; height: 36px; border-radius: 50%;
+    background: linear-gradient(135deg, var(--maroon), var(--maroon-3));
+    color: white; display: grid; place-items: center; font-size: 12px; font-weight: 700;
 }
 
-.profile-trigger span {
-    text-align: left;
-}
+.profile-trigger span { text-align: left; }
+.profile-trigger strong { display: block; font-size: 11px; }
+.profile-trigger small { font-size: 9px; color: var(--muted); }
 
-.profile-trigger strong {
-    display: block;
-    font-size: 11px;
-}
+/* ---------- CONTENT ---------- */
 
-.profile-trigger small {
-    font-size: 9px;
-    color: var(--muted);
-}
+.content { padding: 30px; max-width: 1600px; margin: auto; }
 
-/* =========================================================
-   CONTENT
-   ========================================================= */
+.view { display: none; animation: viewIn .35s ease; }
+.view.active { display: block; }
 
-.content {
-    padding: 30px;
-    max-width: 1600px;
-    margin: auto;
-}
+@keyframes viewIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
 
-.view {
-    display: none;
-    animation: viewIn .35s ease;
-}
+.welcome { display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 25px; }
 
-.view.active {
-    display: block;
-}
+.eyebrow { font-size: 10px; text-transform: uppercase; letter-spacing: .15em; color: var(--maroon); font-weight: 700; margin-bottom: 7px; }
 
-@keyframes viewIn {
-    from {
-        opacity: 0;
-        transform: translateY(8px);
-    }
+.welcome h1 { font-family: "Playfair Display", serif; font-size: clamp(28px, 3vw, 42px); letter-spacing: -.03em; }
+.welcome p { margin-top: 5px; font-size: 12px; color: var(--muted); }
 
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
+.status-pill { padding: 8px 12px; background: var(--green-soft); color: var(--green); border-radius: 999px; font-size: 10px; font-weight: 700; }
 
-/* =========================================================
-   WELCOME
-   ========================================================= */
+/* ---------- STATS ---------- */
 
-.welcome {
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-end;
-
-    margin-bottom: 25px;
-}
-
-.eyebrow {
-    font-size: 10px;
-    text-transform: uppercase;
-    letter-spacing: .15em;
-
-    color: var(--maroon);
-
-    font-weight: 700;
-
-    margin-bottom: 7px;
-}
-
-.welcome h1 {
-    font-family: "Playfair Display", serif;
-
-    font-size: clamp(28px, 3vw, 42px);
-
-    letter-spacing: -.03em;
-}
-
-.welcome p {
-    margin-top: 5px;
-
-    font-size: 12px;
-    color: var(--muted);
-}
-
-.status-pill {
-    padding: 8px 12px;
-
-    background: var(--green-soft);
-
-    color: var(--green);
-
-    border-radius: 999px;
-
-    font-size: 10px;
-    font-weight: 700;
-}
-
-/* =========================================================
-   INTELLIGENCE STRIP
-   ========================================================= */
-
-.intelligence-strip {
-    display: grid;
-
-    grid-template-columns:
-        repeat(4, 1fr);
-
-    gap: 13px;
-
-    margin-bottom: 18px;
-}
+.intelligence-strip { display: grid; grid-template-columns: repeat(4, 1fr); gap: 13px; margin-bottom: 18px; }
 
 .stat-card {
-    background: var(--card);
-
-    backdrop-filter: blur(18px);
-
-    border: 1px solid var(--border);
-
-    border-radius: var(--radius-lg);
-
-    padding: 17px;
-
-    position: relative;
-
-    overflow: hidden;
-
-    transition:
-        transform .25s,
-        box-shadow .25s;
+    background: var(--card); backdrop-filter: blur(18px); border: 1px solid var(--border);
+    border-radius: var(--radius-lg); padding: 17px; position: relative; overflow: hidden;
+    transition: transform .25s, box-shadow .25s;
 }
 
-.stat-card:hover {
-    transform: translateY(-4px);
+.stat-card:hover { transform: translateY(-4px); box-shadow: var(--shadow); }
 
-    box-shadow: var(--shadow);
-}
+.stat-top { display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; }
+.stat-label { font-size: 10px; color: var(--muted); }
+.stat-icon { width: 29px; height: 29px; border-radius: 9px; display: grid; place-items: center; background: var(--blue-soft); }
+.stat-value { font-size: 24px; font-weight: 700; letter-spacing: -.04em; }
+.stat-change { font-size: 9px; margin-top: 5px; }
 
-.stat-top {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+.up { color: var(--green); }
+.down { color: var(--red); }
+.neutral { color: var(--muted); }
 
-    margin-bottom: 12px;
-}
+/* ---------- GRID / CARD ---------- */
 
-.stat-label {
-    font-size: 10px;
-    color: var(--muted);
-}
-
-.stat-icon {
-    width: 29px;
-    height: 29px;
-
-    border-radius: 9px;
-
-    display: grid;
-    place-items: center;
-
-    background: var(--blue-soft);
-}
-
-.stat-value {
-    font-size: 24px;
-    font-weight: 700;
-    letter-spacing: -.04em;
-}
-
-.stat-change {
-    font-size: 9px;
-    margin-top: 5px;
-}
-
-.up {
-    color: var(--green);
-}
-
-.down {
-    color: var(--red);
-}
-
-.neutral {
-    color: var(--muted);
-}
-
-/* =========================================================
-   DASHBOARD GRID
-   ========================================================= */
-
-.dashboard-grid {
-    display: grid;
-
-    grid-template-columns:
-        minmax(0, 1.65fr)
-        minmax(300px, .85fr);
-
-    gap: 18px;
-}
+.dashboard-grid { display: grid; grid-template-columns: minmax(0, 1.65fr) minmax(300px, .85fr); gap: 18px; }
 
 .card {
-    background:
-        rgba(255,255,255,.82);
-
-    backdrop-filter:
-        blur(18px);
-
-    border:
-        1px solid var(--border);
-
-    border-radius:
-        var(--radius-xl);
-
-    box-shadow:
-        var(--shadow-small);
-
-    overflow: hidden;
+    background: rgba(255,255,255,.82); backdrop-filter: blur(18px);
+    border: 1px solid var(--border); border-radius: var(--radius-xl);
+    box-shadow: var(--shadow-small); overflow: hidden;
 }
 
-.card-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+.card-header { display: flex; justify-content: space-between; align-items: center; padding: 20px 21px 0; }
+.card-title { font-size: 13px; font-weight: 700; }
+.card-subtitle { font-size: 9px; color: var(--muted); margin-top: 3px; }
 
-    padding: 20px 21px 0;
-}
+.text-btn { background: transparent; color: var(--maroon); font-size: 10px; font-weight: 700; }
+.text-btn:hover { text-decoration: underline; }
 
-.card-title {
-    font-size: 13px;
-    font-weight: 700;
-}
+.market-card { padding-bottom: 14px; }
+.market-toolbar { display: flex; gap: 7px; align-items: center; }
+.market-select { background: #F7F6F5; border: 1px solid var(--border); border-radius: 9px; padding: 7px 9px; font-size: 9px; }
 
-.card-subtitle {
-    font-size: 9px;
-    color: var(--muted);
-    margin-top: 3px;
-}
-
-.text-btn {
-    background: transparent;
-
-    color: var(--maroon);
-
-    font-size: 10px;
-    font-weight: 700;
-}
-
-.text-btn:hover {
-    text-decoration: underline;
-}
-
-/* =========================================================
-   MARKET INTELLIGENCE
-   ========================================================= */
-
-.market-card {
-    padding-bottom: 14px;
-}
-
-.market-toolbar {
-    display: flex;
-    gap: 7px;
-    align-items: center;
-}
-
-.market-select {
-    background: #F7F6F5;
-
-    border: 1px solid var(--border);
-
-    border-radius: 9px;
-
-    padding: 7px 9px;
-
-    font-size: 9px;
-}
-
-.chart-container {
-    height: 300px;
-
-    padding: 12px 18px 8px;
-}
+.chart-container { height: 300px; padding: 12px 18px 8px; }
 
 .signal {
-    margin: 0 20px 8px;
-
-    padding: 14px 15px;
-
-    border-radius: 15px;
-
-    background:
-        linear-gradient(
-            110deg,
-            #FFF8E3,
-            #FFFDF6
-        );
-
-    border: 1px solid rgba(212,175,55,.25);
-
-    position: relative;
-
-    overflow: hidden;
+    margin: 0 20px 8px; padding: 14px 15px; border-radius: 15px;
+    background: linear-gradient(110deg, #FFF8E3, #FFFDF6);
+    border: 1px solid rgba(212,175,55,.25); position: relative; overflow: hidden;
 }
 
 .signal::after {
-    content: "";
-
-    position: absolute;
-
-    width: 100px;
-    height: 100px;
-
-    border-radius: 50%;
-
-    background: var(--gold);
-
-    filter: blur(50px);
-
-    opacity: .13;
-
-    right: -40px;
-    top: -50px;
+    content: ""; position: absolute; width: 100px; height: 100px; border-radius: 50%;
+    background: var(--gold); filter: blur(50px); opacity: .13; right: -40px; top: -50px;
 }
 
-.signal-label {
-    display: flex;
-    align-items: center;
-    gap: 7px;
+.signal-label { display: flex; align-items: center; gap: 7px; font-size: 9px; color: #846A08; font-weight: 700; text-transform: uppercase; letter-spacing: .1em; }
+.signal-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--gold); }
+.signal strong { display: block; font-size: 12px; margin: 7px 0 4px; }
+.signal p { font-size: 10px; line-height: 1.6; color: #6D6250; max-width: 720px; }
 
-    font-size: 9px;
-
-    color: #846A08;
-
-    font-weight: 700;
-
-    text-transform: uppercase;
-    letter-spacing: .1em;
-}
-
-.signal-dot {
-    width: 6px;
-    height: 6px;
-
-    border-radius: 50%;
-
-    background: var(--gold);
-}
-
-.signal strong {
-    display: block;
-
-    font-size: 12px;
-
-    margin: 7px 0 4px;
-}
-
-.signal p {
-    font-size: 10px;
-
-    line-height: 1.6;
-
-    color: #6D6250;
-
-    max-width: 720px;
-}
-
-/* =========================================================
-   LOCATION PULSE
-   ========================================================= */
-
-.location-card {
-    padding-bottom: 10px;
-}
-
-.location-list {
-    padding: 14px 20px 20px;
-}
+.location-card { padding-bottom: 10px; }
+.location-list { padding: 14px 20px 20px; }
 
 .location-row {
-    display: grid;
-
-    grid-template-columns:
-        1.3fr
-        .7fr
-        .7fr
-        auto;
-
-    align-items: center;
-
-    gap: 10px;
-
-    padding: 13px 0;
-
-    border-bottom: 1px solid var(--border);
-
-    font-size: 10px;
+    display: grid; grid-template-columns: 1.3fr .7fr .7fr auto;
+    align-items: center; gap: 10px; padding: 13px 0;
+    border-bottom: 1px solid var(--border); font-size: 10px;
 }
 
-.location-row:last-child {
-    border-bottom: none;
-}
+.location-row:last-child { border-bottom: none; }
+.location-name { font-weight: 700; }
+.location-price { color: var(--muted); }
+.location-trend { font-weight: 700; }
+.spark { width: 50px; height: 18px; position: relative; }
+.spark svg { width: 100%; height: 100%; }
 
-.location-name {
-    font-weight: 700;
-}
+.section { margin-top: 18px; }
 
-.location-price {
-    color: var(--muted);
-}
+.property-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; padding: 15px 20px 20px; }
 
-.location-trend {
-    font-weight: 700;
-}
+.property { border: 1px solid var(--border); border-radius: 17px; overflow: hidden; background: white; transition: .3s; }
+.property:hover { transform: translateY(-5px); box-shadow: 0 18px 35px rgba(45,8,17,.08); }
 
-.spark {
-    width: 50px;
-    height: 18px;
-
-    position: relative;
-}
-
-.spark svg {
-    width: 100%;
-    height: 100%;
-}
-
-/* =========================================================
-   PROPERTIES
-   ========================================================= */
-
-.section {
-    margin-top: 18px;
-}
-
-.property-grid {
-    display: grid;
-
-    grid-template-columns:
-        repeat(3, 1fr);
-
-    gap: 14px;
-
-    padding: 15px 20px 20px;
-}
-
-.property {
-    border:
-        1px solid var(--border);
-
-    border-radius:
-        17px;
-
-    overflow: hidden;
-
-    background: white;
-
-    transition:
-        .3s;
-}
-
-.property:hover {
-    transform: translateY(-5px);
-
-    box-shadow:
-        0 18px 35px rgba(45,8,17,.08);
-}
-
-.property-image {
-    height: 150px;
-
-    background:
-        linear-gradient(
-            135deg,
-            #632235,
-            #B77980
-        );
-
-    position: relative;
-}
+.property-image { height: 150px; background: linear-gradient(135deg, #632235, #B77980); position: relative; }
 
 .property-image::after {
-    content: "BELoveeth • VERIFIED";
-
-    position: absolute;
-
-    top: 10px;
-    left: 10px;
-
-    background:
-        rgba(255,255,255,.9);
-
-    color: var(--maroon);
-
-    padding: 5px 7px;
-
-    border-radius: 7px;
-
-    font-size: 7px;
-
-    font-weight: 800;
-
-    letter-spacing: .06em;
+    content: "BELOVEETH • VERIFIED"; position: absolute; top: 10px; left: 10px;
+    background: rgba(255,255,255,.9); color: var(--maroon); padding: 5px 7px;
+    border-radius: 7px; font-size: 7px; font-weight: 800; letter-spacing: .06em;
 }
 
-.property-body {
-    padding: 13px;
-}
+.property-image.owned::after { content: "BELOVEETH • OWNED"; }
 
-.property-location {
-    font-size: 8px;
+.property-body { padding: 13px; }
+.property-location { font-size: 8px; color: var(--muted); margin-bottom: 5px; }
+.property-title { font-size: 12px; font-weight: 700; margin-bottom: 7px; }
+.property-price { font-size: 16px; font-weight: 700; }
+.property-meta { display: flex; gap: 9px; margin-top: 7px; color: var(--muted); font-size: 8px; flex-wrap: wrap; }
+.property-intelligence { display: flex; gap: 5px; flex-wrap: wrap; margin-top: 10px; }
 
-    color: var(--muted);
+.tag { padding: 5px 7px; border-radius: 7px; background: var(--bg); font-size: 7px; color: var(--muted); }
+.tag.green { background: var(--green-soft); color: var(--green); }
+.tag.gold { background: var(--gold-soft); color: #846A08; }
+.tag.red { background: var(--red-soft); color: var(--red); }
 
-    margin-bottom: 5px;
-}
+.property-actions { display: flex; gap: 7px; margin-top: 12px; }
+.property-actions button { flex: 1; padding: 8px; border-radius: 9px; font-size: 8px; font-weight: 700; }
+.view-btn { background: var(--maroon); color: white; }
+.save-btn { background: var(--bg); color: var(--maroon); }
 
-.property-title {
-    font-size: 12px;
+.right-stack { display: flex; flex-direction: column; gap: 18px; }
 
-    font-weight: 700;
-
-    margin-bottom: 7px;
-}
-
-.property-price {
-    font-size: 16px;
-
-    font-weight: 700;
-}
-
-.property-meta {
-    display: flex;
-    gap: 9px;
-
-    margin-top: 7px;
-
-    color: var(--muted);
-
-    font-size: 8px;
-}
-
-.property-intelligence {
-    display: flex;
-
-    gap: 5px;
-
-    flex-wrap: wrap;
-
-    margin-top: 10px;
-}
-
-.tag {
-    padding: 5px 7px;
-
-    border-radius: 7px;
-
-    background: var(--bg);
-
-    font-size: 7px;
-
-    color: var(--muted);
-}
-
-.tag.green {
-    background: var(--green-soft);
-    color: var(--green);
-}
-
-.property-actions {
-    display: flex;
-
-    gap: 7px;
-
-    margin-top: 12px;
-}
-
-.property-actions button {
-    flex: 1;
-
-    padding: 8px;
-
-    border-radius: 9px;
-
-    font-size: 8px;
-
-    font-weight: 700;
-}
-
-.view-btn {
-    background: var(--maroon);
-    color: white;
-}
-
-.save-btn {
-    background: var(--bg);
-    color: var(--maroon);
-}
-
-/* =========================================================
-   RIGHT COLUMN
-   ========================================================= */
-
-.right-stack {
-    display: flex;
-    flex-direction: column;
-    gap: 18px;
-}
-
-.journey {
-    padding-bottom: 18px;
-}
-
-.journey-list {
-    padding: 17px 20px;
-}
-
-.journey-item {
-    display: flex;
-    gap: 11px;
-
-    position: relative;
-
-    padding-bottom: 18px;
-}
+.journey { padding-bottom: 18px; }
+.journey-list { padding: 17px 20px; }
+.journey-item { display: flex; gap: 11px; position: relative; padding-bottom: 18px; }
 
 .journey-item:not(:last-child)::after {
-    content: "";
-
-    position: absolute;
-
-    left: 10px;
-    top: 23px;
-    bottom: 0;
-
-    width: 1px;
-
-    background:
-        var(--border);
+    content: ""; position: absolute; left: 10px; top: 23px; bottom: 0; width: 1px; background: var(--border);
 }
 
 .journey-dot {
-    width: 21px;
-    height: 21px;
-
-    flex-shrink: 0;
-
-    border-radius: 50%;
-
-    display: grid;
-    place-items: center;
-
-    font-size: 8px;
-
-    background: var(--bg);
-
-    border: 1px solid var(--border);
-
-    z-index: 1;
+    width: 21px; height: 21px; flex-shrink: 0; border-radius: 50%; display: grid; place-items: center;
+    font-size: 8px; background: var(--bg); border: 1px solid var(--border); z-index: 1;
 }
 
-.journey-dot.complete {
-    background: var(--green-soft);
-    color: var(--green);
+.journey-dot.complete { background: var(--green-soft); color: var(--green); border-color: rgba(22,163,106,.15); }
+.journey-dot.current { background: var(--maroon); color: white; box-shadow: 0 0 0 5px rgba(74,16,29,.08); }
 
-    border-color:
-        rgba(22,163,106,.15);
-}
+.journey-item strong { font-size: 10px; }
+.journey-item p { font-size: 8px; color: var(--muted); margin-top: 3px; }
 
-.journey-dot.current {
-    background: var(--maroon);
-    color: white;
-
-    box-shadow:
-        0 0 0 5px rgba(74,16,29,.08);
-}
-
-.journey-item strong {
-    font-size: 10px;
-}
-
-.journey-item p {
-    font-size: 8px;
-    color: var(--muted);
-    margin-top: 3px;
-}
-
-/* =========================================================
-   VIEWING
-   ========================================================= */
-
-.viewing {
-    padding-bottom: 20px;
-}
-
-.viewing-body {
-    padding: 17px 20px;
-}
-
-.viewing-date {
-    display: flex;
-    gap: 12px;
-    align-items: center;
-}
+.viewing { padding-bottom: 20px; }
+.viewing-body { padding: 17px 20px; }
+.viewing-date { display: flex; gap: 12px; align-items: center; }
 
 .date-box {
-    width: 48px;
-    height: 52px;
-
-    border-radius: 13px;
-
-    background:
-        var(--maroon);
-
-    color: white;
-
-    display: grid;
-    place-items: center;
-
-    text-align: center;
+    width: 48px; height: 52px; border-radius: 13px; background: var(--maroon); color: white;
+    display: grid; place-items: center; text-align: center;
 }
 
-.date-box strong {
-    font-size: 16px;
+.date-box strong { font-size: 16px; }
+.date-box small { font-size: 7px; opacity: .7; }
+.viewing-body strong { font-size: 11px; }
+.viewing-body p { font-size: 9px; color: var(--muted); margin-top: 3px; }
+
+.book-btn { width: 100%; margin-top: 15px; padding: 10px; border-radius: 10px; background: var(--bg); color: var(--maroon); font-size: 9px; font-weight: 700; }
+
+.news { padding-bottom: 15px; }
+.news-list { padding: 14px 20px; }
+.news-item { padding: 11px 0; border-bottom: 1px solid var(--border); }
+.news-item:last-child { border-bottom: none; }
+.news-source { color: var(--maroon); font-size: 7px; font-weight: 800; text-transform: uppercase; letter-spacing: .1em; }
+.news-item strong { display: block; font-size: 10px; line-height: 1.4; margin-top: 4px; }
+.news-item p { font-size: 8px; color: var(--muted); margin-top: 3px; }
+
+/* ---------- FUNDS ---------- */
+
+.funds-hero {
+    background: linear-gradient(130deg, #3A0B16, #6B1A2C); border-radius: 20px; color: white;
+    padding: 25px; position: relative; overflow: hidden;
 }
 
-.date-box small {
-    font-size: 7px;
-    opacity: .7;
+.funds-hero::before {
+    content: ""; position: absolute; width: 190px; height: 190px; border-radius: 50%;
+    background: var(--gold); opacity: .12; filter: blur(40px); right: -60px; top: -60px;
 }
 
-.viewing-body strong {
-    font-size: 11px;
+.funds-balance-row { display: flex; gap: 24px; flex-wrap: wrap; position: relative; margin-top: 16px; }
+.funds-balance-row div strong { display: block; font-family: "Playfair Display", serif; font-size: 26px; }
+.funds-balance-row div span { display: block; margin-top: 4px; font-size: 9px; opacity: .65; text-transform: uppercase; letter-spacing: .08em; }
+
+.funds-actions { display: flex; gap: 10px; margin-top: 20px; position: relative; }
+.funds-actions button { padding: 11px 15px; border-radius: 10px; font-size: 9px; font-weight: 700; }
+.funds-actions .primary-fund { background: white; color: var(--maroon); }
+.funds-actions .secondary-fund { background: rgba(255,255,255,.12); color: white; border: 1px solid rgba(255,255,255,.25); }
+
+.funds-disclaimer {
+    margin-top: 20px; padding: 12px 14px; border-radius: 12px;
+    background: #FFF8E3; border: 1px solid rgba(212,175,55,.3);
+    font-size: 9px; color: #6D6250; line-height: 1.6;
 }
 
-.viewing-body p {
-    font-size: 9px;
-    color: var(--muted);
-    margin-top: 3px;
+/* ---------- PROTECTION ---------- */
+
+.protection-explainer { padding: 18px 20px; }
+.protection-explainer p { font-size: 10px; color: var(--muted); line-height: 1.7; max-width: 640px; }
+
+/* ---------- SUPPORT ---------- */
+
+.support-form { display: grid; gap: 10px; padding: 18px 20px; max-width: 520px; }
+.support-form label { font-size: 9px; font-weight: 700; color: var(--muted); }
+.support-form input, .support-form textarea {
+    padding: 11px 12px; border-radius: 10px; border: 1px solid var(--border); font-size: 10.5px; outline: none;
+}
+.support-form textarea { min-height: 90px; resize: vertical; }
+.support-form button {
+    justify-self: start; margin-top: 4px; padding: 10px 16px; border-radius: 10px;
+    background: var(--maroon); color: white; font-size: 9px; font-weight: 700;
 }
 
-.book-btn {
-    width: 100%;
-
-    margin-top: 15px;
-
-    padding: 10px;
-
-    border-radius: 10px;
-
-    background: var(--bg);
-
-    color: var(--maroon);
-
-    font-size: 9px;
-
-    font-weight: 700;
-}
-
-/* =========================================================
-   NEWS
-   ========================================================= */
-
-.news {
-    padding-bottom: 15px;
-}
-
-.news-list {
-    padding: 14px 20px;
-}
-
-.news-item {
-    padding: 11px 0;
-
-    border-bottom:
-        1px solid var(--border);
-}
-
-.news-item:last-child {
-    border-bottom: none;
-}
-
-.news-source {
-    color: var(--maroon);
-
-    font-size: 7px;
-
-    font-weight: 800;
-
-    text-transform: uppercase;
-
-    letter-spacing: .1em;
-}
-
-.news-item strong {
-    display: block;
-
-    font-size: 10px;
-
-    line-height: 1.4;
-
-    margin-top: 4px;
-}
-
-.news-item p {
-    font-size: 8px;
-
-    color: var(--muted);
-
-    margin-top: 3px;
-}
-
-/* =========================================================
-   PROP FLOATING CONTROL
-   ========================================================= */
+/* ---------- PROP FLOATING CONTROL ---------- */
 
 .prop-floating {
-    position: fixed;
-
-    right: 27px;
-    bottom: 25px;
-
-    z-index: 120;
-
-    display: flex;
-    align-items: center;
-    gap: 9px;
-
-    padding: 7px 13px 7px 7px;
-
-    border-radius: 999px;
-
-    background:
-        rgba(255,255,255,.88);
-
-    backdrop-filter:
-        blur(20px);
-
-    border:
-        1px solid rgba(74,16,29,.13);
-
-    box-shadow:
-        0 15px 45px rgba(38,9,17,.15);
-
-    transition: .3s;
+    position: fixed; right: 27px; bottom: 25px; z-index: 120;
+    display: flex; align-items: center; gap: 9px; padding: 7px 13px 7px 7px;
+    border-radius: 999px; background: rgba(255,255,255,.88); backdrop-filter: blur(20px);
+    border: 1px solid rgba(74,16,29,.13); box-shadow: 0 15px 45px rgba(38,9,17,.15); transition: .3s;
 }
 
-.prop-floating:hover {
-    transform: translateY(-4px);
-
-    box-shadow:
-        0 20px 55px rgba(38,9,17,.2);
-}
+.prop-floating:hover { transform: translateY(-4px); box-shadow: 0 20px 55px rgba(38,9,17,.2); }
 
 .prop-orb {
-    width: 38px;
-    height: 38px;
-
-    border-radius: 50%;
-
-    background:
-        radial-gradient(
-            circle at 32% 28%,
-            #fff,
-            #D4AF37 28%,
-            #7B1E33 65%,
-            #300811
-        );
-
-    position: relative;
-
-    box-shadow:
-        0 0 25px rgba(212,175,55,.25);
+    width: 38px; height: 38px; border-radius: 50%;
+    background: radial-gradient(circle at 32% 28%, #fff, #D4AF37 28%, #7B1E33 65%, #300811);
+    position: relative; box-shadow: 0 0 25px rgba(212,175,55,.25);
 }
 
 .prop-orb::after {
-    content: "";
-
-    position: absolute;
-
-    inset: -5px;
-
-    border-radius: 50%;
-
-    border: 1px solid rgba(212,175,55,.2);
-
-    animation:
-        orbit 3s linear infinite;
+    content: ""; position: absolute; inset: -5px; border-radius: 50%;
+    border: 1px solid rgba(212,175,55,.2); animation: orbit 3s linear infinite;
 }
 
-@keyframes orbit {
-    from {
-        transform: rotate(0);
-    }
+@keyframes orbit { from { transform: rotate(0); } to { transform: rotate(360deg); } }
 
-    to {
-        transform: rotate(360deg);
-    }
-}
+.prop-floating strong { display: block; font-size: 10px; color: var(--maroon); }
+.prop-floating span { display: block; font-size: 8px; color: var(--muted); }
 
-.prop-floating strong {
-    display: block;
-
-    font-size: 10px;
-
-    color: var(--maroon);
-}
-
-.prop-floating span {
-    display: block;
-
-    font-size: 8px;
-
-    color: var(--muted);
-}
-
-/* =========================================================
-   PROP DRAWER
-   ========================================================= */
+/* ---------- PROP DRAWER ---------- */
 
 .overlay {
-    position: fixed;
-
-    inset: 0;
-
-    background:
-        rgba(17,8,11,.28);
-
-    backdrop-filter:
-        blur(4px);
-
-    z-index: 130;
-
-    opacity: 0;
-
-    pointer-events: none;
-
-    transition: .3s;
+    position: fixed; inset: 0; background: rgba(17,8,11,.28); backdrop-filter: blur(4px);
+    z-index: 130; opacity: 0; pointer-events: none; transition: .3s;
 }
 
-.overlay.open {
-    opacity: 1;
-
-    pointer-events: auto;
-}
+.overlay.open { opacity: 1; pointer-events: auto; }
 
 .drawer {
-    position: fixed;
-
-    right: 0;
-    top: 0;
-    bottom: 0;
-
-    width: min(430px, 94vw);
-
-    background:
-        rgba(255,255,255,.93);
-
-    backdrop-filter:
-        blur(25px);
-
-    z-index: 140;
-
-    transform:
-        translateX(105%);
-
-    transition:
-        transform .4s cubic-bezier(.2,.8,.2,1);
-
-    border-left:
-        1px solid var(--border);
-
-    box-shadow:
-        -20px 0 60px rgba(40,10,18,.12);
-
-    display: flex;
-    flex-direction: column;
+    position: fixed; right: 0; top: 0; bottom: 0; width: min(430px, 94vw);
+    background: rgba(255,255,255,.93); backdrop-filter: blur(25px); z-index: 140;
+    transform: translateX(105%); transition: transform .4s cubic-bezier(.2,.8,.2,1);
+    border-left: 1px solid var(--border); box-shadow: -20px 0 60px rgba(40,10,18,.12);
+    display: flex; flex-direction: column;
 }
 
-.drawer.open {
-    transform: translateX(0);
-}
+.drawer.open { transform: translateX(0); }
 
-.drawer-header {
-    padding: 23px;
+.drawer-header { padding: 23px; border-bottom: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center; }
+.drawer-title { display: flex; align-items: center; gap: 10px; }
+.drawer-title .prop-orb { width: 34px; height: 34px; }
+.drawer-title strong { display: block; font-size: 12px; }
+.drawer-title span { font-size: 8px; color: var(--muted); }
 
-    border-bottom:
-        1px solid var(--border);
+.close-btn { width: 31px; height: 31px; border-radius: 9px; background: var(--bg); }
 
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
+.prop-body { padding: 22px; overflow-y: auto; flex: 1; }
 
-.drawer-title {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-}
+.prop-context { background: var(--bg); border-radius: 14px; padding: 12px; font-size: 9px; color: var(--muted); margin-bottom: 17px; }
+.prop-context strong { color: var(--ink); }
 
-.drawer-title .prop-orb {
-    width: 34px;
-    height: 34px;
-}
+.prop-suggestions { display: flex; flex-wrap: wrap; gap: 7px; margin-bottom: 20px; }
+.prop-suggestions button { padding: 8px 10px; border-radius: 999px; background: white; border: 1px solid var(--border); color: var(--maroon); font-size: 8px; }
 
-.drawer-title strong {
-    display: block;
-    font-size: 12px;
-}
+.prop-answer { background: linear-gradient(135deg, #4A101D, #671A2C); color: white; border-radius: 17px; padding: 16px; font-size: 10px; line-height: 1.7; margin-bottom: 17px; }
+.prop-answer small { display: block; opacity: .55; font-size: 7px; margin-bottom: 6px; text-transform: uppercase; letter-spacing: .1em; }
 
-.drawer-title span {
-    font-size: 8px;
-    color: var(--muted);
-}
+.prop-input { display: flex; gap: 7px; padding: 10px; border: 1px solid var(--border); border-radius: 13px; background: white; }
+.prop-input input { flex: 1; border: none; outline: none; font-size: 9px; }
+.prop-input button { width: 31px; height: 31px; border-radius: 9px; background: var(--maroon); color: white; }
 
-.close-btn {
-    width: 31px;
-    height: 31px;
-
-    border-radius: 9px;
-
-    background: var(--bg);
-}
-
-.prop-body {
-    padding: 22px;
-
-    overflow-y: auto;
-
-    flex: 1;
-}
-
-.prop-context {
-    background:
-        var(--bg);
-
-    border-radius: 14px;
-
-    padding: 12px;
-
-    font-size: 9px;
-
-    color: var(--muted);
-
-    margin-bottom: 17px;
-}
-
-.prop-context strong {
-    color: var(--ink);
-}
-
-.prop-suggestions {
-    display: flex;
-
-    flex-wrap: wrap;
-
-    gap: 7px;
-
-    margin-bottom: 20px;
-}
-
-.prop-suggestions button {
-    padding: 8px 10px;
-
-    border-radius: 999px;
-
-    background: white;
-
-    border: 1px solid var(--border);
-
-    color: var(--maroon);
-
-    font-size: 8px;
-}
-
-.prop-answer {
-    background:
-        linear-gradient(
-            135deg,
-            #4A101D,
-            #671A2C
-        );
-
-    color: white;
-
-    border-radius: 17px;
-
-    padding: 16px;
-
-    font-size: 10px;
-
-    line-height: 1.7;
-
-    margin-bottom: 17px;
-}
-
-.prop-answer small {
-    display: block;
-
-    opacity: .55;
-
-    font-size: 7px;
-
-    margin-bottom: 6px;
-
-    text-transform: uppercase;
-
-    letter-spacing: .1em;
-}
-
-.prop-input {
-    display: flex;
-
-    gap: 7px;
-
-    padding: 10px;
-
-    border:
-        1px solid var(--border);
-
-    border-radius: 13px;
-
-    background: white;
-}
-
-.prop-input input {
-    flex: 1;
-
-    border: none;
-
-    outline: none;
-
-    font-size: 9px;
-}
-
-.prop-input button {
-    width: 31px;
-    height: 31px;
-
-    border-radius: 9px;
-
-    background: var(--maroon);
-
-    color: white;
-}
-
-/* =========================================================
-   PROFILE GLASS PANEL
-   ========================================================= */
+/* ---------- PROFILE PANEL ---------- */
 
 .profile-panel {
-    position: fixed;
-
-    top: 72px;
-    right: 25px;
-
-    width: 300px;
-
-    padding: 12px;
-
-    border-radius: 22px;
-
-    background:
-        rgba(255,255,255,.78);
-
-    backdrop-filter:
-        blur(28px);
-
-    border:
-        1px solid rgba(255,255,255,.9);
-
-    box-shadow:
-        0 25px 70px rgba(36,10,17,.16);
-
-    z-index: 110;
-
-    transform:
-        translateY(-10px) scale(.96);
-
-    opacity: 0;
-
-    pointer-events: none;
-
-    transition:
-        .25s ease;
+    position: fixed; top: 72px; right: 25px; width: 300px; padding: 12px; border-radius: 22px;
+    background: rgba(255,255,255,.78); backdrop-filter: blur(28px); border: 1px solid rgba(255,255,255,.9);
+    box-shadow: 0 25px 70px rgba(36,10,17,.16); z-index: 110;
+    transform: translateY(-10px) scale(.96); opacity: 0; pointer-events: none; transition: .25s ease;
 }
 
-.profile-panel.open {
-    transform:
-        translateY(0) scale(1);
+.profile-panel.open { transform: translateY(0) scale(1); opacity: 1; pointer-events: auto; }
 
-    opacity: 1;
+.profile-summary { display: flex; align-items: center; gap: 11px; padding: 9px; border-bottom: 1px solid var(--border); margin-bottom: 8px; }
+.profile-summary .avatar { width: 43px; height: 43px; }
+.profile-summary strong { font-size: 11px; }
+.profile-summary p { font-size: 8px; color: var(--muted); margin-top: 2px; }
 
-    pointer-events: auto;
-}
+.profile-menu { display: grid; grid-template-columns: repeat(2, 1fr); gap: 5px; }
+.profile-menu button { text-align: left; padding: 12px; border-radius: 12px; background: transparent; font-size: 9px; color: var(--ink); transition: .2s; }
+.profile-menu button:hover { background: rgba(74,16,29,.06); color: var(--maroon); transform: translateX(2px); }
+.profile-menu button span { display: block; font-size: 14px; margin-bottom: 5px; }
+.profile-menu .danger { color: var(--red); }
 
-.profile-summary {
-    display: flex;
-
-    align-items: center;
-
-    gap: 11px;
-
-    padding: 9px;
-
-    border-bottom:
-        1px solid var(--border);
-
-    margin-bottom: 8px;
-}
-
-.profile-summary .avatar {
-    width: 43px;
-    height: 43px;
-}
-
-.profile-summary strong {
-    font-size: 11px;
-}
-
-.profile-summary p {
-    font-size: 8px;
-
-    color: var(--muted);
-
-    margin-top: 2px;
-}
-
-.profile-menu {
-    display: grid;
-
-    grid-template-columns:
-        repeat(2, 1fr);
-
-    gap: 5px;
-}
-
-.profile-menu button {
-    text-align: left;
-
-    padding: 12px;
-
-    border-radius: 12px;
-
-    background: transparent;
-
-    font-size: 9px;
-
-    color: var(--ink);
-
-    transition: .2s;
-}
-
-.profile-menu button:hover {
-    background: rgba(74,16,29,.06);
-
-    color: var(--maroon);
-
-    transform: translateX(2px);
-}
-
-.profile-menu button span {
-    display: block;
-
-    font-size: 14px;
-
-    margin-bottom: 5px;
-}
-
-.profile-menu .danger {
-    color: var(--red);
-}
-
-/* =========================================================
-   MODAL
-   ========================================================= */
+/* ---------- MODAL ---------- */
 
 .modal-overlay {
-    position: fixed;
-
-    inset: 0;
-
-    z-index: 200;
-
-    background:
-        rgba(15,8,11,.4);
-
-    backdrop-filter:
-        blur(8px);
-
-    display: none;
-
-    place-items: center;
-
-    padding: 20px;
+    position: fixed; inset: 0; z-index: 200; background: rgba(15,8,11,.4); backdrop-filter: blur(8px);
+    display: none; place-items: center; padding: 20px;
 }
 
-.modal-overlay.open {
-    display: grid;
-}
+.modal-overlay.open { display: grid; }
 
-.modal {
-    width: min(560px, 100%);
+.modal { width: min(560px, 100%); background: white; border-radius: 25px; box-shadow: 0 30px 100px rgba(20,5,10,.25); animation: modalIn .3s ease; }
 
-    background: white;
+@keyframes modalIn { from { opacity: 0; transform: scale(.94) translateY(10px); } to { opacity: 1; transform: scale(1) translateY(0); } }
 
-    border-radius: 25px;
+.modal-header { padding: 20px; border-bottom: 1px solid var(--border); display: flex; justify-content: space-between; }
+.modal-body { padding: 22px; }
+.modal h3 { font-size: 16px; }
+.modal p { font-size: 10px; color: var(--muted); line-height: 1.7; margin-top: 7px; }
 
-    box-shadow:
-        0 30px 100px rgba(20,5,10,.25);
+.modal-actions { display: flex; justify-content: flex-end; gap: 8px; margin-top: 20px; }
+.modal-actions button { padding: 10px 15px; border-radius: 9px; font-size: 9px; font-weight: 700; }
 
-    animation:
-        modalIn .3s ease;
-}
+.primary { background: var(--maroon); color: white; }
+.secondary { background: var(--bg); color: var(--ink); }
 
-@keyframes modalIn {
-    from {
-        opacity: 0;
-        transform: scale(.94) translateY(10px);
-    }
+/* ---------- PROP-SYNC / CO-OWNERSHIP ---------- */
 
-    to {
-        opacity: 1;
-        transform: scale(1) translateY(0);
-    }
-}
+.sync-card { padding: 20px; }
 
-.modal-header {
-    padding: 20px;
-
-    border-bottom:
-        1px solid var(--border);
-
-    display: flex;
-
-    justify-content: space-between;
-}
-
-.modal-body {
-    padding: 22px;
-}
-
-.modal h3 {
-    font-size: 16px;
-}
-
-.modal p {
-    font-size: 10px;
-
-    color: var(--muted);
-
-    line-height: 1.7;
-
-    margin-top: 7px;
-}
-
-.modal-actions {
-    display: flex;
-
-    justify-content: flex-end;
-
-    gap: 8px;
-
-    margin-top: 20px;
-}
-
-.modal-actions button {
-    padding: 10px 15px;
-
-    border-radius: 9px;
-
-    font-size: 9px;
-
-    font-weight: 700;
-}
-
-.primary {
-    background: var(--maroon);
-
-    color: white;
-}
-
-.secondary {
-    background: var(--bg);
-
-    color: var(--ink);
-}
-
-/* =========================================================
-   PROP-SYNC
-   ========================================================= */
-
-.sync-card {
-    padding: 20px;
-}
-
-.sync-hero {
-    background:
-        linear-gradient(
-            130deg,
-            #3A0B16,
-            #6B1A2C
-        );
-
-    border-radius: 20px;
-
-    color: white;
-
-    padding: 25px;
-
-    position: relative;
-
-    overflow: hidden;
-}
+.sync-hero { background: linear-gradient(130deg, #3A0B16, #6B1A2C); border-radius: 20px; color: white; padding: 25px; position: relative; overflow: hidden; }
 
 .sync-hero::before {
-    content: "";
-
-    position: absolute;
-
-    width: 190px;
-    height: 190px;
-
-    border-radius: 50%;
-
-    background: var(--gold);
-
-    opacity: .12;
-
-    filter: blur(40px);
-
-    right: -60px;
-    top: -60px;
+    content: ""; position: absolute; width: 190px; height: 190px; border-radius: 50%;
+    background: var(--gold); opacity: .12; filter: blur(40px); right: -60px; top: -60px;
 }
 
-.sync-hero h2 {
-    font-family: "Playfair Display", serif;
+.sync-hero h2 { font-family: "Playfair Display", serif; font-size: 27px; position: relative; }
+.sync-hero p { position: relative; max-width: 570px; font-size: 10px; opacity: .72; line-height: 1.7; margin-top: 7px; }
 
-    font-size: 27px;
+.sync-create { margin-top: 18px; padding: 11px 15px; border-radius: 10px; background: white; color: var(--maroon); font-size: 9px; font-weight: 700; }
 
-    position: relative;
-}
+.sync-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; margin-top: 15px; }
 
-.sync-hero p {
-    position: relative;
+.sync-option { padding: 18px; border: 1px solid var(--border); border-radius: 17px; background: white; transition: .25s; }
+.sync-option:hover { transform: translateY(-3px); box-shadow: var(--shadow-small); }
+.sync-option span { font-size: 20px; }
+.sync-option strong { display: block; margin-top: 10px; font-size: 11px; }
+.sync-option p { margin-top: 4px; color: var(--muted); font-size: 8px; line-height: 1.5; }
 
-    max-width: 570px;
+/* ---------- MOBILE ---------- */
 
-    font-size: 10px;
-
-    opacity: .72;
-
-    line-height: 1.7;
-
-    margin-top: 7px;
-}
-
-.sync-create {
-    margin-top: 18px;
-
-    padding: 11px 15px;
-
-    border-radius: 10px;
-
-    background: white;
-
-    color: var(--maroon);
-
-    font-size: 9px;
-
-    font-weight: 700;
-}
-
-.sync-grid {
-    display: grid;
-
-    grid-template-columns:
-        repeat(2, 1fr);
-
-    gap: 12px;
-
-    margin-top: 15px;
-}
-
-.sync-option {
-    padding: 18px;
-
-    border:
-        1px solid var(--border);
-
-    border-radius: 17px;
-
-    background: white;
-
-    transition: .25s;
-}
-
-.sync-option:hover {
-    transform: translateY(-3px);
-
-    box-shadow: var(--shadow-small);
-}
-
-.sync-option span {
-    font-size: 20px;
-}
-
-.sync-option strong {
-    display: block;
-
-    margin-top: 10px;
-
-    font-size: 11px;
-}
-
-.sync-option p {
-    margin-top: 4px;
-
-    color: var(--muted);
-
-    font-size: 8px;
-
-    line-height: 1.5;
-}
-
-/* =========================================================
-   MOBILE
-   ========================================================= */
-
-.mobile-menu {
-    display: none;
-}
+.mobile-menu { display: none; }
 
 @media(max-width:1100px) {
-
-    .intelligence-strip {
-        grid-template-columns:
-            repeat(2, 1fr);
-    }
-
-    .dashboard-grid {
-        grid-template-columns: 1fr;
-    }
-
-    .property-grid {
-        grid-template-columns:
-            repeat(2,1fr);
-    }
-
+    .intelligence-strip { grid-template-columns: repeat(2, 1fr); }
+    .dashboard-grid { grid-template-columns: 1fr; }
+    .property-grid { grid-template-columns: repeat(2,1fr); }
 }
 
 @media(max-width:760px) {
-
-    :root {
-        --sidebar-width: 0px;
-    }
-
-    .sidebar {
-        transform:
-            translateX(-100%);
-
-        transition: .3s;
-
-        width: 250px;
-    }
-
-    .sidebar.mobile-open {
-        transform:
-            translateX(0);
-    }
-
-    .main {
-        margin-left: 0;
-        width: 100%;
-    }
-
-    .header {
-        padding: 0 15px;
-    }
-
-    .search {
-        display: none;
-    }
-
-    .mobile-menu {
-        display: grid;
-
-        width: 35px;
-        height: 35px;
-
-        place-items: center;
-
-        border-radius: 10px;
-
-        background: white;
-
-        border: 1px solid var(--border);
-    }
-
-    .content {
-        padding: 18px;
-    }
-
-    .welcome {
-        align-items: flex-start;
-
-        flex-direction: column;
-
-        gap: 12px;
-    }
-
-    .intelligence-strip {
-        grid-template-columns:
-            repeat(2, 1fr);
-    }
-
-    .property-grid {
-        grid-template-columns: 1fr;
-    }
-
-    .profile-trigger span {
-        display: none;
-    }
-
-    .chart-container {
-        height: 245px;
-    }
-
-    .location-row {
-        grid-template-columns:
-            1.3fr .8fr .7fr;
-    }
-
-    .location-row .spark {
-        display: none;
-    }
-
+    :root { --sidebar-width: 0px; }
+    .sidebar { transform: translateX(-100%); transition: .3s; width: 250px; }
+    .sidebar.mobile-open { transform: translateX(0); }
+    .main { margin-left: 0; width: 100%; }
+    .header { padding: 0 15px; }
+    .search { display: none; }
+    .mobile-menu { display: grid; width: 35px; height: 35px; place-items: center; border-radius: 10px; background: white; border: 1px solid var(--border); }
+    .content { padding: 18px; }
+    .welcome { align-items: flex-start; flex-direction: column; gap: 12px; }
+    .intelligence-strip { grid-template-columns: repeat(2, 1fr); }
+    .property-grid { grid-template-columns: 1fr; }
+    .profile-trigger span { display: none; }
+    .chart-container { height: 245px; }
+    .location-row { grid-template-columns: 1.3fr .8fr .7fr; }
+    .location-row .spark { display: none; }
+    .funds-balance-row { gap: 14px; }
 }
 
 </style>
@@ -2090,982 +585,254 @@ button {
 
 <div class="app">
 
-<!-- =====================================================
-     SIDEBAR
-     ===================================================== -->
+<!-- ===================================================== SIDEBAR ===================================================== -->
 
 <aside class="sidebar" id="sidebar">
 
     <div class="brand">
-
-        <div class="brand-mark">
-            B
-        </div>
-
+        <div class="brand-mark">B</div>
         <div class="brand-text">
             <strong>BELOVEETH</strong>
             <span>REALTY & PROPTECH</span>
         </div>
-
     </div>
 
-
-    <div class="nav-section">
-        Workspace
-    </div>
-
+    <div class="nav-section">Workspace</div>
     <nav class="nav">
-
-        <button class="active" data-view="overview">
-            <span class="nav-icon">⌂</span>
-            Overview
-        </button>
-
-        <button data-view="explore">
-            <span class="nav-icon">⌕</span>
-            Explore
-        </button>
-
-        <button data-view="saved">
-            <span class="nav-icon">♡</span>
-            Saved Properties
-        </button>
-
-        <button data-view="opportunities">
-            <span class="nav-icon">◈</span>
-            Opportunities
-        </button>
-
-        <button data-view="market">
-            <span class="nav-icon">⌁</span>
-            Market Watch
-        </button>
-
-        <button data-view="viewings">
-            <span class="nav-icon">◷</span>
-            Viewings
-        </button>
-
-        <button data-view="documents">
-            <span class="nav-icon">▣</span>
-            Documents
-        </button>
-
-        <button data-view="reports">
-            <span class="nav-icon">▤</span>
-            Reports
-        </button>
-
-        <button data-view="messages">
-            <span class="nav-icon">✉</span>
-            Messages
-        </button>
-
+        <button class="active" data-view="overview"><span class="nav-icon">⌂</span>Overview</button>
+        <button data-view="explore"><span class="nav-icon">⌕</span>Explore</button>
+        <button data-view="my-properties"><span class="nav-icon">⌘</span>My Properties</button>
+        <button data-view="saved"><span class="nav-icon">♡</span>Saved Properties</button>
     </nav>
 
-
-    <div class="nav-section">
-        Intelligence
-    </div>
-
+    <div class="nav-section">Investment</div>
     <nav class="nav">
-
-        <button data-view="pulse">
-            <span class="nav-icon">◉</span>
-            Beloveeth Pulse
-        </button>
-
-        <button data-view="prop-sync">
-            <span class="nav-icon">⇄</span>
-            Prop-Sync
-        </button>
-
+        <button data-view="opportunities"><span class="nav-icon">◈</span>Opportunities</button>
+        <button data-view="co-ownership"><span class="nav-icon">⛓</span>Co-Ownership</button>
+        <button data-view="prop-sync"><span class="nav-icon">⇄</span>Proppy-Sync</button>
+        <button data-view="funds"><span class="nav-icon">฿</span>Beloveeth Funds</button>
     </nav>
 
+    <div class="nav-section">Intelligence</div>
+    <nav class="nav">
+        <button data-view="market"><span class="nav-icon">⌁</span>Market Watch</button>
+        <button data-view="pulse"><span class="nav-icon">◉</span>Beloveeth Pulse</button>
+    </nav>
+
+    <div class="nav-section">Account & Property</div>
+    <nav class="nav">
+        <button data-view="viewings"><span class="nav-icon">◷</span>Viewings</button>
+        <button data-view="documents"><span class="nav-icon">▣</span>Documents</button>
+        <button data-view="reports"><span class="nav-icon">▤</span>Reports</button>
+        <button data-view="protection"><span class="nav-icon">⛨</span>Property Protection</button>
+        <button data-view="messages"><span class="nav-icon">✉</span>Messages</button>
+        <button data-view="support"><span class="nav-icon">☎</span>Support</button>
+    </nav>
 
     <div class="sidebar-bottom">
-
         <div class="prop-sidebar-card">
-
             <div class="prop-mini">
-
                 <div class="prop-orb-small"></div>
-
                 <div>
-                    <strong>Prop Intelligence</strong>
-                    <p>Contextual property intelligence</p>
+                    <strong>Proppy Intelligence</strong>
+                    <p>Your property intelligence companion</p>
                 </div>
-
             </div>
-
         </div>
-
     </div>
 
 </aside>
 
 
-<!-- =====================================================
-     MAIN
-     ===================================================== -->
+<!-- ===================================================== MAIN ===================================================== -->
 
 <main class="main">
 
 <header class="header">
-
-    <button class="mobile-menu" id="mobileMenu">
-        ☰
-    </button>
-
+    <button class="mobile-menu" id="mobileMenu">☰</button>
     <div class="search">
-
         <span>⌕</span>
-
-        <input
-            id="globalSearch"
-            type="text"
-            placeholder="Search properties, locations, reports..."
-        >
-
+        <input id="globalSearch" type="text" placeholder="Search properties, locations, reports...">
     </div>
-
-
     <div class="header-actions">
-
-        <button
-            class="icon-btn"
-            id="notificationButton"
-            title="Notifications"
-        >
-            ♢
-            <span class="notification-dot"></span>
-        </button>
-
-
-        <button
-            class="profile-trigger"
-            id="profileTrigger"
-        >
-
-            <div class="avatar">
-                PD
-            </div>
-
-            <span>
-                <strong>Philip Dare-Johnson</strong>
-                <small>Client account</small>
-            </span>
-
+        <button class="icon-btn" id="notificationButton" title="Notifications">♢<span class="notification-dot"></span></button>
+        <button class="profile-trigger" id="profileTrigger">
+            <div class="avatar">PD</div>
+            <span><strong>Philip Dare-Johnson</strong><small>Client account</small></span>
             ▾
-
         </button>
-
     </div>
-
 </header>
-
 
 <div class="content">
 
 
-<!-- =====================================================
-     OVERVIEW
-     ===================================================== -->
+<!-- ===================================================== OVERVIEW ===================================================== -->
 
-<section
-    class="view active"
-    id="view-overview"
->
+<section class="view active" id="view-overview">
 
     <div class="welcome">
-
         <div>
-
-            <div class="eyebrow">
-                Client Intelligence
-            </div>
-
-            <h1>
-                Your property position.
-            </h1>
-
-            <p>
-                Market intelligence, opportunities and your property journey — in one place.
-            </p>
-
+            <div class="eyebrow">Client Intelligence</div>
+            <h1>Your property position.</h1>
+            <p>Market intelligence, opportunities and your property journey — in one place.</p>
         </div>
-
-        <div class="status-pill">
-            ● Intelligence systems operational
-        </div>
-
+        <div class="status-pill">● Intelligence systems operational</div>
     </div>
-
-
-    <!-- TOP STATS -->
 
     <div class="intelligence-strip">
-
         <div class="stat-card">
-
-            <div class="stat-top">
-
-                <span class="stat-label">
-                    Saved Properties
-                </span>
-
-                <div class="stat-icon">
-                    ♡
-                </div>
-
-            </div>
-
-            <div class="stat-value">
-                08
-            </div>
-
-            <div class="stat-change neutral">
-                Across 4 locations
-            </div>
-
+            <div class="stat-top"><span class="stat-label">Saved Properties</span><div class="stat-icon">♡</div></div>
+            <div class="stat-value">08</div>
+            <div class="stat-change neutral">Across 4 locations</div>
         </div>
-
-
         <div class="stat-card">
-
-            <div class="stat-top">
-
-                <span class="stat-label">
-                    Market Watch
-                </span>
-
-                <div class="stat-icon">
-                    ⌁
-                </div>
-
-            </div>
-
-            <div class="stat-value">
-                4.8%
-            </div>
-
-            <div class="stat-change up">
-                ↑ modeled 6M movement
-            </div>
-
+            <div class="stat-top"><span class="stat-label">Market Watch</span><div class="stat-icon">⌁</div></div>
+            <div class="stat-value">4.8%</div>
+            <div class="stat-change up">↑ modeled 6M movement</div>
         </div>
-
-
         <div class="stat-card">
-
-            <div class="stat-top">
-
-                <span class="stat-label">
-                    Upcoming Viewing
-                </span>
-
-                <div class="stat-icon">
-                    ◷
-                </div>
-
-            </div>
-
-            <div class="stat-value">
-                24 Sep
-            </div>
-
-            <div class="stat-change neutral">
-                Ikoyi • 11:30 AM
-            </div>
-
+            <div class="stat-top"><span class="stat-label">Upcoming Viewing</span><div class="stat-icon">◷</div></div>
+            <div class="stat-value">24 Sep</div>
+            <div class="stat-change neutral">Ikoyi • 11:30 AM</div>
         </div>
-
-
         <div class="stat-card">
-
-            <div class="stat-top">
-
-                <span class="stat-label">
-                    Documents
-                </span>
-
-                <div class="stat-icon">
-                    ▣
-                </div>
-
-            </div>
-
-            <div class="stat-value">
-                2
-            </div>
-
-            <div class="stat-change down">
-                Requires attention
-            </div>
-
+            <div class="stat-top"><span class="stat-label">Documents</span><div class="stat-icon">▣</div></div>
+            <div class="stat-value">2</div>
+            <div class="stat-change down">Requires attention</div>
         </div>
-
     </div>
-
 
     <div class="dashboard-grid">
 
-
-        <!-- MARKET -->
-
         <div class="card market-card">
-
             <div class="card-header">
-
                 <div>
-                    <div class="card-title">
-                        Market Intelligence
-                    </div>
-
-                    <div class="card-subtitle">
-                        Ikoyi residential price index • illustrative model
-                    </div>
+                    <div class="card-title">Market Intelligence</div>
+                    <div class="card-subtitle">Ikoyi residential price index • illustrative model</div>
                 </div>
-
-
                 <div class="market-toolbar">
-
-                    <select
-                        class="market-select"
-                        id="locationSelect"
-                    >
-
-                        <option value="ikoyi">
-                            Ikoyi
-                        </option>
-
-                        <option value="lekki">
-                            Lekki
-                        </option>
-
-                        <option value="ikeja">
-                            Ikeja
-                        </option>
-
-                        <option value="yaba">
-                            Yaba
-                        </option>
-
+                    <select class="market-select" id="locationSelect">
+                        <option value="ikoyi">Ikoyi</option>
+                        <option value="lekki">Lekki</option>
+                        <option value="ikeja">Ikeja</option>
+                        <option value="yaba">Yaba</option>
                     </select>
-
-
-                    <select
-                        class="market-select"
-                        id="periodSelect"
-                    >
-
-                        <option value="6">
-                            6 Months
-                        </option>
-
-                        <option value="12">
-                            12 Months
-                        </option>
-
+                    <select class="market-select" id="periodSelect">
+                        <option value="6">6 Months</option>
+                        <option value="12">12 Months</option>
                     </select>
-
                 </div>
-
             </div>
-
-
-            <div class="chart-container">
-
-                <canvas id="marketChart"></canvas>
-
-            </div>
-
-
+            <div class="chart-container"><canvas id="marketChart"></canvas></div>
             <div class="signal">
-
-                <div class="signal-label">
-
-                    <span class="signal-dot"></span>
-
-                    PROP MARKET SIGNAL
-
-                </div>
-
-                <strong id="propForecastTitle">
-                    Ikoyi is showing positive modeled momentum.
-                </strong>
-
-                <p id="propForecastText">
-
-                    Based on the illustrative trend model currently displayed,
-                    the Ikoyi price index could move higher over the next six
-                    months if the observed trajectory persists. The model is
-                    directional and does not guarantee future prices.
-
-                </p>
-
+                <div class="signal-label"><span class="signal-dot"></span>PROPPY MARKET SIGNAL</div>
+                <strong id="propForecastTitle">Ikoyi is showing positive modeled momentum.</strong>
+                <p id="propForecastText">Based on the illustrative trend model currently displayed, the Ikoyi price index could move higher over the next six months if the observed trajectory persists. The model is directional and does not guarantee future prices.</p>
             </div>
-
         </div>
-
-
-        <!-- LOCATION PULSE -->
 
         <div class="card location-card">
-
             <div class="card-header">
-
                 <div>
-                    <div class="card-title">
-                        Location Pulse
-                    </div>
-
-                    <div class="card-subtitle">
-                        Market movement across selected Nigerian locations
-                    </div>
+                    <div class="card-title">Location Pulse</div>
+                    <div class="card-subtitle">Market movement across selected Nigerian locations</div>
                 </div>
-
-                <button
-                    class="text-btn"
-                    data-view-link="market"
-                >
-                    Explore
-                </button>
-
+                <button class="text-btn" data-view-link="market">Explore</button>
             </div>
-
-
             <div class="location-list">
-
-                <div class="location-row">
-
-                    <div class="location-name">
-                        Ikoyi
-                    </div>
-
-                    <div class="location-price">
-                        ₦1.25m/m²
-                    </div>
-
-                    <div class="location-trend up">
-                        +5.8%
-                    </div>
-
-                    <div class="spark">
-                        ↗
-                    </div>
-
-                </div>
-
-
-                <div class="location-row">
-
-                    <div class="location-name">
-                        Lekki
-                    </div>
-
-                    <div class="location-price">
-                        ₦680k/m²
-                    </div>
-
-                    <div class="location-trend up">
-                        +7.2%
-                    </div>
-
-                    <div class="spark">
-                        ↗
-                    </div>
-
-                </div>
-
-
-                <div class="location-row">
-
-                    <div class="location-name">
-                        Ikeja
-                    </div>
-
-                    <div class="location-price">
-                        ₦590k/m²
-                    </div>
-
-                    <div class="location-trend up">
-                        +3.9%
-                    </div>
-
-                    <div class="spark">
-                        ↗
-                    </div>
-
-                </div>
-
-
-                <div class="location-row">
-
-                    <div class="location-name">
-                        Yaba
-                    </div>
-
-                    <div class="location-price">
-                        ₦420k/m²
-                    </div>
-
-                    <div class="location-trend up">
-                        +6.1%
-                    </div>
-
-                    <div class="spark">
-                        ↗
-                    </div>
-
-                </div>
-
+                <div class="location-row"><div class="location-name">Ikoyi</div><div class="location-price">₦1.25m/m²</div><div class="location-trend up">+5.8%</div><div class="spark">↗</div></div>
+                <div class="location-row"><div class="location-name">Lekki</div><div class="location-price">₦680k/m²</div><div class="location-trend up">+7.2%</div><div class="spark">↗</div></div>
+                <div class="location-row"><div class="location-name">Ikeja</div><div class="location-price">₦590k/m²</div><div class="location-trend up">+3.9%</div><div class="spark">↗</div></div>
+                <div class="location-row"><div class="location-name">Yaba</div><div class="location-price">₦420k/m²</div><div class="location-trend up">+6.1%</div><div class="spark">↗</div></div>
             </div>
-
         </div>
 
     </div>
-
-
-    <!-- PROPERTY RECOMMENDATIONS -->
 
     <div class="card section">
-
         <div class="card-header">
-
             <div>
-                <div class="card-title">
-                    Properties Prop Thinks You Should See
-                </div>
-
-                <div class="card-subtitle">
-                    Matched using your saved properties and stated interests
-                </div>
+                <div class="card-title">Properties Proppy Thinks You Should See</div>
+                <div class="card-subtitle">Matched using your saved properties and stated interests</div>
             </div>
-
-            <button
-                class="text-btn"
-                data-view-link="explore"
-            >
-                View all
-            </button>
-
+            <button class="text-btn" data-view-link="explore">View all</button>
         </div>
-
-
         <div class="property-grid">
-
-
             <article class="property">
-
                 <div class="property-image"></div>
-
                 <div class="property-body">
-
-                    <div class="property-location">
-                        Ikoyi • Lagos
-                    </div>
-
-                    <div class="property-title">
-                        4 Bedroom Contemporary Residence
-                    </div>
-
-                    <div class="property-price">
-                        ₦420M
-                    </div>
-
-                    <div class="property-meta">
-                        <span>4 Beds</span>
-                        <span>5 Baths</span>
-                        <span>640m²</span>
-                    </div>
-
-                    <div class="property-intelligence">
-
-                        <span class="tag green">
-                            Demand ↑
-                        </span>
-
-                        <span class="tag">
-                            Yield 5.1%
-                        </span>
-
-                        <span class="tag">
-                            Verified
-                        </span>
-
-                    </div>
-
+                    <div class="property-location">Ikoyi • Lagos</div>
+                    <div class="property-title">4 Bedroom Contemporary Residence</div>
+                    <div class="property-price">₦420M</div>
+                    <div class="property-meta"><span>4 Beds</span><span>5 Baths</span><span>640m²</span></div>
+                    <div class="property-intelligence"><span class="tag green">Demand ↑</span><span class="tag">Yield 5.1%</span><span class="tag">Verified</span></div>
                     <div class="property-actions">
-
-                        <button
-                            class="view-btn"
-                            data-property="Ikoyi Residence"
-                        >
-                            Analyze
-                        </button>
-
-                        <button
-                            class="save-btn"
-                            data-save
-                        >
-                            ♡ Save
-                        </button>
-
+                        <button class="view-btn" data-property="Ikoyi Residence">Analyze</button>
+                        <button class="save-btn" data-save>♡ Save</button>
                     </div>
-
                 </div>
-
             </article>
-
-
             <article class="property">
-
-                <div
-                    class="property-image"
-                    style="
-                        background:
-                        linear-gradient(
-                            135deg,
-                            #263A4B,
-                            #6E8998
-                        );
-                    "
-                ></div>
-
+                <div class="property-image" style="background:linear-gradient(135deg,#263A4B,#6E8998);"></div>
                 <div class="property-body">
-
-                    <div class="property-location">
-                        Lekki Phase 1 • Lagos
-                    </div>
-
-                    <div class="property-title">
-                        5 Bedroom Smart Home
-                    </div>
-
-                    <div class="property-price">
-                        ₦310M
-                    </div>
-
-                    <div class="property-meta">
-                        <span>5 Beds</span>
-                        <span>6 Baths</span>
-                        <span>510m²</span>
-                    </div>
-
-                    <div class="property-intelligence">
-
-                        <span class="tag green">
-                            Demand ↑
-                        </span>
-
-                        <span class="tag">
-                            Yield 6.4%
-                        </span>
-
-                        <span class="tag">
-                            New
-                        </span>
-
-                    </div>
-
+                    <div class="property-location">Lekki Phase 1 • Lagos</div>
+                    <div class="property-title">5 Bedroom Smart Home</div>
+                    <div class="property-price">₦310M</div>
+                    <div class="property-meta"><span>5 Beds</span><span>6 Baths</span><span>510m²</span></div>
+                    <div class="property-intelligence"><span class="tag green">Demand ↑</span><span class="tag">Yield 6.4%</span><span class="tag">New</span></div>
                     <div class="property-actions">
-
-                        <button
-                            class="view-btn"
-                            data-property="Lekki Smart Home"
-                        >
-                            Analyze
-                        </button>
-
-                        <button
-                            class="save-btn"
-                            data-save
-                        >
-                            ♡ Save
-                        </button>
-
+                        <button class="view-btn" data-property="Lekki Smart Home">Analyze</button>
+                        <button class="save-btn" data-save>♡ Save</button>
                     </div>
-
                 </div>
-
             </article>
-
-
             <article class="property">
-
-                <div
-                    class="property-image"
-                    style="
-                        background:
-                        linear-gradient(
-                            135deg,
-                            #5E4A3A,
-                            #B69A76
-                        );
-                    "
-                ></div>
-
+                <div class="property-image" style="background:linear-gradient(135deg,#5E4A3A,#B69A76);"></div>
                 <div class="property-body">
-
-                    <div class="property-location">
-                        Yaba • Lagos
-                    </div>
-
-                    <div class="property-title">
-                        Residential Investment Block
-                    </div>
-
-                    <div class="property-price">
-                        ₦185M
-                    </div>
-
-                    <div class="property-meta">
-                        <span>8 Units</span>
-                        <span>Yield 7.2%</span>
-                        <span>720m²</span>
-                    </div>
-
-                    <div class="property-intelligence">
-
-                        <span class="tag green">
-                            Strong Demand
-                        </span>
-
-                        <span class="tag">
-                            Investor
-                        </span>
-
-                    </div>
-
+                    <div class="property-location">Yaba • Lagos</div>
+                    <div class="property-title">Residential Investment Block</div>
+                    <div class="property-price">₦185M</div>
+                    <div class="property-meta"><span>8 Units</span><span>Yield 7.2%</span><span>720m²</span></div>
+                    <div class="property-intelligence"><span class="tag green">Strong Demand</span><span class="tag">Investor</span></div>
                     <div class="property-actions">
-
-                        <button
-                            class="view-btn"
-                            data-property="Yaba Investment Block"
-                        >
-                            Analyze
-                        </button>
-
-                        <button
-                            class="save-btn"
-                            data-save
-                        >
-                            ♡ Save
-                        </button>
-
+                        <button class="view-btn" data-property="Yaba Investment Block">Analyze</button>
+                        <button class="save-btn" data-save>♡ Save</button>
                     </div>
-
                 </div>
-
             </article>
-
         </div>
-
     </div>
 
-
-    <!-- JOURNEY / VIEWING / NEWS -->
-
-    <div
-        class="dashboard-grid section"
-        style="grid-template-columns:1fr 1fr 1fr;"
-    >
-
+    <div class="dashboard-grid section" style="grid-template-columns:1fr 1fr 1fr;">
 
         <div class="card journey">
-
-            <div class="card-header">
-
-                <div>
-                    <div class="card-title">
-                        Property Journey
-                    </div>
-
-                    <div class="card-subtitle">
-                        Your active transaction
-                    </div>
-                </div>
-
-            </div>
-
-
+            <div class="card-header"><div><div class="card-title">Property Journey</div><div class="card-subtitle">Your active transaction</div></div></div>
             <div class="journey-list">
-
-                <div class="journey-item">
-
-                    <div class="journey-dot complete">
-                        ✓
-                    </div>
-
-                    <div>
-                        <strong>Property saved</strong>
-                        <p>Ikoyi Residence</p>
-                    </div>
-
-                </div>
-
-
-                <div class="journey-item">
-
-                    <div class="journey-dot complete">
-                        ✓
-                    </div>
-
-                    <div>
-                        <strong>Viewing scheduled</strong>
-                        <p>24 September 2026</p>
-                    </div>
-
-                </div>
-
-
-                <div class="journey-item">
-
-                    <div class="journey-dot current">
-                        •
-                    </div>
-
-                    <div>
-                        <strong>Due diligence</strong>
-                        <p>Property documentation review</p>
-                    </div>
-
-                </div>
-
-
-                <div class="journey-item">
-
-                    <div class="journey-dot">
-                        4
-                    </div>
-
-                    <div>
-                        <strong>Negotiation</strong>
-                        <p>Pending</p>
-                    </div>
-
-                </div>
-
+                <div class="journey-item"><div class="journey-dot complete">✓</div><div><strong>Property saved</strong><p>Ikoyi Residence</p></div></div>
+                <div class="journey-item"><div class="journey-dot complete">✓</div><div><strong>Viewing scheduled</strong><p>24 September 2026</p></div></div>
+                <div class="journey-item"><div class="journey-dot current">•</div><div><strong>Due diligence</strong><p>Property documentation review</p></div></div>
+                <div class="journey-item"><div class="journey-dot">4</div><div><strong>Negotiation</strong><p>Pending</p></div></div>
             </div>
-
         </div>
-
 
         <div class="card viewing">
-
-            <div class="card-header">
-
-                <div>
-                    <div class="card-title">
-                        Next Viewing
-                    </div>
-
-                    <div class="card-subtitle">
-                        Your calendar
-                    </div>
-                </div>
-
-            </div>
-
-
+            <div class="card-header"><div><div class="card-title">Next Viewing</div><div class="card-subtitle">Your calendar</div></div></div>
             <div class="viewing-body">
-
                 <div class="viewing-date">
-
-                    <div class="date-box">
-
-                        <strong>
-                            24
-                        </strong>
-
-                        <small>
-                            SEP
-                        </small>
-
-                    </div>
-
-                    <div>
-
-                        <strong>
-                            Ikoyi Residence
-                        </strong>
-
-                        <p>
-                            11:30 AM • On-site
-                        </p>
-
-                    </div>
-
+                    <div class="date-box"><strong>24</strong><small>SEP</small></div>
+                    <div><strong>Ikoyi Residence</strong><p>11:30 AM • On-site</p></div>
                 </div>
-
-
-                <button
-                    class="book-btn"
-                    id="bookViewing"
-                >
-                    Manage viewing
-                </button>
-
+                <button class="book-btn" id="bookViewing">Manage viewing</button>
             </div>
-
         </div>
-
 
         <div class="card news">
-
-            <div class="card-header">
-
-                <div>
-                    <div class="card-title">
-                        Market Intelligence Feed
-                    </div>
-
-                    <div class="card-subtitle">
-                        Curated for your watchlist
-                    </div>
-                </div>
-
-            </div>
-
-
+            <div class="card-header"><div><div class="card-title">Market Intelligence Feed</div><div class="card-subtitle">Curated for your watchlist</div></div></div>
             <div class="news-list">
-
-                <div class="news-item">
-
-                    <div class="news-source">
-                        Beloveeth Pulse
-                    </div>
-
-                    <strong>
-                        Ikoyi premium residential demand remains elevated.
-                    </strong>
-
-                    <p>
-                        Market observation • 2h ago
-                    </p>
-
-                </div>
-
-
-                <div class="news-item">
-
-                    <div class="news-source">
-                        Market Watch
-                    </div>
-
-                    <strong>
-                        Lekki transaction activity is showing increased momentum.
-                    </strong>
-
-                    <p>
-                        Market observation • Today
-                    </p>
-
-                </div>
-
+                <div class="news-item"><div class="news-source">Beloveeth Pulse</div><strong>Ikoyi premium residential demand remains elevated.</strong><p>Market observation • 2h ago</p></div>
+                <div class="news-item"><div class="news-source">Market Watch</div><strong>Lekki transaction activity is showing increased momentum.</strong><p>Market observation • Today</p></div>
             </div>
-
         </div>
 
     </div>
@@ -3073,671 +840,368 @@ button {
 </section>
 
 
-<!-- =====================================================
-     EXPLORE
-     ===================================================== -->
+<!-- ===================================================== EXPLORE ===================================================== -->
 
-<section
-    class="view"
-    id="view-explore"
->
-
+<section class="view" id="view-explore">
     <div class="welcome">
-
         <div>
-
-            <div class="eyebrow">
-                Property Intelligence
-            </div>
-
-            <h1>
-                Explore intelligently.
-            </h1>
-
-            <p>
-                Search properties using price, location, yield, demand and Prop analysis.
-            </p>
-
+            <div class="eyebrow">Property Intelligence</div>
+            <h1>Explore intelligently.</h1>
+            <p>Search properties using price, location, yield, demand and Proppy analysis.</p>
         </div>
-
     </div>
-
-
     <div class="card">
-
         <div class="property-grid">
-
-            <!-- Additional properties can be populated from Supabase -->
-
             <article class="property">
-
                 <div class="property-image"></div>
-
                 <div class="property-body">
-
-                    <div class="property-location">
-                        Ikoyi • Lagos
-                    </div>
-
-                    <div class="property-title">
-                        Luxury Waterfront Apartment
-                    </div>
-
-                    <div class="property-price">
-                        ₦265M
-                    </div>
-
-                    <div class="property-meta">
-                        <span>3 Beds</span>
-                        <span>4 Baths</span>
-                        <span>410m²</span>
-                    </div>
-
-                    <div class="property-intelligence">
-                        <span class="tag green">Demand ↑</span>
-                        <span class="tag">Yield 4.8%</span>
-                    </div>
-
+                    <div class="property-location">Ikoyi • Lagos</div>
+                    <div class="property-title">Luxury Waterfront Apartment</div>
+                    <div class="property-price">₦265M</div>
+                    <div class="property-meta"><span>3 Beds</span><span>4 Baths</span><span>410m²</span></div>
+                    <div class="property-intelligence"><span class="tag green">Demand ↑</span><span class="tag">Yield 4.8%</span></div>
                     <div class="property-actions">
-
-                        <button
-                            class="view-btn"
-                            data-property="Luxury Waterfront Apartment"
-                        >
-                            Analyze
-                        </button>
-
-                        <button
-                            class="save-btn"
-                            data-save
-                        >
-                            ♡ Save
-                        </button>
-
+                        <button class="view-btn" data-property="Luxury Waterfront Apartment">Analyze</button>
+                        <button class="save-btn" data-save>♡ Save</button>
                     </div>
-
                 </div>
-
             </article>
-
         </div>
-
     </div>
-
 </section>
 
 
-<!-- =====================================================
-     MARKET WATCH
-     ===================================================== -->
+<!-- ===================================================== MY PROPERTIES (new) ===================================================== -->
 
-<section
-    class="view"
-    id="view-market"
->
-
+<section class="view" id="view-my-properties">
     <div class="welcome">
-
         <div>
-
-            <div class="eyebrow">
-                Beloveeth Pulse
-            </div>
-
-            <h1>
-                Watch the market.
-            </h1>
-
-            <p>
-                Track locations, prices, demand and modeled scenarios.
-            </p>
-
+            <div class="eyebrow">Ownership Record</div>
+            <h1>My Properties.</h1>
+            <p>What you actually own through Beloveeth — different from Saved Properties, which is just what you're watching.</p>
         </div>
-
     </div>
-
-
-    <div class="card market-card">
-
+    <div class="card">
         <div class="card-header">
-
-            <div>
-
-                <div class="card-title">
-                    Nigeria Property Market Monitor
+            <div><div class="card-title">Owned Properties</div><div class="card-subtitle">Acquisition, ownership, documents and protection status, in one record</div></div>
+        </div>
+        <div class="property-grid">
+            <article class="property">
+                <div class="property-image owned"></div>
+                <div class="property-body">
+                    <div class="property-location">Ikeja GRA • Lagos</div>
+                    <div class="property-title">3 Bedroom Terrace</div>
+                    <div class="property-price">₦165M</div>
+                    <div class="property-meta"><span>Acquired Mar 2025</span><span>100% owned</span></div>
+                    <div class="property-intelligence">
+                        <span class="tag green">Protection Active</span>
+                        <span class="tag">Docs Complete</span>
+                    </div>
+                    <div class="property-actions">
+                        <button class="view-btn" data-property="Ikeja GRA Terrace">Analyze</button>
+                        <button class="save-btn" onclick="showView('documents')">Documents</button>
+                    </div>
                 </div>
-
-                <div class="card-subtitle">
-                    Demonstration intelligence layer — replace with verified datasets
-                </div>
-
-            </div>
-
+            </article>
         </div>
-
-
-        <div class="chart-container" style="height:420px;">
-
-            <canvas id="largeMarketChart"></canvas>
-
-        </div>
-
-
-        <div class="signal">
-
-            <div class="signal-label">
-                PROP INTERPRETATION
-            </div>
-
-            <strong>
-                Watch price acceleration against rental yield.
-            </strong>
-
-            <p>
-                A rising price trend does not automatically mean an attractive
-                investment. Prop should evaluate price movement together with
-                rental income, demand, supply, liquidity and property-specific
-                risks before generating an investment insight.
-            </p>
-
-        </div>
-
+        <p style="padding:0 20px 20px;font-size:9px;color:var(--muted);line-height:1.6;">
+            Demo record. In production, every acquisition made through Beloveeth lands here permanently — with transaction history, ownership percentage, documents and protection status attached for as long as you hold the property.
+        </p>
     </div>
-
 </section>
 
 
-<!-- =====================================================
-     PROP-SYNC
-     ===================================================== -->
-
-<section
-    class="view"
-    id="view-prop-sync"
->
-
-    <div class="welcome">
-
-        <div>
-
-            <div class="eyebrow">
-                Collaborative Property
-            </div>
-
-            <h1>
-                Prop-Sync.
-            </h1>
-
-            <p>
-                Collaborate with another client around a specific property or property opportunity.
-            </p>
-
-        </div>
-
-    </div>
-
-
-    <div class="sync-card">
-
-        <div class="sync-hero">
-
-            <h2>
-                Don't invest alone.
-            </h2>
-
-            <p>
-                Prop-Sync lets you create a private collaboration around a
-                property. Invite another Beloveeth client, compare contributions,
-                discuss the opportunity and keep the property information,
-                conversations and documents together.
-            </p>
-
-            <button
-                class="sync-create"
-                id="createSync"
-            >
-                + Create Prop-Sync
-            </button>
-
-        </div>
-
-
-        <div class="sync-grid">
-
-            <div class="sync-option">
-
-                <span>
-                    ⇄
-                </span>
-
-                <strong>
-                    Co-invest
-                </strong>
-
-                <p>
-                    Explore a shared property acquisition with another client.
-                </p>
-
-            </div>
-
-
-            <div class="sync-option">
-
-                <span>
-                    ◇
-                </span>
-
-                <strong>
-                    Property Deal
-                </strong>
-
-                <p>
-                    Collaborate around a specific property negotiation.
-                </p>
-
-            </div>
-
-
-            <div class="sync-option">
-
-                <span>
-                    ▤
-                </span>
-
-                <strong>
-                    Shared Analysis
-                </strong>
-
-                <p>
-                    Share Prop's property analysis with your collaborator.
-                </p>
-
-            </div>
-
-
-            <div class="sync-option">
-
-                <span>
-                    ⛓
-                </span>
-
-                <strong>
-                    Private Workspace
-                </strong>
-
-                <p>
-                    Keep messages, documents and deal information together.
-                </p>
-
-            </div>
-
-        </div>
-
-    </div>
-
-</section>
-
-
-<!-- =====================================================
-     GENERIC VIEWS
-     ===================================================== -->
+<!-- ===================================================== SAVED PROPERTIES ===================================================== -->
 
 <section class="view" id="view-saved">
-
     <div class="welcome">
-
         <div>
-
-            <div class="eyebrow">
-                Your Properties
-            </div>
-
-            <h1>
-                Saved Properties.
-            </h1>
-
-            <p>
-                Properties you've chosen to monitor.
-            </p>
-
+            <div class="eyebrow">Your Properties</div>
+            <h1>Saved Properties.</h1>
+            <p>Properties you've chosen to monitor.</p>
         </div>
-
     </div>
-
     <div class="card">
-
         <div class="property-grid">
-
             <article class="property">
-
                 <div class="property-image"></div>
-
                 <div class="property-body">
-
-                    <div class="property-location">
-                        Ikoyi • Lagos
-                    </div>
-
-                    <div class="property-title">
-                        4 Bedroom Contemporary Residence
-                    </div>
-
-                    <div class="property-price">
-                        ₦420M
-                    </div>
-
-                    <div class="property-intelligence">
-                        <span class="tag green">
-                            Demand ↑
-                        </span>
-
-                        <span class="tag">
-                            Yield 5.1%
-                        </span>
-                    </div>
-
+                    <div class="property-location">Ikoyi • Lagos</div>
+                    <div class="property-title">4 Bedroom Contemporary Residence</div>
+                    <div class="property-price">₦420M</div>
+                    <div class="property-intelligence"><span class="tag green">Demand ↑</span><span class="tag">Yield 5.1%</span></div>
                     <div class="property-actions">
-
-                        <button
-                            class="view-btn"
-                            data-property="Ikoyi Residence"
-                        >
-                            Analyze
-                        </button>
-
-                        <button
-                            class="save-btn"
-                            data-save
-                        >
-                            ♥ Saved
-                        </button>
-
+                        <button class="view-btn" data-property="Ikoyi Residence">Analyze</button>
+                        <button class="save-btn" data-save>♥ Saved</button>
                     </div>
-
                 </div>
-
             </article>
-
         </div>
-
     </div>
-
 </section>
 
+
+<!-- ===================================================== OPPORTUNITIES ===================================================== -->
 
 <section class="view" id="view-opportunities">
-
     <div class="welcome">
-
         <div>
-
-            <div class="eyebrow">
-                Opportunities
-            </div>
-
-            <h1>
-                Investment opportunities.
-            </h1>
-
-            <p>
-                Structured opportunities presented through the Beloveeth platform.
-            </p>
-
+            <div class="eyebrow">Opportunities</div>
+            <h1>Investment opportunities.</h1>
+            <p>Structured opportunities presented through the Beloveeth platform.</p>
         </div>
+    </div>
+    <div class="card">
+        <div style="padding:25px;">
+            <h3 style="font-size:15px;">Opportunity intelligence</h3>
+            <p style="font-size:10px;color:#667085;margin-top:7px;line-height:1.7;">
+                This area will eventually connect to verified opportunities, investment structures, documentation and transaction workflows — including co-ownership offers like <em>Eko Atlantic — Co-Ownership Opportunity</em>.
+            </p>
+            <button class="primary" style="margin-top:15px;padding:10px 14px;border-radius:9px;font-size:9px;" onclick="showView('co-ownership')">See Co-Ownership</button>
+        </div>
+    </div>
+</section>
 
+
+<!-- ===================================================== CO-OWNERSHIP (new) ===================================================== -->
+
+<section class="view" id="view-co-ownership">
+    <div class="welcome">
+        <div>
+            <div class="eyebrow">Shared Ownership</div>
+            <h1>Co-Ownership.</h1>
+            <p>Own a share of a property alongside other Beloveeth clients — and keep watching what happens to it afterward.</p>
+        </div>
+    </div>
+    <div class="card">
+        <div class="card-header">
+            <div><div class="card-title">Your Co-Owned Assets</div><div class="card-subtitle">Ownership share, contributions and development progress</div></div>
+        </div>
+        <div class="property-grid">
+            <article class="property">
+                <div class="property-image" style="background:linear-gradient(135deg,#1D3B53,#5C93B8);"></div>
+                <div class="property-body">
+                    <div class="property-location">Eko Atlantic • Lagos</div>
+                    <div class="property-title">Eko Atlantic — Co-Ownership Opportunity</div>
+                    <div class="property-price">₦12M contributed</div>
+                    <div class="property-meta"><span>8% share</span><span>4 co-owners</span></div>
+                    <div class="property-intelligence"><span class="tag gold">Development Stage</span><span class="tag green">On Track</span></div>
+                    <div class="property-actions">
+                        <button class="view-btn" data-property="Eko Atlantic Co-Ownership">Analyze</button>
+                        <button class="save-btn" onclick="showView('prop-sync')">Proppy-Sync</button>
+                    </div>
+                </div>
+            </article>
+        </div>
+        <p style="padding:0 20px 20px;font-size:9px;color:var(--muted);line-height:1.6;">
+            Demo record. Once you participate in a co-ownership opportunity, it stays here permanently — with contributions, transaction history, documents, development updates and Proppy's ongoing analysis attached.
+        </p>
+    </div>
+</section>
+
+
+<!-- ===================================================== PROPPY-SYNC ===================================================== -->
+
+<section class="view" id="view-prop-sync">
+    <div class="welcome">
+        <div>
+            <div class="eyebrow">Collaborative Property</div>
+            <h1>Proppy-Sync.</h1>
+            <p>Collaborate with another client around a specific property or property opportunity.</p>
+        </div>
+    </div>
+    <div class="sync-card">
+        <div class="sync-hero">
+            <h2>Don't invest alone.</h2>
+            <p>Proppy-Sync lets you create a private collaboration around a property. Invite another Beloveeth client, compare contributions, discuss the opportunity and keep the property information, conversations and documents together.</p>
+            <button class="sync-create" id="createSync">+ Create Proppy-Sync</button>
+        </div>
+        <div class="sync-grid">
+            <div class="sync-option"><span>⇄</span><strong>Co-invest</strong><p>Explore a shared property acquisition with another client.</p></div>
+            <div class="sync-option"><span>◇</span><strong>Property Deal</strong><p>Collaborate around a specific property negotiation.</p></div>
+            <div class="sync-option"><span>▤</span><strong>Shared Analysis</strong><p>Share Proppy's property analysis with your collaborator.</p></div>
+            <div class="sync-option"><span>⛓</span><strong>Private Workspace</strong><p>Keep messages, documents and deal information together.</p></div>
+        </div>
+    </div>
+</section>
+
+
+<!-- ===================================================== FUNDS (new) ===================================================== -->
+
+<section class="view" id="view-funds">
+    <div class="welcome">
+        <div>
+            <div class="eyebrow">Beloveeth Funds</div>
+            <h1>Keep funds ready.</h1>
+            <p>Position money for an eligible property or investment, instead of starting from zero every time.</p>
+        </div>
+    </div>
+
+    <div class="funds-hero">
+        <div class="funds-balance-row">
+            <div><strong>₦0.00</strong><span>Available Funds</span></div>
+            <div><strong>₦0.00</strong><span>Reserved Funds</span></div>
+            <div><strong>₦0.00</strong><span>Total Contributed</span></div>
+        </div>
+        <div class="funds-actions">
+            <button class="primary-fund" onclick="openModal('Add Funds','This connects to a licensed payment processor (e.g. Paystack/Flutterwave) in production. Beloveeth does not custody client funds without the appropriate financial infrastructure and legal structure in place.','Got it')">Add Funds</button>
+            <button class="secondary-fund" onclick="showView('opportunities')">View Opportunities</button>
+        </div>
+        <div class="funds-disclaimer">
+            <strong>Demo only.</strong> No real money moves through this screen yet. A production version requires a licensed payment/escrow provider and legal review before any client funds can be held — this is a real regulatory step, not just a feature to switch on.
+        </div>
+    </div>
+
+    <div class="card section">
+        <div class="card-header"><div><div class="card-title">Transactions</div><div class="card-subtitle">Funds movement history</div></div></div>
+        <div class="location-list">
+            <div class="location-row" style="grid-template-columns:1.6fr .8fr .8fr;">
+                <div class="location-name" style="font-weight:500;color:var(--muted);">No transactions yet</div><div></div><div></div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+<!-- ===================================================== MARKET WATCH ===================================================== -->
+
+<section class="view" id="view-market">
+    <div class="welcome">
+        <div>
+            <div class="eyebrow">Beloveeth Pulse</div>
+            <h1>Watch the market.</h1>
+            <p>Track locations, prices, demand and modeled scenarios.</p>
+        </div>
+    </div>
+    <div class="card market-card">
+        <div class="card-header">
+            <div>
+                <div class="card-title">Nigeria Property Market Monitor</div>
+                <div class="card-subtitle">Demonstration intelligence layer — replace with verified datasets</div>
+            </div>
+        </div>
+        <div class="chart-container" style="height:420px;"><canvas id="largeMarketChart"></canvas></div>
+        <div class="signal">
+            <div class="signal-label">PROPPY INTERPRETATION</div>
+            <strong>Watch price acceleration against rental yield.</strong>
+            <p>A rising price trend does not automatically mean an attractive investment. Proppy should evaluate price movement together with rental income, demand, supply, liquidity and property-specific risks before generating an investment insight.</p>
+        </div>
+    </div>
+</section>
+
+
+<!-- ===================================================== PROTECTION (new) ===================================================== -->
+
+<section class="view" id="view-protection">
+    <div class="welcome">
+        <div>
+            <div class="eyebrow">Property Protection</div>
+            <h1>Protect what you've acquired.</h1>
+            <p>Beloveeth doesn't stop at helping you buy — protection is what happens after.</p>
+        </div>
     </div>
 
     <div class="card">
-
-        <div style="padding:25px;">
-
-            <h3 style="font-size:15px;">
-                Opportunity intelligence
-            </h3>
-
-            <p style="
-                font-size:10px;
-                color:#667085;
-                margin-top:7px;
-                line-height:1.7;
-            ">
-                This area will eventually connect to verified opportunities,
-                investment structures, documentation and transaction workflows.
-            </p>
-
+        <div class="protection-explainer">
+            <p>Property Protection is a premium service involving the appropriate legal and insurance structure for an eligible property. Where available, it can be purchased as a one-time premium per property rather than a recurring platform subscription. Beloveeth's legal/verification workflow determines eligibility and status — Proppy can explain what a status means, but does not decide it.</p>
         </div>
-
+        <div class="property-grid">
+            <article class="property">
+                <div class="property-image owned"></div>
+                <div class="property-body">
+                    <div class="property-location">Ikeja GRA • Lagos</div>
+                    <div class="property-title">3 Bedroom Terrace</div>
+                    <div class="property-intelligence"><span class="tag green">Protection Active</span></div>
+                    <div class="property-actions">
+                        <button class="view-btn" onclick="openModal('Protection Details','Policy information, legal review status and relevant documents for this property would appear here in production.','Open')">View Policy</button>
+                    </div>
+                </div>
+            </article>
+            <article class="property">
+                <div class="property-image" style="background:linear-gradient(135deg,#4a4a4a,#8a8a8a);"></div>
+                <div class="property-body">
+                    <div class="property-location">Yaba • Lagos</div>
+                    <div class="property-title">Residential Investment Block</div>
+                    <div class="property-intelligence"><span class="tag red">Protection Not Active</span></div>
+                    <div class="property-actions">
+                        <button class="view-btn" onclick="openModal('Activate Protection','Starting protection for this property connects to Beloveeth\\'s legal/insurance review workflow in production.','Start Review')">Activate</button>
+                    </div>
+                </div>
+            </article>
+        </div>
     </div>
-
 </section>
 
+
+<!-- ===================================================== VIEWINGS / DOCUMENTS / REPORTS ===================================================== -->
 
 <section class="view" id="view-viewings">
-
-    <div class="welcome">
-
-        <div>
-
-            <div class="eyebrow">
-                Viewings
-            </div>
-
-            <h1>
-                Your property viewings.
-            </h1>
-
-        </div>
-
-    </div>
-
-    <div class="card">
-
-        <div style="padding:25px;">
-
-            <strong style="font-size:13px;">
-                24 September 2026
-            </strong>
-
-            <p style="
-                font-size:10px;
-                color:#667085;
-                margin-top:5px;
-            ">
-                Ikoyi Residence • 11:30 AM • On-site
-            </p>
-
-        </div>
-
-    </div>
-
+    <div class="welcome"><div><div class="eyebrow">Viewings</div><h1>Your property viewings.</h1></div></div>
+    <div class="card"><div style="padding:25px;"><strong style="font-size:13px;">24 September 2026</strong><p style="font-size:10px;color:#667085;margin-top:5px;">Ikoyi Residence • 11:30 AM • On-site</p></div></div>
 </section>
-
 
 <section class="view" id="view-documents">
-
-    <div class="welcome">
-
-        <div>
-
-            <div class="eyebrow">
-                Documentation
-            </div>
-
-            <h1>
-                Your documents.
-            </h1>
-
-        </div>
-
-    </div>
-
-    <div class="card">
-
-        <div style="padding:25px;">
-
-            <strong style="font-size:13px;">
-                2 documents require attention
-            </strong>
-
-            <p style="
-                font-size:10px;
-                color:#667085;
-                margin-top:6px;
-            ">
-                Property documentation and client verification.
-            </p>
-
-        </div>
-
-    </div>
-
+    <div class="welcome"><div><div class="eyebrow">Documentation</div><h1>Your documents.</h1></div></div>
+    <div class="card"><div style="padding:25px;"><strong style="font-size:13px;">2 documents require attention</strong><p style="font-size:10px;color:#667085;margin-top:6px;">Property documentation and client verification. Ask Proppy to explain any clause — Proppy explains, Beloveeth's legal/verification workflow verifies.</p></div></div>
 </section>
-
 
 <section class="view" id="view-reports">
-
-    <div class="welcome">
-
-        <div>
-
-            <div class="eyebrow">
-                Intelligence
-            </div>
-
-            <h1>
-                Reports.
-            </h1>
-
-        </div>
-
-    </div>
-
+    <div class="welcome"><div><div class="eyebrow">Intelligence</div><h1>Reports.</h1></div></div>
     <div class="card">
-
         <div style="padding:25px;">
-
-            <strong style="font-size:13px;">
-                Beloveeth Market Report
-            </strong>
-
-            <p style="
-                font-size:10px;
-                color:#667085;
-                margin-top:6px;
-            ">
-                Location intelligence and property market observations.
-            </p>
-
-            <button
-                class="primary"
-                style="
-                    margin-top:15px;
-                    padding:10px 14px;
-                    border-radius:9px;
-                    font-size:9px;
-                "
-                id="openReport"
-            >
-                Open report
-            </button>
-
+            <strong style="font-size:13px;">Beloveeth Market Report</strong>
+            <p style="font-size:10px;color:#667085;margin-top:6px;">Location intelligence and property market observations.</p>
+            <button class="primary" style="margin-top:15px;padding:10px 14px;border-radius:9px;font-size:9px;" id="openReport">Open report</button>
         </div>
-
     </div>
-
 </section>
 
 
+<!-- ===================================================== MESSAGES / SUPPORT ===================================================== -->
+
 <section class="view" id="view-messages">
-
     <div class="welcome">
-
         <div>
-
-            <div class="eyebrow">
-                Communication
-            </div>
-
-            <h1>
-                Messages.
-            </h1>
-
-            <p>
-                Communicate with your Beloveeth team and Prop-Sync collaborators.
-            </p>
-
+            <div class="eyebrow">Communication</div>
+            <h1>Messages.</h1>
+            <p>Communicate with your Beloveeth team and Proppy-Sync collaborators.</p>
         </div>
-
     </div>
+    <div class="card"><div style="padding:25px;"><strong style="font-size:13px;">Beloveeth Client Support</strong><p style="font-size:10px;color:#667085;margin-top:6px;">Your property team is available for questions about your active property journey.</p></div></div>
+</section>
 
+<section class="view" id="view-support">
+    <div class="welcome">
+        <div>
+            <div class="eyebrow">Human Support</div>
+            <h1>Talk to a person.</h1>
+            <p>Proppy handles intelligence. Beloveeth's people handle human service — AI doesn't replace either.</p>
+        </div>
+    </div>
     <div class="card">
-
-        <div style="padding:25px;">
-
-            <strong style="font-size:13px;">
-                Beloveeth Client Support
-            </strong>
-
-            <p style="
-                font-size:10px;
-                color:#667085;
-                margin-top:6px;
-            ">
-                Your property team is available for questions about your active property journey.
-            </p>
-
-        </div>
-
+        <form class="support-form" onsubmit="event.preventDefault();openModal('Request sent','Your inquiry has entered Beloveeth\\'s internal workflow and stays connected to your client and property record. A team member will follow up.','Done');this.reset();">
+            <div><label>Related property (optional)</label><input type="text" placeholder="e.g. Ikoyi Residence"></div>
+            <div><label>What do you need help with?</label><textarea required placeholder="I want more information about..."></textarea></div>
+            <button type="submit">Send to Beloveeth Support</button>
+        </form>
     </div>
-
 </section>
 
 
 <section class="view" id="view-pulse">
-
     <div class="welcome">
-
         <div>
-
-            <div class="eyebrow">
-                Beloveeth Pulse
-            </div>
-
-            <h1>
-                Market Intelligence.
-            </h1>
-
-            <p>
-                The data layer behind Beloveeth's property decisions.
-            </p>
-
+            <div class="eyebrow">Beloveeth Pulse</div>
+            <h1>Market Intelligence.</h1>
+            <p>The data layer behind Beloveeth's property decisions.</p>
         </div>
-
     </div>
-
     <div class="card">
-
         <div style="padding:25px;">
-
-            <strong style="font-size:15px;">
-                Beloveeth Pulse
-            </strong>
-
-            <p style="
-                font-size:10px;
-                color:#667085;
-                line-height:1.7;
-                margin-top:7px;
-            ">
-                Future versions will combine verified Beloveeth transaction
-                data, approved external datasets, historical pricing,
-                supply, demand and location intelligence.
-            </p>
-
+            <strong style="font-size:15px;">Beloveeth Pulse</strong>
+            <p style="font-size:10px;color:#667085;line-height:1.7;margin-top:7px;">Future versions will combine verified Beloveeth transaction data, approved external datasets, historical pricing, supply, demand and location intelligence.</p>
         </div>
-
     </div>
-
 </section>
 
 
@@ -3747,1538 +1211,351 @@ button {
 </div>
 
 
-<!-- =====================================================
-     FLOATING PROP
-     ===================================================== -->
+<!-- ===================================================== FLOATING PROPPY ===================================================== -->
 
-<button
-    class="prop-floating"
-    id="propButton"
->
-
+<button class="prop-floating" id="propButton">
     <div class="prop-orb"></div>
-
-    <div>
-        <strong>Ask Prop</strong>
-        <span>Property intelligence</span>
-    </div>
-
+    <div><strong>Ask Proppy</strong><span>Property intelligence</span></div>
 </button>
 
+<div class="overlay" id="propOverlay"></div>
 
-<!-- =====================================================
-     PROP DRAWER
-     ===================================================== -->
-
-<div
-    class="overlay"
-    id="propOverlay"
-></div>
-
-
-<aside
-    class="drawer"
-    id="propDrawer"
->
-
+<aside class="drawer" id="propDrawer">
     <div class="drawer-header">
-
         <div class="drawer-title">
-
             <div class="prop-orb"></div>
-
-            <div>
-
-                <strong>
-                    Prop Intelligence
-                </strong>
-
-                <span>
-                    Context-aware property analysis
-                </span>
-
-            </div>
-
+            <div><strong>Proppy Intelligence</strong><span>Context-aware property analysis</span></div>
         </div>
-
-        <button
-            class="close-btn"
-            id="closeProp"
-        >
-            ×
-        </button>
-
+        <button class="close-btn" id="closeProp">×</button>
     </div>
-
-
     <div class="prop-body">
-
-        <div class="prop-context">
-
-            <strong>
-                Current context
-            </strong>
-
-            <br>
-
-            Ikoyi • Residential Market • September 2026
-
-        </div>
-
-
+        <div class="prop-context"><strong>Current context</strong><br>Ikoyi • Residential Market • September 2026</div>
         <div class="prop-suggestions">
-
-            <button data-question="What is happening in Ikoyi?">
-                Ikoyi trend
-            </button>
-
-            <button data-question="Should I monitor this property?">
-                Analyze property
-            </button>
-
-            <button data-question="Compare Ikoyi and Lekki">
-                Compare locations
-            </button>
-
-            <button data-question="What affects property value here?">
-                Value drivers
-            </button>
-
+            <button data-question="What is happening in Ikoyi?">Ikoyi trend</button>
+            <button data-question="Should I monitor this property?">Analyze property</button>
+            <button data-question="Compare Ikoyi and Lekki">Compare locations</button>
+            <button data-question="What affects property value here?">Value drivers</button>
         </div>
-
-
-        <div
-            class="prop-answer"
-            id="propAnswer"
-        >
-
-            <small>
-                Prop interpretation
-            </small>
-
-            I'm currently looking at the market context surrounding your
-            selected location. Ask me about price movement, demand,
-            rental yield, comparable properties or the factors affecting
-            the opportunity.
-
+        <div class="prop-answer" id="propAnswer">
+            <small>Proppy interpretation</small>
+            I'm currently looking at the market context surrounding your selected location. Ask me about price movement, demand, rental yield, comparable properties or the factors affecting the opportunity.
         </div>
-
-
         <div class="prop-input">
-
-            <input
-                id="propInput"
-                placeholder="Ask Prop something..."
-            >
-
-            <button id="propSend">
-                →
-            </button>
-
+            <input id="propInput" placeholder="Ask Proppy something...">
+            <button id="propSend">→</button>
         </div>
-
     </div>
-
 </aside>
 
 
-<!-- =====================================================
-     PROFILE PANEL
-     ===================================================== -->
+<!-- ===================================================== PROFILE PANEL ===================================================== -->
 
-<div
-    class="profile-panel"
-    id="profilePanel"
->
-
+<div class="profile-panel" id="profilePanel">
     <div class="profile-summary">
-
-        <div class="avatar">
-            PD
-        </div>
-
-        <div>
-
-            <strong>
-                Philip Dare-Johnson
-            </strong>
-
-            <p>
-                Client account • Beloveeth
-            </p>
-
-        </div>
-
+        <div class="avatar">PD</div>
+        <div><strong>Philip Dare-Johnson</strong><p>Client account • Beloveeth</p></div>
     </div>
-
-
     <div class="profile-menu">
-
-        <button data-profile-action="profile">
-
-            <span>◉</span>
-
-            Profile
-
-        </button>
-
-
-        <button data-profile-action="settings">
-
-            <span>⚙</span>
-
-            Settings
-
-        </button>
-
-
-        <button data-profile-action="sync">
-
-            <span>⇄</span>
-
-            Prop-Sync
-
-        </button>
-
-
-        <button data-profile-action="preferences">
-
-            <span>⌁</span>
-
-            Preferences
-
-        </button>
-
-
-        <button data-profile-action="security">
-
-            <span>◇</span>
-
-            Security
-
-        </button>
-
-
-        <button data-profile-action="documents">
-
-            <span>▣</span>
-
-            Documents
-
-        </button>
-
-
-        <button data-profile-action="notifications">
-
-            <span>♢</span>
-
-            Notifications
-
-        </button>
-
-
-        <button
-            class="danger"
-            data-profile-action="logout"
-        >
-
-            <span>↪</span>
-
-            Sign out
-
-        </button>
-
+        <button data-profile-action="profile"><span>◉</span>Profile</button>
+        <button data-profile-action="settings"><span>⚙</span>Settings</button>
+        <button data-profile-action="sync"><span>⇄</span>Proppy-Sync</button>
+        <button data-profile-action="preferences"><span>⌁</span>Preferences</button>
+        <button data-profile-action="security"><span>◇</span>Security</button>
+        <button data-profile-action="documents"><span>▣</span>Documents</button>
+        <button data-profile-action="notifications"><span>♢</span>Notifications</button>
+        <button class="danger" data-profile-action="logout"><span>↪</span>Sign out</button>
     </div>
-
 </div>
 
 
-<!-- =====================================================
-     MODAL
-     ===================================================== -->
+<!-- ===================================================== MODAL ===================================================== -->
 
-<div
-    class="modal-overlay"
-    id="modalOverlay"
->
-
+<div class="modal-overlay" id="modalOverlay">
     <div class="modal">
-
         <div class="modal-header">
-
-            <h3 id="modalTitle">
-                Property Intelligence
-            </h3>
-
-            <button
-                class="close-btn"
-                id="closeModal"
-            >
-                ×
-            </button>
-
+            <h3 id="modalTitle">Property Intelligence</h3>
+            <button class="close-btn" id="closeModal">×</button>
         </div>
-
-
         <div class="modal-body">
-
-            <p id="modalText">
-                Property analysis.
-            </p>
-
+            <p id="modalText">Property analysis.</p>
             <div class="modal-actions">
-
-                <button
-                    class="secondary"
-                    id="cancelModal"
-                >
-                    Close
-                </button>
-
-                <button
-                    class="primary"
-                    id="modalPrimary"
-                >
-                    Continue
-                </button>
-
+                <button class="secondary" id="cancelModal">Close</button>
+                <button class="primary" id="modalPrimary">Continue</button>
             </div>
-
         </div>
-
     </div>
-
 </div>
 
 
 <script>
 
 /* =========================================================
-   DEMO DATA
-   =========================================================
-
-   IMPORTANT:
-   This is intentionally illustrative.
-
-   Production:
-   -----------------------------------------
-   Supabase
-       ↓
-   Verified Property Data
-       ↓
-   Market Data
-       ↓
-   Analytics Layer
-       ↓
-   Prop AI
-       ↓
-   Client Interface
-
-   Never present these demo values as live market data.
+   DEMO DATA — replace with Supabase + Proppy AI in production
    ========================================================= */
 
-
-/* =========================================================
-   NAVIGATION
-   ========================================================= */
-
-const navButtons =
-    document.querySelectorAll("[data-view]");
-
-const views =
-    document.querySelectorAll(".view");
+const navButtons = document.querySelectorAll("[data-view]");
+const views = document.querySelectorAll(".view");
 
 function showView(viewName) {
-
-    views.forEach(view => {
-
-        view.classList.remove("active");
-
-    });
-
-    const target =
-        document.getElementById(`view-${viewName}`);
-
-    if (target) {
-
-        target.classList.add("active");
-
-    }
-
-    navButtons.forEach(button => {
-
-        button.classList.toggle(
-            "active",
-            button.dataset.view === viewName
-        );
-
-    });
-
-    window.scrollTo({
-        top: 0,
-        behavior: "smooth"
-    });
-
+    views.forEach(view => view.classList.remove("active"));
+    const target = document.getElementById(`view-${viewName}`);
+    if (target) target.classList.add("active");
+    navButtons.forEach(button => button.classList.toggle("active", button.dataset.view === viewName));
+    window.scrollTo({ top: 0, behavior: "smooth" });
 }
 
 navButtons.forEach(button => {
-
     button.addEventListener("click", () => {
-
         showView(button.dataset.view);
-
-        document
-            .getElementById("sidebar")
-            .classList.remove("mobile-open");
-
+        document.getElementById("sidebar").classList.remove("mobile-open");
     });
-
 });
 
+document.querySelectorAll("[data-view-link]").forEach(button => {
+    button.addEventListener("click", () => showView(button.dataset.viewLink));
+});
 
-document
-    .querySelectorAll("[data-view-link]")
-    .forEach(button => {
+document.getElementById("mobileMenu").addEventListener("click", () => {
+    document.getElementById("sidebar").classList.toggle("mobile-open");
+});
 
-        button.addEventListener("click", () => {
+/* ---------- PROFILE PANEL ---------- */
 
-            showView(button.dataset.viewLink);
+const profilePanel = document.getElementById("profilePanel");
 
-        });
-
-    });
-
-
-/* =========================================================
-   MOBILE SIDEBAR
-   ========================================================= */
-
-document
-    .getElementById("mobileMenu")
-    .addEventListener("click", () => {
-
-        document
-            .getElementById("sidebar")
-            .classList.toggle("mobile-open");
-
-    });
-
-
-/* =========================================================
-   PROFILE PANEL
-   ========================================================= */
-
-const profilePanel =
-    document.getElementById("profilePanel");
-
-document
-    .getElementById("profileTrigger")
-    .addEventListener("click", event => {
-
-        event.stopPropagation();
-
-        profilePanel.classList.toggle("open");
-
-    });
-
+document.getElementById("profileTrigger").addEventListener("click", event => {
+    event.stopPropagation();
+    profilePanel.classList.toggle("open");
+});
 
 document.addEventListener("click", event => {
-
-    if (
-        !profilePanel.contains(event.target) &&
-        !event.target.closest("#profileTrigger")
-    ) {
-
+    if (!profilePanel.contains(event.target) && !event.target.closest("#profileTrigger")) {
         profilePanel.classList.remove("open");
-
     }
-
 });
 
-
-/* =========================================================
-   PROFILE ACTIONS
-   ========================================================= */
-
-document
-    .querySelectorAll("[data-profile-action]")
-    .forEach(button => {
-
-        button.addEventListener("click", () => {
-
-            const action =
-                button.dataset.profileAction;
-
-            profilePanel.classList.remove("open");
-
-            if (action === "sync") {
-
-                showView("prop-sync");
-
-                return;
-
-            }
-
-            if (action === "documents") {
-
-                showView("documents");
-
-                return;
-
-            }
-
-            openModal(
-                action.charAt(0).toUpperCase() + action.slice(1),
-                `${action.charAt(0).toUpperCase() + action.slice(1)} controls will be connected to the authenticated client profile in the production Supabase application.`,
-                "Open"
-            );
-
-        });
-
+document.querySelectorAll("[data-profile-action]").forEach(button => {
+    button.addEventListener("click", () => {
+        const action = button.dataset.profileAction;
+        profilePanel.classList.remove("open");
+        if (action === "sync") { showView("prop-sync"); return; }
+        if (action === "documents") { showView("documents"); return; }
+        openModal(
+            action.charAt(0).toUpperCase() + action.slice(1),
+            `${action.charAt(0).toUpperCase() + action.slice(1)} controls will be connected to the authenticated client profile in the production Supabase application.`,
+            "Open"
+        );
     });
+});
 
-
-/* =========================================================
-   MARKET DATA
-   ========================================================= */
+/* ---------- MARKET DATA / CHARTS ---------- */
 
 const marketData = {
-
-    ikoyi: {
-
-        label: "Ikoyi",
-
-        historical: [
-            100,
-            101.5,
-            103,
-            105.4,
-            107.2,
-            109.5,
-            112,
-            114.8
-        ],
-
-        forecast: [
-            116,
-            118,
-            120.5,
-            123,
-            125.5,
-            128
-        ],
-
-        currentPrice: 1.25,
-
-        projectedPrice: 1.40
-
-    },
-
-
-    lekki: {
-
-        label: "Lekki",
-
-        historical: [
-            100,
-            102,
-            104.5,
-            106,
-            109,
-            112,
-            115,
-            117
-        ],
-
-        forecast: [
-            119,
-            121.5,
-            124,
-            126.5,
-            129,
-            132
-        ],
-
-        currentPrice: .68,
-
-        projectedPrice: .76
-
-    },
-
-
-    ikeja: {
-
-        label: "Ikeja",
-
-        historical: [
-            100,
-            100.8,
-            102,
-            103.5,
-            105,
-            106.8,
-            108,
-            110
-        ],
-
-        forecast: [
-            111.5,
-            113,
-            115,
-            117,
-            119,
-            121
-        ],
-
-        currentPrice: .59,
-
-        projectedPrice: .65
-
-    },
-
-
-    yaba: {
-
-        label: "Yaba",
-
-        historical: [
-            100,
-            101.2,
-            103.5,
-            105,
-            107,
-            110,
-            112,
-            114
-        ],
-
-        forecast: [
-            116,
-            118.5,
-            121,
-            123.5,
-            126,
-            129
-        ],
-
-        currentPrice: .42,
-
-        projectedPrice: .48
-
-    }
-
+    ikoyi:  { label: "Ikoyi",  historical: [100,101.5,103,105.4,107.2,109.5,112,114.8], forecast: [116,118,120.5,123,125.5,128], currentPrice: 1.25, projectedPrice: 1.40 },
+    lekki:  { label: "Lekki",  historical: [100,102,104.5,106,109,112,115,117],         forecast: [119,121.5,124,126.5,129,132], currentPrice: .68,  projectedPrice: .76 },
+    ikeja:  { label: "Ikeja",  historical: [100,100.8,102,103.5,105,106.8,108,110],     forecast: [111.5,113,115,117,119,121],   currentPrice: .59,  projectedPrice: .65 },
+    yaba:   { label: "Yaba",   historical: [100,101.2,103.5,105,107,110,112,114],       forecast: [116,118.5,121,123.5,126,129], currentPrice: .42,  projectedPrice: .48 }
 };
-
-
-/* =========================================================
-   CHART
-   ========================================================= */
 
 let marketChart;
 
 function createMarketChart() {
-
-    const ctx =
-        document
-        .getElementById("marketChart")
-        .getContext("2d");
-
-    const data =
-        marketData.ikoyi;
-
-    const labels = [
-        "Apr",
-        "May",
-        "Jun",
-        "Jul",
-        "Aug",
-        "Sep",
-        "Oct",
-        "Nov",
-        "Dec",
-        "Jan",
-        "Feb",
-        "Mar",
-        "Apr",
-        "May"
-    ];
-
+    const ctx = document.getElementById("marketChart").getContext("2d");
+    const data = marketData.ikoyi;
+    const labels = ["Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec","Jan","Feb","Mar","Apr","May"];
 
     marketChart = new Chart(ctx, {
-
         type: "line",
-
         data: {
-
             labels,
-
             datasets: [
-
-                {
-
-                    label: "Historical",
-
-                    data: [
-                        ...data.historical,
-                        null,
-                        null,
-                        null,
-                        null,
-                        null,
-                        null
-                    ],
-
-                    borderColor: "#4A101D",
-
-                    backgroundColor:
-                        "rgba(74,16,29,.05)",
-
-                    borderWidth: 2.5,
-
-                    pointRadius: 0,
-
-                    tension: .4,
-
-                    fill: true
-
-                },
-
-
-                {
-
-                    label: "Modeled trajectory",
-
-                    data: [
-                        null,
-                        null,
-                        null,
-                        null,
-                        null,
-                        null,
-                        null,
-                        data.historical[
-                            data.historical.length - 1
-                        ],
-                        ...data.forecast
-                    ],
-
-                    borderColor: "#D4AF37",
-
-                    borderWidth: 2,
-
-                    borderDash: [5,5],
-
-                    pointRadius: 2,
-
-                    pointBackgroundColor:
-                        "#D4AF37",
-
-                    tension: .4,
-
-                    fill: false
-
-                }
-
+                { label: "Historical", data: [...data.historical,null,null,null,null,null,null], borderColor: "#4A101D", backgroundColor: "rgba(74,16,29,.05)", borderWidth: 2.5, pointRadius: 0, tension: .4, fill: true },
+                { label: "Modeled trajectory", data: [null,null,null,null,null,null,null,data.historical[data.historical.length-1],...data.forecast], borderColor: "#D4AF37", borderWidth: 2, borderDash: [5,5], pointRadius: 2, pointBackgroundColor: "#D4AF37", tension: .4, fill: false }
             ]
-
         },
-
         options: {
-
-            responsive: true,
-
-            maintainAspectRatio: false,
-
-            interaction: {
-                intersect: false,
-                mode: "index"
-            },
-
-            plugins: {
-
-                legend: {
-
-                    display: true,
-
-                    labels: {
-                        font: {
-                            size: 9
-                        }
-                    }
-
-                },
-
-                tooltip: {
-
-                    backgroundColor:
-                        "#1D1115",
-
-                    titleFont: {
-                        size: 10
-                    },
-
-                    bodyFont: {
-                        size: 9
-                    }
-
-                }
-
-            },
-
-            scales: {
-
-                x: {
-
-                    grid: {
-                        display: false
-                    },
-
-                    ticks: {
-                        font: {
-                            size: 8
-                        }
-                    }
-
-                },
-
-                y: {
-
-                    grid: {
-                        color:
-                            "rgba(0,0,0,.05)"
-                    },
-
-                    ticks: {
-                        font: {
-                            size: 8
-                        }
-                    }
-
-                }
-
-            }
-
+            responsive: true, maintainAspectRatio: false,
+            interaction: { intersect: false, mode: "index" },
+            plugins: { legend: { display: true, labels: { font: { size: 9 } } }, tooltip: { backgroundColor: "#1D1115", titleFont: { size: 10 }, bodyFont: { size: 9 } } },
+            scales: { x: { grid: { display: false }, ticks: { font: { size: 8 } } }, y: { grid: { color: "rgba(0,0,0,.05)" }, ticks: { font: { size: 8 } } } }
         }
-
     });
-
 }
 
 createMarketChart();
 
-
-/* =========================================================
-   MARKET LOCATION CHANGE
-   ========================================================= */
-
-document
-    .getElementById("locationSelect")
-    .addEventListener("change", event => {
-
-        updateMarket(
-            event.target.value
-        );
-
-    });
-
+document.getElementById("locationSelect").addEventListener("change", event => updateMarket(event.target.value));
 
 function updateMarket(location) {
-
-    const data =
-        marketData[location];
-
-    const historical =
-        data.historical;
-
-    const forecast =
-        data.forecast;
-
-
-    marketChart.data.datasets[0].data = [
-        ...historical,
-        null,
-        null,
-        null,
-        null,
-        null,
-        null
-    ];
-
-
-    marketChart.data.datasets[1].data = [
-        null,
-        null,
-        null,
-        null,
-        null,
-        null,
-        null,
-        historical[
-            historical.length - 1
-        ],
-        ...forecast
-    ];
-
-
+    const data = marketData[location];
+    marketChart.data.datasets[0].data = [...data.historical,null,null,null,null,null,null];
+    marketChart.data.datasets[1].data = [null,null,null,null,null,null,null,data.historical[data.historical.length-1],...data.forecast];
     marketChart.update();
 
+    const projectedIncrease = ((data.projectedPrice / data.currentPrice) - 1) * 100;
 
-    const projectedIncrease =
-        (
-            (
-                data.projectedPrice /
-                data.currentPrice
-            ) - 1
-        ) * 100;
-
-
-    document
-        .getElementById("propForecastTitle")
-        .textContent =
-            `${data.label} is showing positive modeled momentum.`;
-
-
-    document
-        .getElementById("propForecastText")
-        .textContent =
-
-        `Illustrative model: if the current trajectory persists, `
-        +
-        `${data.label}'s modeled price level could move from approximately `
-        +
-        `₦${data.currentPrice.toFixed(2)}m/m² toward `
-        +
-        `₦${data.projectedPrice.toFixed(2)}m/m² over the modeled period `
-        +
-        `(~${projectedIncrease.toFixed(1)}%). `
-        +
+    document.getElementById("propForecastTitle").textContent = `${data.label} is showing positive modeled momentum.`;
+    document.getElementById("propForecastText").textContent =
+        `Illustrative model: if the current trajectory persists, ${data.label}'s modeled price level could move from approximately ` +
+        `₦${data.currentPrice.toFixed(2)}m/m² toward ₦${data.projectedPrice.toFixed(2)}m/m² over the modeled period (~${projectedIncrease.toFixed(1)}%). ` +
         `This is a scenario, not a guaranteed future market price.`;
-
 }
-
-
-/* =========================================================
-   LARGE MARKET CHART
-   ========================================================= */
 
 function createLargeChart() {
-
-    const canvas =
-        document.getElementById(
-            "largeMarketChart"
-        );
-
+    const canvas = document.getElementById("largeMarketChart");
     if (!canvas) return;
-
-    const ctx =
-        canvas.getContext("2d");
-
-    const data =
-        marketData.ikoyi;
+    const ctx = canvas.getContext("2d");
+    const data = marketData.ikoyi;
 
     new Chart(ctx, {
-
         type: "line",
-
         data: {
-
-            labels: [
-                "Apr",
-                "May",
-                "Jun",
-                "Jul",
-                "Aug",
-                "Sep",
-                "Oct",
-                "Nov",
-                "Dec",
-                "Jan",
-                "Feb",
-                "Mar",
-                "Apr",
-                "May"
-            ],
-
+            labels: ["Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec","Jan","Feb","Mar","Apr","May"],
             datasets: [
-
-                {
-
-                    label: "Historical market index",
-
-                    data: [
-                        ...data.historical,
-                        null,
-                        null,
-                        null,
-                        null,
-                        null,
-                        null
-                    ],
-
-                    borderColor: "#4A101D",
-
-                    borderWidth: 3,
-
-                    pointRadius: 2,
-
-                    tension: .4
-
-                },
-
-
-                {
-
-                    label: "Modeled trajectory",
-
-                    data: [
-                        null,
-                        null,
-                        null,
-                        null,
-                        null,
-                        null,
-                        null,
-                        114.8,
-                        ...data.forecast
-                    ],
-
-                    borderColor: "#D4AF37",
-
-                    borderDash: [6,5],
-
-                    borderWidth: 2,
-
-                    pointRadius: 3,
-
-                    tension: .4
-
-                }
-
+                { label: "Historical market index", data: [...data.historical,null,null,null,null,null,null], borderColor: "#4A101D", borderWidth: 3, pointRadius: 2, tension: .4 },
+                { label: "Modeled trajectory", data: [null,null,null,null,null,null,null,114.8,...data.forecast], borderColor: "#D4AF37", borderDash: [6,5], borderWidth: 2, pointRadius: 3, tension: .4 }
             ]
-
         },
-
-        options: {
-
-            responsive: true,
-
-            maintainAspectRatio: false,
-
-            plugins: {
-
-                legend: {
-                    labels: {
-                        font: {
-                            size: 9
-                        }
-                    }
-                }
-
-            }
-
-        }
-
+        options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { labels: { font: { size: 9 } } } } }
     });
-
 }
 
+/* ---------- PROPPY DRAWER ---------- */
 
-/* =========================================================
-   PROP DRAWER
-   ========================================================= */
+const propDrawer = document.getElementById("propDrawer");
+const propOverlay = document.getElementById("propOverlay");
 
-const propDrawer =
-    document.getElementById("propDrawer");
+function openProp() { propDrawer.classList.add("open"); propOverlay.classList.add("open"); }
+function closeProp() { propDrawer.classList.remove("open"); propOverlay.classList.remove("open"); }
 
-const propOverlay =
-    document.getElementById("propOverlay");
+document.getElementById("propButton").addEventListener("click", openProp);
+document.getElementById("closeProp").addEventListener("click", closeProp);
+propOverlay.addEventListener("click", closeProp);
 
-
-function openProp() {
-
-    propDrawer.classList.add("open");
-
-    propOverlay.classList.add("open");
-
-}
-
-
-function closeProp() {
-
-    propDrawer.classList.remove("open");
-
-    propOverlay.classList.remove("open");
-
-}
-
-
-document
-    .getElementById("propButton")
-    .addEventListener(
-        "click",
-        openProp
-    );
-
-
-document
-    .getElementById("closeProp")
-    .addEventListener(
-        "click",
-        closeProp
-    );
-
-
-propOverlay.addEventListener(
-    "click",
-    closeProp
-);
-
-
-/* =========================================================
-   PROP QUESTIONS
-   ========================================================= */
-
-const propAnswer =
-    document.getElementById("propAnswer");
+const propAnswer = document.getElementById("propAnswer");
 
 function answerProp(question) {
-
     let answer = "";
+    const q = question.toLowerCase();
 
-    const q =
-        question.toLowerCase();
-
-
-    if (
-        q.includes("ikoyi") &&
-        q.includes("happening")
-    ) {
-
-        answer =
-            `Ikoyi is showing positive modeled price momentum in this demonstration dataset. `
-            +
-            `Prop would normally combine verified Beloveeth transactions, supply, demand, `
-            +
-            `comparable properties and rental economics before generating a market interpretation.`;
-
+    if (q.includes("ikoyi") && q.includes("happening")) {
+        answer = `Ikoyi is showing positive modeled price momentum in this demonstration dataset. Proppy would normally combine verified Beloveeth transactions, supply, demand, comparable properties and rental economics before generating a market interpretation.`;
+    } else if (q.includes("monitor") || q.includes("property")) {
+        answer = `The property currently sits within a location showing positive modeled momentum. That alone does not establish that it is an attractive investment. I would also examine its asking price against comparable transactions, rental yield, documentation status, liquidity and property-specific risks.`;
+    } else if (q.includes("compare")) {
+        answer = `In the current demonstration model, Lekki shows a stronger modeled percentage trajectory while Ikoyi maintains a higher modeled price level. A production comparison would also account for rental yields, demand, supply, transaction liquidity and property type.`;
+    } else if (q.includes("value")) {
+        answer = `Important value drivers can include location accessibility, infrastructure, comparable transactions, land characteristics, building quality, supply constraints, rental demand and the quality of the property's documentation.`;
+    } else if (q.includes("document") || q.includes("explain")) {
+        answer = `I can help explain what a document or clause generally means in plain language. I'm not a substitute for Beloveeth's legal/verification review — I explain, Beloveeth's workflow verifies.`;
+    } else if (q.includes("own") || q.includes("my properties")) {
+        answer = `Your My Properties record keeps acquisition details, ownership percentage, documents and protection status together for anything you've acquired through Beloveeth. Saved Properties is different — that's just what you're watching.`;
+    } else {
+        answer = `I can analyze the property or market context using the information available to Beloveeth. Try asking me about price movement, demand, rental yield, comparable properties, location intelligence, your documents, or Proppy-Sync.`;
     }
 
-
-    else if (
-        q.includes("monitor") ||
-        q.includes("property")
-    ) {
-
-        answer =
-            `The property currently sits within a location showing positive modeled momentum. `
-            +
-            `That alone does not establish that it is an attractive investment. `
-            +
-            `I would also examine its asking price against comparable transactions, `
-            +
-            `rental yield, documentation status, liquidity and property-specific risks.`;
-
-    }
-
-
-    else if (
-        q.includes("compare")
-    ) {
-
-        answer =
-            `In the current demonstration model, Lekki shows a stronger modeled percentage trajectory `
-            +
-            `while Ikoyi maintains a higher modeled price level. A production comparison would `
-            +
-            `also account for rental yields, demand, supply, transaction liquidity and property type.`;
-
-    }
-
-
-    else if (
-        q.includes("value")
-    ) {
-
-        answer =
-            `Important value drivers can include location accessibility, infrastructure, comparable `
-            +
-            `transactions, land characteristics, building quality, supply constraints, rental demand `
-            +
-            `and the quality of the property's documentation.`;
-
-    }
-
-
-    else {
-
-        answer =
-            `I can analyze the property or market context using the information available to Beloveeth. `
-            +
-            `Try asking me about price movement, demand, rental yield, comparable properties, `
-            +
-            `location intelligence or Prop-Sync.`;
-
-    }
-
-
-    propAnswer.innerHTML = `
-
-        <small>
-            Prop interpretation
-        </small>
-
-        ${answer}
-
-    `;
-
+    propAnswer.innerHTML = `<small>Proppy interpretation</small>${answer}`;
 }
 
+document.querySelectorAll("[data-question]").forEach(button => {
+    button.addEventListener("click", () => answerProp(button.dataset.question));
+});
 
-document
-    .querySelectorAll("[data-question]")
-    .forEach(button => {
+document.getElementById("propSend").addEventListener("click", () => {
+    const input = document.getElementById("propInput");
+    if (!input.value.trim()) return;
+    answerProp(input.value);
+    input.value = "";
+});
 
-        button.addEventListener("click", () => {
+document.getElementById("propInput").addEventListener("keydown", event => {
+    if (event.key === "Enter") document.getElementById("propSend").click();
+});
 
-            answerProp(
-                button.dataset.question
-            );
+/* ---------- PROPERTY ANALYSIS ---------- */
 
-        });
-
+document.querySelectorAll("[data-property]").forEach(button => {
+    button.addEventListener("click", () => {
+        const property = button.dataset.property;
+        openModal(
+            `${property} — Proppy Analysis`,
+            `Proppy is preparing a contextual analysis for ${property}. In production this panel will combine property records, comparable transactions, location intelligence, market trends, rental economics and verification status.`,
+            "Ask Proppy"
+        );
     });
+});
 
+/* ---------- SAVE BUTTONS ---------- */
 
-document
-    .getElementById("propSend")
-    .addEventListener("click", () => {
-
-        const input =
-            document.getElementById("propInput");
-
-        if (!input.value.trim()) return;
-
-        answerProp(input.value);
-
-        input.value = "";
-
+document.querySelectorAll("[data-save]").forEach(button => {
+    button.addEventListener("click", () => {
+        const saved = button.textContent.includes("Saved");
+        button.textContent = saved ? "♡ Save" : "♥ Saved";
+        button.style.background = saved ? "" : "#E9F8F1";
+        button.style.color = saved ? "" : "#16A36A";
     });
+});
 
+/* ---------- PROPPY-SYNC / VIEWING / REPORT ---------- */
 
-document
-    .getElementById("propInput")
-    .addEventListener(
-        "keydown",
-        event => {
-
-            if (
-                event.key === "Enter"
-            ) {
-
-                document
-                    .getElementById("propSend")
-                    .click();
-
-            }
-
-        }
+document.getElementById("createSync").addEventListener("click", () => {
+    openModal(
+        "Create Proppy-Sync",
+        `Create a private collaboration workspace around a property. You will eventually be able to select a property, invite another Beloveeth client, define the collaboration type, establish contribution terms and manage the shared workspace.`,
+        "Start Proppy-Sync"
     );
+});
 
-
-/* =========================================================
-   PROPERTY ANALYSIS
-   ========================================================= */
-
-document
-    .querySelectorAll("[data-property]")
-    .forEach(button => {
-
-        button.addEventListener("click", () => {
-
-            const property =
-                button.dataset.property;
-
-            openModal(
-
-                `${property} — Prop Analysis`,
-
-                `Prop is preparing a contextual analysis for ${property}. `
-                +
-                `In production this panel will combine property records, `
-                +
-                `comparable transactions, location intelligence, market trends, `
-                +
-                `rental economics and verification status.`,
-
-                "Ask Prop"
-
-            );
-
-        });
-
-    });
-
-
-/* =========================================================
-   SAVE BUTTONS
-   ========================================================= */
-
-document
-    .querySelectorAll("[data-save]")
-    .forEach(button => {
-
-        button.addEventListener("click", () => {
-
-            const saved =
-                button.textContent.includes("Saved");
-
-            button.textContent =
-                saved ? "♡ Save" : "♥ Saved";
-
-            if (!saved) {
-
-                button.style.background =
-                    "#E9F8F1";
-
-                button.style.color =
-                    "#16A36A";
-
-            }
-
-            else {
-
-                button.style.background =
-                    "";
-
-                button.style.color =
-                    "";
-
-            }
-
-        });
-
-    });
-
-
-/* =========================================================
-   PROP-SYNC
-   ========================================================= */
-
-document
-    .getElementById("createSync")
-    .addEventListener("click", () => {
-
-        openModal(
-
-            "Create Prop-Sync",
-
-            `Create a private collaboration workspace around a property. `
-            +
-            `You will eventually be able to select a property, invite another `
-            +
-            `Beloveeth client, define the collaboration type, establish contribution `
-            +
-            `terms and manage the shared workspace.`,
-
-            "Start Prop-Sync"
-
-        );
-
-    });
-
-
-/* =========================================================
-   VIEWING
-   ========================================================= */
-
-document
-    .getElementById("bookViewing")
-    .addEventListener("click", () => {
-
-        openModal(
-
-            "Viewing Management",
-
-            `Your Ikoyi Residence viewing is currently scheduled for `
-            +
-            `24 September 2026 at 11:30 AM. `
-            +
-            `The production version will connect this action to the `
-            +
-            `Beloveeth viewing and calendar workflow.`,
-
-            "Manage Viewing"
-
-        );
-
-    });
-
-
-/* =========================================================
-   REPORT
-   ========================================================= */
-
-document
-    .getElementById("openReport")
-    .addEventListener("click", () => {
-
-        openModal(
-
-            "Beloveeth Market Report",
-
-            `This report will eventually be generated from the Beloveeth Pulse `
-            +
-            `data layer and may contain historical market movement, location `
-            +
-            `analysis, supply, demand, pricing and investment scenarios.`,
-
-            "Open Report"
-
-        );
-
-    });
-
-
-/* =========================================================
-   MODAL
-   ========================================================= */
-
-const modalOverlay =
-    document.getElementById(
-        "modalOverlay"
+document.getElementById("bookViewing").addEventListener("click", () => {
+    openModal(
+        "Viewing Management",
+        `Your Ikoyi Residence viewing is currently scheduled for 24 September 2026 at 11:30 AM. The production version will connect this action to the Beloveeth viewing and calendar workflow.`,
+        "Manage Viewing"
     );
+});
 
-function openModal(
-    title,
-    text,
-    primary
-) {
+document.getElementById("openReport").addEventListener("click", () => {
+    openModal(
+        "Beloveeth Market Report",
+        `This report will eventually be generated from the Beloveeth Pulse data layer and may contain historical market movement, location analysis, supply, demand, pricing and investment scenarios.`,
+        "Open Report"
+    );
+});
 
-    document
-        .getElementById("modalTitle")
-        .textContent = title;
+/* ---------- MODAL ---------- */
 
-    document
-        .getElementById("modalText")
-        .textContent = text;
+const modalOverlay = document.getElementById("modalOverlay");
 
-    document
-        .getElementById("modalPrimary")
-        .textContent = primary;
-
+function openModal(title, text, primary) {
+    document.getElementById("modalTitle").textContent = title;
+    document.getElementById("modalText").textContent = text;
+    document.getElementById("modalPrimary").textContent = primary;
     modalOverlay.classList.add("open");
-
 }
 
+function closeModal() { modalOverlay.classList.remove("open"); }
 
-function closeModal() {
+document.getElementById("closeModal").addEventListener("click", closeModal);
+document.getElementById("cancelModal").addEventListener("click", closeModal);
+modalOverlay.addEventListener("click", event => { if (event.target === modalOverlay) closeModal(); });
 
-    modalOverlay.classList.remove("open");
+/* ---------- NOTIFICATIONS ---------- */
 
-}
+document.getElementById("notificationButton").addEventListener("click", () => {
+    openModal("Notifications", `You have 2 document actions requiring attention and 1 upcoming property viewing.`, "Review");
+});
 
+/* ---------- SEARCH ---------- */
 
-document
-    .getElementById("closeModal")
-    .addEventListener(
-        "click",
-        closeModal
-    );
+document.getElementById("globalSearch").addEventListener("keydown", event => {
+    if (event.key !== "Enter") return;
+    const query = event.target.value.trim();
+    if (!query) return;
+    showView("explore");
+    console.log("Search:", query);
+});
 
-
-document
-    .getElementById("cancelModal")
-    .addEventListener(
-        "click",
-        closeModal
-    );
-
-
-modalOverlay.addEventListener(
-    "click",
-    event => {
-
-        if (
-            event.target ===
-            modalOverlay
-        ) {
-
-            closeModal();
-
-        }
-
-    }
-);
-
-
-/* =========================================================
-   NOTIFICATIONS
-   ========================================================= */
-
-document
-    .getElementById("notificationButton")
-    .addEventListener("click", () => {
-
-        openModal(
-
-            "Notifications",
-
-            `You have 2 document actions requiring attention and 1 upcoming property viewing.`,
-
-            "Review"
-
-        );
-
-    });
-
-
-/* =========================================================
-   SEARCH
-   ========================================================= */
-
-document
-    .getElementById("globalSearch")
-    .addEventListener(
-        "keydown",
-        event => {
-
-            if (
-                event.key !== "Enter"
-            ) return;
-
-            const query =
-                event.target.value
-                .trim();
-
-            if (!query) return;
-
-            showView("explore");
-
-            /*
-             * Production:
-             * This becomes a permission-aware
-             * Supabase search across:
-             *
-             * properties
-             * locations
-             * reports
-             * documents
-             * opportunities
-             * messages
-             */
-
-            console.log(
-                "Search:",
-                query
-            );
-
-        }
-    );
-
-
-/* =========================================================
-   INITIALISE
-   ========================================================= */
+/* ---------- INITIALISE ---------- */
 
 createLargeChart();
 
