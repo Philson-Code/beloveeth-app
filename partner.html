@@ -3,299 +3,875 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Beloveeth — Partner & JV Portal</title>
+<meta name="theme-color" content="#f8f3ec">
+<title>Beloveeth | Partner Workspace</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Sora:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <style>
-:root {
-  --maroon: #5A1725;
-  --burgundy: #6B1E2E;
-  --gold: #D4AF37;
-  --ivory: #FCFBF8;
-  --white: #FFFFFF;
-  --soft: #F4F2EE;
-  --grey: #D9DCE0;
-  --slate: #66707A;
-  --charcoal: #20252B;
-  --green: #2E7D32;
-  --amber: #C67D0A;
+:root{
+ --maroon:#4a101d;--maroon-2:#681d31;--maroon-3:#8a3048;--rose:#c86b85;--gold:#b8912a;
+ --ivory:#f8f3ec;--paper:#fffdfa;--sand:#efe5d8;
+ --ink:#2b1218;--muted:#7b6b6e;--muted-2:#a29396;
+ --line:rgba(74,16,29,.11);--line-strong:rgba(74,16,29,.18);
+ --green:#1f9d6b;--red:#c9364d;--sky:#5a9fd8;
+ --radius:24px;--shadow:0 18px 50px rgba(74,16,29,.08);--shadow-lg:0 30px 80px rgba(74,16,29,.16);
+ --fd:"Sora",sans-serif;--fb:"Manrope",sans-serif;
 }
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{min-height:100vh;font-family:var(--fb);color:var(--ink);-webkit-font-smoothing:antialiased;
+ background:radial-gradient(900px 520px at 88% -6%,rgba(104,29,49,.17),transparent 62%),
+ radial-gradient(760px 520px at -4% 58%,rgba(184,145,42,.11),transparent 60%),
+ radial-gradient(640px 420px at 55% 105%,rgba(200,107,133,.12),transparent 60%),var(--ivory);
+ background-attachment:fixed}
+button,input,select,textarea{font:inherit;color:inherit}
+button{border:0;background:none;cursor:pointer}
+a{color:inherit;text-decoration:none}
+:focus-visible{outline:2px solid var(--maroon-3);outline-offset:2px}
+.ambient{position:fixed;inset:0;pointer-events:none;z-index:0;background-image:radial-gradient(rgba(74,16,29,.07) 1px,transparent 1px);background-size:30px 30px;-webkit-mask-image:linear-gradient(180deg,#000,transparent 55%);mask-image:linear-gradient(180deg,#000,transparent 55%)}
 
-* { margin: 0; padding: 0; box-sizing: border-box; }
-body {
-  font-family: 'Inter', system-ui, -apple-system, sans-serif;
-  background: var(--ivory);
-  color: var(--charcoal);
-  min-height: 100vh;
+/* ---------- SHELL ---------- */
+.app{position:relative;z-index:1;display:flex;min-height:100vh}
+.sidebar{position:fixed;inset:0 auto 0 0;width:268px;z-index:60;display:flex;flex-direction:column;
+ background:linear-gradient(170deg,rgba(255,253,250,.92),rgba(250,238,240,.72));backdrop-filter:blur(24px);
+ border-right:1px solid var(--line);transition:transform .3s cubic-bezier(.2,.8,.2,1)}
+.brand{display:flex;align-items:center;gap:12px;height:80px;padding:0 22px;border-bottom:1px solid var(--line)}
+.brand-mark{width:38px;height:38px;border-radius:12px;display:grid;place-items:center;color:#fff;font-family:var(--fd);font-weight:800;
+ background:linear-gradient(145deg,var(--maroon-3),var(--maroon));box-shadow:0 8px 24px rgba(74,16,29,.28)}
+.brand strong{display:block;font-family:var(--fd);font-size:15px;letter-spacing:.12em;color:var(--maroon)}
+.brand small{display:block;margin-top:1px;color:var(--muted);font-size:10px;letter-spacing:.08em}
+.ws{margin:16px;padding:13px;border-radius:18px;background:rgba(255,255,255,.7);border:1px solid var(--line);box-shadow:inset 0 1px 0 #fff}
+.ws em{display:block;font-style:normal;color:var(--muted);font-size:10px;font-weight:800;letter-spacing:.1em;text-transform:uppercase}
+.ws-row{display:flex;align-items:center;gap:10px;margin-top:9px}
+.avatar{width:32px;height:32px;flex:none;border-radius:50%;display:grid;place-items:center;color:#fff;font-size:11px;font-weight:800;
+ background:linear-gradient(145deg,var(--maroon-3),var(--maroon))}
+.ws-row strong{display:block;font-size:12.5px}
+.ws-row span{display:block;margin-top:2px;color:var(--muted);font-size:10.5px}
+.nav{flex:1;overflow:auto;padding:4px 14px 20px;scrollbar-width:thin}
+.nav h6{margin:16px 10px 6px;color:var(--muted-2);font-size:9.5px;font-weight:800;letter-spacing:.12em;text-transform:uppercase}
+.nav-item{width:100%;display:flex;align-items:center;gap:11px;margin:2px 0;padding:11px 13px;border-radius:13px;
+ color:#6b5a5e;font-size:13px;font-weight:700;text-align:left;transition:.2s ease}
+.nav-item:hover{background:rgba(74,16,29,.06);color:var(--maroon)}
+.nav-item.active{color:#fff;background:linear-gradient(135deg,var(--maroon-2),var(--maroon));box-shadow:0 10px 24px rgba(74,16,29,.22)}
+.nav-icon{width:17px;text-align:center;font-size:14px;opacity:.85}
+.count{margin-left:auto;min-width:21px;height:21px;padding:0 6px;border-radius:100px;display:grid;place-items:center;
+ font-size:10px;font-weight:800;color:var(--maroon-2);background:rgba(104,29,49,.09)}
+.nav-item.active .count{color:#fff;background:rgba(255,255,255,.22)}
+.side-foot{padding:14px;border-top:1px solid var(--line);display:flex;align-items:center;gap:10px}
+.side-foot strong{display:block;font-size:12px}
+.side-foot span{display:block;margin-top:2px;color:var(--muted);font-size:10.5px}
+
+.main{flex:1;min-width:0;margin-left:268px}
+.topbar{position:sticky;top:0;z-index:50;height:74px;display:flex;align-items:center;gap:14px;padding:0 30px;
+ background:rgba(248,243,236,.8);backdrop-filter:blur(22px) saturate(140%);border-bottom:1px solid var(--line)}
+.search{position:relative;flex:1;max-width:420px}
+.search input{width:100%;height:42px;padding:0 14px 0 40px;border-radius:13px;background:rgba(255,255,255,.75);
+ border:1px solid var(--line);font-size:13.5px;outline:none;transition:.2s}
+.search input:focus{border-color:var(--maroon-3);box-shadow:0 0 0 4px rgba(138,48,72,.1)}
+.search i{position:absolute;left:14px;top:11px;color:var(--muted-2);font-style:normal}
+.top-actions{margin-left:auto;display:flex;align-items:center;gap:9px}
+.icon-btn{position:relative;width:40px;height:40px;display:grid;place-items:center;border-radius:13px;color:var(--maroon);
+ background:rgba(255,255,255,.7);border:1px solid var(--line);transition:.2s}
+.icon-btn:hover{background:#fff;transform:translateY(-1px)}
+.dot{position:absolute;top:9px;right:9px;width:7px;height:7px;border-radius:50%;background:var(--red);border:1.5px solid var(--ivory)}
+.status{display:flex;align-items:center;gap:8px;color:var(--muted);font-size:12px;font-weight:600}
+.status i{width:8px;height:8px;border-radius:50%;background:var(--green);box-shadow:0 0 0 4px rgba(31,157,107,.16)}
+.menu-btn{display:none;width:42px;height:42px;border-radius:12px;background:rgba(74,16,29,.07);color:var(--maroon);font-size:20px}
+.workspace{max-width:1500px;margin:0 auto;padding:30px 30px 120px}
+
+/* ---------- SHARED ---------- */
+.view{display:none;animation:in .35s ease}
+.view.active{display:block}
+@keyframes in{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+.head{display:flex;align-items:flex-end;justify-content:space-between;gap:18px;margin-bottom:24px;flex-wrap:wrap}
+.head small{display:flex;align-items:center;gap:9px;color:var(--muted);font-size:12.5px;font-weight:700}
+.head small b{width:24px;height:2px;border-radius:2px;background:var(--gold)}
+.head h1{margin-top:8px;font-family:var(--fd);font-size:clamp(28px,3.2vw,44px);line-height:1.02;letter-spacing:-.065em;color:var(--maroon)}
+.head p{margin-top:9px;max-width:560px;color:#6b5a5e;font-size:14px;line-height:1.6}
+.acts{display:flex;flex-wrap:wrap;gap:10px}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:7px;padding:12px 17px;border-radius:12px;
+ font-size:13px;font-weight:800;transition:transform .2s ease,box-shadow .2s ease,background .2s ease}
+.btn.primary{color:#fff;background:linear-gradient(135deg,var(--maroon-2),var(--maroon));box-shadow:0 12px 30px rgba(74,16,29,.24)}
+.btn.ghost{color:var(--maroon);background:rgba(255,255,255,.7);border:1px solid var(--line-strong)}
+.btn.soft{color:var(--maroon-2);background:rgba(104,29,49,.08);border:1px solid rgba(104,29,49,.12)}
+.btn:hover{transform:translateY(-2px)}
+.btn.ghost:hover{background:#fff}
+.card{position:relative;overflow:hidden;border-radius:var(--radius);border:1px solid var(--line);
+ background:linear-gradient(150deg,rgba(255,255,255,.92),rgba(255,253,250,.7));backdrop-filter:blur(20px);
+ box-shadow:var(--shadow),inset 0 1px 0 #fff;transition:border-color .25s,box-shadow .25s}
+.card:hover{border-color:var(--line-strong)}
+.card-head{display:flex;align-items:flex-start;justify-content:space-between;gap:12px;padding:20px 22px 0}
+.label{color:var(--muted);font-size:11px;font-weight:700;letter-spacing:.04em}
+.title{margin-top:4px;font-family:var(--fd);font-size:17px;font-weight:600;letter-spacing:-.035em}
+.body{padding:18px 22px 22px}
+.pill{padding:6px 10px;border-radius:100px;font-size:10px;font-weight:800;letter-spacing:.06em;white-space:nowrap;
+ color:var(--maroon-2);background:rgba(104,29,49,.07);border:1px solid rgba(104,29,49,.12)}
+.pill.green{color:var(--green);background:rgba(31,157,107,.09);border-color:rgba(31,157,107,.16)}
+.pill.red{color:var(--red);background:rgba(201,54,77,.08);border-color:rgba(201,54,77,.16)}
+.pill.gold{color:#8a6a12;background:rgba(184,145,42,.12);border-color:rgba(184,145,42,.22)}
+.pill.sky{color:#2f6d9e;background:rgba(90,159,216,.12);border-color:rgba(90,159,216,.22)}
+.grid-5{display:grid;grid-template-columns:repeat(5,1fr);gap:14px;margin-bottom:18px}
+.grid-2{display:grid;grid-template-columns:1.45fr .85fr;gap:16px;margin-bottom:18px}
+.grid-3{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.kpi{padding:20px}
+.kpi span{color:var(--muted);font-size:11.5px;font-weight:700}
+.kpi strong{display:block;margin-top:10px;font-family:var(--fd);font-size:30px;letter-spacing:-.055em;color:var(--maroon)}
+.kpi small{display:block;margin-top:6px;font-size:11.5px;font-weight:700;color:var(--green)}
+.kpi small.n{color:var(--muted-2);font-weight:600}
+.kpi::after{content:"";position:absolute;right:-30px;bottom:-34px;width:96px;height:96px;border-radius:50%;
+ background:radial-gradient(circle,rgba(200,107,133,.22),transparent 68%)}
+
+table{width:100%;border-collapse:collapse;min-width:620px}
+.tw{overflow:auto}
+th{padding:13px 20px;text-align:left;color:var(--muted);font-size:10.5px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;
+ background:rgba(74,16,29,.03);border-bottom:1px solid var(--line)}
+td{padding:15px 20px;border-bottom:1px solid var(--line);font-size:13px;vertical-align:middle}
+tr:last-child td{border-bottom:0}
+tbody tr{transition:background .2s}
+tbody tr:hover{background:rgba(255,255,255,.6)}
+td strong{font-weight:800}
+td em{display:block;margin-top:3px;font-style:normal;color:var(--muted);font-size:11.5px}
+.thumb{width:46px;height:42px;flex:none;border-radius:11px;background-size:cover;background-position:center;background-color:var(--sand);border:1px solid var(--line)}
+.cellflex{display:flex;align-items:center;gap:11px}
+
+.feed{display:flex;gap:12px;padding:13px 0;border-bottom:1px solid var(--line)}
+.feed:last-child{border-bottom:0}
+.feed i{width:32px;height:32px;flex:none;display:grid;place-items:center;border-radius:11px;font-style:normal;font-size:13px;
+ color:var(--maroon-2);background:rgba(104,29,49,.08)}
+.feed strong{font-size:12.5px}
+.feed p{margin-top:3px;color:var(--muted);font-size:11.5px;line-height:1.5}
+.feed span{margin-left:auto;color:var(--muted-2);font-size:10.5px;white-space:nowrap}
+.bar{height:7px;border-radius:100px;background:rgba(74,16,29,.09);overflow:hidden}
+.bar span{display:block;height:100%;border-radius:100px;background:linear-gradient(90deg,var(--maroon-2),var(--rose))}
+.funnel{display:grid;gap:13px}
+.funnel .row{display:flex;justify-content:space-between;font-size:12px;margin-bottom:6px}
+
+/* property cards */
+.pgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(270px,1fr));gap:16px}
+.pcard{overflow:hidden;border-radius:24px;background:var(--paper);border:1px solid var(--line);box-shadow:var(--shadow);
+ text-align:left;transition:transform .3s cubic-bezier(.2,.8,.2,1),box-shadow .3s}
+.pcard:hover{transform:translateY(-6px);box-shadow:var(--shadow-lg)}
+.pimg{position:relative;height:180px;background-size:cover;background-position:center;background-color:var(--sand)}
+.pimg::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(40,8,17,.3),transparent 40%)}
+.chip{position:absolute;z-index:2;top:13px;left:13px;padding:6px 10px;border-radius:100px;color:var(--maroon);
+ background:rgba(255,253,250,.92);font-size:10.5px;font-weight:800;letter-spacing:.04em}
+.price{position:absolute;z-index:2;bottom:12px;left:13px;padding:7px 11px;border-radius:100px;color:#fff;
+ background:rgba(40,8,17,.6);backdrop-filter:blur(6px);font-family:var(--fd);font-size:13px;font-weight:600}
+.pbody{padding:16px 18px 18px}
+.pbody small{color:var(--maroon-3);font-size:12px;font-weight:700}
+.pbody h3{margin-top:5px;font-family:var(--fd);font-size:17px;line-height:1.22;letter-spacing:-.045em}
+.pstats{display:flex;gap:16px;margin-top:14px;padding-top:13px;border-top:1px solid var(--line)}
+.pstats div strong{display:block;font-family:var(--fd);font-size:16px;color:var(--maroon)}
+.pstats div span{display:block;margin-top:2px;color:var(--muted);font-size:10.5px;font-weight:600}
+.pacts{display:flex;gap:8px;margin-top:14px}
+.pacts .btn{flex:1;padding:10px;font-size:12px}
+.tabs{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:18px}
+.tabs button{padding:9px 15px;border-radius:100px;color:#6b5a5e;background:rgba(255,255,255,.7);border:1px solid var(--line);
+ font-size:12.5px;font-weight:700;transition:.2s}
+.tabs button:hover{border-color:var(--line-strong);color:var(--maroon)}
+.tabs button.active{color:#fff;background:var(--maroon);border-color:var(--maroon)}
+
+/* forms */
+.split{display:grid;grid-template-columns:1.35fr .65fr;gap:16px;align-items:start}
+.fgrid{display:grid;grid-template-columns:1fr 1fr;gap:13px}
+.f{display:flex;flex-direction:column;gap:6px}
+.f.full{grid-column:1/-1}
+.f label{color:var(--muted);font-size:12px;font-weight:700}
+.f input,.f select,.f textarea{width:100%;padding:12px 14px;border-radius:12px;background:#fff;border:1px solid var(--line-strong);
+ font-size:13.5px;outline:none;transition:.2s}
+.f textarea{min-height:110px;resize:vertical}
+.f input:focus,.f select:focus,.f textarea:focus{border-color:var(--maroon-3);box-shadow:0 0 0 4px rgba(138,48,72,.12)}
+.sect{margin-bottom:26px}
+.sect:last-child{margin-bottom:0}
+.sect h4{font-family:var(--fd);font-size:16px;letter-spacing:-.03em}
+.sect p.sub{margin:4px 0 15px;color:var(--muted);font-size:12.5px}
+.drop{min-height:170px;display:grid;place-items:center;text-align:center;border-radius:18px;border:1.5px dashed var(--line-strong);
+ background:rgba(255,255,255,.55);cursor:pointer;transition:.2s}
+.drop:hover{border-color:var(--maroon-3);background:rgba(200,107,133,.07)}
+.drop b{display:block;margin-top:10px;font-size:13.5px}
+.drop span{display:block;margin-top:5px;color:var(--muted);font-size:12px}
+.drop i{display:grid;place-items:center;width:48px;height:48px;margin:0 auto;border-radius:15px;font-style:normal;font-size:19px;
+ color:var(--maroon);background:rgba(104,29,49,.08)}
+.note{padding:14px 16px;border-radius:16px;font-size:12.5px;line-height:1.6;color:#6b5a5e;
+ background:rgba(104,29,49,.05);border:1px solid rgba(104,29,49,.1)}
+.note.warn{color:#8a6a12;background:rgba(184,145,42,.1);border-color:rgba(184,145,42,.2)}
+
+/* drawer */
+.overlay{position:fixed;inset:0;z-index:95;background:rgba(43,18,24,.42);backdrop-filter:blur(10px);
+ opacity:0;visibility:hidden;transition:.3s}
+.overlay.open{opacity:1;visibility:visible}
+.drawer{position:absolute;right:0;top:0;bottom:0;width:min(520px,100%);overflow:auto;padding:28px;
+ background:var(--paper);box-shadow:-24px 0 70px rgba(74,16,29,.2);transform:translateX(20px);transition:transform .35s cubic-bezier(.2,.8,.2,1)}
+.overlay.open .drawer{transform:none}
+.dhead{display:flex;justify-content:space-between;gap:16px;align-items:flex-start;margin-bottom:22px}
+.dhead h2{margin-top:6px;font-family:var(--fd);font-size:26px;letter-spacing:-.055em;color:var(--maroon)}
+.dhead p{margin-top:5px;color:var(--muted);font-size:12.5px}
+.dclose{width:38px;height:38px;flex:none;border-radius:50%;color:var(--maroon);background:rgba(74,16,29,.07);font-size:20px}
+.dimg{height:190px;border-radius:20px;background-size:cover;background-position:center;background-color:var(--sand)}
+.specs{display:grid;grid-template-columns:repeat(2,1fr);gap:9px;margin-top:16px}
+.spec{padding:13px;border-radius:14px;background:var(--ivory);border:1px solid var(--line)}
+.spec span{display:block;color:var(--muted);font-size:11px;font-weight:600}
+.spec strong{display:block;margin-top:4px;font-family:var(--fd);font-size:17px;color:var(--maroon)}
+.dsect{margin-top:22px}
+.dsect h3{font-family:var(--fd);font-size:15px;letter-spacing:-.03em;margin-bottom:10px}
+
+/* ---------- PROP ORB ---------- */
+.prop-trigger{position:fixed;z-index:100;left:calc(50% + 134px);bottom:30px;transform:translateX(-50%);width:64px;height:64px;padding:0;
+ border-radius:50%;background:rgba(255,255,255,.3);border:1px solid rgba(255,255,255,.85);backdrop-filter:blur(8px);
+ box-shadow:0 10px 36px rgba(104,29,49,.28),0 0 56px rgba(200,107,133,.4),inset 0 0 20px rgba(255,255,255,.8);
+ transition:transform .3s ease,box-shadow .4s ease}
+.prop-trigger:hover{transform:translateX(-50%) scale(1.07)}
+.orb-spin{position:absolute;inset:0;border-radius:50%;overflow:hidden;animation:orbSpin 10s linear infinite}
+.orb-spin i{position:absolute;border-radius:50%;filter:blur(9px);opacity:.92}
+.orb-spin .b1{width:46px;height:46px;left:-8px;top:-6px;background:#dc7594;animation:d1 5s ease-in-out infinite}
+.orb-spin .b2{width:40px;height:40px;right:-9px;bottom:-6px;background:#7a2138;animation:d2 6.5s ease-in-out infinite}
+.orb-spin .b3{width:34px;height:34px;left:16px;bottom:-13px;background:#f4b968;animation:d3 4.6s ease-in-out infinite}
+.orb-spin .b4{width:32px;height:32px;right:4px;top:-11px;background:#86bdff;animation:d4 7.4s ease-in-out infinite}
+.orb-glass{position:absolute;inset:0;border-radius:50%;pointer-events:none;
+ background:radial-gradient(circle at 34% 26%,rgba(255,255,255,.95),transparent 34%),radial-gradient(circle at 60% 68%,rgba(255,255,255,.25),transparent 50%)}
+.prop-ring{position:absolute;inset:-8px;border-radius:50%;border:1px solid rgba(200,107,133,.35);pointer-events:none;animation:ring 3.6s ease-in-out infinite}
+@keyframes orbSpin{to{transform:rotate(360deg)}}
+@keyframes ring{0%,100%{transform:scale(.94);opacity:.5}50%{transform:scale(1.12);opacity:1}}
+@keyframes d1{0%,100%{transform:translate(0,0) scale(1)}50%{transform:translate(14px,12px) scale(1.15)}}
+@keyframes d2{0%,100%{transform:translate(0,0) scale(1)}50%{transform:translate(-13px,-10px) scale(.9)}}
+@keyframes d3{0%,100%{transform:translate(0,0) scale(1)}50%{transform:translate(10px,-14px) scale(1.2)}}
+@keyframes d4{0%,100%{transform:translate(0,0) scale(1)}50%{transform:translate(-12px,13px) scale(1.1)}}
+.prop-trigger.listening{box-shadow:0 10px 36px rgba(104,29,49,.3),0 0 80px rgba(200,107,133,.7),inset 0 0 20px rgba(255,255,255,.8)}
+.prop-trigger.listening .prop-ring{animation-duration:1s}
+.prop-trigger.thinking .orb-spin{animation-duration:1.6s}
+.prop-trigger.thinking .prop-ring{animation-duration:.8s}
+.prop-caption{position:fixed;z-index:99;left:calc(50% + 134px);bottom:9px;transform:translateX(-50%);pointer-events:none;
+ color:var(--maroon-3);opacity:.7;font-size:10.5px;font-weight:700;letter-spacing:.1em}
+.prop-panel{position:fixed;z-index:90;left:calc(50% + 134px);bottom:114px;width:min(384px,calc(100vw - 28px));max-height:490px;
+ display:flex;flex-direction:column;overflow:hidden;border-radius:26px;
+ background:linear-gradient(150deg,rgba(255,252,248,.72),rgba(250,238,240,.6));border:1px solid rgba(255,255,255,.8);
+ box-shadow:0 30px 80px rgba(74,16,29,.22),0 0 70px rgba(200,107,133,.16),inset 0 1px 0 #fff;
+ backdrop-filter:blur(30px) saturate(150%);opacity:0;pointer-events:none;
+ transform:translate(-50%,20px) scale(.95);transition:opacity .35s ease,transform .35s cubic-bezier(.2,.8,.2,1)}
+.prop-panel.open{opacity:1;pointer-events:auto;transform:translate(-50%,0) scale(1)}
+.prop-panel::before{content:"";position:absolute;width:200px;height:200px;top:-110px;right:-60px;border-radius:50%;pointer-events:none;
+ background:radial-gradient(circle,rgba(200,107,133,.35),transparent 68%)}
+.ph{position:relative;display:flex;align-items:center;justify-content:space-between;padding:16px 18px 12px}
+.pid{display:flex;align-items:center;gap:10px}
+.mini-orb{width:28px;height:28px;border-radius:50%;box-shadow:0 0 18px rgba(200,107,133,.65);
+ background:radial-gradient(circle at 35% 30%,#fff 4%,#ffd0dc 25%,#c86b85 55%,#7a2138 95%)}
+.pid strong{display:block;font-family:var(--fd);font-size:14px;color:var(--maroon)}
+.pid span{display:block;margin-top:1px;color:var(--muted);font-size:11px}
+.pclose{width:30px;height:30px;border-radius:10px;color:var(--maroon);background:rgba(74,16,29,.07);font-size:17px}
+.pmsgs{position:relative;flex:1;min-height:130px;padding:6px 16px 10px;overflow-y:auto;scrollbar-width:thin}
+.msg{max-width:90%;margin-bottom:10px;padding:11px 13px;border-radius:17px;font-size:13.5px;line-height:1.55;animation:mi .3s ease}
+@keyframes mi{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+.msg.ai{color:var(--ink);background:rgba(255,255,255,.78);border:1px solid rgba(255,255,255,.9);border-top-left-radius:6px;
+ box-shadow:0 4px 14px rgba(74,16,29,.05)}
+.msg.user{margin-left:auto;color:#fff;background:linear-gradient(135deg,var(--maroon-3),var(--maroon));border-top-right-radius:6px}
+.msg small{display:block;margin-bottom:4px;color:var(--maroon-3);font-size:10.5px;font-weight:800;letter-spacing:.06em}
+.typing{display:inline-flex;gap:4px;padding:14px 16px}
+.typing i{width:6px;height:6px;border-radius:50%;background:var(--rose);animation:dt 1s ease-in-out infinite}
+.typing i:nth-child(2){animation-delay:.15s}
+.typing i:nth-child(3){animation-delay:.3s}
+@keyframes dt{0%,100%{opacity:.3;transform:translateY(0)}50%{opacity:1;transform:translateY(-3px)}}
+.psug{display:flex;gap:6px;overflow-x:auto;padding:0 16px 10px;scrollbar-width:none}
+.psug::-webkit-scrollbar{display:none}
+.psug button{flex:0 0 auto;padding:8px 12px;border-radius:100px;color:var(--maroon-2);background:rgba(255,255,255,.7);
+ border:1px solid rgba(104,29,49,.12);font-size:12px;font-weight:700;transition:.2s}
+.psug button:hover{background:#fff}
+.pin{display:flex;gap:8px;margin:0 12px 12px;padding:6px;border-radius:18px;background:rgba(255,255,255,.8);
+ border:1px solid rgba(255,255,255,.95);box-shadow:0 4px 16px rgba(74,16,29,.06)}
+.pin input{flex:1;min-width:0;padding:9px 10px;background:transparent;border:0;outline:none;font-size:14px}
+.pin input::placeholder{color:var(--muted-2)}
+.psend{width:38px;height:38px;border-radius:13px;color:#fff;font-size:16px;
+ background:linear-gradient(135deg,var(--maroon-3),var(--maroon));box-shadow:0 6px 16px rgba(74,16,29,.25)}
+
+@media(max-width:1200px){.grid-5{grid-template-columns:repeat(3,1fr)}.grid-2,.split{grid-template-columns:1fr}}
+@media(max-width:980px){
+ .sidebar{transform:translateX(-100%)}.sidebar.open{transform:none}
+ .main{margin-left:0}.menu-btn{display:grid;place-items:center}.status{display:none}
+ .workspace{padding:22px 18px 120px}.topbar{padding:0 16px}
+ .prop-trigger,.prop-caption,.prop-panel{left:50%}
 }
-
-button, input, select, textarea { font: inherit; }
-button { cursor: pointer; }
-a { color: inherit; text-decoration: none; }
-
-.container {
-  width: min(1200px, calc(100% - 48px));
-  margin: 40px auto;
+@media(max-width:640px){
+ .grid-5{grid-template-columns:repeat(2,1fr)}.grid-3{grid-template-columns:1fr}
+ .search{display:none}.fgrid{grid-template-columns:1fr}
 }
-
-.top-bar {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 32px;
-}
-
-.back-link {
-  font-size: 13px;
-  font-weight: 700;
-  color: var(--maroon);
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  margin-bottom: 8px;
-}
-
-.title {
-  font-family: 'Georgia', serif;
-  font-size: 32px;
-  color: var(--charcoal);
-}
-
-.layout-grid {
-  display: grid;
-  grid-template-columns: 1.2fr 0.8fr;
-  gap: 32px;
-}
-
-.card {
-  background: white;
-  border: 1px solid var(--grey);
-  border-radius: 16px;
-  padding: 28px;
-  box-shadow: 0 4px 20px rgba(0,0,0,0.03);
-  margin-bottom: 24px;
-}
-
-.card h3 {
-  font-size: 18px;
-  color: var(--maroon);
-  margin-bottom: 6px;
-}
-
-.card p {
-  font-size: 13px;
-  color: var(--slate);
-  margin-bottom: 20px;
-}
-
-/* FORM STYLES */
-.form-group {
-  margin-bottom: 18px;
-}
-
-.form-group label {
-  display: block;
-  font-size: 12px;
-  font-weight: 700;
-  color: var(--charcoal);
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
-  margin-bottom: 6px;
-}
-
-.form-group input, .form-group select, .form-group textarea {
-  width: 100%;
-  padding: 11px 14px;
-  border: 1px solid var(--grey);
-  border-radius: 8px;
-  background: var(--soft);
-  font-size: 14px;
-}
-
-.form-group input:focus, .form-group select:focus, .form-group textarea:focus {
-  outline: none;
-  border-color: var(--maroon);
-  background: white;
-}
-
-.form-row {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 16px;
-}
-
-.btn-submit {
-  width: 100%;
-  background: var(--maroon);
-  color: white;
-  border: none;
-  padding: 12px;
-  border-radius: 8px;
-  font-weight: 700;
-  font-size: 14px;
-}
-
-.btn-submit:hover {
-  background: var(--burgundy);
-}
-
-/* STATUS TABLE */
-.status-table {
-  width: 100%;
-  border-collapse: collapse;
-  font-size: 13px;
-}
-
-.status-table th {
-  text-align: left;
-  padding: 10px;
-  background: var(--soft);
-  color: var(--slate);
-  font-size: 11px;
-  text-transform: uppercase;
-}
-
-.status-table td {
-  padding: 12px 10px;
-  border-bottom: 1px solid var(--soft);
-}
-
-.badge {
-  padding: 4px 8px;
-  border-radius: 12px;
-  font-size: 11px;
-  font-weight: 700;
-  display: inline-block;
-}
-
-.badge-draft { background: #E9ECEF; color: var(--slate); }
-.badge-verified { background: rgba(46, 125, 50, 0.12); color: var(--green); }
-.badge-pending { background: rgba(198, 125, 10, 0.12); color: var(--amber); }
-
-@media (max-width: 900px) {
-  .layout-grid { grid-template-columns: 1fr; }
-  .form-row { grid-template-columns: 1fr; }
-}
+@media(prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}}
 </style>
 </head>
 <body>
 
-<div class="container">
-  <a href="index.html" class="back-link">← Return to Homepage</a>
-  <div class="top-bar">
-    <div>
-      <h1 class="title">Partner & JV Portal</h1>
-      <p style="font-size: 13px; color: var(--slate);">Submit joint-ventures, land holdings, and developer listings for Beloveeth verification.</p>
+<div class="ambient"></div>
+
+<div class="app">
+
+<!-- SIDEBAR -->
+<aside class="sidebar" id="sidebar">
+  <a class="brand" href="index.html">
+    <div class="brand-mark">B</div>
+    <div><strong>BELOVEETH</strong><small>Partner Workspace</small></div>
+  </a>
+
+  <div class="ws">
+    <em>Workspace</em>
+    <div class="ws-row">
+      <div class="avatar">PD</div>
+      <div><strong>Philip Dare Realty</strong><span>Individual partner</span></div>
     </div>
   </div>
 
-  <div class="layout-grid">
-    <!-- SUBMISSION FORM -->
-    <div class="card">
-      <h3>Submit New Property / JV Deal</h3>
-      <p>Fill out the primary deal attributes. All submissions are automatically saved as <strong>Draft</strong> until verified by our legal engine.</p>
-      
-      <form id="jvForm" onsubmit="handleJVSubmit(event)">
-        <div class="form-group">
-          <label>Property Title / Land Name</label>
-          <input type="text" placeholder="e.g. 5,000 sqm Commercial Plot - Epe Expressway" required />
-        </div>
+  <nav class="nav" id="nav">
+    <h6>Workspace</h6>
+    <button class="nav-item active" data-view="overview"><span class="nav-icon">⌂</span>Home</button>
+    <button class="nav-item" data-view="properties"><span class="nav-icon">▣</span>My properties<span class="count">18</span></button>
+    <button class="nav-item" data-view="upload"><span class="nav-icon">＋</span>Add property</button>
+    <h6>Clients &amp; deals</h6>
+    <button class="nav-item" data-view="enquiries"><span class="nav-icon">◌</span>Enquiries<span class="count">7</span></button>
+    <button class="nav-item" data-view="viewings"><span class="nav-icon">◷</span>Viewings</button>
+    <button class="nav-item" data-view="deals"><span class="nav-icon">◇</span>Deals</button>
+    <h6>Business</h6>
+    <button class="nav-item" data-view="analytics"><span class="nav-icon">⌁</span>Analytics</button>
+    <button class="nav-item" data-view="verification"><span class="nav-icon">✓</span>Verification<span class="count">3</span></button>
+    <h6>Intelligence</h6>
+    <button class="nav-item" data-view="market"><span class="nav-icon">◈</span>Market intelligence</button>
+    <button class="nav-item" onclick="openProp()"><span class="nav-icon">✦</span>Ask Prop</button>
+  </nav>
 
-        <div class="form-row">
-          <div class="form-group">
-            <label>Location / Corridor</label>
-            <select required>
-              <option value="">Select Region...</option>
-              <option>Ibeju-Lekki / Epe Corridor (Lagos)</option>
-              <option>Ikeja / Maryland Central (Lagos)</option>
-              <option>Maitama / Guzape Extension (Abuja)</option>
-              <option>Eko Atlantic City (Lagos)</option>
-            </select>
-          </div>
-          <div class="form-group">
-            <label>Deal Structure</label>
-            <select required>
-              <option value="">Select Type...</option>
-              <option>Joint Venture (JV Split)</option>
-              <option>Outright Sale</option>
-              <option>Long Lease</option>
-            </select>
-          </div>
-        </div>
+  <div class="side-foot">
+    <div class="avatar">PD</div>
+    <div><strong>Philip Dare-Johnson</strong><span>Verified partner</span></div>
+  </div>
+</aside>
 
-        <div class="form-row">
-          <div class="form-group">
-            <label>Asking Value (₦)</label>
-            <input type="number" placeholder="e.g. 250000000" required />
-          </div>
-          <div class="form-group">
-            <label>Title Document Type</label>
-            <select required>
-              <option value="">Select Title...</option>
-              <option>Certificate of Occupancy (C of O)</option>
-              <option>Governor's Consent</option>
-              <option>Gazette / Excision</option>
-              <option>Deed of Assignment</option>
-            </select>
-          </div>
-        </div>
+<!-- MAIN -->
+<main class="main">
 
-        <div class="form-group">
-          <label>Key Features & Legal Notes</label>
-          <textarea rows="3" placeholder="Specify land topography, survey plan numbers, or JV premium terms..."></textarea>
-        </div>
-
-        <button type="submit" class="btn-submit">Submit Property for Verification</button>
-      </form>
+  <header class="topbar">
+    <button class="menu-btn" id="menuBtn" aria-label="Menu">☰</button>
+    <div class="search"><i>⌕</i><input placeholder="Search properties, enquiries, clients..." aria-label="Search"></div>
+    <div class="top-actions">
+      <div class="status"><i></i>Intelligence online</div>
+      <button class="icon-btn" title="Notifications">♧<span class="dot"></span></button>
+      <button class="icon-btn" title="Settings">⚙</button>
+      <div class="avatar">PD</div>
     </div>
+  </header>
 
-    <!-- PIPELINE & TRACKER -->
-    <div>
-      <div class="card">
-        <h3>Active Submissions</h3>
-        <p>Real-time status of your property pipeline.</p>
-        
-        <table class="status-table">
-          <thead>
-            <tr>
-              <th>Property</th>
-              <th>Type</th>
-              <th>Status</th>
-            </tr>
-          </thead>
-          <tbody id="submissionList">
-            <tr>
-              <td><strong>Lekki Phase 1 Prime Plot</strong></td>
-              <td>JV Split</td>
-              <td><span class="badge badge-verified">Verified</span></td>
-            </tr>
-            <tr>
-              <td><strong>Katampe Extension Plot 12</strong></td>
-              <td>Outright</td>
-              <td><span class="badge badge-pending">Verification Pending</span></td>
-            </tr>
-            <tr>
-              <td><strong>Epe Expressway 1 Hectare</strong></td>
-              <td>JV Split</td>
-              <td><span class="badge badge-draft">Draft</span></td>
-            </tr>
-          </tbody>
-        </table>
+  <div class="workspace">
+
+    <!-- OVERVIEW -->
+    <section class="view active" id="view-overview">
+      <div class="head">
+        <div>
+          <small><b></b>Partner workspace</small>
+          <h1>Good afternoon,<br>Philip.</h1>
+          <p>Here is what your Beloveeth portfolio is doing right now — activity, clients and anything waiting on you.</p>
+        </div>
+        <div class="acts">
+          <button class="btn ghost">Export</button>
+          <button class="btn primary" onclick="go('upload')">+ Add property</button>
+        </div>
       </div>
 
-      <div class="card" style="background: var(--maroon); color: white;">
-        <h3 style="color: var(--gold);">Partner Terms</h3>
-        <p style="color: #E2D9DC;">Verified JV listings gain immediate visibility to over 12,000+ diaspora and institutional buyers in the Client Portal.</p>
+      <div class="grid-5">
+        <div class="card kpi"><span>Active listings</span><strong>18</strong><small>↑ 3 this month</small></div>
+        <div class="card kpi"><span>Property views</span><strong>12.8K</strong><small>↑ 24.6%</small></div>
+        <div class="card kpi"><span>New enquiries</span><strong>47</strong><small>↑ 12 this week</small></div>
+        <div class="card kpi"><span>Viewings</span><strong>16</strong><small class="n">4 awaiting confirmation</small></div>
+        <div class="card kpi"><span>Active deals</span><strong>7</strong><small>₦84.5m pipeline</small></div>
       </div>
+
+      <div class="grid-2">
+        <article class="card">
+          <div class="card-head">
+            <div><div class="label">Portfolio activity</div><div class="title">Views and enquiries</div></div>
+            <span class="pill">LAST 6 MONTHS</span>
+          </div>
+          <div class="body">
+            <svg viewBox="0 0 700 250" preserveAspectRatio="none" style="width:100%;height:250px">
+              <defs><linearGradient id="g" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0%" stop-color="rgba(200,107,133,.35)"/><stop offset="100%" stop-color="rgba(200,107,133,0)"/>
+              </linearGradient></defs>
+              <line x1="0" y1="210" x2="700" y2="210" stroke="rgba(74,16,29,.08)"/>
+              <line x1="0" y1="140" x2="700" y2="140" stroke="rgba(74,16,29,.06)"/>
+              <line x1="0" y1="70" x2="700" y2="70" stroke="rgba(74,16,29,.06)"/>
+              <path d="M0,182 C90,168 140,150 210,128 C300,100 350,112 420,96 C520,74 600,58 700,44 L700,250 L0,250 Z" fill="url(#g)"/>
+              <polyline points="0,182 105,160 210,128 315,108 420,96 525,66 700,44" fill="none" stroke="#681d31" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+              <polyline points="0,200 105,192 210,178 315,170 420,158 525,146 700,132" fill="none" stroke="#c86b85" stroke-width="2.5" stroke-dasharray="6 7" stroke-linecap="round"/>
+            </svg>
+            <div class="note" style="margin-top:14px">
+              <b style="color:var(--maroon)">Prop:</b> enquiry volume is climbing faster than views, which usually means your listings are attracting better-qualified traffic.
+            </div>
+          </div>
+        </article>
+
+        <article class="card">
+          <div class="card-head">
+            <div><div class="label">Trust layer</div><div class="title">Partner verification</div></div>
+            <span class="pill gold">ACTION NEEDED</span>
+          </div>
+          <div class="body">
+            <div style="display:flex;align-items:center;gap:14px">
+              <div><strong style="font-family:var(--fd);font-size:26px;color:var(--maroon)">72%</strong>
+              <div style="color:var(--muted);font-size:11.5px">profile complete</div></div>
+              <div class="bar" style="flex:1"><span style="width:72%"></span></div>
+            </div>
+            <div class="feed" style="margin-top:16px"><i>!</i>
+              <div><strong>3 listings need documents</strong><p>Complete verification to keep them eligible for publication.</p></div>
+            </div>
+            <button class="btn soft" style="width:100%;margin-top:14px" onclick="go('verification')">Review verification</button>
+          </div>
+        </article>
+      </div>
+
+      <div class="grid-2">
+        <article class="card">
+          <div class="card-head">
+            <div><div class="label">Inventory</div><div class="title">Most active properties</div></div>
+            <button class="btn ghost" style="padding:9px 14px;font-size:12px" onclick="go('properties')">View all</button>
+          </div>
+          <div class="tw" style="margin-top:16px">
+            <table>
+              <thead><tr><th>Property</th><th>Views</th><th>Enquiries</th><th>Interest</th></tr></thead>
+              <tbody id="topRows"></tbody>
+            </table>
+          </div>
+        </article>
+
+        <article class="card">
+          <div class="card-head"><div><div class="label">Live</div><div class="title">Recent activity</div></div></div>
+          <div class="body">
+            <div class="feed"><i>◉</i><div><strong>New enquiry</strong><p>A client asked about the Lekki duplex.</p></div><span>8m</span></div>
+            <div class="feed"><i>◷</i><div><strong>Viewing requested</strong><p>Saturday · 11:00 AM · Ikoyi Terrace</p></div><span>34m</span></div>
+            <div class="feed"><i>♡</i><div><strong>Property saved</strong><p>Your Lekki duplex was saved by a client.</p></div><span>1h</span></div>
+            <div class="feed"><i>✓</i><div><strong>Listing verified</strong><p>Ikeja serviced apartment passed verification.</p></div><span>3h</span></div>
+          </div>
+        </article>
+      </div>
+
+      <div class="grid-3">
+        <article class="card"><div class="card-head"><div><div class="label">Next appointment</div><div class="title">Upcoming viewing</div></div></div>
+          <div class="body"><strong style="font-family:var(--fd);font-size:17px">Ikoyi Terrace Residence</strong>
+            <p style="color:var(--muted);font-size:12.5px;margin-top:6px">Saturday · 11:00 AM · David Okoro</p>
+            <div class="pacts"><button class="btn primary">Open</button><button class="btn ghost">Message</button></div>
+          </div></article>
+        <article class="card"><div class="card-head"><div><div class="label">Waiting on you</div><div class="title">Pending response</div></div><span class="pill red">1</span></div>
+          <div class="body"><strong style="font-family:var(--fd);font-size:17px">Sarah wants pricing</strong>
+            <p style="color:var(--muted);font-size:12.5px;margin-top:6px">4 Bedroom Contemporary Duplex · Lekki</p>
+            <button class="btn primary" style="width:100%;margin-top:14px" onclick="go('enquiries')">Respond</button>
+          </div></article>
+        <article class="card"><div class="card-head"><div><div class="label">Beloveeth Pulse</div><div class="title">Market signal</div></div><span class="pill sky">INSIGHT</span></div>
+          <div class="body"><strong style="font-family:var(--fd);font-size:17px">Lekki momentum holding</strong>
+            <p style="color:var(--muted);font-size:12.5px;line-height:1.55;margin-top:6px">Your Lagos inventory is seeing higher enquiry activity this period.</p>
+            <button class="btn ghost" style="width:100%;margin-top:14px" onclick="go('market')">Explore intelligence</button>
+          </div></article>
+      </div>
+    </section>
+
+    <!-- PROPERTIES -->
+    <section class="view" id="view-properties">
+      <div class="head">
+        <div><small><b></b>Inventory</small><h1>My properties.</h1>
+          <p>Everything you supply to the Beloveeth ecosystem, with its live performance attached.</p></div>
+        <div class="acts"><button class="btn ghost">Filter</button><button class="btn primary" onclick="go('upload')">+ Add property</button></div>
+      </div>
+      <div class="tabs" id="ptabs">
+        <button class="active" data-f="All">All · 18</button><button data-f="Published">Published · 14</button>
+        <button data-f="Review">Under review · 2</button><button data-f="Draft">Drafts · 1</button><button data-f="Archived">Archived · 1</button>
+      </div>
+      <div class="pgrid" id="pgrid"></div>
+    </section>
+
+    <!-- UPLOAD -->
+    <section class="view" id="view-upload">
+      <div class="head">
+        <div><small><b></b>Property studio</small><h1>Add a property.</h1>
+          <p>Create a complete property record. Prop will read it back to you before it goes for verification.</p></div>
+        <div class="acts"><button class="btn ghost">Save draft</button><button class="btn primary" onclick="submitProperty()">Submit for verification</button></div>
+      </div>
+
+      <div class="split">
+        <div class="card" style="padding:26px">
+          <div class="sect"><h4>Property identity</h4><p class="sub">Tell Beloveeth what you're listing.</p>
+            <div class="fgrid">
+              <div class="f full"><label>Property title</label><input id="pTitle" placeholder="Contemporary 4 bedroom detached duplex"></div>
+              <div class="f"><label>Property type</label><select><option>Residential</option><option>Land</option><option>Commercial</option><option>Off-plan</option><option>Short-let</option></select></div>
+              <div class="f"><label>Transaction</label><select><option>For sale</option><option>For rent</option><option>For lease</option><option>Investment</option></select></div>
+            </div></div>
+
+          <div class="sect"><h4>Location</h4><p class="sub">Help clients find it.</p>
+            <div class="fgrid">
+              <div class="f"><label>State</label><select><option>Lagos</option><option>Ogun</option><option>Abuja</option><option>Rivers</option><option>Oyo</option></select></div>
+              <div class="f"><label>City</label><input placeholder="Lagos"></div>
+              <div class="f"><label>Area</label><input placeholder="Lekki Phase 1"></div>
+              <div class="f"><label>Landmark</label><input placeholder="Near Admiralty Way"></div>
+              <div class="f full"><label>Address</label><input placeholder="Full property address"></div>
+            </div></div>
+
+          <div class="sect"><h4>Property details</h4>
+            <div class="fgrid">
+              <div class="f"><label>Bedrooms</label><input type="number" placeholder="4"></div>
+              <div class="f"><label>Bathrooms</label><input type="number" placeholder="5"></div>
+              <div class="f"><label>Land size</label><input placeholder="600 m²"></div>
+              <div class="f"><label>Building size</label><input placeholder="420 m²"></div>
+              <div class="f"><label>Condition</label><select><option>New</option><option>Good</option><option>Renovated</option><option>Needs renovation</option></select></div>
+              <div class="f"><label>Furnishing</label><select><option>Unfurnished</option><option>Semi-furnished</option><option>Fully furnished</option></select></div>
+              <div class="f full"><label>Description</label><textarea placeholder="Describe the property, its features and anything a client should know."></textarea></div>
+            </div></div>
+
+          <div class="sect"><h4>Pricing</h4>
+            <div class="fgrid">
+              <div class="f"><label>Asking price</label><input placeholder="₦85,000,000"></div>
+              <div class="f"><label>Negotiable</label><select><option>Yes</option><option>No</option><option>Subject to offer</option></select></div>
+            </div></div>
+        </div>
+
+        <div class="card" style="padding:26px">
+          <div class="sect"><h4>Property media</h4><p class="sub">Build an immersive listing.</p>
+            <div class="drop" onclick="fakeUpload()"><div><i>↑</i><b>Drop media here</b>
+              <span>Photos · video · 360° · floor plans</span><span>JPG, PNG, MP4, PDF</span></div></div>
+          </div>
+          <div class="sect"><h4>Immersive experience</h4>
+            <div class="f" style="margin-top:12px"><label>360° tour URL</label><input placeholder="https://..."></div>
+            <div class="f" style="margin-top:12px"><label>Video URL</label><input placeholder="https://..."></div>
+          </div>
+          <div class="sect"><h4>Verification documents</h4>
+            <div class="note warn" style="margin-top:10px">Beloveeth reviews documentation before a listing receives verified status.</div>
+            <button class="btn ghost" style="width:100%;margin-top:12px" onclick="fakeUpload()">Upload documents</button>
+          </div>
+          <div class="note"><b style="color:var(--maroon)">Prop:</b> listings with a floor plan and at least eight photos tend to convert enquiries into viewings far more often. Worth the extra ten minutes.</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ENQUIRIES -->
+    <section class="view" id="view-enquiries">
+      <div class="head"><div><small><b></b>Client relationships</small><h1>Enquiries.</h1>
+        <p>Everyone interested in your properties, ranked by what needs you first.</p></div>
+        <button class="btn ghost" onclick="openProp('Which enquiries need my attention?')">Ask Prop</button></div>
+      <div class="tabs"><button class="active">All · 47</button><button>New · 7</button><button>Follow-up · 12</button><button>Viewing · 9</button><button>Negotiation · 5</button></div>
+      <div class="card"><div class="tw"><table>
+        <thead><tr><th>Client</th><th>Property</th><th>Intent</th><th>Last activity</th><th>Status</th><th></th></tr></thead>
+        <tbody>
+          <tr><td><strong>Sarah Ade</strong><em>Buyer · Lagos</em></td><td>4 Bedroom Duplex</td><td>Pricing</td><td>8 minutes ago</td><td><span class="pill red">NEEDS RESPONSE</span></td><td><button class="btn ghost" style="padding:9px 14px;font-size:12px" onclick="openEnquiry('Sarah Ade','Pricing enquiry · 4 Bedroom Duplex')">Open</button></td></tr>
+          <tr><td><strong>David Okoro</strong><em>Investor · Abuja</em></td><td>Ikoyi Terrace</td><td>Viewing</td><td>34 minutes ago</td><td><span class="pill green">QUALIFIED</span></td><td><button class="btn ghost" style="padding:9px 14px;font-size:12px" onclick="openEnquiry('David Okoro','Viewing request · Ikoyi Terrace')">Open</button></td></tr>
+          <tr><td><strong>Michael Bello</strong><em>Buyer · Lagos</em></td><td>Ikeja Apartment</td><td>Information</td><td>2 hours ago</td><td><span class="pill gold">FOLLOW-UP</span></td><td><button class="btn ghost" style="padding:9px 14px;font-size:12px" onclick="openEnquiry('Michael Bello','Information request · Ikeja Apartment')">Open</button></td></tr>
+        </tbody></table></div></div>
+    </section>
+
+    <!-- VIEWINGS -->
+    <section class="view" id="view-viewings">
+      <div class="head"><div><small><b></b>Appointments</small><h1>Viewings.</h1><p>Coordinate property visits and track what came out of them.</p></div>
+        <div class="acts"><button class="btn ghost">Calendar</button><button class="btn primary">+ Schedule</button></div></div>
+      <div class="card"><div class="tw"><table>
+        <thead><tr><th>Date</th><th>Client</th><th>Property</th><th>Type</th><th>Status</th><th>Outcome</th></tr></thead>
+        <tbody>
+          <tr><td><strong>Today</strong><em>4:00 PM</em></td><td>Sarah Ade</td><td>4 Bedroom Duplex</td><td>Physical</td><td><span class="pill gold">UPCOMING</span></td><td>—</td></tr>
+          <tr><td><strong>Tomorrow</strong><em>11:00 AM</em></td><td>David Okoro</td><td>Ikoyi Terrace</td><td>Physical</td><td><span class="pill green">CONFIRMED</span></td><td>—</td></tr>
+          <tr><td><strong>Yesterday</strong><em>2:00 PM</em></td><td>Michael Bello</td><td>Ikeja Apartment</td><td>Virtual</td><td><span class="pill sky">COMPLETED</span></td><td>Interested</td></tr>
+        </tbody></table></div></div>
+    </section>
+
+    <!-- DEALS -->
+    <section class="view" id="view-deals">
+      <div class="head"><div><small><b></b>Transactions</small><h1>Deals.</h1><p>Follow a property from first enquiry through to documentation.</p></div></div>
+      <div class="grid-3" style="margin-bottom:18px">
+        <div class="card kpi"><span>Qualified · 3</span><strong>₦31.5m</strong><small class="n">Potential pipeline</small></div>
+        <div class="card kpi"><span>Negotiation · 2</span><strong>₦53m</strong><small class="n">Active negotiation</small></div>
+        <div class="card kpi"><span>Documentation · 2</span><strong>₦42m</strong><small class="n">Processing</small></div>
+      </div>
+      <div class="card"><div class="card-head"><div><div class="label">Pipeline</div><div class="title">Active deals</div></div><span class="pill">₦84.5M TOTAL</span></div>
+        <div class="tw" style="margin-top:16px"><table>
+          <thead><tr><th>Client</th><th>Property</th><th>Value</th><th>Stage</th><th>Last activity</th></tr></thead>
+          <tbody>
+            <tr><td><strong>David Okoro</strong></td><td>Ikoyi Terrace</td><td>₦120m</td><td><span class="pill gold">NEGOTIATION</span></td><td>Today</td></tr>
+            <tr><td><strong>Sarah Ade</strong></td><td>4 Bedroom Duplex</td><td>₦85m</td><td><span class="pill sky">QUALIFIED</span></td><td>Today</td></tr>
+          </tbody></table></div></div>
+    </section>
+
+    <!-- ANALYTICS -->
+    <section class="view" id="view-analytics">
+      <div class="head"><div><small><b></b>Performance</small><h1>Portfolio analytics.</h1><p>How your inventory is actually performing across Beloveeth.</p></div></div>
+      <div class="grid-5">
+        <div class="card kpi"><span>Portfolio views</span><strong>12.8K</strong><small>↑ 24.6%</small></div>
+        <div class="card kpi"><span>Enquiry rate</span><strong>3.7%</strong><small>↑ 0.8%</small></div>
+        <div class="card kpi"><span>Viewing conversion</span><strong>34%</strong><small class="n">Based on activity</small></div>
+        <div class="card kpi"><span>Active deals</span><strong>7</strong><small class="n">₦84.5m pipeline</small></div>
+        <div class="card kpi"><span>Transactions</span><strong>4</strong><small>This period</small></div>
+      </div>
+      <div class="grid-2">
+        <article class="card"><div class="card-head"><div><div class="label">Conversion</div><div class="title">Enquiry funnel</div></div></div>
+          <div class="body funnel" id="funnel"></div></article>
+        <article class="card"><div class="card-head"><div><div class="label">Distribution</div><div class="title">Top locations</div></div></div>
+          <div class="body">
+            <div class="feed"><i>L</i><div><strong>Lekki</strong><p>8 properties</p></div><span>5.4K views</span></div>
+            <div class="feed"><i>I</i><div><strong>Ikoyi</strong><p>3 properties</p></div><span>3.1K views</span></div>
+            <div class="feed"><i>I</i><div><strong>Ikeja</strong><p>4 properties</p></div><span>2.2K views</span></div>
+          </div></article>
+      </div>
+    </section>
+
+    <!-- VERIFICATION -->
+    <section class="view" id="view-verification">
+      <div class="head"><div><small><b></b>Trust layer</small><h1>Verification.</h1><p>Track your partner verification and property documentation.</p></div></div>
+      <div class="card"><div class="card-head"><div><div class="label">Queue</div><div class="title">Items needing you</div></div><span class="pill gold">3 OPEN</span></div>
+        <div class="tw" style="margin-top:16px"><table>
+          <thead><tr><th>Property</th><th>Requirement</th><th>Status</th><th>Submitted</th><th></th></tr></thead>
+          <tbody>
+            <tr><td><strong>Modern Family Home</strong></td><td>Title document</td><td><span class="pill red">MISSING</span></td><td>Yesterday</td><td><button class="btn soft" style="padding:9px 14px;font-size:12px" onclick="fakeUpload()">Upload</button></td></tr>
+            <tr><td><strong>Land Parcel — Sangotedo</strong></td><td>Survey document</td><td><span class="pill gold">REQUESTED</span></td><td>2 days ago</td><td><button class="btn soft" style="padding:9px 14px;font-size:12px" onclick="fakeUpload()">Upload</button></td></tr>
+            <tr><td><strong>Garden Court Apartments</strong></td><td>Ownership authority</td><td><span class="pill sky">UNDER REVIEW</span></td><td>3 days ago</td><td><button class="btn ghost" style="padding:9px 14px;font-size:12px">View</button></td></tr>
+          </tbody></table></div></div>
+    </section>
+
+    <!-- MARKET -->
+    <section class="view" id="view-market">
+      <div class="head"><div><small><b></b>Beloveeth intelligence</small><h1>The market around<br>your inventory.</h1>
+        <p>Signals read against the locations you actually hold property in.</p></div>
+        <span class="pill">MODEL / DATA LAYER</span></div>
+      <div class="grid-3">
+        <article class="card"><div class="card-head"><div><div class="label">Lagos</div><div class="title">Residential activity</div></div><span class="pill green">ACTIVE</span></div>
+          <div class="body"><strong style="font-family:var(--fd);font-size:28px;color:var(--maroon)">+8.4%</strong>
+            <p style="color:var(--muted);font-size:12.5px;line-height:1.6;margin-top:8px">Modelled price movement across selected Lagos residential locations.</p>
+            <button class="btn ghost" style="width:100%;margin-top:14px" onclick="openProp('What is happening in the Lagos market?')">Ask Prop</button></div></article>
+        <article class="card"><div class="card-head"><div><div class="label">Lekki</div><div class="title">Your strongest market</div></div><span class="pill sky">YOUR MARKET</span></div>
+          <div class="body"><strong style="font-family:var(--fd);font-size:28px;color:var(--maroon)">8 listings</strong>
+            <p style="color:var(--muted);font-size:12.5px;line-height:1.6;margin-top:8px">Your inventory here is carrying 42% of total portfolio engagement.</p>
+            <button class="btn ghost" style="width:100%;margin-top:14px" onclick="openProp('How is my Lekki inventory performing?')">View activity</button></div></article>
+        <article class="card"><div class="card-head"><div><div class="label">Beloveeth Pulse</div><div class="title">Live signal layer</div></div><span class="pill">LIVE</span></div>
+          <div class="body"><strong style="font-family:var(--fd);font-size:28px;color:var(--maroon)">Stable</strong>
+            <p style="color:var(--muted);font-size:12.5px;line-height:1.6;margin-top:8px">Supply pressure is steady, so pricing power sits with well-verified listings.</p>
+            <button class="btn ghost" style="width:100%;margin-top:14px" onclick="openProp('Explain the current supply signal')">Open Pulse</button></div></article>
+      </div>
+      <p style="margin-top:22px;color:var(--muted-2);font-size:12px;max-width:760px;line-height:1.6">
+        Figures shown here are illustrative demonstration data. Beloveeth distinguishes verified internal data, calculated intelligence and AI interpretation rather than presenting every number as fact.</p>
+    </section>
+
+  </div>
+</main>
+</div>
+
+<!-- DRAWER -->
+<div class="overlay" id="overlay" onclick="if(event.target===this)closeDrawer()">
+  <div class="drawer" role="dialog" aria-modal="true">
+    <div class="dhead">
+      <div><small class="label" id="dKind">Property record</small><h2 id="dTitle">Property</h2><p id="dSub">Beloveeth partner record</p></div>
+      <button class="dclose" onclick="closeDrawer()" aria-label="Close">×</button>
     </div>
+    <div class="dimg" id="dImg"></div>
+    <div class="dsect"><h3>Property intelligence</h3>
+      <div class="specs" id="dSpecs"></div></div>
+    <div class="dsect"><h3>Listing status</h3>
+      <div class="note" style="display:flex;align-items:center;justify-content:space-between;gap:12px">
+        <div><strong style="color:var(--maroon)">Verified</strong><div style="color:var(--muted);font-size:11.5px;margin-top:3px">Documentation complete</div></div>
+        <span class="pill green">PUBLISHED</span></div></div>
+    <div class="dsect"><h3>Prop's read</h3><div class="note" id="dProp"></div></div>
+    <div class="dsect"><h3>Actions</h3>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:9px">
+        <button class="btn primary">Edit listing</button><button class="btn ghost">View public page</button>
+        <button class="btn ghost">Manage media</button>
+        <button class="btn soft" onclick="closeDrawer();openProp('Analyze '+currentProp.name)">Ask Prop</button>
+      </div></div>
   </div>
 </div>
 
-<script>
-function handleJVSubmit(e) {
-  e.preventDefault();
-  alert('Property submitted successfully! Status set to: Draft (Verification Pending).');
-  e.target.reset();
-}
-</script>
+<!-- PROP -->
+<button class="prop-trigger" id="propTrigger" aria-label="Open Prop" aria-expanded="false" onclick="toggleProp()">
+  <span class="prop-ring"></span>
+  <span class="orb-spin"><i class="b1"></i><i class="b2"></i><i class="b3"></i><i class="b4"></i></span>
+  <span class="orb-glass"></span>
+</button>
+<div class="prop-caption">prop intelligence</div>
 
+<aside class="prop-panel" id="propPanel" aria-hidden="true">
+  <div class="ph">
+    <div class="pid"><div class="mini-orb"></div><div><strong>Prop</strong><span>Partner intelligence layer</span></div></div>
+    <button class="pclose" onclick="closeProp()" aria-label="Close Prop">×</button>
+  </div>
+  <div class="pmsgs" id="pmsgs">
+    <div class="msg ai"><small>Prop</small>Hi Philip. Ask me about your portfolio, a listing, your enquiries, verification or what the market is doing around your inventory.</div>
+  </div>
+  <div class="psug">
+    <button onclick="ask('Which property is getting the most attention?')">Most active</button>
+    <button onclick="ask('What needs my attention?')">Needs attention</button>
+    <button onclick="ask('Show my verification issues')">Verification</button>
+    <button onclick="ask('How is my portfolio performing?')">Performance</button>
+    <button onclick="ask('What is happening in the market?')">Market</button>
+  </div>
+  <form class="pin" onsubmit="sendProp(event)">
+    <input id="pInput" autocomplete="off" placeholder="Ask Prop something...">
+    <button class="psend" type="submit" aria-label="Send">↑</button>
+  </form>
+</aside>
+
+<script>
+const IMG = id => `https://images.unsplash.com/${id}?auto=format&fit=crop&w=900&q=80`;
+
+const props = [
+ {id:"a1",name:"4 Bedroom Contemporary Duplex",area:"Lekki Phase 1",price:"₦85m",tag:"High interest",views:3421,enq:18,view:5,saves:42,img:IMG("photo-1600585154340-be6161a56a0c"),status:"Published"},
+ {id:"a2",name:"Ikoyi Terrace Residence",area:"Ikoyi",price:"₦120m",tag:"Verified",views:2874,enq:11,view:4,saves:36,img:IMG("photo-1600607687939-ce8a6c25118c"),status:"Published"},
+ {id:"a3",name:"Ikeja Serviced Apartment",area:"Ikeja GRA",price:"₦45m",tag:"Growing",views:1932,enq:8,view:3,saves:21,img:IMG("photo-1512917774080-9991f1c4c750"),status:"Published"},
+ {id:"a4",name:"Modern Family Home",area:"Ajah",price:"₦62m",tag:"Verification",views:842,enq:4,view:1,saves:9,img:IMG("photo-1600566753190-17f0baa2a6c3"),status:"Review"},
+ {id:"a5",name:"Land Parcel — Sangotedo",area:"Sangotedo",price:"₦32m",tag:"New",views:512,enq:3,view:0,saves:6,img:IMG("photo-1600607687920-4e2a09cf159d"),status:"Review"},
+ {id:"a6",name:"Garden Court Apartments",area:"Yaba",price:"₦70m",tag:"Price change",views:711,enq:5,view:2,saves:14,img:IMG("photo-1560448204-e02f11c3d0e2"),status:"Published"}
+];
+let currentProp = props[0];
+
+/* nav */
+const views = document.querySelectorAll(".view");
+const items = document.querySelectorAll(".nav-item[data-view]");
+function go(name){
+  views.forEach(v=>v.classList.remove("active"));
+  const t=document.getElementById("view-"+name); if(t)t.classList.add("active");
+  items.forEach(b=>b.classList.toggle("active",b.dataset.view===name));
+  document.getElementById("sidebar").classList.remove("open");
+  window.scrollTo({top:0,behavior:"smooth"});
+}
+items.forEach(b=>b.addEventListener("click",()=>go(b.dataset.view)));
+document.getElementById("menuBtn").addEventListener("click",()=>document.getElementById("sidebar").classList.toggle("open"));
+
+/* property cards + table */
+function card(p){return `
+ <article class="pcard">
+  <div class="pimg" style="background-image:url('${p.img}')"><span class="chip">${p.tag}</span><span class="price">${p.price}</span></div>
+  <div class="pbody">
+   <small>${p.area} · Lagos</small><h3>${p.name}</h3>
+   <div class="pstats">
+    <div><strong>${p.views.toLocaleString()}</strong><span>Views</span></div>
+    <div><strong>${p.enq}</strong><span>Enquiries</span></div>
+    <div><strong>${p.view}</strong><span>Viewings</span></div>
+   </div>
+   <div class="pacts"><button class="btn primary" onclick="openProperty('${p.id}')">Manage</button>
+   <button class="btn ghost" onclick="openProp('Analyze ${p.name}')">Ask Prop</button></div>
+  </div></article>`;}
+
+let filter="All";
+function renderGrid(){
+  const list = filter==="All"?props:props.filter(p=>p.status===filter);
+  document.getElementById("pgrid").innerHTML = list.length?list.map(card).join(""):
+   `<p style="color:var(--muted)">Nothing in this tab yet.</p>`;
+}
+document.getElementById("ptabs").addEventListener("click",e=>{
+  const b=e.target.closest("button[data-f]"); if(!b)return;
+  filter=b.dataset.f;
+  document.querySelectorAll("#ptabs button").forEach(x=>x.classList.toggle("active",x===b));
+  renderGrid();
+});
+renderGrid();
+
+document.getElementById("topRows").innerHTML = props.slice(0,3).map((p,i)=>`
+ <tr onclick="openProperty('${p.id}')" style="cursor:pointer">
+  <td><div class="cellflex"><div class="thumb" style="background-image:url('${p.img}')"></div>
+   <div><strong>${p.name}</strong><em>${p.area}, Lagos</em></div></div></td>
+  <td>${p.views.toLocaleString()}</td><td>${p.enq}</td>
+  <td><span class="pill ${i<2?'green':'gold'}">${i<2?'HIGH':'GROWING'}</span></td></tr>`).join("");
+
+document.getElementById("funnel").innerHTML =
+ [["Property views","12,840",100],["Enquiries","47",72],["Viewings","16",49],["Offers","7",30],["Transactions","4",18]]
+ .map(([k,v,w])=>`<div><div class="row"><strong>${k}</strong><span style="color:var(--muted)">${v}</span></div>
+ <div class="bar"><span style="width:${w}%"></span></div></div>`).join("");
+
+/* drawer */
+const overlay=document.getElementById("overlay");
+function openProperty(id){
+  const p=props.find(x=>x.id===id); if(!p)return; currentProp=p;
+  document.getElementById("dKind").textContent="Property record";
+  document.getElementById("dTitle").textContent=p.name;
+  document.getElementById("dSub").textContent=`${p.area}, Lagos · ${p.price} indicative`;
+  document.getElementById("dImg").style.backgroundImage=`url('${p.img}')`;
+  document.getElementById("dImg").style.display="block";
+  document.getElementById("dSpecs").innerHTML=
+   [["Views",p.views.toLocaleString()],["Enquiries",p.enq],["Saves",p.saves],["Viewings",p.view]]
+   .map(([k,v])=>`<div class="spec"><span>${k}</span><strong>${v}</strong></div>`).join("");
+  document.getElementById("dProp").innerHTML=`<b style="color:var(--maroon)">Prop:</b> ${propRead(p)}`;
+  overlay.classList.add("open"); document.body.style.overflow="hidden";
+}
+function openEnquiry(name,sub){
+  currentProp={name};
+  document.getElementById("dKind").textContent="Client enquiry";
+  document.getElementById("dTitle").textContent=name;
+  document.getElementById("dSub").textContent=sub;
+  document.getElementById("dImg").style.display="none";
+  document.getElementById("dSpecs").innerHTML=
+   [["Stage","Qualified"],["Response time","8 min"],["Channel","Platform"],["Budget","Indicative"]]
+   .map(([k,v])=>`<div class="spec"><span>${k}</span><strong>${v}</strong></div>`).join("");
+  document.getElementById("dProp").innerHTML=`<b style="color:var(--maroon)">Prop:</b> this client has opened the listing three times. A direct reply with pricing context usually converts an enquiry like this into a viewing.`;
+  overlay.classList.add("open"); document.body.style.overflow="hidden";
+}
+function closeDrawer(){overlay.classList.remove("open");document.body.style.overflow="";}
+function propRead(p){
+  const rate=(p.enq/p.views*100).toFixed(1);
+  return `${p.name} is converting about ${rate}% of views into enquiries. ${rate>0.5?"That's ahead of your portfolio average — worth keeping the pricing where it is.":"That's below your portfolio average, so the photography or the asking price is probably where I'd look first."}`;
+}
+
+function submitProperty(){
+  const t=document.getElementById("pTitle").value.trim();
+  if(!t){alert("Add a property title before submitting.");return;}
+  alert("Property submitted for Beloveeth verification.\n\nIn the connected platform this creates the record, uploads media and notifies the verification team.");
+}
+function fakeUpload(){alert("Upload interface ready.\n\nIn production this connects to Beloveeth Storage for media and documents.");}
+
+/* PROP */
+const trigger=document.getElementById("propTrigger"), panel=document.getElementById("propPanel"),
+      input=document.getElementById("pInput"), msgs=document.getElementById("pmsgs");
+let justOpened=false;
+function toggleProp(){panel.classList.contains("open")?closeProp():openProp();}
+function openProp(prompt=""){
+  justOpened=true; setTimeout(()=>justOpened=false,0);
+  panel.classList.add("open"); panel.setAttribute("aria-hidden","false"); trigger.setAttribute("aria-expanded","true");
+  if(prompt){setTimeout(()=>{input.value=prompt;sendProp();},250);} else {setTimeout(()=>input.focus(),350);}
+}
+function closeProp(){panel.classList.remove("open");panel.setAttribute("aria-hidden","true");
+ trigger.setAttribute("aria-expanded","false");trigger.classList.remove("listening","thinking");}
+function ask(t){input.value=t;sendProp();}
+function add(text,type){
+  const m=document.createElement("div"); m.className=`msg ${type}`;
+  if(type==="ai")m.innerHTML=`<small>Prop</small>${text}`; else m.textContent=text;
+  msgs.appendChild(m); msgs.scrollTop=msgs.scrollHeight;
+}
+function sendProp(e){
+  if(e)e.preventDefault();
+  const text=input.value.trim(); if(!text)return;
+  add(text,"user"); input.value="";
+  trigger.classList.add("listening");
+  const typing=document.createElement("div");
+  typing.className="msg ai typing"; typing.innerHTML="<i></i><i></i><i></i>";
+  setTimeout(()=>{trigger.classList.remove("listening");trigger.classList.add("thinking");
+    msgs.appendChild(typing);msgs.scrollTop=msgs.scrollHeight;},450);
+  setTimeout(()=>{trigger.classList.remove("thinking");typing.remove();add(reply(text),"ai");},1400);
+}
+function reply(q){
+  q=q.toLowerCase();
+  const top=props[0];
+  if(q.includes("analyze")||q.includes("analyse")||q.includes("this property")){
+    const p=props.find(x=>q.includes(x.name.toLowerCase()))||currentProp;
+    const full=props.find(x=>x.name===p.name)||top;
+    return `<b>${full.name}</b> in ${full.area} has ${full.views.toLocaleString()} views, ${full.enq} enquiries and ${full.saves} saves.<br><br>${propRead(full)}`;
+  }
+  if(q.includes("most")||q.includes("attention")&&q.includes("property"))
+    return `Your <b>4 Bedroom Contemporary Duplex</b> in Lekki leads the portfolio with 3,421 views and 18 enquiries. Ikoyi Terrace is second and converting at a higher rate per view.`;
+  if(q.includes("attention")||q.includes("need"))
+    return `Three things: Sarah Ade is waiting on pricing for the Lekki duplex, two listings are missing verification documents, and four viewing requests haven't been confirmed yet.`;
+  if(q.includes("verif")||q.includes("document"))
+    return `Three verification items are open. Modern Family Home is missing a title document, Sangotedo needs a survey, and Garden Court is under review with our team.<br><br>Clearing the first two keeps both listings eligible for publication.`;
+  if(q.includes("portfolio")||q.includes("perform"))
+    return `18 active listings, 12.8K views, 47 enquiries, 16 viewings and 7 deals worth ₦84.5m in pipeline. Your enquiry rate is 3.7%, up 0.8 points on the period.`;
+  if(q.includes("market")||q.includes("lagos")||q.includes("price")||q.includes("supply"))
+    return `On the current illustrative model, Lagos residential is showing sustained price momentum with stable supply. That combination usually favours verified, well-documented listings.<br><br><span style="color:var(--muted)">Scenario signal, not a guaranteed future price.</span>`;
+  if(q.includes("lekki"))
+    return `Lekki carries 8 of your 18 listings and around 42% of portfolio engagement. It's your strongest market, so I'd keep new inventory weighted there while demand holds.`;
+  if(q.includes("enquir")||q.includes("client"))
+    return `47 enquiries, 7 new this week. One is waiting on you: Sarah Ade on the Lekki duplex, 8 minutes ago. Fast replies are the single biggest lever on your viewing conversion.`;
+  return `I can read your portfolio, listings, enquiries, verification queue and the market around your inventory.<br><br>Try asking about <b>performance</b>, <b>verification</b>, a <b>property</b>, or <b>what needs attention</b>.`;
+}
+
+document.addEventListener("keydown",e=>{
+  if(e.key!=="Escape")return;
+  if(panel.classList.contains("open"))closeProp();
+  else if(overlay.classList.contains("open"))closeDrawer();
+});
+document.addEventListener("click",e=>{
+  if(justOpened)return;
+  if(panel.classList.contains("open")&&!panel.contains(e.target)&&!trigger.contains(e.target))closeProp();
+});
+</script>
 </body>
 </html>
