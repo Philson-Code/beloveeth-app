@@ -1,1474 +1,778 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<meta name="theme-color" content="#F7F1EA" />
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<meta name="theme-color" content="#f8f3ec">
 <title>Beloveeth Workforce | Operations Command Centre</title>
-<meta name="description" content="Beloveeth Workforce — internal CRM, contact centre and operations command centre." />
-
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Sora:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-
 <style>
-  :root{
-    --maroon:#4a101d; --maroon-2:#681d31; --maroon-3:#8a3048;
-    --paper:#FBF6F1; --paper-2:#FFFFFF;
-    --ink:#2A141C; --ink-soft:#4B3A3E; --muted:#8A7873; --muted-2:#6F5C58;
-    --line:rgba(74,16,29,.12); --line-strong:rgba(74,16,29,.20);
-    --tech:#2F7FD1; --tech-2:#1F5FB0; --cyan:#59C1E8;
-    --gold:#B9872E; --green:#1F9D74; --amber:#C68A2E; --red:#D6455A;
-    --radius:18px; --radius-sm:12px;
-    --font-display:"Sora",sans-serif; --font-body:"Manrope",sans-serif;
-    --sidebar-w:236px; --topbar-h:60px;
-  }
-  *{box-sizing:border-box;margin:0;padding:0;}
-  html,body{width:100%;min-height:100%;}
-  body{
-    font-family:var(--font-body); color:var(--ink);
-    background:
-      radial-gradient(circle at 85% 4%, rgba(122,36,60,.08), transparent 30%),
-      radial-gradient(circle at 5% 96%, rgba(47,127,209,.06), transparent 28%),
-      var(--paper);
-  }
-  button,input,select,textarea{font:inherit;}
-  button{border:0;cursor:pointer;background:none;}
-  a{color:inherit;text-decoration:none;}
-  table{border-collapse:collapse;width:100%;}
+:root{
+ --maroon:#4a101d;--maroon-2:#681d31;--maroon-3:#8a3048;--rose:#c86b85;--gold:#b8912a;
+ --ivory:#f8f3ec;--paper:#fffdfa;--sand:#efe5d8;
+ --ink:#2b1218;--muted:#7b6b6e;--muted-2:#a29396;
+ --line:rgba(74,16,29,.11);--line-strong:rgba(74,16,29,.18);
+ --green:#1f9d6b;--red:#c9364d;--sky:#5a9fd8;--amber:#b9872e;
+ --radius:22px;--shadow:0 18px 50px rgba(74,16,29,.08);--shadow-lg:0 30px 80px rgba(74,16,29,.16);
+ --fd:"Sora",sans-serif;--fb:"Manrope",sans-serif;--sw:250px;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{min-height:100vh;font-family:var(--fb);color:var(--ink);-webkit-font-smoothing:antialiased;
+ background:radial-gradient(900px 520px at 88% -6%,rgba(104,29,49,.17),transparent 62%),
+ radial-gradient(760px 520px at -4% 58%,rgba(184,145,42,.11),transparent 60%),
+ radial-gradient(640px 420px at 55% 105%,rgba(200,107,133,.12),transparent 60%),var(--ivory);
+ background-attachment:fixed}
+button,input,select,textarea{font:inherit;color:inherit}
+button{border:0;background:none;cursor:pointer}
+a{color:inherit;text-decoration:none}
+table{border-collapse:collapse;width:100%}
+:focus-visible{outline:2px solid var(--maroon-3);outline-offset:2px}
+.ambient{position:fixed;inset:0;z-index:0;pointer-events:none;background-image:radial-gradient(rgba(74,16,29,.07) 1px,transparent 1px);
+ background-size:30px 30px;-webkit-mask-image:linear-gradient(180deg,#000,transparent 55%);mask-image:linear-gradient(180deg,#000,transparent 55%)}
+.shell{position:relative;z-index:1;display:flex;min-height:100vh}
 
-  /* ============ SHELL ============ */
-  .shell{display:flex;min-height:100vh;}
+/* sidebar */
+.sidebar{position:sticky;top:0;flex:0 0 var(--sw);width:var(--sw);height:100vh;display:flex;flex-direction:column;z-index:40;
+ background:linear-gradient(170deg,rgba(255,253,250,.92),rgba(250,238,240,.72));backdrop-filter:blur(24px);border-right:1px solid var(--line)}
+.sb{display:flex;align-items:center;gap:11px;padding:20px 20px 18px;border-bottom:1px solid var(--line)}
+.mark{width:36px;height:36px;border-radius:12px;display:grid;place-items:center;color:#fff;font-family:var(--fd);font-weight:800;font-size:14px;
+ background:linear-gradient(145deg,var(--maroon-3),var(--maroon));box-shadow:0 8px 24px rgba(74,16,29,.28)}
+.sb strong{display:block;font-family:var(--fd);font-size:14px;letter-spacing:.1em;color:var(--maroon)}
+.sb small{display:block;margin-top:2px;color:var(--muted);font-size:10px;letter-spacing:.08em}
+.snav{flex:1;overflow-y:auto;padding:14px 13px;scrollbar-width:thin}
+.snav h6{margin:16px 10px 6px;color:var(--muted-2);font-size:9.5px;font-weight:800;letter-spacing:.12em;text-transform:uppercase}
+.link{display:flex;align-items:center;gap:11px;width:100%;padding:10px 13px;margin-bottom:2px;border-radius:13px;
+ color:#6b5a5e;font-size:13px;font-weight:700;text-align:left;transition:.2s}
+.link .ic{width:16px;text-align:center;font-size:13px;opacity:.8}
+.link:hover{background:rgba(74,16,29,.06);color:var(--maroon)}
+.link.active{color:#fff;background:linear-gradient(135deg,var(--maroon-2),var(--maroon));box-shadow:0 10px 24px rgba(74,16,29,.22)}
+.link .tail{margin-left:auto;min-width:21px;height:21px;padding:0 6px;border-radius:100px;display:grid;place-items:center;
+ font-size:10px;font-weight:800;color:var(--maroon-2);background:rgba(104,29,49,.09)}
+.link.active .tail{color:#fff;background:rgba(255,255,255,.22)}
+.sfoot{padding:14px 18px;border-top:1px solid var(--line);display:flex;align-items:center;gap:8px;color:var(--muted);font-size:11.5px;font-weight:700}
+.live{width:8px;height:8px;border-radius:50%;background:var(--green);box-shadow:0 0 0 4px rgba(31,157,107,.16)}
 
-  /* ============ SIDEBAR ============ */
-  .sidebar{
-    width:var(--sidebar-w); flex:0 0 auto;
-    position:sticky; top:0; height:100vh;
-    background:rgba(255,255,255,.72);
-    border-right:1px solid var(--line);
-    backdrop-filter:blur(20px);
-    display:flex; flex-direction:column;
-    z-index:30;
-  }
-  .side-brand{
-    display:flex; align-items:center; gap:10px;
-    padding:18px 18px 16px; border-bottom:1px solid var(--line);
-  }
-  .side-brand-mark{
-    width:32px;height:32px;border-radius:10px;
-    background:linear-gradient(145deg,#741f36,#3c0b17);
-    display:grid;place-items:center;
-    box-shadow:0 8px 20px rgba(74,16,29,.28);
-  }
-  .side-brand-mark span{color:#fff;font-family:var(--font-display);font-size:12px;font-weight:800;}
-  .side-brand-copy strong{display:block;font-family:var(--font-display);font-size:12px;letter-spacing:.06em;}
-  .side-brand-copy small{display:block;color:var(--muted);font-size:8px;letter-spacing:.1em;text-transform:uppercase;margin-top:1px;}
+/* main */
+.main{flex:1;min-width:0;display:flex;flex-direction:column}
+.topbar{position:sticky;top:0;z-index:30;height:70px;display:flex;align-items:center;gap:12px;padding:0 26px;
+ background:rgba(248,243,236,.82);backdrop-filter:blur(22px) saturate(140%);border-bottom:1px solid var(--line)}
+.search{position:relative;flex:1;max-width:400px}
+.search input{width:100%;height:40px;padding:0 14px 0 38px;border-radius:13px;background:rgba(255,255,255,.75);
+ border:1px solid var(--line);font-size:13px;outline:none;transition:.2s}
+.search input:focus{border-color:var(--maroon-3);box-shadow:0 0 0 4px rgba(138,48,72,.1)}
+.search i{position:absolute;left:13px;top:10px;font-style:normal;color:var(--muted-2)}
+.tright{margin-left:auto;display:flex;align-items:center;gap:9px}
+.chip{display:flex;align-items:center;gap:7px;padding:8px 12px;border-radius:100px;color:var(--muted);
+ background:rgba(255,255,255,.7);border:1px solid var(--line);font-size:11.5px;font-weight:700}
+.ibtn{position:relative;width:38px;height:38px;display:grid;place-items:center;border-radius:13px;color:var(--maroon);
+ background:rgba(255,255,255,.7);border:1px solid var(--line);font-size:14px;transition:.2s}
+.ibtn:hover{background:#fff;transform:translateY(-1px)}
+.ibtn b{position:absolute;top:-5px;right:-5px;min-width:17px;height:17px;padding:0 4px;border-radius:100px;display:grid;place-items:center;
+ background:var(--red);color:#fff;font-size:9px;font-weight:800}
+.quick{width:38px;height:38px;border-radius:13px;display:grid;place-items:center;color:#fff;font-size:18px;
+ background:linear-gradient(135deg,var(--maroon-2),var(--maroon));box-shadow:0 10px 24px rgba(74,16,29,.24)}
+.av{width:38px;height:38px;border-radius:13px;display:grid;place-items:center;color:#fff;font-family:var(--fd);font-size:12px;font-weight:800;
+ background:linear-gradient(145deg,var(--maroon-3),var(--maroon))}
+.content{flex:1;padding:26px 26px 120px;min-width:0;max-width:1560px;width:100%;margin:0 auto}
+.stoggle{display:none;width:40px;height:40px;border-radius:12px;background:rgba(74,16,29,.07);color:var(--maroon);font-size:18px}
 
-  .side-scroll{flex:1;overflow-y:auto;padding:14px 12px 10px;}
-  .side-group{margin-bottom:16px;}
-  .side-group-label{
-    padding:0 8px 6px; color:var(--muted);
-    font-size:8.5px; font-weight:800; letter-spacing:.13em; text-transform:uppercase;
-  }
-  .side-link{
-    display:flex; align-items:center; gap:9px;
-    width:100%; padding:9px 10px; border-radius:9px;
-    color:var(--ink-soft); font-size:12px; font-weight:700;
-    margin-bottom:2px; transition:.18s ease;
-  }
-  .side-link .ic{
-    width:16px; text-align:center; font-size:11px; color:var(--muted);
-  }
-  .side-link:hover{background:rgba(74,16,29,.05); color:var(--maroon-2);}
-  .side-link.active{background:rgba(74,16,29,.08); color:var(--maroon);}
-  .side-link.active .ic{color:var(--maroon);}
+/* views */
+.view{display:none}
+.view.active{display:block;animation:in .35s ease}
+@keyframes in{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+.vhead{display:flex;align-items:flex-end;justify-content:space-between;gap:16px;flex-wrap:wrap;margin-bottom:22px}
+.vhead small{display:flex;align-items:center;gap:9px;color:var(--muted);font-size:12.5px;font-weight:700}
+.vhead small b{width:24px;height:2px;border-radius:2px;background:var(--gold)}
+.vhead h1{margin-top:8px;font-family:var(--fd);font-size:clamp(26px,3vw,40px);letter-spacing:-.06em;line-height:1.02;color:var(--maroon)}
+.acts{display:flex;gap:9px;flex-wrap:wrap}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:7px;padding:11px 16px;border-radius:12px;font-size:12.5px;font-weight:800;transition:.2s}
+.btn.primary{color:#fff;background:linear-gradient(135deg,var(--maroon-2),var(--maroon));box-shadow:0 12px 30px rgba(74,16,29,.22)}
+.btn.ghost{color:var(--maroon);background:rgba(255,255,255,.7);border:1px solid var(--line-strong)}
+.btn.soft{color:var(--maroon-2);background:rgba(104,29,49,.08);border:1px solid rgba(104,29,49,.12)}
+.btn.hot{color:#a8283c;background:rgba(201,54,77,.09);border:1px solid rgba(201,54,77,.18)}
+.btn:hover{transform:translateY(-2px)}
+.tabs{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:18px}
+.tab{padding:9px 15px;border-radius:100px;color:#6b5a5e;background:rgba(255,255,255,.7);border:1px solid var(--line);font-size:12.5px;font-weight:700;transition:.2s}
+.tab:hover{color:var(--maroon);border-color:var(--line-strong)}
+.tab.active{color:#fff;background:var(--maroon);border-color:var(--maroon)}
+.sub{display:none}.sub.active{display:block}
 
-  .side-foot{
-    padding:12px 16px 16px; border-top:1px solid var(--line);
-  }
-  .side-status{
-    display:flex; align-items:center; gap:7px;
-    font-size:9.5px; color:var(--muted-2); font-weight:700;
-  }
-  .dot-live{width:6px;height:6px;border-radius:50%;background:var(--green);box-shadow:0 0 8px rgba(31,157,116,.6);}
+/* cards */
+.card{position:relative;overflow:hidden;border-radius:var(--radius);border:1px solid var(--line);
+ background:linear-gradient(150deg,rgba(255,255,255,.92),rgba(255,253,250,.7));backdrop-filter:blur(20px);
+ box-shadow:var(--shadow),inset 0 1px 0 #fff;transition:.25s}
+.card:hover{border-color:var(--line-strong)}
+.pad{padding:20px 22px}
+.lbl{color:var(--muted);font-size:11px;font-weight:700;letter-spacing:.04em}
+.ttl{margin-top:4px;font-family:var(--fd);font-size:17px;font-weight:600;letter-spacing:-.035em}
+.kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:18px}
+.kpi{padding:18px}
+.kpi span{color:var(--muted);font-size:11.5px;font-weight:700}
+.kpi strong{display:block;margin-top:9px;font-family:var(--fd);font-size:28px;letter-spacing:-.055em;color:var(--maroon)}
+.kpi small{display:block;margin-top:5px;font-size:11.5px;font-weight:700;color:var(--muted-2)}
+.kpi small.up{color:var(--green)}.kpi small.warn{color:#8a611f}.kpi small.bad{color:var(--red)}
+.kpi::after{content:"";position:absolute;right:-30px;bottom:-34px;width:92px;height:92px;border-radius:50%;
+ background:radial-gradient(circle,rgba(200,107,133,.2),transparent 68%)}
+.g2{display:grid;grid-template-columns:1.4fr .9fr;gap:16px}
+.g3{display:grid;grid-template-columns:.85fr 1.3fr .85fr;gap:16px}
+.stack{display:flex;flex-direction:column;gap:10px}
 
-  /* ============ MAIN ============ */
-  .main{flex:1; min-width:0; display:flex; flex-direction:column;}
+/* tables */
+.tw{overflow:auto}
+th{text-align:left;padding:12px 18px;color:var(--muted);font-size:10.5px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;
+ background:rgba(74,16,29,.03);border-bottom:1px solid var(--line)}
+td{padding:14px 18px;border-bottom:1px solid var(--line);font-size:13px;color:#4b3a3e;vertical-align:middle}
+tr:last-child td{border-bottom:0}
+tr.ck{cursor:pointer;transition:background .2s}
+tr.ck:hover{background:rgba(255,255,255,.65)}
+td.n{font-weight:800;color:var(--ink)}
+.pill{display:inline-flex;align-items:center;gap:6px;padding:6px 11px;border-radius:100px;font-size:10.5px;font-weight:800;letter-spacing:.03em;
+ color:var(--maroon-2);background:rgba(104,29,49,.07);border:1px solid rgba(104,29,49,.12)}
+.pill .d{width:7px;height:7px;border-radius:50%;background:currentColor}
+.p-green{color:#188061;background:rgba(31,157,107,.1);border-color:rgba(31,157,107,.18)}
+.p-amber{color:#8a611f;background:rgba(185,135,46,.12);border-color:rgba(185,135,46,.22)}
+.p-red{color:#a8283c;background:rgba(201,54,77,.09);border-color:rgba(201,54,77,.18)}
+.p-sky{color:#2f6d9e;background:rgba(90,159,216,.12);border-color:rgba(90,159,216,.22)}
+.p-mute{color:var(--muted);background:rgba(74,16,29,.05);border-color:var(--line)}
 
-  .topbar{
-    position:sticky; top:0; z-index:25;
-    height:var(--topbar-h);
-    display:flex; align-items:center; gap:14px;
-    padding:0 22px;
-    background:rgba(255,255,255,.78);
-    border-bottom:1px solid var(--line);
-    backdrop-filter:blur(20px);
-  }
-  .search-box{
-    flex:1; max-width:360px;
-    display:flex; align-items:center; gap:8px;
-    padding:8px 12px; border-radius:10px;
-    background:rgba(74,16,29,.04); border:1px solid var(--line);
-    color:var(--muted-2); font-size:11px;
-  }
-  .search-box input{flex:1;border:0;background:transparent;outline:none;color:var(--ink);font-size:11px;}
-  .search-box input::placeholder{color:var(--muted);}
-  .topbar-right{margin-left:auto; display:flex; align-items:center; gap:10px;}
-  .tb-chip{
-    display:flex; align-items:center; gap:6px;
-    padding:7px 10px; border-radius:9px;
-    background:rgba(74,16,29,.04); border:1px solid var(--line);
-    font-size:10px; font-weight:700; color:var(--ink-soft);
-  }
-  .tb-icon-btn{
-    position:relative;
-    width:32px;height:32px; border-radius:9px;
-    display:grid; place-items:center;
-    background:rgba(74,16,29,.04); border:1px solid var(--line);
-    color:var(--ink-soft); font-size:12px;
-  }
-  .tb-icon-btn .badge{
-    position:absolute; top:-4px; right:-4px;
-    min-width:14px; height:14px; padding:0 3px;
-    border-radius:100px; background:var(--red); color:#fff;
-    font-size:7px; font-weight:800; display:grid; place-items:center;
-  }
-  .tb-avatar{
-    width:32px;height:32px;border-radius:9px;
-    background:linear-gradient(145deg,#741f36,#3c0b17);
-    display:grid;place-items:center;color:#fff;
-    font-family:var(--font-display);font-size:11px;font-weight:800;
-  }
-  .tb-quick{
-    width:32px;height:32px;border-radius:9px;
-    background:linear-gradient(135deg,#7b243f,#4b101f);
-    color:#fff; font-size:15px; font-weight:800;
-    display:grid; place-items:center;
-    box-shadow:0 8px 20px rgba(75,16,31,.24);
-  }
+/* feed / list rows */
+.feed{display:flex;gap:11px;padding:12px 14px;margin-bottom:8px;border-radius:14px;background:rgba(255,255,255,.6);border:1px solid var(--line)}
+.feed .dot{width:8px;height:8px;border-radius:50%;margin-top:5px;flex:none}
+.feed p{font-size:12.5px;line-height:1.55;color:#4b3a3e}
+.feed time{display:block;margin-top:4px;color:var(--muted-2);font-size:10.5px}
+.row{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:13px 15px;margin-bottom:8px;border-radius:14px;
+ background:rgba(255,255,255,.6);border:1px solid var(--line);cursor:pointer;transition:.2s}
+.row:hover{background:#fff;transform:translateY(-1px)}
+.row .t{font-weight:800;font-size:13px}
+.row .m{margin-top:3px;color:var(--muted);font-size:11.5px}
+.kv{padding:12px 13px;border-radius:14px;background:rgba(74,16,29,.035);border:1px solid var(--line)}
+.kv span{display:block;color:var(--muted);font-size:10.5px;font-weight:600}
+.kv strong{display:block;margin-top:4px;font-family:var(--fd);font-size:15px;color:var(--maroon)}
+.kvg{display:grid;grid-template-columns:1fr 1fr;gap:9px}
+.note{padding:13px 15px;border-radius:14px;font-size:12.5px;line-height:1.6;color:#4b3a3e;
+ background:rgba(104,29,49,.05);border:1px solid rgba(104,29,49,.1)}
 
-  .content{flex:1; padding:22px 26px 60px; min-width:0;}
-  .view{display:none;}
-  .view.active{display:block; animation:viewIn .3s ease;}
-  @keyframes viewIn{from{opacity:0;transform:translateY(6px);}to{opacity:1;transform:translateY(0);}}
+/* pipeline */
+.pipe{display:grid;grid-template-columns:repeat(6,minmax(180px,1fr));gap:12px;overflow-x:auto;padding-bottom:6px}
+.phead{display:flex;justify-content:space-between;align-items:center;padding:11px 13px;border-radius:14px 14px 0 0;
+ background:rgba(104,29,49,.06);border:1px solid var(--line);border-bottom:0}
+.phead span{font-size:11.5px;font-weight:800;color:#4b3a3e}
+.phead strong{font-family:var(--fd);font-size:15px;color:var(--maroon)}
+.pbody{min-height:220px;padding:10px;display:flex;flex-direction:column;gap:9px;border:1px solid var(--line);border-radius:0 0 14px 14px;background:rgba(255,255,255,.45)}
+.pcard{padding:12px;border-radius:13px;background:#fff;border:1px solid var(--line);cursor:pointer;transition:.2s}
+.pcard:hover{transform:translateY(-3px);box-shadow:var(--shadow)}
+.pcard .n{font-weight:800;font-size:12.5px}
+.pcard .p{margin-top:3px;color:var(--muted);font-size:11px}
+.pcard .v{margin-top:7px;font-family:var(--fd);font-size:13px;color:var(--maroon)}
 
-  .view-head{display:flex; align-items:flex-end; justify-content:space-between; margin-bottom:18px; flex-wrap:wrap; gap:12px;}
-  .view-head small{color:var(--muted); font-size:8.5px; text-transform:uppercase; letter-spacing:.14em;}
-  .view-head h1{margin-top:5px; font-family:var(--font-display); font-size:24px; font-weight:700; letter-spacing:-.03em; color:var(--ink);}
-  .view-actions{display:flex; gap:8px;}
+/* inbox */
+.inbox{display:grid;grid-template-columns:.85fr 1.3fr .85fr;border:1px solid var(--line);border-radius:var(--radius);overflow:hidden;min-height:540px;
+ background:linear-gradient(150deg,rgba(255,255,255,.9),rgba(255,253,250,.65));backdrop-filter:blur(20px);box-shadow:var(--shadow)}
+.icol{min-width:0}
+.icol+.icol{border-left:1px solid var(--line)}
+.ihead{padding:15px 18px;border-bottom:1px solid var(--line);color:var(--muted);font-size:10.5px;font-weight:800;letter-spacing:.1em;text-transform:uppercase}
+.conv{padding:14px 18px;border-bottom:1px solid var(--line);cursor:pointer;transition:.2s}
+.conv:hover,.conv.on{background:rgba(255,255,255,.75)}
+.conv.on{box-shadow:inset 3px 0 0 var(--maroon-2)}
+.conv .w{font-weight:800;font-size:13px}
+.conv .s{margin-top:4px;color:var(--muted);font-size:11.5px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.conv .c{margin-top:6px;color:var(--maroon-3);font-size:10px;font-weight:800;letter-spacing:.08em;text-transform:uppercase}
+.thread{padding:18px}
+.tmsg{max-width:82%;margin-bottom:11px;padding:11px 13px;border-radius:16px;font-size:12.5px;line-height:1.55}
+.tmsg.cust{background:rgba(255,255,255,.85);border:1px solid var(--line);border-top-left-radius:6px}
+.tmsg.agent{margin-left:auto;color:#fff;background:linear-gradient(135deg,var(--maroon-3),var(--maroon));border-top-right-radius:6px}
+.ctx{padding:14px 18px;border-bottom:1px solid var(--line)}
+.ctx span{display:block;color:var(--muted);font-size:10.5px;font-weight:600}
+.ctx strong{display:block;margin-top:4px;font-size:13px}
 
-  .btn{padding:9px 14px;border-radius:9px;font-size:11px;font-weight:800;transition:.2s ease;}
-  .btn-primary{color:#fff;background:linear-gradient(135deg,#7b243f,#4b101f);box-shadow:0 10px 24px rgba(75,16,31,.22);}
-  .btn-ghost{color:var(--ink-soft);background:rgba(74,16,29,.045);border:1px solid var(--line);}
-  .btn:hover{transform:translateY(-1px);}
+/* agent + property cards */
+.agrid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+.acard{padding:18px;cursor:pointer;transition:.25s}
+.acard:hover{transform:translateY(-4px);box-shadow:var(--shadow-lg)}
+.atop{display:flex;align-items:center;gap:11px}
+.aav{width:42px;height:42px;border-radius:14px;display:grid;place-items:center;color:#fff;font-family:var(--fd);font-weight:800;font-size:14px;
+ background:linear-gradient(145deg,var(--maroon-3),var(--maroon))}
+.atop .an{font-weight:800;font-size:13.5px}
+.atop .ar{margin-top:2px;color:var(--muted);font-size:11px}
+.amet{display:grid;grid-template-columns:repeat(3,1fr);gap:9px;margin-top:15px}
+.amet div{text-align:center;padding:10px 4px;border-radius:12px;background:rgba(74,16,29,.035);border:1px solid var(--line)}
+.amet strong{display:block;font-family:var(--fd);font-size:16px;color:var(--maroon)}
+.amet span{display:block;margin-top:3px;color:var(--muted);font-size:9.5px;font-weight:700;letter-spacing:.05em;text-transform:uppercase}
+.pgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.lcard{overflow:hidden;cursor:pointer;transition:.3s cubic-bezier(.2,.8,.2,1)}
+.lcard:hover{transform:translateY(-6px);box-shadow:var(--shadow-lg)}
+.limg{position:relative;height:160px;background-size:cover;background-position:center;background-color:var(--sand)}
+.limg::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(40,8,17,.3),transparent 42%)}
+.flags{position:absolute;z-index:2;top:12px;left:12px;display:flex;gap:6px;flex-wrap:wrap;max-width:90%}
+.flag{padding:5px 9px;border-radius:100px;font-size:9.5px;font-weight:800;letter-spacing:.04em;color:#fff;backdrop-filter:blur(4px)}
+.f-featured{background:rgba(184,145,42,.9)}.f-urgent{background:rgba(201,54,77,.9)}
+.f-vip{background:rgba(74,16,29,.88)}.f-new{background:rgba(90,159,216,.9)}.f-doc{background:rgba(185,135,46,.9)}
+.lbody{padding:15px 17px 17px}
+.lbody h4{font-family:var(--fd);font-size:15px;letter-spacing:-.04em}
+.lbody .loc{margin-top:4px;color:var(--muted);font-size:11.5px}
+.lbody .pr{margin-top:9px;font-family:var(--fd);font-size:16px;color:var(--maroon)}
+.lstats{display:flex;gap:14px;margin-top:11px;padding-top:11px;border-top:1px solid var(--line);color:var(--muted);font-size:11px;font-weight:600}
 
-  /* subtabs */
-  .subtabs{display:flex; gap:6px; margin-bottom:16px; flex-wrap:wrap;}
-  .subtab{
-    padding:8px 13px; border-radius:9px; font-size:11px; font-weight:700;
-    color:var(--muted-2); background:rgba(74,16,29,.035); border:1px solid var(--line);
-  }
-  .subtab.active{color:#fff; background:linear-gradient(135deg,#7b243f,#4b101f); border-color:transparent;}
-  .subview{display:none;}
-  .subview.active{display:block;}
+/* drawer */
+.ov{position:fixed;inset:0;z-index:95;background:rgba(43,18,24,.42);backdrop-filter:blur(10px);opacity:0;visibility:hidden;transition:.3s}
+.ov.open{opacity:1;visibility:visible}
+.drawer{position:fixed;top:0;right:0;height:100vh;width:min(440px,94vw);z-index:96;overflow-y:auto;background:var(--paper);
+ border-left:1px solid var(--line);box-shadow:-24px 0 70px rgba(74,16,29,.2);transform:translateX(100%);transition:transform .35s cubic-bezier(.2,.8,.2,1)}
+.drawer.open{transform:none}
+.dhead{display:flex;justify-content:space-between;align-items:flex-start;gap:14px;padding:24px 24px 18px;border-bottom:1px solid var(--line)}
+.dhead h2{margin-top:6px;font-family:var(--fd);font-size:23px;letter-spacing:-.05em;color:var(--maroon)}
+.dclose{width:36px;height:36px;flex:none;border-radius:50%;color:var(--maroon);background:rgba(74,16,29,.07);font-size:19px}
+.dbody{padding:22px 24px 60px}
+.dsec{margin-bottom:22px}
+.dsec h5{margin-bottom:10px;color:var(--muted);font-size:10.5px;font-weight:800;letter-spacing:.1em;text-transform:uppercase}
+.tl{display:flex;gap:12px;padding:10px 0;border-bottom:1px solid var(--line);font-size:12.5px;color:#4b3a3e}
+.tl:last-child{border-bottom:0}
+.tl b{flex:0 0 46px;color:var(--muted);font-size:11px}
+.dacts{display:flex;flex-wrap:wrap;gap:8px}
+.dacts button{padding:10px 14px;border-radius:12px;font-size:12px;font-weight:800;color:var(--maroon-2);
+ background:rgba(104,29,49,.07);border:1px solid rgba(104,29,49,.12);transition:.2s}
+.dacts button:hover{background:#fff;transform:translateY(-1px)}
 
-  /* card */
-  .card{
-    border:1px solid var(--line); border-radius:var(--radius);
-    background:linear-gradient(145deg, rgba(255,255,255,.82), rgba(255,255,255,.52));
-    backdrop-filter:blur(18px);
-    box-shadow:0 16px 40px rgba(74,16,29,.06), inset 0 1px 0 rgba(255,255,255,.7);
-  }
-  .card-pad{padding:18px 20px;}
-  .card-label{color:var(--muted); font-size:8px; font-weight:800; letter-spacing:.14em; text-transform:uppercase;}
-  .card-title{margin-top:4px; font-family:var(--font-display); font-size:14px; font-weight:700; color:var(--ink);}
+/* PROP ORB */
+.prop-trigger{position:fixed;z-index:100;left:calc(50% + 125px);bottom:30px;transform:translateX(-50%);width:64px;height:64px;border-radius:50%;
+ background:rgba(255,255,255,.3);border:1px solid rgba(255,255,255,.85);backdrop-filter:blur(8px);
+ box-shadow:0 10px 36px rgba(104,29,49,.28),0 0 56px rgba(200,107,133,.4),inset 0 0 20px rgba(255,255,255,.8);transition:transform .3s,box-shadow .4s}
+.prop-trigger:hover{transform:translateX(-50%) scale(1.07)}
+.spin{position:absolute;inset:0;border-radius:50%;overflow:hidden;animation:sp 10s linear infinite}
+.spin i{position:absolute;border-radius:50%;filter:blur(9px);opacity:.92}
+.spin .b1{width:46px;height:46px;left:-8px;top:-6px;background:#dc7594;animation:d1 5s ease-in-out infinite}
+.spin .b2{width:40px;height:40px;right:-9px;bottom:-6px;background:#7a2138;animation:d2 6.5s ease-in-out infinite}
+.spin .b3{width:34px;height:34px;left:16px;bottom:-13px;background:#f4b968;animation:d3 4.6s ease-in-out infinite}
+.spin .b4{width:32px;height:32px;right:4px;top:-11px;background:#86bdff;animation:d4 7.4s ease-in-out infinite}
+.glass{position:absolute;inset:0;border-radius:50%;pointer-events:none;
+ background:radial-gradient(circle at 34% 26%,rgba(255,255,255,.95),transparent 34%),radial-gradient(circle at 60% 68%,rgba(255,255,255,.25),transparent 50%)}
+.ring{position:absolute;inset:-8px;border-radius:50%;border:1px solid rgba(200,107,133,.35);pointer-events:none;animation:rb 3.6s ease-in-out infinite}
+@keyframes sp{to{transform:rotate(360deg)}}
+@keyframes rb{0%,100%{transform:scale(.94);opacity:.5}50%{transform:scale(1.12);opacity:1}}
+@keyframes d1{0%,100%{transform:translate(0,0) scale(1)}50%{transform:translate(14px,12px) scale(1.15)}}
+@keyframes d2{0%,100%{transform:translate(0,0) scale(1)}50%{transform:translate(-13px,-10px) scale(.9)}}
+@keyframes d3{0%,100%{transform:translate(0,0) scale(1)}50%{transform:translate(10px,-14px) scale(1.2)}}
+@keyframes d4{0%,100%{transform:translate(0,0) scale(1)}50%{transform:translate(-12px,13px) scale(1.1)}}
+.prop-trigger.listening{box-shadow:0 10px 36px rgba(104,29,49,.3),0 0 80px rgba(200,107,133,.7),inset 0 0 20px rgba(255,255,255,.8)}
+.prop-trigger.listening .ring{animation-duration:1s}
+.prop-trigger.thinking .spin{animation-duration:1.6s}
+.prop-trigger.thinking .ring{animation-duration:.8s}
+.pcap{position:fixed;z-index:99;left:calc(50% + 125px);bottom:9px;transform:translateX(-50%);pointer-events:none;
+ color:var(--maroon-3);opacity:.7;font-size:10.5px;font-weight:700;letter-spacing:.1em}
+.ppanel{position:fixed;z-index:90;left:calc(50% + 125px);bottom:114px;width:min(390px,calc(100vw - 28px));max-height:480px;
+ display:flex;flex-direction:column;overflow:hidden;border-radius:26px;
+ background:linear-gradient(150deg,rgba(255,252,248,.72),rgba(250,238,240,.6));border:1px solid rgba(255,255,255,.8);
+ box-shadow:0 30px 80px rgba(74,16,29,.22),0 0 70px rgba(200,107,133,.16),inset 0 1px 0 #fff;
+ backdrop-filter:blur(30px) saturate(150%);opacity:0;pointer-events:none;transform:translate(-50%,20px) scale(.95);
+ transition:opacity .35s,transform .35s cubic-bezier(.2,.8,.2,1)}
+.ppanel.open{opacity:1;pointer-events:auto;transform:translate(-50%,0) scale(1)}
+.ppanel::before{content:"";position:absolute;width:200px;height:200px;top:-110px;right:-60px;border-radius:50%;pointer-events:none;
+ background:radial-gradient(circle,rgba(200,107,133,.35),transparent 68%)}
+.ph{position:relative;display:flex;align-items:center;justify-content:space-between;padding:16px 18px 12px}
+.pid{display:flex;align-items:center;gap:10px}
+.morb{width:28px;height:28px;border-radius:50%;box-shadow:0 0 18px rgba(200,107,133,.65);
+ background:radial-gradient(circle at 35% 30%,#fff 4%,#ffd0dc 25%,#c86b85 55%,#7a2138 95%)}
+.pid strong{display:block;font-family:var(--fd);font-size:14px;color:var(--maroon)}
+.pid span{display:block;margin-top:1px;color:var(--muted);font-size:11px}
+.pclose{width:30px;height:30px;border-radius:10px;color:var(--maroon);background:rgba(74,16,29,.07);font-size:17px}
+.pmsgs{flex:1;min-height:130px;padding:6px 16px 10px;overflow-y:auto;scrollbar-width:thin}
+.msg{max-width:90%;margin-bottom:10px;padding:11px 13px;border-radius:17px;font-size:13px;line-height:1.55;animation:mi .3s ease}
+@keyframes mi{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+.msg.ai{background:rgba(255,255,255,.78);border:1px solid rgba(255,255,255,.9);border-top-left-radius:6px;box-shadow:0 4px 14px rgba(74,16,29,.05)}
+.msg.user{margin-left:auto;color:#fff;background:linear-gradient(135deg,var(--maroon-3),var(--maroon));border-top-right-radius:6px}
+.msg small{display:block;margin-bottom:4px;color:var(--maroon-3);font-size:10.5px;font-weight:800;letter-spacing:.06em}
+.typing{display:inline-flex;gap:4px;padding:14px 16px}
+.typing i{width:6px;height:6px;border-radius:50%;background:var(--rose);animation:dt 1s ease-in-out infinite}
+.typing i:nth-child(2){animation-delay:.15s}.typing i:nth-child(3){animation-delay:.3s}
+@keyframes dt{0%,100%{opacity:.3;transform:translateY(0)}50%{opacity:1;transform:translateY(-3px)}}
+.psug{display:flex;gap:6px;overflow-x:auto;padding:0 16px 10px;scrollbar-width:none}
+.psug::-webkit-scrollbar{display:none}
+.psug button{flex:0 0 auto;padding:8px 12px;border-radius:100px;color:var(--maroon-2);background:rgba(255,255,255,.7);
+ border:1px solid rgba(104,29,49,.12);font-size:11.5px;font-weight:700}
+.psug button:hover{background:#fff}
+.pin{display:flex;gap:8px;margin:0 12px 12px;padding:6px;border-radius:18px;background:rgba(255,255,255,.8);
+ border:1px solid rgba(255,255,255,.95);box-shadow:0 4px 16px rgba(74,16,29,.06)}
+.pin input{flex:1;min-width:0;padding:9px 10px;background:transparent;border:0;outline:none;font-size:13.5px}
+.psend{width:38px;height:38px;border-radius:13px;color:#fff;font-size:16px;
+ background:linear-gradient(135deg,var(--maroon-3),var(--maroon));box-shadow:0 6px 16px rgba(74,16,29,.25)}
 
-  /* KPI row */
-  .kpi-row{display:grid; grid-template-columns:repeat(8,1fr); gap:10px; margin-bottom:18px;}
-  .kpi{
-    padding:14px 13px; border-radius:14px;
-    background:linear-gradient(145deg, rgba(255,255,255,.82), rgba(255,255,255,.5));
-    border:1px solid var(--line);
-  }
-  .kpi span{display:block; color:var(--muted); font-size:7px; text-transform:uppercase; letter-spacing:.08em;}
-  .kpi strong{display:block; margin-top:6px; font-family:var(--font-display); font-size:19px; letter-spacing:-.03em; color:var(--ink);}
-  .kpi small{display:block; margin-top:3px; font-size:7.5px; font-weight:700;}
-  .kpi small.up{color:var(--green);} .kpi small.warn{color:var(--amber);} .kpi small.bad{color:var(--red);}
-
-  /* status pill */
-  .status-pill{display:inline-flex; align-items:center; gap:5px; padding:4px 8px; border-radius:100px; font-size:9px; font-weight:800;}
-  .status-pill .d{width:6px;height:6px;border-radius:50%;}
-  .st-active{background:rgba(31,157,116,.09); color:#188061;} .st-active .d{background:var(--green);}
-  .st-away{background:rgba(198,138,46,.10); color:#8a611f;} .st-away .d{background:var(--amber);}
-  .st-oncall{background:rgba(214,69,90,.09); color:#a8283c;} .st-oncall .d{background:var(--red);}
-  .st-acw{background:rgba(47,127,209,.09); color:var(--tech-2);} .st-acw .d{background:var(--tech);}
-  .st-offline{background:rgba(74,16,29,.05); color:var(--muted-2);} .st-offline .d{background:var(--muted);}
-
-  /* tables */
-  .tbl{width:100%;}
-  .tbl th{
-    text-align:left; padding:9px 12px; font-size:8.5px; color:var(--muted);
-    text-transform:uppercase; letter-spacing:.08em; border-bottom:1px solid var(--line);
-  }
-  .tbl td{padding:11px 12px; font-size:11.5px; color:var(--ink-soft); border-bottom:1px solid var(--line); vertical-align:middle;}
-  .tbl tr:last-child td{border-bottom:0;}
-  .tbl tr.rowclick{cursor:pointer; transition:.15s ease;}
-  .tbl tr.rowclick:hover{background:rgba(74,16,29,.035);}
-  .tbl .name-cell{font-weight:800; color:var(--ink);}
-  .tag-mini{
-    display:inline-block; padding:3px 7px; border-radius:100px;
-    font-size:8px; font-weight:800; background:rgba(74,16,29,.06); color:var(--maroon-2);
-  }
-  .tag-hi{background:rgba(214,69,90,.10); color:#a8283c;}
-  .tag-med{background:rgba(198,138,46,.10); color:#8a611f;}
-  .tag-lo{background:rgba(74,16,29,.05); color:var(--muted-2);}
-
-  /* two/three column layouts */
-  .grid-2{display:grid; grid-template-columns:1.4fr .9fr; gap:16px;}
-  .grid-2-rev{display:grid; grid-template-columns:.9fr 1.4fr; gap:16px;}
-  .grid-3col{display:grid; grid-template-columns:.85fr 1.3fr .85fr; gap:14px;}
-  .stack{display:flex; flex-direction:column; gap:14px;}
-
-  /* kanban pipeline */
-  .pipeline{display:grid; grid-template-columns:repeat(6,1fr); gap:10px; overflow-x:auto;}
-  .pipe-col{min-width:0;}
-  .pipe-head{
-    display:flex; justify-content:space-between; align-items:center;
-    padding:9px 10px; border-radius:10px 10px 0 0;
-    background:rgba(74,16,29,.05); border:1px solid var(--line); border-bottom:0;
-  }
-  .pipe-head span{font-size:9.5px; font-weight:800; color:var(--ink-soft);}
-  .pipe-head strong{font-family:var(--font-display); font-size:13px; color:var(--maroon);}
-  .pipe-body{
-    border:1px solid var(--line); border-radius:0 0 10px 10px;
-    padding:8px; display:flex; flex-direction:column; gap:8px;
-    min-height:220px; background:rgba(255,255,255,.4);
-  }
-  .pipe-card{
-    padding:10px; border-radius:10px; background:#fff; border:1px solid var(--line);
-    cursor:pointer; transition:.18s ease;
-  }
-  .pipe-card:hover{transform:translateY(-2px); box-shadow:0 10px 22px rgba(74,16,29,.08);}
-  .pipe-card .n{font-weight:800; font-size:11px; color:var(--ink);}
-  .pipe-card .p{margin-top:3px; font-size:9.5px; color:var(--muted-2);}
-  .pipe-card .v{margin-top:6px; font-size:10px; font-weight:800; color:var(--maroon);}
-
-  /* agent monitor / call console */
-  .queue-list, .agent-avail{display:flex; flex-direction:column; gap:8px;}
-  .queue-item, .avail-item{
-    display:flex; justify-content:space-between; align-items:center;
-    padding:10px 12px; border-radius:11px; background:rgba(74,16,29,.03); border:1px solid var(--line);
-  }
-  .queue-item .who{font-weight:800; font-size:11.5px; color:var(--ink);}
-  .queue-item .meta{margin-top:2px; font-size:9.5px; color:var(--muted-2);}
-  .queue-item .wait{font-size:10px; font-weight:800; color:var(--red);}
-  .avail-item .who{font-weight:700; font-size:11px; color:var(--ink-soft);}
-
-  .call-panel{padding:18px 20px;}
-  .call-panel .cname{font-family:var(--font-display); font-size:17px; font-weight:700; color:var(--ink);}
-  .call-panel .csub{margin-top:3px; color:var(--muted-2); font-size:10.5px;}
-  .call-grid{display:grid; grid-template-columns:repeat(2,1fr); gap:10px; margin-top:16px;}
-  .call-stat{padding:10px 12px; border-radius:11px; background:rgba(74,16,29,.03); border:1px solid var(--line);}
-  .call-stat span{display:block; color:var(--muted); font-size:8px; text-transform:uppercase; letter-spacing:.07em;}
-  .call-stat strong{display:block; margin-top:4px; font-size:12.5px; color:var(--ink);}
-  .call-controls{display:flex; flex-wrap:wrap; gap:7px; margin-top:16px;}
-  .call-controls button{
-    padding:8px 12px; border-radius:9px; font-size:10px; font-weight:800;
-    background:rgba(74,16,29,.045); border:1px solid var(--line); color:var(--ink-soft);
-  }
-  .call-controls button.hot{background:rgba(214,69,90,.10); color:#a8283c; border-color:rgba(214,69,90,.2);}
-  .note-line{margin-top:14px; padding:10px 12px; border-radius:10px; background:rgba(47,127,209,.06); border:1px solid rgba(47,127,209,.15); font-size:9.5px; color:#33495c; line-height:1.5;}
-
-  /* conversations inbox */
-  .inbox-grid{display:grid; grid-template-columns:.85fr 1.3fr .85fr; gap:0; border:1px solid var(--line); border-radius:var(--radius); overflow:hidden; min-height:520px;}
-  .inbox-col{background:rgba(255,255,255,.5); min-width:0;}
-  .inbox-col + .inbox-col{border-left:1px solid var(--line);}
-  .inbox-col-head{padding:14px 16px; border-bottom:1px solid var(--line); font-size:9px; font-weight:800; color:var(--muted); text-transform:uppercase; letter-spacing:.1em;}
-  .convo-item{padding:12px 16px; border-bottom:1px solid var(--line); cursor:pointer; transition:.15s ease;}
-  .convo-item:hover, .convo-item.active{background:rgba(74,16,29,.05);}
-  .convo-item .who{font-weight:800; font-size:11.5px; color:var(--ink); display:flex; justify-content:space-between;}
-  .convo-item .snippet{margin-top:3px; font-size:10px; color:var(--muted-2); overflow:hidden; text-overflow:ellipsis; white-space:nowrap;}
-  .convo-item .chan{font-size:8px; color:var(--tech-2); font-weight:800; margin-top:4px; text-transform:uppercase;}
-  .thread-pad{padding:16px 18px;}
-  .thread-msg{max-width:80%; margin-bottom:10px; padding:9px 11px; border-radius:12px; font-size:10.5px; line-height:1.5;}
-  .thread-msg.cust{background:rgba(74,16,29,.05); border:1px solid var(--line);}
-  .thread-msg.agent{margin-left:auto; background:rgba(47,127,209,.08); border:1px solid rgba(47,127,209,.16);}
-  .ctx-row{padding:12px 16px; border-bottom:1px solid var(--line);}
-  .ctx-row span{display:block; color:var(--muted); font-size:8px; text-transform:uppercase; letter-spacing:.08em;}
-  .ctx-row strong{display:block; margin-top:4px; font-size:11.5px; color:var(--ink);}
-
-  /* agents grid */
-  .agents-grid{display:grid; grid-template-columns:repeat(3,1fr); gap:12px;}
-  .agent-card{padding:15px; cursor:pointer;}
-  .agent-top{display:flex; align-items:center; gap:10px;}
-  .agent-avatar{
-    width:38px;height:38px;border-radius:11px;
-    background:linear-gradient(145deg,#741f36,#3c0b17); color:#fff;
-    display:grid; place-items:center; font-family:var(--font-display); font-weight:800; font-size:13px;
-  }
-  .agent-name{font-weight:800; font-size:12.5px; color:var(--ink);}
-  .agent-role{font-size:9px; color:var(--muted); margin-top:1px;}
-  .agent-metrics{display:grid; grid-template-columns:repeat(3,1fr); gap:8px; margin-top:13px;}
-  .agent-metrics div{text-align:center; padding:8px 4px; border-radius:9px; background:rgba(74,16,29,.03); border:1px solid var(--line);}
-  .agent-metrics strong{display:block; font-family:var(--font-display); font-size:13px; color:var(--ink);}
-  .agent-metrics span{display:block; font-size:7px; color:var(--muted); text-transform:uppercase; margin-top:2px;}
-
-  /* property cards */
-  .props-grid{display:grid; grid-template-columns:repeat(3,1fr); gap:12px;}
-  .prop-card2{overflow:hidden; cursor:pointer;}
-  .prop-img2{height:120px; background-size:cover; background-position:center; position:relative;}
-  .prop-flags{position:absolute; top:9px; left:9px; display:flex; gap:5px; flex-wrap:wrap; max-width:90%;}
-  .flag{padding:3px 7px; border-radius:100px; font-size:7px; font-weight:800; letter-spacing:.04em;}
-  .flag-featured{background:rgba(185,135,46,.85); color:#fff;}
-  .flag-urgent{background:rgba(214,69,90,.9); color:#fff;}
-  .flag-vip{background:rgba(74,16,29,.85); color:#fff;}
-  .flag-new{background:rgba(47,127,209,.88); color:#fff;}
-  .flag-doc{background:rgba(198,138,46,.85); color:#fff;}
-  .prop-body2{padding:12px 13px 14px;}
-  .prop-body2 h4{font-family:var(--font-display); font-size:12.5px; font-weight:700; color:var(--ink);}
-  .prop-body2 .loc{font-size:9px; color:var(--muted); margin-top:2px;}
-  .prop-body2 .price{margin-top:8px; font-family:var(--font-display); font-size:13px; color:var(--maroon);}
-  .prop-stats-row{display:flex; gap:10px; margin-top:9px; padding-top:9px; border-top:1px solid var(--line);}
-  .prop-stats-row span{font-size:8.5px; color:var(--muted-2);}
-
-  /* partner list */
-  .partner-row{display:flex; justify-content:space-between; align-items:center; padding:13px 14px; border-radius:12px; background:rgba(255,255,255,.5); border:1px solid var(--line); cursor:pointer; margin-bottom:8px; transition:.15s ease;}
-  .partner-row:hover{background:rgba(74,16,29,.04);}
-  .partner-row .pn{font-weight:800; font-size:12px; color:var(--ink);}
-  .partner-row .pm{font-size:9.5px; color:var(--muted-2); margin-top:2px;}
-
-  /* activity timeline */
-  .timeline{display:flex; flex-direction:column;}
-  .tl-item{display:flex; gap:10px; padding:9px 0; border-bottom:1px solid var(--line);}
-  .tl-item:last-child{border-bottom:0;}
-  .tl-time{flex:0 0 44px; font-size:9px; color:var(--muted); font-weight:700; padding-top:1px;}
-  .tl-text{font-size:10.5px; color:var(--ink-soft);}
-  .tl-day{font-size:8.5px; color:var(--muted); text-transform:uppercase; letter-spacing:.1em; font-weight:800; margin:10px 0 4px;}
-
-  /* feed */
-  .feed-item{display:flex; gap:10px; padding:10px 12px; border-radius:11px; margin-bottom:7px; background:rgba(74,16,29,.025); border:1px solid var(--line);}
-  .feed-dot{width:7px;height:7px;border-radius:50%; margin-top:4px; flex:0 0 auto;}
-  .feed-text{font-size:10.5px; color:var(--ink-soft); line-height:1.5;}
-  .feed-time{font-size:8px; color:var(--muted); margin-top:2px;}
-
-  /* drawer */
-  .overlay{position:fixed; inset:0; background:rgba(42,20,28,.28); backdrop-filter:blur(2px); z-index:60; opacity:0; pointer-events:none; transition:.25s ease;}
-  .overlay.open{opacity:1; pointer-events:auto;}
-  .drawer{
-    position:fixed; top:0; right:0; height:100vh; width:min(420px, 92vw); z-index:61;
-    background:rgba(255,255,255,.97); backdrop-filter:blur(20px);
-    border-left:1px solid var(--line); box-shadow:-20px 0 60px rgba(74,16,29,.14);
-    transform:translateX(100%); transition:transform .32s cubic-bezier(.2,.8,.2,1);
-    overflow-y:auto;
-  }
-  .drawer.open{transform:translateX(0);}
-  .drawer-head{display:flex; justify-content:space-between; align-items:flex-start; padding:20px 20px 14px; border-bottom:1px solid var(--line);}
-  .drawer-close{width:28px;height:28px;border-radius:8px;background:rgba(74,16,29,.05);color:var(--ink-soft);font-size:13px;}
-  .drawer-body{padding:18px 20px 60px;}
-  .drawer-section{margin-bottom:18px;}
-  .drawer-section h5{font-size:9px; color:var(--muted); text-transform:uppercase; letter-spacing:.1em; font-weight:800; margin-bottom:9px;}
-  .kv-grid{display:grid; grid-template-columns:1fr 1fr; gap:9px;}
-  .kv{padding:9px 10px; border-radius:10px; background:rgba(74,16,29,.03); border:1px solid var(--line);}
-  .kv span{display:block; font-size:7.5px; color:var(--muted); text-transform:uppercase;}
-  .kv strong{display:block; margin-top:3px; font-size:11.5px; color:var(--ink);}
-  .drawer-actions{display:flex; flex-wrap:wrap; gap:7px;}
-  .drawer-actions button{padding:8px 11px; border-radius:9px; font-size:9.5px; font-weight:800; background:rgba(74,16,29,.045); border:1px solid var(--line); color:var(--ink-soft);}
-
-  /* prop orb (same DNA as index/client) */
-  .prop-trigger{
-    position:fixed; z-index:100; left:50%; bottom:17px; transform:translateX(-50%);
-    width:52px; height:52px; display:grid; place-items:center; border-radius:50%;
-    background:radial-gradient(circle at 45% 35%, rgba(255,255,255,.98), rgba(99,202,255,.55) 18%, rgba(48,125,255,.22) 40%, rgba(74,16,29,.06) 65%, transparent 75%);
-    border:1px solid rgba(170,232,255,.35);
-    box-shadow:0 10px 28px rgba(74,16,29,.16), 0 0 18px rgba(73,180,255,.28), 0 0 55px rgba(34,126,255,.18), inset 0 0 16px rgba(170,239,255,.2);
-    backdrop-filter:blur(10px);
-    transition:box-shadow .4s ease, transform .3s ease;
-  }
-  .prop-trigger:hover{transform:translateX(-50%) scale(1.06);}
-  .prop-energy{position:absolute; inset:-6px; border-radius:50%; border:1px solid rgba(110,208,255,.2); animation:propBreath 3.5s ease-in-out infinite;}
-  .prop-energy::after{content:""; position:absolute; inset:-1px; border-radius:50%; border:1px solid rgba(119,215,255,.12); animation:propRotate 8s linear infinite;}
-  .prop-core{
-    width:18px;height:18px;border-radius:50%;
-    background:radial-gradient(circle at 50% 40%, #fff, #b9efff 17%, #62caff 38%, #247aff 65%, transparent 73%);
-    box-shadow:0 0 12px #80dcff, 0 0 28px rgba(50,156,255,.7);
-    animation:coreFloat 2.8s ease-in-out infinite;
-  }
-  @keyframes propBreath{0%,100%{transform:scale(.96);opacity:.55;}50%{transform:scale(1.06);opacity:1;}}
-  @keyframes propRotate{from{transform:rotate(0);}to{transform:rotate(360deg);}}
-  @keyframes coreFloat{0%,100%{transform:scale(.92);}50%{transform:scale(1.08);}}
-  .prop-trigger.thinking .prop-core{animation:coreFloat 1s ease-in-out infinite, coreSpin 2s linear infinite;}
-  @keyframes coreSpin{to{transform:rotate(360deg) scale(1.08);}}
-  .prop-caption{position:fixed; z-index:99; left:50%; bottom:3px; transform:translateX(-50%); color:rgba(74,16,29,.4); font-size:7px; letter-spacing:.15em; text-transform:uppercase; pointer-events:none;}
-
-  .prop-panel{
-    position:fixed; z-index:90; left:50%; bottom:80px; width:min(390px, calc(100vw - 28px)); max-height:440px;
-    transform:translate(-50%,20px) scale(.95); opacity:0; pointer-events:none;
-    border-radius:22px;
-    background:linear-gradient(145deg, rgba(255,255,255,.93), rgba(255,255,255,.8));
-    border:1px solid rgba(74,16,29,.12);
-    box-shadow:0 28px 84px rgba(74,16,29,.18), inset 0 1px 0 rgba(255,255,255,.9);
-    backdrop-filter:blur(28px) saturate(135%);
-    transition:opacity .35s ease, transform .35s cubic-bezier(.2,.8,.2,1);
-  }
-  .prop-panel.open{opacity:1; pointer-events:auto; transform:translate(-50%,0) scale(1);}
-  .prop-panel-head{display:flex; align-items:center; justify-content:space-between; padding:15px 16px 11px; border-bottom:1px solid var(--line);}
-  .prop-identity{display:flex; align-items:center; gap:9px;}
-  .mini-orb{width:23px;height:23px;border-radius:50%; background:radial-gradient(circle, white 4%, #a6ecff 20%, #359aff 45%, rgba(48,116,255,.05) 70%); box-shadow:0 0 15px rgba(70,184,255,.55);}
-  .prop-identity strong{display:block; font-family:var(--font-display); font-size:11px; color:var(--ink);}
-  .prop-identity span{display:block; margin-top:2px; color:var(--muted); font-size:7px;}
-  .prop-close{width:24px;height:24px;border-radius:8px;color:var(--ink-soft);background:rgba(74,16,29,.05);}
-  .prop-messages{padding:14px; max-height:250px; overflow-y:auto;}
-  .prop-message{max-width:91%; margin-bottom:10px; padding:9px 10px; border-radius:12px; font-size:9.5px; line-height:1.5;}
-  .prop-message.ai{color:#33495c; background:rgba(47,127,209,.07); border:1px solid rgba(47,127,209,.15); border-top-left-radius:5px;}
-  .prop-message.user{margin-left:auto; color:#2c1a21; background:rgba(74,16,29,.06); border:1px solid rgba(74,16,29,.1); border-top-right-radius:5px;}
-  .prop-message small{display:block; margin-bottom:4px; color:var(--tech-2); font-size:6px; font-weight:800; letter-spacing:.1em; text-transform:uppercase;}
-  .prop-suggestions{display:flex; gap:5px; overflow-x:auto; padding:0 14px 9px; scrollbar-width:none;}
-  .prop-suggestions button{flex:0 0 auto; padding:7px 9px; color:var(--tech-2); background:rgba(47,127,209,.07); border:1px solid rgba(47,127,209,.16); border-radius:9px; font-size:7px; font-weight:700;}
-  .prop-input{display:flex; gap:7px; margin:0 11px 11px; padding:6px; border-radius:12px; background:rgba(74,16,29,.04); border:1px solid var(--line);}
-  .prop-input input{flex:1; min-width:0; padding:8px 6px; outline:none; border:0; color:var(--ink); background:transparent; font-size:9px;}
-  .prop-send{width:29px;height:29px;border-radius:9px;color:#fff;background:linear-gradient(135deg,#398fff,#185bc7);}
-
-  /* mobile */
-  .sidebar-toggle{display:none;}
-  @media (max-width:980px){
-    .sidebar{position:fixed; left:0; height:100vh; transform:translateX(-100%); transition:transform .3s ease; box-shadow:20px 0 50px rgba(74,16,29,.14);}
-    .sidebar.open{transform:translateX(0);}
-    .sidebar-toggle{display:grid; place-items:center; width:34px;height:34px;border-radius:9px;background:rgba(74,16,29,.05);border:1px solid var(--line);color:var(--maroon-2);font-size:14px;}
-    .search-box{display:none;}
-    .kpi-row{grid-template-columns:repeat(4,1fr);}
-    .grid-2, .grid-2-rev, .grid-3col{grid-template-columns:1fr;}
-    .agents-grid, .props-grid{grid-template-columns:repeat(2,1fr);}
-    .pipeline{grid-template-columns:repeat(3,minmax(200px,1fr));}
-    .inbox-grid{grid-template-columns:1fr; min-height:0;}
-    .content{padding:18px 16px 60px;}
-  }
-  @media (max-width:560px){
-    .kpi-row{grid-template-columns:repeat(2,1fr);}
-    .agents-grid, .props-grid{grid-template-columns:1fr;}
-    .pipeline{grid-template-columns:repeat(2,minmax(180px,1fr));}
-  }
+@media(max-width:1200px){.kpis{grid-template-columns:repeat(4,1fr)}.g2,.g3{grid-template-columns:1fr}.agrid,.pgrid{grid-template-columns:repeat(2,1fr)}.inbox{grid-template-columns:1fr;min-height:0}}
+@media(max-width:980px){
+ .sidebar{position:fixed;left:0;transform:translateX(-100%);transition:transform .3s}
+ .sidebar.open{transform:none}
+ .stoggle{display:grid;place-items:center}.search{display:none}
+ .content{padding:20px 16px 120px}.topbar{padding:0 16px}.chip{display:none}
+ .prop-trigger,.pcap,.ppanel{left:50%}
+}
+@media(max-width:620px){.kpis{grid-template-columns:repeat(2,1fr)}.agrid,.pgrid{grid-template-columns:1fr}.pipe{grid-template-columns:repeat(2,minmax(170px,1fr))}}
+@media(prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}}
 </style>
 </head>
 <body>
+<div class="ambient"></div>
 
 <div class="shell">
+<aside class="sidebar" id="sidebar">
+  <a class="sb" href="index.html"><div class="mark">B</div><div><strong>WORKFORCE</strong><small>Operations Console</small></div></a>
+  <nav class="snav" id="snav">
+    <button class="link active" data-v="command"><span class="ic">◆</span>Command Centre</button>
+    <h6>CRM</h6>
+    <button class="link" data-v="crm" data-s="leads"><span class="ic">☰</span>Leads<span class="tail">7</span></button>
+    <button class="link" data-v="crm" data-s="customers"><span class="ic">☺</span>Customers</button>
+    <button class="link" data-v="crm" data-s="pipeline"><span class="ic">⇥</span>Pipeline</button>
+    <button class="link" data-v="crm" data-s="tasks"><span class="ic">✓</span>Tasks &amp; follow-ups<span class="tail">14</span></button>
+    <h6>Contact centre</h6>
+    <button class="link" data-v="contact" data-s="calls"><span class="ic">☎</span>Live calls<span class="tail">2</span></button>
+    <button class="link" data-v="contact" data-s="conversations"><span class="ic">✉</span>Conversations</button>
+    <h6>Workforce</h6>
+    <button class="link" data-v="workforce" data-s="agents"><span class="ic">◍</span>Agents</button>
+    <button class="link" data-v="workforce" data-s="performance"><span class="ic">▲</span>Performance</button>
+    <h6>Properties</h6>
+    <button class="link" data-v="properties" data-s="all"><span class="ic">▦</span>All listings</button>
+    <button class="link" data-v="properties" data-s="important"><span class="ic">★</span>Important listings</button>
+    <h6>Network</h6>
+    <button class="link" data-v="partners"><span class="ic">⚭</span>Partners</button>
+    <h6>Intelligence</h6>
+    <button class="link" data-v="intel" data-s="market"><span class="ic">◈</span>Market intelligence</button>
+    <button class="link" data-v="intel" data-s="news"><span class="ic">▤</span>News</button>
+    <button class="link" data-v="intel" data-s="reports"><span class="ic">▥</span>Reports</button>
+    <h6>System</h6>
+    <button class="link" data-v="admin"><span class="ic">⚙</span>Administration</button>
+  </nav>
+  <div class="sfoot"><span class="live"></span>Live workforce · 12 active</div>
+</aside>
 
-  <!-- ============ SIDEBAR ============ -->
-  <aside class="sidebar" id="sidebar">
-    <div class="side-brand">
-      <div class="side-brand-mark"><span>B</span></div>
-      <div class="side-brand-copy">
-        <strong>WORKFORCE</strong>
-        <small>Operations Console</small>
-      </div>
+<div class="main">
+  <header class="topbar">
+    <button class="stoggle" onclick="document.getElementById('sidebar').classList.toggle('open')">☰</button>
+    <div class="search"><i>⌕</i><input placeholder="Search leads, customers, properties, partners..." aria-label="Search"></div>
+    <div class="tright">
+      <div class="chip"><span class="live"></span>Live</div>
+      <button class="ibtn" aria-label="Calls">☎<b>2</b></button>
+      <button class="ibtn" aria-label="Notifications">♧<b>6</b></button>
+      <button class="quick" aria-label="Quick action">+</button>
+      <div class="av">PD</div>
     </div>
+  </header>
 
-    <div class="side-scroll">
+  <div class="content">
 
-      <div class="side-group">
-        <button class="side-link active" data-view="command"><span class="ic">◆</span> Command Centre</button>
+    <!-- COMMAND -->
+    <section class="view active" id="v-command">
+      <div class="vhead">
+        <div><small><b></b>Beloveeth Workforce</small><h1>Command centre.</h1></div>
+        <div class="acts"><button class="btn ghost" onclick="askProp('Which agents have overdue follow-ups?')">Ask Prop</button>
+          <button class="btn primary">New task</button></div>
       </div>
-
-      <div class="side-group">
-        <div class="side-group-label">CRM</div>
-        <button class="side-link" data-view="crm" data-sub="leads"><span class="ic">☰</span> Leads</button>
-        <button class="side-link" data-view="crm" data-sub="customers"><span class="ic">☺</span> Customers</button>
-        <button class="side-link" data-view="crm" data-sub="pipeline"><span class="ic">⇥</span> Pipeline</button>
-        <button class="side-link" data-view="crm" data-sub="tasks"><span class="ic">✓</span> Tasks &amp; Follow-ups</button>
+      <div class="kpis" id="kpis"></div>
+      <div class="g2">
+        <div class="card"><div class="pad"><div class="lbl">Live operational board</div><div class="ttl">Agent monitor</div></div>
+          <div class="tw"><table><thead><tr><th>Agent</th><th>Status</th><th>Call</th><th>Leads</th><th>Follow-ups</th></tr></thead>
+            <tbody id="monitor"></tbody></table></div></div>
+        <div class="card pad"><div class="lbl">Live activity</div><div class="ttl">What's happening now</div>
+          <div style="margin-top:14px" id="feed"></div></div>
       </div>
+    </section>
 
-      <div class="side-group">
-        <div class="side-group-label">Contact Centre</div>
-        <button class="side-link" data-view="contact" data-sub="calls"><span class="ic">☎</span> Live Calls</button>
-        <button class="side-link" data-view="contact" data-sub="conversations"><span class="ic">✉</span> Conversations</button>
+    <!-- CRM -->
+    <section class="view" id="v-crm">
+      <div class="vhead"><div><small><b></b>Customer relationships</small><h1>CRM.</h1></div>
+        <div class="acts"><button class="btn ghost" onclick="askProp('Which leads are unassigned?')">Ask Prop</button><button class="btn primary">New lead</button></div></div>
+      <div class="tabs" id="crmTabs">
+        <button class="tab active" data-s="leads">Leads</button><button class="tab" data-s="customers">Customers</button>
+        <button class="tab" data-s="pipeline">Pipeline</button><button class="tab" data-s="tasks">Tasks &amp; follow-ups</button></div>
+      <div class="sub active" id="crm-leads"><div class="card"><div class="tw"><table>
+        <thead><tr><th>Customer</th><th>Property interest</th><th>Source</th><th>Intent</th><th>Agent</th><th>Age</th></tr></thead>
+        <tbody id="leadsT"></tbody></table></div></div></div>
+      <div class="sub" id="crm-customers"><div class="card"><div class="tw"><table>
+        <thead><tr><th>Customer</th><th>Type</th><th>Budget</th><th>Locations</th><th>Engagement</th><th>Last contact</th></tr></thead>
+        <tbody id="custT"></tbody></table></div></div></div>
+      <div class="sub" id="crm-pipeline"><div class="pipe" id="pipe"></div></div>
+      <div class="sub" id="crm-tasks"><div class="card pad"><div id="tasks"></div></div></div>
+    </section>
+
+    <!-- CONTACT -->
+    <section class="view" id="v-contact">
+      <div class="vhead"><div><small><b></b>Contact centre</small><h1>Calls &amp; conversations.</h1></div></div>
+      <div class="tabs" id="contactTabs"><button class="tab active" data-s="calls">Live calls</button><button class="tab" data-s="conversations">Conversations</button></div>
+      <div class="sub active" id="contact-calls">
+        <div class="g3">
+          <div class="card pad"><div class="lbl">Call queue</div><div class="ttl">2 waiting</div>
+            <div class="stack" style="margin-top:14px">
+              <div class="row"><div><div class="t">Michael A.</div><div class="m">Interested in Lekki 3-bed</div></div><span class="pill p-red">00:18</span></div>
+              <div class="row"><div><div class="t">Grace O.</div><div class="m">Property viewing request</div></div><span class="pill p-amber">00:07</span></div>
+            </div>
+            <div class="note" style="margin-top:14px">Telephony backend not connected — this is a UI preview of the call console.</div></div>
+
+          <div class="card pad"><div class="lbl">Active call</div>
+            <div style="font-family:var(--fd);font-size:22px;letter-spacing:-.045em;color:var(--maroon);margin-top:6px">Michael Adewale</div>
+            <div style="margin-top:5px;color:var(--muted);font-size:12.5px">Lekki Phase 1 · ₦85,000,000</div>
+            <div class="kvg" style="margin-top:18px">
+              <div class="kv"><span>Duration</span><strong>04:32</strong></div>
+              <div class="kv"><span>Agent</span><strong>Sarah Johnson</strong></div>
+              <div class="kv"><span>Lead status</span><strong>Qualified</strong></div>
+              <div class="kv"><span>Intent</span><strong>High</strong></div>
+            </div>
+            <div class="dacts" style="margin-top:18px">
+              <button>Hold</button><button>Mute</button><button>Transfer</button><button>Warm transfer</button>
+              <button onclick="openDrawer('customer',D.customers[0])">Open record</button></div>
+            <button class="btn hot" style="width:100%;margin-top:10px">End call</button></div>
+
+          <div class="card pad"><div class="lbl">Availability</div><div class="ttl">8 agents available</div>
+            <div class="stack" style="margin-top:14px" id="avail"></div></div>
+        </div>
       </div>
-
-      <div class="side-group">
-        <div class="side-group-label">Workforce</div>
-        <button class="side-link" data-view="workforce" data-sub="agents"><span class="ic">◍</span> Agents</button>
-        <button class="side-link" data-view="workforce" data-sub="performance"><span class="ic">▲</span> Performance</button>
+      <div class="sub" id="contact-conversations">
+        <div class="inbox">
+          <div class="icol"><div class="ihead">Conversations</div><div id="convList"></div></div>
+          <div class="icol"><div class="ihead">Thread</div><div class="thread" id="convThread"></div></div>
+          <div class="icol"><div class="ihead">Context</div><div id="convCtx"></div></div>
+        </div>
       </div>
+    </section>
 
-      <div class="side-group">
-        <div class="side-group-label">Properties</div>
-        <button class="side-link" data-view="properties" data-sub="all"><span class="ic">▦</span> All Listings</button>
-        <button class="side-link" data-view="properties" data-sub="important"><span class="ic">★</span> Important Listings</button>
+    <!-- WORKFORCE -->
+    <section class="view" id="v-workforce">
+      <div class="vhead"><div><small><b></b>Workforce management</small><h1>Agents &amp; performance.</h1></div></div>
+      <div class="tabs" id="workforceTabs"><button class="tab active" data-s="agents">Agents</button><button class="tab" data-s="performance">Performance</button></div>
+      <div class="sub active" id="workforce-agents"><div class="agrid" id="agrid"></div></div>
+      <div class="sub" id="workforce-performance">
+        <div class="g2">
+          <div class="card pad"><div class="lbl">Team activity</div><div class="ttl">Calls handled, last 7 days</div>
+            <div style="height:260px;margin-top:16px"><canvas id="perf"></canvas></div></div>
+          <div class="card pad"><div class="lbl">Operational quality</div><div class="ttl">This week</div>
+            <div class="stack" style="margin-top:14px">
+              <div class="kv"><span>SLA compliance</span><strong>91%</strong></div>
+              <div class="kv"><span>CRM completion</span><strong>87%</strong></div>
+              <div class="kv"><span>Follow-up completion</span><strong>78%</strong></div>
+              <div class="kv"><span>Avg response time</span><strong>6m 40s</strong></div>
+            </div></div>
+        </div>
       </div>
+    </section>
 
-      <div class="side-group">
-        <button class="side-link" data-view="partners"><span class="ic">⚭</span> Partners</button>
+    <!-- PROPERTIES -->
+    <section class="view" id="v-properties">
+      <div class="vhead"><div><small><b></b>Property operations</small><h1>Listings.</h1></div>
+        <div class="acts"><button class="btn primary">Add property</button></div></div>
+      <div class="tabs" id="propertiesTabs"><button class="tab active" data-s="all">All listings</button><button class="tab" data-s="important">Important listings</button></div>
+      <div class="sub active" id="properties-all"><div class="card"><div class="tw"><table>
+        <thead><tr><th>Property</th><th>Location</th><th>Price</th><th>Partner</th><th>Agent</th><th>Status</th></tr></thead>
+        <tbody id="propT"></tbody></table></div></div></div>
+      <div class="sub" id="properties-important"><div class="pgrid" id="impGrid"></div></div>
+    </section>
+
+    <!-- PARTNERS -->
+    <section class="view" id="v-partners">
+      <div class="vhead"><div><small><b></b>Partner network</small><h1>Partners.</h1></div>
+        <div class="acts"><button class="btn ghost">Export</button></div></div>
+      <div class="g2">
+        <div class="card pad"><div class="lbl">Directory</div><div class="ttl">24 active partners</div>
+          <div style="margin-top:14px" id="partnerList"></div></div>
+        <div class="card pad"><div class="lbl">Needs attention</div><div class="ttl">Follow-up alerts</div>
+          <div style="margin-top:14px" id="partnerAlerts"></div></div>
       </div>
+    </section>
 
-      <div class="side-group">
-        <div class="side-group-label">Intelligence</div>
-        <button class="side-link" data-view="intelligence" data-sub="market"><span class="ic">◈</span> Market Intelligence</button>
-        <button class="side-link" data-view="intelligence" data-sub="news"><span class="ic">▤</span> News</button>
-        <button class="side-link" data-view="intelligence" data-sub="reports"><span class="ic">▥</span> Reports</button>
+    <!-- INTELLIGENCE -->
+    <section class="view" id="v-intel">
+      <div class="vhead"><div><small><b></b>Beloveeth Pulse</small><h1>Intelligence.</h1></div><span class="pill">MODEL / DATA LAYER</span></div>
+      <div class="tabs" id="intelTabs"><button class="tab active" data-s="market">Market</button><button class="tab" data-s="news">News</button><button class="tab" data-s="reports">Reports</button></div>
+      <div class="sub active" id="intel-market">
+        <div class="g2">
+          <div class="card pad"><div class="lbl">Lagos</div><div class="ttl">Price movement, 12 months</div>
+            <div style="height:280px;margin-top:16px"><canvas id="intel"></canvas></div></div>
+          <div class="card pad"><div class="lbl">News → CRM connection</div><div class="ttl">Infrastructure impact</div>
+            <div class="note" style="margin-top:14px">New road development detected around <b>Lekki / Ibeju-Lekki</b>. 24 listings and 11 active leads sit in the affected corridor.</div>
+            <button class="btn soft" style="width:100%;margin-top:14px" onclick="askProp('What happened to the Ibeju-Lekki pipeline?')">Ask Prop about this</button></div>
+        </div>
       </div>
+      <div class="sub" id="intel-news"><div class="card pad"><div id="news"></div></div></div>
+      <div class="sub" id="intel-reports"><div class="pgrid" id="reports"></div></div>
+    </section>
 
-      <div class="side-group">
-        <button class="side-link" data-view="admin"><span class="ic">⚙</span> Administration</button>
+    <!-- ADMIN -->
+    <section class="view" id="v-admin">
+      <div class="vhead"><div><small><b></b>Administration</small><h1>Roles &amp; automation.</h1></div></div>
+      <div class="g2">
+        <div class="card"><div class="pad"><div class="lbl">Access levels</div><div class="ttl">Role matrix</div></div>
+          <div class="tw"><table><thead><tr><th>Role</th><th>CRM</th><th>Calls</th><th>Properties</th><th>Partners</th><th>Admin</th></tr></thead>
+            <tbody>
+              <tr><td class="n">Admin</td><td>Full</td><td>Full</td><td>Full</td><td>Full</td><td>Full</td></tr>
+              <tr><td class="n">Manager / Supervisor</td><td>Full</td><td>Full</td><td>Full</td><td>Full</td><td>—</td></tr>
+              <tr><td class="n">Sales representative</td><td>Assigned</td><td>Own</td><td>View</td><td>—</td><td>—</td></tr>
+              <tr><td class="n">QA / Operations</td><td>View</td><td>Review</td><td>—</td><td>—</td><td>—</td></tr>
+              <tr><td class="n">Partner manager</td><td>—</td><td>—</td><td>Partner listings</td><td>Full</td><td>—</td></tr>
+            </tbody></table></div></div>
+        <div class="card pad"><div class="lbl">Automation engine</div><div class="ttl">Active rules</div>
+          <div style="margin-top:14px" id="rules"></div>
+          <button class="btn ghost" style="width:100%;margin-top:6px">Open rule builder</button></div>
       </div>
+    </section>
 
-    </div>
-
-    <div class="side-foot">
-      <div class="side-status"><span class="dot-live"></span> Live workforce · 12 active</div>
-    </div>
-  </aside>
-
-  <!-- ============ MAIN ============ -->
-  <div class="main">
-
-    <header class="topbar">
-      <button class="sidebar-toggle" onclick="document.getElementById('sidebar').classList.toggle('open')">☰</button>
-
-      <div class="search-box">
-        <span>⌕</span>
-        <input placeholder="Search leads, customers, properties, partners…" />
-      </div>
-
-      <div class="topbar-right">
-        <div class="tb-chip"><span class="dot-live"></span> Live</div>
-        <button class="tb-icon-btn" aria-label="Calls">☎<span class="badge">2</span></button>
-        <button class="tb-icon-btn" aria-label="Notifications">🔔<span class="badge">6</span></button>
-        <button class="tb-quick" aria-label="Quick action">+</button>
-        <div class="tb-avatar">PD</div>
-      </div>
-    </header>
-
-    <div class="content">
-
-      <!-- ================= COMMAND CENTRE ================= -->
-      <section class="view active" id="view-command">
-
-        <div class="view-head">
-          <div><small>Beloveeth Workforce</small><h1>Command Centre</h1></div>
-          <div class="view-actions">
-            <button class="btn btn-ghost" onclick="askProp('Which agents have overdue follow-ups?')">Ask Prop</button>
-            <button class="btn btn-primary">New Task</button>
-          </div>
-        </div>
-
-        <div class="kpi-row">
-          <div class="kpi"><span>Active agents</span><strong>12</strong><small class="up">of 19</small></div>
-          <div class="kpi"><span>On calls</span><strong>4</strong><small>live now</small></div>
-          <div class="kpi"><span>Calls waiting</span><strong>2</strong><small class="warn">avg 00:14</small></div>
-          <div class="kpi"><span>Open conversations</span><strong>31</strong><small>across channels</small></div>
-          <div class="kpi"><span>Unassigned leads</span><strong>7</strong><small class="bad">needs routing</small></div>
-          <div class="kpi"><span>Follow-ups due</span><strong>14</strong><small class="warn">4 overdue</small></div>
-          <div class="kpi"><span>Viewings today</span><strong>9</strong><small>3 completed</small></div>
-          <div class="kpi"><span>Active transactions</span><strong>6</strong><small class="up">₦410m pipeline</small></div>
-        </div>
-
-        <div class="grid-2">
-
-          <div class="card card-pad">
-            <div class="card-label">Live operational board</div>
-            <div class="card-title">Agent monitor</div>
-            <table class="tbl" style="margin-top:12px;">
-              <thead><tr><th>Agent</th><th>Status</th><th>Call</th><th>Leads</th><th>Follow-ups</th></tr></thead>
-              <tbody id="commandAgentTable"></tbody>
-            </table>
-          </div>
-
-          <div class="card card-pad">
-            <div class="card-label">Live activity</div>
-            <div class="card-title">What's happening now</div>
-            <div id="commandFeed" style="margin-top:12px;"></div>
-          </div>
-
-        </div>
-
-      </section>
-
-
-      <!-- ================= CRM ================= -->
-      <section class="view" id="view-crm">
-
-        <div class="view-head">
-          <div><small>Customer Relationship Management</small><h1>CRM</h1></div>
-          <div class="view-actions"><button class="btn btn-primary">New Lead</button></div>
-        </div>
-
-        <div class="subtabs" id="crmTabs">
-          <button class="subtab active" data-sub="leads">Leads</button>
-          <button class="subtab" data-sub="customers">Customers</button>
-          <button class="subtab" data-sub="pipeline">Pipeline</button>
-          <button class="subtab" data-sub="tasks">Tasks &amp; Follow-ups</button>
-        </div>
-
-        <!-- LEADS -->
-        <div class="subview active" id="crm-leads">
-          <div class="card card-pad">
-            <table class="tbl">
-              <thead><tr><th>Customer</th><th>Property interest</th><th>Source</th><th>Intent</th><th>Agent</th><th>Age</th></tr></thead>
-              <tbody id="leadsTable"></tbody>
-            </table>
-          </div>
-        </div>
-
-        <!-- CUSTOMERS -->
-        <div class="subview" id="crm-customers">
-          <div class="card card-pad">
-            <table class="tbl">
-              <thead><tr><th>Customer</th><th>Type</th><th>Budget</th><th>Locations</th><th>Engagement</th><th>Last contact</th></tr></thead>
-              <tbody id="customersTable"></tbody>
-            </table>
-          </div>
-        </div>
-
-        <!-- PIPELINE -->
-        <div class="subview" id="crm-pipeline">
-          <div class="pipeline" id="pipelineBoard"></div>
-        </div>
-
-        <!-- TASKS -->
-        <div class="subview" id="crm-tasks">
-          <div class="card card-pad">
-            <div id="tasksList"></div>
-          </div>
-        </div>
-
-      </section>
-
-
-      <!-- ================= CONTACT CENTRE ================= -->
-      <section class="view" id="view-contact">
-
-        <div class="view-head">
-          <div><small>Contact Centre</small><h1>Calls &amp; conversations</h1></div>
-        </div>
-
-        <div class="subtabs" id="contactTabs">
-          <button class="subtab active" data-sub="calls">Live Calls</button>
-          <button class="subtab" data-sub="conversations">Conversations</button>
-        </div>
-
-        <!-- LIVE CALLS -->
-        <div class="subview active" id="contact-calls">
-          <div class="grid-3col">
-
-            <div class="card card-pad">
-              <div class="card-label">Call queue</div>
-              <div class="card-title">2 waiting</div>
-              <div class="queue-list" style="margin-top:12px;">
-                <div class="queue-item">
-                  <div><div class="who">Michael A.</div><div class="meta">Interested in Lekki 3-bed</div></div>
-                  <div class="wait">00:18</div>
-                </div>
-                <div class="queue-item">
-                  <div><div class="who">Grace O.</div><div class="meta">Property viewing request</div></div>
-                  <div class="wait">00:07</div>
-                </div>
-              </div>
-              <div class="note-line">Telephony backend not connected — this is a UI preview of the call console.</div>
-            </div>
-
-            <div class="card call-panel">
-              <div class="card-label">Active call</div>
-              <div class="cname">Michael Adewale</div>
-              <div class="csub">Interested property · Lekki Phase 1 · ₦85,000,000</div>
-              <div class="call-grid">
-                <div class="call-stat"><span>Duration</span><strong>04:32</strong></div>
-                <div class="call-stat"><span>Assigned agent</span><strong>Sarah Johnson</strong></div>
-                <div class="call-stat"><span>Lead status</span><strong>Qualified</strong></div>
-                <div class="call-stat"><span>Intent</span><strong>High</strong></div>
-              </div>
-              <div class="call-controls">
-                <button>Hold</button><button>Mute</button><button>Transfer</button>
-                <button>Warm transfer</button><button>Add participant</button>
-                <button onclick="openDrawer('customer', drawerData.customers[0])">Open customer record</button>
-                <button class="hot">End call</button>
-              </div>
-            </div>
-
-            <div class="card card-pad">
-              <div class="card-label">Available agents</div>
-              <div class="card-title">8 available</div>
-              <div class="agent-avail" style="margin-top:12px;">
-                <div class="avail-item"><span class="who">Sarah Johnson</span><span class="status-pill st-active"><span class="d"></span>Active</span></div>
-                <div class="avail-item"><span class="who">David Ade</span><span class="status-pill st-oncall"><span class="d"></span>On call</span></div>
-                <div class="avail-item"><span class="who">Daniel Peter</span><span class="status-pill st-active"><span class="d"></span>Active</span></div>
-                <div class="avail-item"><span class="who">Mariam Yusuf</span><span class="status-pill st-away"><span class="d"></span>Away</span></div>
-                <div class="avail-item"><span class="who">Tunde Bello</span><span class="status-pill st-active"><span class="d"></span>Active</span></div>
-              </div>
-            </div>
-
-          </div>
-        </div>
-
-        <!-- CONVERSATIONS -->
-        <div class="subview" id="contact-conversations">
-          <div class="inbox-grid">
-            <div class="inbox-col">
-              <div class="inbox-col-head">Conversations</div>
-              <div id="convoList"></div>
-            </div>
-            <div class="inbox-col">
-              <div class="inbox-col-head">Thread</div>
-              <div class="thread-pad" id="convoThread"></div>
-            </div>
-            <div class="inbox-col">
-              <div class="inbox-col-head">Context</div>
-              <div id="convoContext"></div>
-            </div>
-          </div>
-        </div>
-
-      </section>
-
-
-      <!-- ================= WORKFORCE ================= -->
-      <section class="view" id="view-workforce">
-
-        <div class="view-head">
-          <div><small>Workforce management</small><h1>Agents &amp; performance</h1></div>
-        </div>
-
-        <div class="subtabs" id="workforceTabs">
-          <button class="subtab active" data-sub="agents">Agents</button>
-          <button class="subtab" data-sub="performance">Performance</button>
-        </div>
-
-        <div class="subview active" id="workforce-agents">
-          <div class="agents-grid" id="agentsGrid"></div>
-        </div>
-
-        <div class="subview" id="workforce-performance">
-          <div class="grid-2">
-            <div class="card card-pad">
-              <div class="card-label">Team activity</div>
-              <div class="card-title">Calls handled, last 7 days</div>
-              <div style="height:240px; margin-top:14px;"><canvas id="perfChart"></canvas></div>
-            </div>
-            <div class="card card-pad">
-              <div class="card-label">Operational quality</div>
-              <div class="card-title">This week</div>
-              <div class="stack" style="margin-top:12px;">
-                <div class="kv" style="grid-column:1/-1;"><span>SLA compliance</span><strong>91%</strong></div>
-                <div class="kv" style="grid-column:1/-1;"><span>CRM completion rate</span><strong>87%</strong></div>
-                <div class="kv" style="grid-column:1/-1;"><span>Follow-up completion</span><strong>78%</strong></div>
-                <div class="kv" style="grid-column:1/-1;"><span>Avg response time</span><strong>6m 40s</strong></div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-      </section>
-
-
-      <!-- ================= PROPERTIES ================= -->
-      <section class="view" id="view-properties">
-
-        <div class="view-head">
-          <div><small>Property operations</small><h1>Listings</h1></div>
-          <div class="view-actions"><button class="btn btn-primary">Add Property</button></div>
-        </div>
-
-        <div class="subtabs" id="propertiesTabs">
-          <button class="subtab active" data-sub="all">All Listings</button>
-          <button class="subtab" data-sub="important">Important Listings</button>
-        </div>
-
-        <div class="subview active" id="properties-all">
-          <div class="card card-pad">
-            <table class="tbl">
-              <thead><tr><th>Property</th><th>Location</th><th>Price</th><th>Partner</th><th>Agent</th><th>Status</th></tr></thead>
-              <tbody id="propertiesTable"></tbody>
-            </table>
-          </div>
-        </div>
-
-        <div class="subview" id="properties-important">
-          <div class="props-grid" id="importantGrid"></div>
-        </div>
-
-      </section>
-
-
-      <!-- ================= PARTNERS ================= -->
-      <section class="view" id="view-partners">
-
-        <div class="view-head">
-          <div><small>Partner network</small><h1>Partners</h1></div>
-          <div class="view-actions"><button class="btn btn-ghost">Export</button></div>
-        </div>
-
-        <div class="grid-2">
-          <div class="card card-pad">
-            <div class="card-label">Partner directory</div>
-            <div class="card-title">24 active partners</div>
-            <div id="partnerList" style="margin-top:13px;"></div>
-          </div>
-
-          <div class="card card-pad">
-            <div class="card-label">Needs attention</div>
-            <div class="card-title">Follow-up alerts</div>
-            <div id="partnerAlerts" style="margin-top:12px;"></div>
-          </div>
-        </div>
-
-      </section>
-
-
-      <!-- ================= INTELLIGENCE ================= -->
-      <section class="view" id="view-intelligence">
-
-        <div class="view-head">
-          <div><small>Beloveeth Pulse</small><h1>Intelligence</h1></div>
-        </div>
-
-        <div class="subtabs" id="intelTabs">
-          <button class="subtab active" data-sub="market">Market Intelligence</button>
-          <button class="subtab" data-sub="news">News</button>
-          <button class="subtab" data-sub="reports">Reports</button>
-        </div>
-
-        <div class="subview active" id="intel-market">
-          <div class="grid-2">
-            <div class="card card-pad">
-              <div class="card-label">Lagos</div>
-              <div class="card-title">Price movement, 12 months</div>
-              <div style="height:260px; margin-top:14px;"><canvas id="intelChart"></canvas></div>
-            </div>
-            <div class="card card-pad">
-              <div class="card-label">News → CRM connection</div>
-              <div class="card-title">Infrastructure impact</div>
-              <div class="note-line" style="margin-top:12px;">
-                New road development detected around <b>Lekki / Ibeju-Lekki</b>. 24 Beloveeth listings and 11 active leads are in the affected corridor.
-              </div>
-              <button class="btn btn-ghost" style="margin-top:12px;" onclick="askProp('What happened to the Ibeju-Lekki pipeline?')">Ask Prop about this</button>
-            </div>
-          </div>
-        </div>
-
-        <div class="subview" id="intel-news">
-          <div class="card card-pad">
-            <div id="newsFeed"></div>
-          </div>
-        </div>
-
-        <div class="subview" id="intel-reports">
-          <div class="props-grid" id="reportsGrid"></div>
-        </div>
-
-      </section>
-
-
-      <!-- ================= ADMIN ================= -->
-      <section class="view" id="view-admin">
-
-        <div class="view-head">
-          <div><small>Administration</small><h1>Roles &amp; permissions</h1></div>
-        </div>
-
-        <div class="grid-2">
-          <div class="card card-pad">
-            <div class="card-label">Access levels</div>
-            <div class="card-title">Role matrix</div>
-            <table class="tbl" style="margin-top:12px;">
-              <thead><tr><th>Role</th><th>CRM</th><th>Calls</th><th>Properties</th><th>Partners</th><th>Admin</th></tr></thead>
-              <tbody>
-                <tr><td class="name-cell">Admin</td><td>Full</td><td>Full</td><td>Full</td><td>Full</td><td>Full</td></tr>
-                <tr><td class="name-cell">Manager / Supervisor</td><td>Full</td><td>Full</td><td>Full</td><td>Full</td><td>—</td></tr>
-                <tr><td class="name-cell">Sales Representative</td><td>Assigned</td><td>Own</td><td>View</td><td>—</td><td>—</td></tr>
-                <tr><td class="name-cell">QA / Operations</td><td>View</td><td>Review</td><td>—</td><td>—</td><td>—</td></tr>
-                <tr><td class="name-cell">Partner Manager</td><td>—</td><td>—</td><td>Partner listings</td><td>Full</td><td>—</td></tr>
-              </tbody>
-            </table>
-          </div>
-
-          <div class="card card-pad">
-            <div class="card-label">Automation engine</div>
-            <div class="card-title">Active rules</div>
-            <div class="stack" style="margin-top:12px;">
-              <div class="feed-item"><span class="feed-dot" style="background:var(--green)"></span><div><div class="feed-text">New lead → check availability → assign agent → start SLA timer</div></div></div>
-              <div class="feed-item"><span class="feed-dot" style="background:var(--amber)"></span><div><div class="feed-text">Agent goes Away → stop routing → redistribute waiting calls</div></div></div>
-              <div class="feed-item"><span class="feed-dot" style="background:var(--tech)"></span><div><div class="feed-text">High-intent lead → notify supervisor</div></div></div>
-              <div class="feed-item"><span class="feed-dot" style="background:var(--red)"></span><div><div class="feed-text">Partner document missing → notify partner manager</div></div></div>
-            </div>
-            <button class="btn btn-ghost" style="margin-top:12px;">Open rule builder</button>
-          </div>
-        </div>
-
-      </section>
-
-    </div>
   </div>
 </div>
+</div>
 
-
-<!-- ============ DRAWER ============ -->
-<div class="overlay" id="overlay" onclick="closeDrawer()"></div>
+<!-- DRAWER -->
+<div class="ov" id="ov" onclick="closeDrawer()"></div>
 <aside class="drawer" id="drawer">
-  <div class="drawer-head">
-    <div>
-      <div class="card-label" id="drawerLabel">Record</div>
-      <div class="card-title" id="drawerTitle" style="font-size:18px;margin-top:5px;">—</div>
-    </div>
-    <button class="drawer-close" onclick="closeDrawer()">×</button>
-  </div>
-  <div class="drawer-body" id="drawerBody"></div>
+  <div class="dhead"><div><div class="lbl" id="dLbl">Record</div><h2 id="dTitle">—</h2></div>
+    <button class="dclose" onclick="closeDrawer()" aria-label="Close">×</button></div>
+  <div class="dbody" id="dBody"></div>
 </aside>
 
-
-<!-- ============ PROP ============ -->
-<button class="prop-trigger" id="propTrigger" aria-label="Open Prop" onclick="toggleProp()">
-  <span class="prop-energy"></span>
-  <span class="prop-core"></span>
+<!-- PROP -->
+<button class="prop-trigger" id="trigger" aria-label="Open Prop" onclick="toggleProp()">
+  <span class="ring"></span><span class="spin"><i class="b1"></i><i class="b2"></i><i class="b3"></i><i class="b4"></i></span><span class="glass"></span>
 </button>
-<div class="prop-caption">prop · operational intelligence</div>
+<div class="pcap">prop · operational intelligence</div>
 
-<aside class="prop-panel" id="propPanel" aria-hidden="true">
-  <div class="prop-panel-head">
-    <div class="prop-identity">
-      <div class="mini-orb"></div>
-      <div><strong>Prop</strong><span>Workforce intelligence</span></div>
-    </div>
-    <button class="prop-close" onclick="closeProp()">×</button>
-  </div>
-  <div class="prop-messages" id="propMessages">
-    <div class="prop-message ai"><small>Prop</small>I can see live agents, leads, properties and partners. Ask me an operational question.</div>
-  </div>
-  <div class="prop-suggestions">
+<aside class="ppanel" id="panel" aria-hidden="true">
+  <div class="ph"><div class="pid"><div class="morb"></div><div><strong>Prop</strong><span>Workforce intelligence</span></div></div>
+    <button class="pclose" onclick="closeProp()" aria-label="Close">×</button></div>
+  <div class="pmsgs" id="msgs">
+    <div class="msg ai"><small>Prop</small>I can see live agents, leads, properties and partners. Ask me an operational question.</div></div>
+  <div class="psug">
     <button onclick="askProp('Which agents have overdue follow-ups?')">Overdue follow-ups</button>
     <button onclick="askProp('Which properties are getting the most enquiries?')">Top enquiries</button>
-    <button onclick="askProp('Who is available to receive a call?')">Available agents</button>
+    <button onclick="askProp('Who is available to take a call?')">Available agents</button>
     <button onclick="askProp('Which partner needs follow-up?')">Partner follow-up</button>
-  </div>
-  <form class="prop-input" onsubmit="sendProp(event)">
-    <input id="propInput" autocomplete="off" placeholder="Ask Prop about the operation…" />
-    <button class="prop-send" type="submit">↑</button>
-  </form>
+    <button onclick="askProp('How is the pipeline looking?')">Pipeline</button></div>
+  <form class="pin" onsubmit="sendProp(event)"><input id="pInput" autocomplete="off" placeholder="Ask Prop about the operation...">
+    <button class="psend" type="submit" aria-label="Send">↑</button></form>
 </aside>
 
-
 <script>
-/* =========================================================
-   SAMPLE DATA
-========================================================= */
+const IMG=i=>`https://images.unsplash.com/${i}?auto=format&fit=crop&w=700&q=80`;
+const ST={active:["Active","p-green"],away:["Away","p-amber"],oncall:["On call","p-red"],acw:["ACW","p-sky"],offline:["Offline","p-mute"]};
+const agents=[
+ {name:"Sarah Johnson",role:"Sales rep · Demand",status:"active",leads:8,followups:2,connected:96,avgCall:"3m 40s",conv:34},
+ {name:"David Ade",role:"Sales rep · Demand",status:"oncall",callTime:"04:32",leads:5,followups:1,connected:88,avgCall:"4m 05s",conv:29},
+ {name:"Mariam Yusuf",role:"Sales rep · Supply",status:"away",leads:11,followups:4,connected:79,avgCall:"3m 20s",conv:22},
+ {name:"Daniel Peter",role:"Sales rep · Demand",status:"active",leads:6,followups:0,connected:91,avgCall:"3m 55s",conv:31},
+ {name:"Grace Obi",role:"Sales rep · Supply",status:"acw",leads:9,followups:3,connected:85,avgCall:"4m 12s",conv:27},
+ {name:"Tunde Bello",role:"Sales rep · Investment",status:"active",leads:7,followups:1,connected:93,avgCall:"3m 30s",conv:36}];
+const D={customers:[{name:"Michael Adewale",phone:"+234 803 xxx xxxx",email:"michael.a@email.com",budget:"₦70m–₦100m",locations:"Lekki / Ikoyi",views:12,saved:4,enquiries:5,viewings:2}],
+ partners:[{name:"XYZ Properties",listings:9,enquiries:14,viewings:2,transactions:1,docs:3,manager:"Amina Sule",lastContact:"14 days ago"}],
+ properties:[{title:"Lekki Residence",id:"BLV-00281",price:"₦85,000,000",location:"Lekki Phase 1",partner:"XYZ Properties",views:128,saves:34,enquiries:11,offers:2}]};
+const q=s=>document.querySelector(s), el=i=>document.getElementById(i);
+const pill=(t,c)=>`<span class="pill ${c}"><span class="d"></span>${t}</span>`;
 
-const agentsData = [
-  { name:"Sarah Johnson", role:"Sales Rep · Demand", status:"active", calls:0, leads:8, followups:2, connected:96, avgCall:"3m 40s", conv:34 },
-  { name:"David Ade", role:"Sales Rep · Demand", status:"oncall", callTime:"04:32", leads:5, followups:1, connected:88, avgCall:"4m 05s", conv:29 },
-  { name:"Mariam Yusuf", role:"Sales Rep · Supply", status:"away", leads:11, followups:4, connected:79, avgCall:"3m 20s", conv:22 },
-  { name:"Daniel Peter", role:"Sales Rep · Demand", status:"active", leads:6, followups:0, connected:91, avgCall:"3m 55s", conv:31 },
-  { name:"Grace Obi", role:"Sales Rep · Supply", status:"acw", leads:9, followups:3, connected:85, avgCall:"4m 12s", conv:27 },
-  { name:"Tunde Bello", role:"Sales Rep · Investment", status:"active", leads:7, followups:1, connected:93, avgCall:"3m 30s", conv:36 },
-];
-
-const statusLabel = { active:["Active","st-active"], away:["Away","st-away"], oncall:["On call","st-oncall"], acw:["ACW","st-acw"], offline:["Offline","st-offline"] };
-
-const drawerData = {
-  customers: [
-    { name:"Michael Adewale", type:"Buyer · Lagos · High intent", phone:"+234 803 xxx xxxx", email:"michael.a@email.com", budget:"₦70M–₦100M", locations:"Lekki / Ikoyi", views:12, saved:4, enquiries:5, viewings:2, agent:"Sarah Johnson", lastContact:"Today" },
-    { name:"Grace Okafor", type:"Investor · Abuja · Medium intent", phone:"+234 805 xxx xxxx", email:"grace.o@email.com", budget:"₦40M–₦60M", locations:"Maitama", views:6, saved:2, enquiries:3, viewings:1, agent:"Daniel Peter", lastContact:"Yesterday" },
-  ],
-  agents: agentsData,
-  partners: [
-    { name:"ABC Developments", type:"Developer · Verified", listings:18, enquiries:27, viewings:4, transactions:2, docs:0, manager:"Philip Dare-Johnson", lastContact:"3 days ago" },
-    { name:"XYZ Properties", type:"Property owner · Verified", listings:9, enquiries:14, viewings:2, transactions:1, docs:3, manager:"Amina Sule", lastContact:"14 days ago" },
-  ],
-  properties: [
-    { title:"Lekki Residence", id:"BLV-00281", price:"₦85,000,000", location:"Lekki Phase 1", partner:"XYZ Properties", agent:"Sarah Johnson", views:128, saves:34, enquiries:11, viewings:4, offers:2 },
-  ]
-};
-
-/* =========================================================
-   NAVIGATION
-========================================================= */
-
-const sideLinks = document.querySelectorAll(".side-link");
-const views = document.querySelectorAll(".view");
-
-function switchView(view, sub) {
-  views.forEach(v => v.classList.remove("active"));
-  document.getElementById(`view-${view}`).classList.add("active");
-
-  sideLinks.forEach(l => l.classList.toggle("active", l.dataset.view === view && (!sub || l.dataset.sub === sub)));
-
-  if (sub) switchSub(view, sub);
-
-  if (window.innerWidth <= 980) document.getElementById("sidebar").classList.remove("open");
-  document.querySelector(".content").scrollTo({ top:0, behavior:"smooth" });
+/* nav */
+const views=document.querySelectorAll(".view"), links=document.querySelectorAll(".link");
+function switchView(v,s){
+  views.forEach(x=>x.classList.remove("active")); el("v-"+v).classList.add("active");
+  links.forEach(l=>l.classList.toggle("active",l.dataset.v===v&&(!s||l.dataset.s===s)));
+  if(s)switchSub(v,s);
+  if(innerWidth<=980)el("sidebar").classList.remove("open");
+  scrollTo({top:0,behavior:"smooth"});
 }
-
-sideLinks.forEach(link => {
-  link.addEventListener("click", () => switchView(link.dataset.view, link.dataset.sub));
-});
-
-function switchSub(view, sub) {
-  const tabWrap = document.getElementById(`${view}Tabs`);
-  if (tabWrap) {
-    tabWrap.querySelectorAll(".subtab").forEach(t => t.classList.toggle("active", t.dataset.sub === sub));
-  }
-  document.querySelectorAll(`#view-${view} .subview`).forEach(sv => sv.classList.remove("active"));
-  const target = document.getElementById(`${view}-${sub}`);
-  if (target) target.classList.add("active");
+links.forEach(l=>l.addEventListener("click",()=>switchView(l.dataset.v,l.dataset.s)));
+function switchSub(v,s){
+  const w=el(v+"Tabs"); if(w)w.querySelectorAll(".tab").forEach(t=>t.classList.toggle("active",t.dataset.s===s));
+  document.querySelectorAll(`#v-${v} .sub`).forEach(x=>x.classList.remove("active"));
+  const t=el(`${v}-${s}`); if(t)t.classList.add("active");
 }
+document.querySelectorAll(".tabs").forEach(w=>{const v=w.id.replace("Tabs","");
+  w.querySelectorAll(".tab").forEach(t=>t.addEventListener("click",()=>switchSub(v,t.dataset.s)));});
 
-document.querySelectorAll(".subtabs").forEach(wrap => {
-  const view = wrap.id.replace("Tabs", "");
-  wrap.querySelectorAll(".subtab").forEach(tab => {
-    tab.addEventListener("click", () => switchSub(view, tab.dataset.sub));
-  });
-});
+/* command */
+el("kpis").innerHTML=[["Active agents","12","of 19","up"],["On calls","4","live now",""],["Calls waiting","2","avg 00:14","warn"],
+ ["Open conversations","31","across channels",""],["Unassigned leads","7","needs routing","bad"],["Follow-ups due","14","4 overdue","warn"],
+ ["Viewings today","9","3 completed",""],["Active transactions","6","₦410m pipeline","up"]]
+ .map(([k,v,s,c])=>`<div class="card kpi"><span>${k}</span><strong>${v}</strong><small class="${c}">${s}</small></div>`).join("");
 
-/* =========================================================
-   COMMAND CENTRE — agent monitor + feed
-========================================================= */
+el("monitor").innerHTML=agents.map(a=>{const[l,c]=ST[a.status];
+ return `<tr class="ck" onclick='openDrawer("agent",${JSON.stringify(a)})'><td class="n">${a.name}</td><td>${pill(l,c)}</td>
+ <td>${a.status==="oncall"?a.callTime:"—"}</td><td>${a.leads}</td>
+ <td>${a.followups}${a.followups>2?' <span class="pill p-red">OVERDUE</span>':""}</td></tr>`;}).join("");
 
-function renderCommandAgents() {
-  const tbody = document.getElementById("commandAgentTable");
-  tbody.innerHTML = agentsData.map(a => {
-    const [label, cls] = statusLabel[a.status];
-    return `<tr class="rowclick" onclick='openDrawer("agent", ${JSON.stringify(a).replace(/'/g, "&apos;")})'>
-      <td class="name-cell">${a.name}</td>
-      <td><span class="status-pill ${cls}"><span class="d"></span>${label}</span></td>
-      <td>${a.status === "oncall" ? a.callTime : "—"}</td>
-      <td>${a.leads}</td>
-      <td>${a.followups}${a.followups > 2 ? " <span class='tag-mini tag-hi'>overdue</span>" : ""}</td>
-    </tr>`;
-  }).join("");
+el("feed").innerHTML=[["var(--sky)","New property enquiry submitted for <b>Lekki Phase 1</b>.","2 min ago"],
+ ["var(--green)","<b>David Ade</b> connected a call with Michael Adewale.","4 min ago"],
+ ["var(--amber)","Lead <b>Grace Okafor</b> has been inactive for 3 days.","11 min ago"],
+ ["var(--maroon-2)","Viewing scheduled for <b>Maitama Apartment</b>.","22 min ago"],
+ ["var(--sky)","Partner <b>ABC Developments</b> submitted 2 new properties.","41 min ago"],
+ ["var(--red)","SLA breach on an open conversation.","1h ago"]]
+ .map(([c,t,tm])=>`<div class="feed"><span class="dot" style="background:${c}"></span><div><p>${t}</p><time>${tm}</time></div></div>`).join("");
+
+/* crm */
+el("leadsT").innerHTML=[["Michael Adewale","3-bed, Lekki","Website","High","Sarah Johnson","2h"],
+ ["Grace Okafor","Investment, Maitama","WhatsApp","Medium","Daniel Peter","1d"],
+ ["Chinedu Obi","Land, Ogun","Referral","Low","Unassigned","3d"],
+ ["Amaka Eze","4-bed, Ikoyi","Instagram","High","Grace Obi","5h"],
+ ["Tunde Bakare","Duplex, Abuja","Phone","Medium","Tunde Bello","6d"]]
+ .map(([n,i,s,it,a,ag])=>`<tr class="ck" onclick='openDrawer("customer",D.customers[0])'><td class="n">${n}</td><td>${i}</td><td>${s}</td>
+ <td>${pill(it.toUpperCase(),it==="High"?"p-red":it==="Medium"?"p-amber":"p-mute")}</td>
+ <td>${a==="Unassigned"?pill("UNASSIGNED","p-red"):a}</td><td>${ag}</td></tr>`).join("");
+
+el("custT").innerHTML=[["Michael Adewale","Buyer","₦70m–₦100m","Lekki / Ikoyi","12 views · 4 saved","Today"],
+ ["Grace Okafor","Investor","₦40m–₦60m","Maitama","6 views · 2 saved","Yesterday"],
+ ["Chinedu Obi","Buyer","₦20m–₦35m","Ogun","2 views · 0 saved","3 days ago"]]
+ .map(r=>`<tr class="ck" onclick='openDrawer("customer",D.customers[0])'><td class="n">${r[0]}</td>`+r.slice(1).map(c=>`<td>${c}</td>`).join("")+"</tr>").join("");
+
+el("pipe").innerHTML=[["New lead",24,[["Chinedu Obi","Land · Ogun","₦32m"],["Amaka Eze","4-bed · Ikoyi","₦280m"]]],
+ ["Qualified",16,[["Grace Okafor","Investment · Maitama","₦52m"]]],["Matched",11,[["Michael Adewale","Lekki 3-bed","₦85m"]]],
+ ["Viewing",7,[["Tunde Bakare","Duplex · Abuja","₦145m"]]],["Negotiation",4,[["Ifeoma Nwosu","Land · Ibeju-Lekki","₦60m"]]],
+ ["Closed",3,[["Bassey Etim","Apartment · Yaba","₦64m"]]]]
+ .map(([s,c,cards])=>`<div><div class="phead"><span>${s}</span><strong>${c}</strong></div><div class="pbody">
+ ${cards.map(k=>`<div class="pcard" onclick='openDrawer("customer",D.customers[0])'><div class="n">${k[0]}</div><div class="p">${k[1]}</div><div class="v">${k[2]}</div></div>`).join("")}
+ </div></div>`).join("");
+
+el("tasks").innerHTML=[["var(--red)","Follow up with Michael Adewale — no contact in 24h","FOLLOW-UP REQUIRED"],
+ ["var(--sky)","Amaka Eze viewed three properties — send a comparison","PROPERTY FOLLOW-UP"],
+ ["var(--amber)","Viewing completed for Tunde Bakare — check in","POST-VIEWING"],
+ ["var(--muted)","Grace Okafor inactive for 7 days","RE-ENGAGE"],
+ ["var(--maroon-2)","David Ade hasn't updated the CRM after his last call","CRM UPDATE"]]
+ .map(([c,t,g])=>`<div class="feed"><span class="dot" style="background:${c}"></span><div><p>${t}</p><time><span class="pill p-mute">${g}</span></time></div></div>`).join("");
+
+/* contact */
+el("avail").innerHTML=agents.map(a=>{const[l,c]=ST[a.status];
+ return `<div class="row" onclick='openDrawer("agent",${JSON.stringify(a)})'><div class="t">${a.name}</div>${pill(l,c)}</div>`;}).join("");
+
+const convos=[{name:"Michael Adewale",ch:"WhatsApp",s:"I'm interested in the 3-bedroom apartment in Ikeja.",p:"Ikeja 3-bed · ₦85m",a:"Sarah Johnson",n:"Schedule viewing"},
+ {name:"Grace Obi",ch:"Website",s:"Can I inspect this weekend?",p:"Maitama Apartment · ₦52m",a:"Daniel Peter",n:"Confirm time"},
+ {name:"David's customer",ch:"Email",s:"Please send the documentation for the Lekki plot.",p:"Ibeju-Lekki Land · ₦32m",a:"David Ade",n:"Send documents"}];
+let ac=0;
+function renderConv(){
+ el("convList").innerHTML=convos.map((c,i)=>`<div class="conv ${i===ac?"on":""}" onclick="ac=${i};renderConv()">
+  <div class="w">${c.name}</div><div class="s">${c.s}</div><div class="c">${c.ch}</div></div>`).join("");
+ const c=convos[ac];
+ el("convThread").innerHTML=`<div class="tmsg cust">${c.s}</div>
+  <div class="tmsg agent">Sure — I can pull the matching options for you now.</div>
+  <div class="tmsg cust">Great, thank you.</div>`;
+ el("convCtx").innerHTML=[["Property",c.p],["Assigned agent",c.a],["Next action",c.n],["Priority","Medium"]]
+  .map(([k,v])=>`<div class="ctx"><span>${k}</span><strong>${v}</strong></div>`).join("")+
+  `<div class="dacts" style="padding:16px 18px"><button onclick='openDrawer("customer",D.customers[0])'>Open record</button><button>Reassign</button><button>Escalate</button></div>`;
 }
-renderCommandAgents();
+renderConv();
 
-const feedItems = [
-  { color:"var(--tech)", text:"New property enquiry submitted for <b>Lekki Phase 1</b>.", time:"2 min ago" },
-  { color:"var(--green)", text:"<b>David Ade</b> connected a call with Michael Adewale.", time:"4 min ago" },
-  { color:"var(--amber)", text:"Lead <b>Grace Okafor</b> has been inactive for 3 days.", time:"11 min ago" },
-  { color:"var(--maroon-2)", text:"Viewing scheduled for <b>Maitama Apartment</b>.", time:"22 min ago" },
-  { color:"var(--tech)", text:"Partner <b>ABC Developments</b> submitted 2 new properties.", time:"41 min ago" },
-  { color:"var(--red)", text:"SLA breach on conversation with <b>Tunde requested</b>.", time:"1h ago" },
-];
-document.getElementById("commandFeed").innerHTML = feedItems.map(f =>
-  `<div class="feed-item"><span class="feed-dot" style="background:${f.color}"></span>
-    <div><div class="feed-text">${f.text}</div><div class="feed-time">${f.time}</div></div></div>`
-).join("");
+/* workforce */
+el("agrid").innerHTML=agents.map(a=>{const[l,c]=ST[a.status];
+ return `<div class="card acard" onclick='openDrawer("agent",${JSON.stringify(a)})'>
+  <div class="atop"><div class="aav">${a.name.split(" ").map(n=>n[0]).join("")}</div>
+   <div><div class="an">${a.name}</div><div class="ar">${a.role}</div></div>
+   <span style="margin-left:auto">${pill(l,c)}</span></div>
+  <div class="amet"><div><strong>${a.leads}</strong><span>Leads</span></div><div><strong>${a.followups}</strong><span>Follow-ups</span></div>
+  <div><strong>${a.conv}%</strong><span>Conversion</span></div></div></div>`;}).join("");
 
-/* =========================================================
-   CRM — leads / customers / pipeline / tasks
-========================================================= */
+const axis={color:"#a29396",font:{family:"Manrope",size:11}};
+const tip={backgroundColor:"rgba(74,16,29,.94)",displayColors:false,padding:10,titleFont:{family:"Manrope",size:12},bodyFont:{family:"Manrope",size:12}};
+new Chart(el("perf"),{type:"bar",data:{labels:["Mon","Tue","Wed","Thu","Fri","Sat","Sun"],
+ datasets:[{data:[38,44,41,52,47,29,18],backgroundColor:"rgba(104,29,49,.65)",hoverBackgroundColor:"#681d31",borderRadius:8,maxBarThickness:30}]},
+ options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false},tooltip:tip},
+ scales:{x:{grid:{display:false},ticks:axis,border:{display:false}},y:{grid:{color:"rgba(74,16,29,.06)"},ticks:axis,border:{display:false}}}}});
 
-const leads = [
-  { name:"Michael Adewale", interest:"3-bed, Lekki", source:"Website", intent:"High", agent:"Sarah Johnson", age:"2h" },
-  { name:"Grace Okafor", interest:"Investment, Maitama", source:"WhatsApp", intent:"Medium", agent:"Daniel Peter", age:"1d" },
-  { name:"Chinedu Obi", interest:"Land, Ogun", source:"Referral", intent:"Low", agent:"Unassigned", age:"3d" },
-  { name:"Amaka Eze", interest:"4-bed, Ikoyi", source:"Instagram", intent:"High", agent:"Grace Obi", age:"5h" },
-  { name:"Tunde Bakare", interest:"Duplex, Abuja", source:"Phone", intent:"Medium", agent:"Tunde Bello", age:"6d" },
-];
-document.getElementById("leadsTable").innerHTML = leads.map(l => {
-  const tag = l.intent === "High" ? "tag-hi" : l.intent === "Medium" ? "tag-med" : "tag-lo";
-  return `<tr class="rowclick" onclick='openDrawer("customer", drawerData.customers[0])'>
-    <td class="name-cell">${l.name}</td><td>${l.interest}</td><td>${l.source}</td>
-    <td><span class="tag-mini ${tag}">${l.intent}</span></td>
-    <td>${l.agent === "Unassigned" ? "<span class='tag-mini tag-hi'>Unassigned</span>" : l.agent}</td>
-    <td>${l.age}</td></tr>`;
-}).join("");
+/* properties */
+const props=[{t:"Lekki Residence",l:"Lekki Phase 1",p:"₦85,000,000",pa:"XYZ Properties",a:"Sarah Johnson",s:"Active",img:IMG("photo-1600585154340-be6161a56a0c"),f:["featured"]},
+ {t:"Maitama Apartment",l:"Maitama, Abuja",p:"₦52,000,000",pa:"ABC Developments",a:"Daniel Peter",s:"Active",img:IMG("photo-1512917774080-9991f1c4c750"),f:["new"]},
+ {t:"Ibeju-Lekki Plot",l:"Ibeju-Lekki",p:"₦32,000,000",pa:"XYZ Properties",a:"David Ade",s:"Pending docs",img:IMG("photo-1600607687920-4e2a09cf159d"),f:["doc"]},
+ {t:"Banana Island Villa",l:"Banana Island, Lagos",p:"₦650,000,000",pa:"ABC Developments",a:"Grace Obi",s:"Active",img:IMG("photo-1613490493576-7fde63acd811"),f:["vip","featured"]},
+ {t:"Yaba Duplex",l:"Yaba, Lagos",p:"₦64,000,000",pa:"XYZ Properties",a:"Tunde Bello",s:"Under offer",img:IMG("photo-1600566753190-17f0baa2a6c3"),f:["urgent"]},
+ {t:"Airport Road Duplex",l:"Airport Road, Abuja",p:"₦210,000,000",pa:"ABC Developments",a:"Sarah Johnson",s:"Active",img:IMG("photo-1600607687939-ce8a6c25118c"),f:["new","featured"]}];
+const FL={featured:["Featured","f-featured"],urgent:["Urgent","f-urgent"],vip:["VIP","f-vip"],new:["New","f-new"],doc:["Docs pending","f-doc"]};
+el("propT").innerHTML=props.map(p=>`<tr class="ck" onclick='openDrawer("property",D.properties[0])'><td class="n">${p.t}</td><td>${p.l}</td>
+ <td>${p.p}</td><td>${p.pa}</td><td>${p.a}</td><td>${pill(p.s.toUpperCase(),p.s==="Active"?"p-green":p.s==="Under offer"?"p-sky":"p-amber")}</td></tr>`).join("");
+el("impGrid").innerHTML=props.filter(p=>p.f.length).map(p=>`<div class="card lcard" onclick='openDrawer("property",D.properties[0])'>
+ <div class="limg" style="background-image:url('${p.img}')"><div class="flags">${p.f.map(f=>`<span class="flag ${FL[f][1]}">${FL[f][0]}</span>`).join("")}</div></div>
+ <div class="lbody"><h4>${p.t}</h4><div class="loc">${p.l}</div><div class="pr">${p.p}</div>
+ <div class="lstats"><span>128 views</span><span>34 saves</span><span>11 enquiries</span></div></div></div>`).join("");
 
-const customers = [
-  { name:"Michael Adewale", type:"Buyer", budget:"₦70M–₦100M", locations:"Lekki / Ikoyi", engagement:"12 views · 4 saved", last:"Today" },
-  { name:"Grace Okafor", type:"Investor", budget:"₦40M–₦60M", locations:"Maitama", engagement:"6 views · 2 saved", last:"Yesterday" },
-  { name:"Chinedu Obi", type:"Buyer", budget:"₦20M–₦35M", locations:"Ogun", engagement:"2 views · 0 saved", last:"3 days ago" },
-];
-document.getElementById("customersTable").innerHTML = customers.map(c =>
-  `<tr class="rowclick" onclick='openDrawer("customer", drawerData.customers[0])'>
-    <td class="name-cell">${c.name}</td><td>${c.type}</td><td>${c.budget}</td>
-    <td>${c.locations}</td><td>${c.engagement}</td><td>${c.last}</td></tr>`
-).join("");
+/* partners */
+el("partnerList").innerHTML=[["ABC Developments","Developer · Verified · 18 active listings"],["XYZ Properties","Property owner · Verified · 9 active listings"],
+ ["Lagos Legal Partners","Legal · Verified · Documentation support"],["Northbridge Surveyors","Surveyor · Verified · 6 active listings"]]
+ .map(([n,m])=>`<div class="row" onclick='openDrawer("partner",D.partners[0])'><div><div class="t">${n}</div><div class="m">${m}</div></div><span class="pill">OPEN →</span></div>`).join("");
+el("partnerAlerts").innerHTML=["ABC Developments hasn't been contacted for 14 days.","3 partner listings have outstanding documentation.",
+ "XYZ Properties submitted 5 new properties.","A partner listing received 27 enquiries this week."]
+ .map(t=>`<div class="feed"><span class="dot" style="background:var(--amber)"></span><div><p>${t}</p></div></div>`).join("");
 
-const pipeline = [
-  { stage:"New Lead", count:24, cards:[["Chinedu Obi","Land · Ogun","₦32m"],["Amaka Eze","4-bed · Ikoyi","₦280m"]] },
-  { stage:"Qualified", count:16, cards:[["Grace Okafor","Investment · Maitama","₦52m"]] },
-  { stage:"Matched", count:11, cards:[["Michael Adewale","Lekki 3-bed","₦85m"]] },
-  { stage:"Viewing", count:7, cards:[["Tunde Bakare","Duplex · Abuja","₦145m"]] },
-  { stage:"Negotiation", count:4, cards:[["Ifeoma Nwosu","Land · Ibeju-Lekki","₦60m"]] },
-  { stage:"Closed", count:3, cards:[["Bassey Etim","Apartment · Yaba","₦64m"]] },
-];
-document.getElementById("pipelineBoard").innerHTML = pipeline.map(col => `
-  <div class="pipe-col">
-    <div class="pipe-head"><span>${col.stage}</span><strong>${col.count}</strong></div>
-    <div class="pipe-body">
-      ${col.cards.map(c => `<div class="pipe-card" onclick='openDrawer("customer", drawerData.customers[0])'>
-        <div class="n">${c[0]}</div><div class="p">${c[1]}</div><div class="v">${c[2]}</div>
-      </div>`).join("")}
-    </div>
-  </div>`).join("");
+/* intelligence */
+new Chart(el("intel"),{type:"line",data:{labels:["Oct","Nov","Dec","Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep"],
+ datasets:[{data:[100,102,104,107,109,112,115,117,119,122,126,131],borderColor:"#681d31",backgroundColor:"rgba(200,107,133,.16)",
+ fill:true,tension:.4,pointRadius:0,pointHoverRadius:5,borderWidth:2.5}]},
+ options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false},tooltip:tip},
+ scales:{x:{grid:{display:false},ticks:axis,border:{display:false}},y:{grid:{color:"rgba(74,16,29,.06)"},ticks:axis,border:{display:false}}}}});
+el("news").innerHTML=[["Infrastructure","New road development reported around Lekki / Ibeju-Lekki.","Today"],
+ ["Construction","Cement prices remain an important construction-cost signal.","Yesterday"],
+ ["Finance","Mortgage conditions remain central to affordability.","2 days ago"],
+ ["Development","New development activity is changing supply in emerging corridors.","4 days ago"]]
+ .map(([c,t,tm])=>`<div class="feed"><span class="dot" style="background:var(--sky)"></span><div><p><span class="pill p-sky">${c.toUpperCase()}</span> ${t}</p><time>${tm}</time></div></div>`).join("");
+el("reports").innerHTML=[["Sales report","Lead volume · conversion · revenue","Weekly",IMG("photo-1551288049-bebda4e38f71"),["new"]],
+ ["Workforce report","Agent activity · SLA · productivity","Weekly",IMG("photo-1553877522-43269d4ea984"),["featured"]],
+ ["Property report","Inventory · enquiries · demand","Monthly",IMG("photo-1560518883-ce09059eeffa"),[]]]
+ .map(([t,l,p,img,f])=>`<div class="card lcard"><div class="limg" style="background-image:url('${img}')">
+ <div class="flags">${f.map(x=>`<span class="flag ${FL[x][1]}">${FL[x][0]}</span>`).join("")}</div></div>
+ <div class="lbody"><h4>${t}</h4><div class="loc">${l}</div><div class="pr">${p}</div></div></div>`).join("");
+el("rules").innerHTML=[["var(--green)","New lead → check availability → assign agent → start SLA timer"],
+ ["var(--amber)","Agent goes Away → stop routing → redistribute waiting calls"],
+ ["var(--sky)","High-intent lead → notify supervisor"],
+ ["var(--red)","Partner document missing → notify partner manager"]]
+ .map(([c,t])=>`<div class="feed"><span class="dot" style="background:${c}"></span><div><p>${t}</p></div></div>`).join("");
 
-const tasks = [
-  { text:"Follow up with Michael Adewale — no contact in 24h", tag:"FOLLOW-UP REQUIRED", color:"var(--red)" },
-  { text:"Amaka Eze viewed three properties — send comparison", tag:"PROPERTY FOLLOW-UP", color:"var(--tech)" },
-  { text:"Viewing completed for Tunde Bakare — check in", tag:"POST-VIEWING", color:"var(--amber)" },
-  { text:"Grace Okafor inactive for 7 days", tag:"RE-ENGAGE", color:"var(--muted-2)" },
-  { text:"David Ade hasn't updated CRM after last call", tag:"CRM UPDATE REQUIRED", color:"var(--maroon-2)" },
-];
-document.getElementById("tasksList").innerHTML = tasks.map(t =>
-  `<div class="feed-item"><span class="feed-dot" style="background:${t.color}"></span>
-    <div><div class="feed-text">${t.text}</div><div class="feed-time"><span class="tag-mini">${t.tag}</span></div></div></div>`
-).join("");
-
-/* =========================================================
-   CONVERSATIONS INBOX
-========================================================= */
-
-const conversations = [
-  { name:"Michael Adewale", channel:"WhatsApp", snippet:"I'm interested in the 3-bedroom apartment in Ikeja.", property:"Ikeja 3-bed · ₦85M", agent:"Sarah Johnson", next:"Schedule viewing" },
-  { name:"Grace Obi", channel:"Website", snippet:"Can I inspect this weekend?", property:"Maitama Apartment · ₦52M", agent:"Daniel Peter", next:"Confirm time" },
-  { name:"David's customer", channel:"Email", snippet:"Please send the documentation for the Lekki plot.", property:"Ibeju-Lekki Land · ₦32M", agent:"David Ade", next:"Send documents" },
-];
-let activeConvo = 0;
-function renderConvo() {
-  document.getElementById("convoList").innerHTML = conversations.map((c, i) => `
-    <div class="convo-item ${i === activeConvo ? "active" : ""}" onclick="selectConvo(${i})">
-      <div class="who">${c.name}</div>
-      <div class="snippet">${c.snippet}</div>
-      <div class="chan">${c.channel}</div>
-    </div>`).join("");
-
-  const c = conversations[activeConvo];
-  document.getElementById("convoThread").innerHTML = `
-    <div class="thread-msg cust">${c.snippet}</div>
-    <div class="thread-msg agent">Sure — I can pull the matching options for you now.</div>
-    <div class="thread-msg cust">Great, thank you.</div>`;
-
-  document.getElementById("convoContext").innerHTML = `
-    <div class="ctx-row"><span>Property</span><strong>${c.property}</strong></div>
-    <div class="ctx-row"><span>Assigned agent</span><strong>${c.agent}</strong></div>
-    <div class="ctx-row"><span>Next action</span><strong>${c.next}</strong></div>
-    <div class="ctx-row"><span>Priority</span><strong>Medium</strong></div>
-    <div style="padding:14px 16px;" class="drawer-actions">
-      <button onclick="openDrawer('customer', drawerData.customers[0])">Open record</button>
-      <button>Reassign</button>
-      <button>Escalate</button>
-    </div>`;
+/* drawer */
+const ov=el("ov"),drawer=el("drawer");
+const kvs=a=>`<div class="kvg">${a.map(([k,v])=>`<div class="kv"><span>${k}</span><strong>${v}</strong></div>`).join("")}</div>`;
+function openDrawer(type,d){
+ el("dLbl").textContent={customer:"Customer 360",agent:"Agent profile",partner:"Partner profile",property:"Property record"}[type];
+ el("dTitle").textContent=d.name||d.title;
+ let h="";
+ if(type==="customer")h=`<div class="dsec"><h5>Contact</h5>${kvs([["Phone",d.phone],["Email",d.email],["Budget",d.budget],["Locations",d.locations]])}</div>
+  <div class="dsec"><h5>Engagement</h5>${kvs([["Views",d.views],["Saved",d.saved],["Enquiries",d.enquiries],["Viewings",d.viewings]])}</div>
+  <div class="dsec"><h5>Activity timeline</h5>
+   <div class="tl"><b>10:42</b>Called customer</div><div class="tl"><b>10:20</b>Viewed Lekki property</div>
+   <div class="tl"><b>09:55</b>Saved property</div><div class="tl"><b>Yest.</b>Requested viewing</div></div>
+  <div class="dsec"><h5>Prop's read</h5><div class="note">High intent and fast engagement. A call today with a two-property comparison is the highest-value next action.</div></div>
+  <div class="dacts"><button>Call</button><button>Message</button><button>Reassign</button><button>Escalate</button></div>`;
+ if(type==="agent"){const[l]=ST[d.status];
+  h=`<div class="dsec"><h5>Status</h5>${kvs([["Role",d.role],["Status",l],["Assigned leads",d.leads],["Follow-ups due",d.followups]])}</div>
+  <div class="dsec"><h5>Performance</h5>${kvs([["Connect rate",d.connected+"%"],["Avg call",d.avgCall],["Conversion",d.conv+"%"],["Queue","Routing on"]])}</div>
+  <div class="dsec"><h5>Supervisor actions</h5><div class="dacts"><button>Set active</button><button>Set away</button><button>Pause routing</button>
+  <button>Reassign leads</button><button>Transfer conversation</button></div></div>`;}
+ if(type==="partner")h=`<div class="dsec"><h5>Overview</h5>${kvs([["Active listings",d.listings],["Open enquiries",d.enquiries],["Viewings",d.viewings],["Transactions",d.transactions]])}</div>
+  <div class="dsec"><h5>Relationship</h5>${kvs([["Manager",d.manager],["Last contact",d.lastContact],["Outstanding docs",d.docs],["Tier","Verified"]])}</div>
+  <div class="dacts"><button>Listings</button><button>Documents</button><button>Message</button><button>Follow-up</button></div>`;
+ if(type==="property")h=`<div class="dsec"><h5>Details</h5>${kvs([["ID",d.id],["Price",d.price],["Location",d.location],["Partner",d.partner]])}</div>
+  <div class="dsec"><h5>Activity</h5>${kvs([["Views",d.views],["Saves",d.saves],["Enquiries",d.enquiries],["Offers",d.offers]])}</div>
+  <div class="dacts"><button>Edit listing</button><button>Request removal</button><button>View documents</button></div>`;
+ el("dBody").innerHTML=h; ov.classList.add("open"); drawer.classList.add("open");
 }
-function selectConvo(i) { activeConvo = i; renderConvo(); }
-renderConvo();
+function closeDrawer(){ov.classList.remove("open");drawer.classList.remove("open");}
 
-/* =========================================================
-   WORKFORCE — agents grid + performance chart
-========================================================= */
-
-document.getElementById("agentsGrid").innerHTML = agentsData.map(a => {
-  const [label, cls] = statusLabel[a.status];
-  return `<div class="card agent-card" onclick='openDrawer("agent", ${JSON.stringify(a).replace(/'/g, "&apos;")})'>
-    <div class="agent-top">
-      <div class="agent-avatar">${a.name.split(" ").map(n=>n[0]).join("")}</div>
-      <div>
-        <div class="agent-name">${a.name}</div>
-        <div class="agent-role">${a.role}</div>
-      </div>
-      <span class="status-pill ${cls}" style="margin-left:auto;"><span class="d"></span>${label}</span>
-    </div>
-    <div class="agent-metrics">
-      <div><strong>${a.leads}</strong><span>Leads</span></div>
-      <div><strong>${a.followups}</strong><span>Follow-ups</span></div>
-      <div><strong>${a.conv}%</strong><span>Conversion</span></div>
-    </div>
-  </div>`;
-}).join("");
-
-new Chart(document.getElementById("perfChart").getContext("2d"), {
-  type: "bar",
-  data: {
-    labels: ["Mon","Tue","Wed","Thu","Fri","Sat","Sun"],
-    datasets: [{ data:[38,44,41,52,47,29,18], backgroundColor:"rgba(74,16,29,.55)", borderRadius:6, maxBarThickness:26 }]
-  },
-  options: {
-    responsive:true, maintainAspectRatio:false,
-    plugins:{ legend:{display:false}, tooltip:{ backgroundColor:"rgba(255,255,255,.96)", titleColor:"#2A141C", bodyColor:"#4B3A3E", borderColor:"rgba(74,16,29,.14)", borderWidth:1 } },
-    scales:{
-      x:{ grid:{display:false}, ticks:{ color:"#8A7873", font:{family:"Manrope", size:9} }, border:{display:false} },
-      y:{ grid:{ color:"rgba(74,16,29,.06)" }, ticks:{ color:"#8A7873", font:{family:"Manrope", size:9} }, border:{display:false} }
-    }
-  }
-});
-
-/* =========================================================
-   PROPERTIES
-========================================================= */
-
-const properties = [
-  { title:"Lekki Residence", loc:"Lekki Phase 1", price:"₦85,000,000", partner:"XYZ Properties", agent:"Sarah Johnson", status:"Active", img:"https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=600&q=80", flags:["featured"] },
-  { title:"Maitama Apartment", loc:"Maitama, Abuja", price:"₦52,000,000", partner:"ABC Developments", agent:"Daniel Peter", status:"Active", img:"https://images.unsplash.com/photo-1512917774080-9991f1c4c750?auto=format&fit=crop&w=600&q=80", flags:["new"] },
-  { title:"Ibeju-Lekki Plot", loc:"Ibeju-Lekki", price:"₦32,000,000", partner:"XYZ Properties", agent:"David Ade", status:"Pending docs", img:"https://images.unsplash.com/photo-1600607687920-4e2a09cf159d?auto=format&fit=crop&w=600&q=80", flags:["doc"] },
-  { title:"Banana Island Villa", loc:"Banana Island, Lagos", price:"₦650,000,000", partner:"ABC Developments", agent:"Grace Obi", status:"Active", img:"https://images.unsplash.com/photo-1580587771525-78b9dba3b914?auto=format&fit=crop&w=600&q=80", flags:["vip","featured"] },
-  { title:"Yaba Duplex", loc:"Yaba, Lagos", price:"₦64,000,000", partner:"XYZ Properties", agent:"Tunde Bello", status:"Under offer", img:"https://images.unsplash.com/photo-1600566753190-17f0baa2a6c3?auto=format&fit=crop&w=600&q=80", flags:["urgent"] },
-  { title:"Airport Road Duplex", loc:"Airport Road, Abuja", price:"₦210,000,000", partner:"ABC Developments", agent:"Sarah Johnson", status:"Active", img:"https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?auto=format&fit=crop&w=600&q=80", flags:["new","featured"] },
-];
-
-document.getElementById("propertiesTable").innerHTML = properties.map(p =>
-  `<tr class="rowclick" onclick='openDrawer("property", drawerData.properties[0])'>
-    <td class="name-cell">${p.title}</td><td>${p.loc}</td><td>${p.price}</td>
-    <td>${p.partner}</td><td>${p.agent}</td><td><span class="tag-mini">${p.status}</span></td></tr>`
-).join("");
-
-const flagMeta = { featured:["Featured","flag-featured"], urgent:["Urgent","flag-urgent"], vip:["VIP","flag-vip"], new:["New","flag-new"], doc:["Docs pending","flag-doc"] };
-document.getElementById("importantGrid").innerHTML = properties.filter(p => p.flags.length).map(p => `
-  <div class="card prop-card2" onclick='openDrawer("property", drawerData.properties[0])'>
-    <div class="prop-img2" style="background-image:url('${p.img}')">
-      <div class="prop-flags">${p.flags.map(f => `<span class="flag ${flagMeta[f][1]}">${flagMeta[f][0]}</span>`).join("")}</div>
-    </div>
-    <div class="prop-body2">
-      <h4>${p.title}</h4><div class="loc">${p.loc}</div><div class="price">${p.price}</div>
-      <div class="prop-stats-row"><span>128 views</span><span>34 saves</span><span>11 enq.</span></div>
-    </div>
-  </div>`).join("");
-
-/* =========================================================
-   PARTNERS
-========================================================= */
-
-const partners = [
-  { name:"ABC Developments", meta:"Developer · Verified · 18 active listings" },
-  { name:"XYZ Properties", meta:"Property owner · Verified · 9 active listings" },
-  { name:"Lagos Legal Partners", meta:"Legal · Verified · Documentation support" },
-  { name:"Northbridge Surveyors", meta:"Surveyor · Verified · 6 active listings" },
-];
-document.getElementById("partnerList").innerHTML = partners.map(p =>
-  `<div class="partner-row" onclick='openDrawer("partner", drawerData.partners[0])'>
-    <div><div class="pn">${p.name}</div><div class="pm">${p.meta}</div></div>
-    <span class="tag-mini">Open →</span>
-  </div>`).join("");
-
-document.getElementById("partnerAlerts").innerHTML = [
-  "ABC Developments hasn't been contacted for 14 days.",
-  "3 partner listings have outstanding documentation.",
-  "XYZ Properties submitted 5 new properties.",
-  "Partner listing received 27 enquiries this week.",
-].map(t => `<div class="feed-item"><span class="feed-dot" style="background:var(--amber)"></span><div class="feed-text">${t}</div></div>`).join("");
-
-/* =========================================================
-   INTELLIGENCE
-========================================================= */
-
-new Chart(document.getElementById("intelChart").getContext("2d"), {
-  type:"line",
-  data:{ labels:["Oct","Nov","Dec","Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep"],
-    datasets:[{ data:[100,102,104,107,109,112,115,117,119,122,126,131], borderColor:"#2f7fd1", backgroundColor:"rgba(47,127,209,.09)", fill:true, tension:.4, pointRadius:0, borderWidth:2 }] },
-  options:{ responsive:true, maintainAspectRatio:false,
-    plugins:{ legend:{display:false}, tooltip:{ backgroundColor:"rgba(255,255,255,.96)", titleColor:"#2A141C", bodyColor:"#4B3A3E", borderColor:"rgba(74,16,29,.14)", borderWidth:1 } },
-    scales:{ x:{ grid:{display:false}, ticks:{ color:"#8A7873", font:{family:"Manrope",size:8} }, border:{display:false} },
-             y:{ grid:{ color:"rgba(74,16,29,.06)" }, ticks:{ color:"#8A7873", font:{family:"Manrope",size:8} }, border:{display:false} } }
-  }
-});
-
-const newsItems = [
-  { cat:"Infrastructure", text:"New road development reported around Lekki / Ibeju-Lekki.", time:"Today" },
-  { cat:"Construction", text:"Cement prices remain an important construction-cost signal.", time:"Yesterday" },
-  { cat:"Finance", text:"Mortgage financing conditions remain important to affordability.", time:"2 days ago" },
-  { cat:"Development", text:"New development activity changing supply in emerging corridors.", time:"4 days ago" },
-];
-document.getElementById("newsFeed").innerHTML = newsItems.map(n =>
-  `<div class="feed-item"><span class="feed-dot" style="background:var(--tech)"></span>
-    <div><div class="feed-text"><span class="tag-mini">${n.cat}</span> ${n.text}</div><div class="feed-time">${n.time}</div></div></div>`
-).join("");
-
-const reports = [
-  { title:"Sales Report", loc:"Lead volume · conversion · revenue", price:"Weekly", img:"https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=600&q=80", flags:["new"] },
-  { title:"Workforce Report", loc:"Agent activity · SLA · productivity", price:"Weekly", img:"https://images.unsplash.com/photo-1553877522-43269d4ea984?auto=format&fit=crop&w=600&q=80", flags:["featured"] },
-  { title:"Property Report", loc:"Inventory · enquiries · demand", price:"Monthly", img:"https://images.unsplash.com/photo-1560518883-ce09059eeffa?auto=format&fit=crop&w=600&q=80", flags:[] },
-];
-document.getElementById("reportsGrid").innerHTML = reports.map(r => `
-  <div class="card prop-card2">
-    <div class="prop-img2" style="background-image:url('${r.img}')">
-      <div class="prop-flags">${(r.flags||[]).map(f => `<span class="flag ${flagMeta[f][1]}">${flagMeta[f][0]}</span>`).join("")}</div>
-    </div>
-    <div class="prop-body2"><h4>${r.title}</h4><div class="loc">${r.loc}</div><div class="price">${r.price}</div></div>
-  </div>`).join("");
-
-/* =========================================================
-   DRAWER
-========================================================= */
-
-const overlay = document.getElementById("overlay");
-const drawer = document.getElementById("drawer");
-
-function openDrawer(type, data) {
-  document.getElementById("drawerLabel").textContent =
-    type === "customer" ? "Customer 360" : type === "agent" ? "Agent profile" : type === "partner" ? "Partner profile" : "Property";
-  document.getElementById("drawerTitle").textContent = data.name || data.title;
-
-  let html = "";
-
-  if (type === "customer") {
-    html = `
-      <div class="drawer-section">
-        <h5>Contact</h5>
-        <div class="kv-grid">
-          <div class="kv"><span>Phone</span><strong>${data.phone}</strong></div>
-          <div class="kv"><span>Email</span><strong>${data.email}</strong></div>
-          <div class="kv"><span>Budget</span><strong>${data.budget}</strong></div>
-          <div class="kv"><span>Locations</span><strong>${data.locations}</strong></div>
-        </div>
-      </div>
-      <div class="drawer-section">
-        <h5>Engagement</h5>
-        <div class="kv-grid">
-          <div class="kv"><span>Views</span><strong>${data.views}</strong></div>
-          <div class="kv"><span>Saved</span><strong>${data.saved}</strong></div>
-          <div class="kv"><span>Enquiries</span><strong>${data.enquiries}</strong></div>
-          <div class="kv"><span>Viewings</span><strong>${data.viewings}</strong></div>
-        </div>
-      </div>
-      <div class="drawer-section">
-        <h5>Activity timeline</h5>
-        <div class="tl-day">Today</div>
-        <div class="timeline">
-          <div class="tl-item"><div class="tl-time">10:42</div><div class="tl-text">Called customer</div></div>
-          <div class="tl-item"><div class="tl-time">10:20</div><div class="tl-text">Viewed Lekki property</div></div>
-          <div class="tl-item"><div class="tl-time">09:55</div><div class="tl-text">Saved property</div></div>
-        </div>
-        <div class="tl-day">Yesterday</div>
-        <div class="timeline">
-          <div class="tl-item"><div class="tl-time">15:21</div><div class="tl-text">Requested viewing</div></div>
-        </div>
-      </div>
-      <div class="drawer-actions">
-        <button>Call</button><button>Message</button><button>Reassign</button><button>Escalate</button>
-      </div>`;
-  }
-
-  if (type === "agent") {
-    const [label] = statusLabel[data.status];
-    html = `
-      <div class="drawer-section">
-        <h5>Status</h5>
-        <div class="kv-grid">
-          <div class="kv"><span>Role</span><strong>${data.role}</strong></div>
-          <div class="kv"><span>Status</span><strong>${label}</strong></div>
-          <div class="kv"><span>Assigned leads</span><strong>${data.leads}</strong></div>
-          <div class="kv"><span>Follow-ups due</span><strong>${data.followups}</strong></div>
-        </div>
-      </div>
-      <div class="drawer-section">
-        <h5>Performance</h5>
-        <div class="kv-grid">
-          <div class="kv"><span>Connect rate</span><strong>${data.connected}%</strong></div>
-          <div class="kv"><span>Avg call</span><strong>${data.avgCall}</strong></div>
-          <div class="kv"><span>Conversion</span><strong>${data.conv}%</strong></div>
-        </div>
-      </div>
-      <div class="drawer-section">
-        <h5>Supervisor actions</h5>
-        <div class="drawer-actions">
-          <button>Set Active</button><button>Set Away</button><button>Pause routing</button>
-          <button>Reassign leads</button><button>Transfer conversation</button><button>View performance</button>
-        </div>
-      </div>`;
-  }
-
-  if (type === "partner") {
-    html = `
-      <div class="drawer-section">
-        <h5>Overview</h5>
-        <div class="kv-grid">
-          <div class="kv"><span>Active listings</span><strong>${data.listings}</strong></div>
-          <div class="kv"><span>Open enquiries</span><strong>${data.enquiries}</strong></div>
-          <div class="kv"><span>Viewings</span><strong>${data.viewings}</strong></div>
-          <div class="kv"><span>Transactions</span><strong>${data.transactions}</strong></div>
-        </div>
-      </div>
-      <div class="drawer-section">
-        <h5>Relationship</h5>
-        <div class="kv-grid">
-          <div class="kv"><span>Manager</span><strong>${data.manager}</strong></div>
-          <div class="kv"><span>Last contact</span><strong>${data.lastContact}</strong></div>
-          <div class="kv"><span>Outstanding docs</span><strong>${data.docs}</strong></div>
-        </div>
-      </div>
-      <div class="drawer-actions">
-        <button>Listings</button><button>Documents</button><button>Message</button><button>Follow-up</button>
-      </div>`;
-  }
-
-  if (type === "property") {
-    html = `
-      <div class="drawer-section">
-        <h5>Details</h5>
-        <div class="kv-grid">
-          <div class="kv"><span>ID</span><strong>${data.id}</strong></div>
-          <div class="kv"><span>Price</span><strong>${data.price}</strong></div>
-          <div class="kv"><span>Location</span><strong>${data.location}</strong></div>
-          <div class="kv"><span>Partner</span><strong>${data.partner}</strong></div>
-        </div>
-      </div>
-      <div class="drawer-section">
-        <h5>Activity</h5>
-        <div class="kv-grid">
-          <div class="kv"><span>Views</span><strong>${data.views}</strong></div>
-          <div class="kv"><span>Saves</span><strong>${data.saves}</strong></div>
-          <div class="kv"><span>Enquiries</span><strong>${data.enquiries}</strong></div>
-          <div class="kv"><span>Offers</span><strong>${data.offers}</strong></div>
-        </div>
-      </div>
-      <div class="drawer-actions">
-        <button>Edit listing</button><button>Request removal</button><button>View documents</button>
-      </div>`;
-  }
-
-  document.getElementById("drawerBody").innerHTML = html;
-  overlay.classList.add("open");
-  drawer.classList.add("open");
+/* prop */
+const trigger=el("trigger"),panel=el("panel"),input=el("pInput"),msgs=el("msgs");
+let justOpened=false;
+function toggleProp(){panel.classList.contains("open")?closeProp():openProp();}
+function openProp(){justOpened=true;setTimeout(()=>justOpened=false,0);
+ panel.classList.add("open");panel.setAttribute("aria-hidden","false");setTimeout(()=>input.focus(),320);}
+function closeProp(){panel.classList.remove("open");panel.setAttribute("aria-hidden","true");trigger.classList.remove("listening","thinking");}
+function askProp(t){openProp();setTimeout(()=>{input.value=t;sendProp();},200);}
+function add(t,type){const m=document.createElement("div");m.className="msg "+type;
+ m.innerHTML=type==="ai"?`<small>Prop</small>${t}`:t;msgs.appendChild(m);msgs.scrollTop=msgs.scrollHeight;}
+function sendProp(e){
+ if(e)e.preventDefault();
+ const t=input.value.trim(); if(!t)return;
+ add(t,"user"); input.value=""; trigger.classList.add("listening");
+ const typ=document.createElement("div");typ.className="msg ai typing";typ.innerHTML="<i></i><i></i><i></i>";
+ setTimeout(()=>{trigger.classList.remove("listening");trigger.classList.add("thinking");msgs.appendChild(typ);msgs.scrollTop=msgs.scrollHeight;},420);
+ setTimeout(()=>{trigger.classList.remove("thinking");typ.remove();add(reply(t),"ai");},1300);
 }
-
-function closeDrawer() {
-  overlay.classList.remove("open");
-  drawer.classList.remove("open");
+function reply(s){
+ s=s.toLowerCase();
+ if(s.includes("overdue")||s.includes("follow"))return `<b>Mariam Yusuf</b> has 4 overdue follow-ups and <b>Grace Obi</b> has 3. Mariam is also Away, so her queue isn't moving — worth redistributing.`;
+ if(s.includes("enquir")||s.includes("propert"))return `Lekki Residence and Banana Island Villa lead this week with 11 and 9 enquiries. Ibeju-Lekki Plot is stalled on documentation.`;
+ if(s.includes("available")||s.includes("call"))return `Sarah Johnson, Daniel Peter and Tunde Bello are Active and free. David Ade is 4:32 into a call and Grace Obi is in after-call work.`;
+ if(s.includes("partner"))return `<b>XYZ Properties</b> hasn't been contacted in 14 days and has 3 listings with outstanding documentation. That's the one I'd call today.`;
+ if(s.includes("unassigned")||s.includes("lead"))return `7 leads are unassigned, the oldest being Chinedu Obi at 3 days. Two of them are marked high intent, so routing them now protects the SLA.`;
+ if(s.includes("pipeline")||s.includes("ibeju"))return `65 opportunities across six stages, ₦410m in active transactions. 11 leads and 24 listings sit in the Ibeju-Lekki corridor affected by the new road — a good week for proactive outreach.`;
+ return `I can read agents, leads, conversations, listings, partners and the pipeline.<br><br>Try <b>overdue follow-ups</b>, <b>available agents</b>, <b>partner follow-up</b> or <b>pipeline</b>.`;
 }
-
-/* =========================================================
-   PROP
-========================================================= */
-
-const propTrigger = document.getElementById("propTrigger");
-const propPanel = document.getElementById("propPanel");
-const propInput = document.getElementById("propInput");
-const propMessages = document.getElementById("propMessages");
-
-function toggleProp() { propPanel.classList.contains("open") ? closeProp() : openProp(); }
-function openProp() { propPanel.classList.add("open"); propPanel.setAttribute("aria-hidden","false"); setTimeout(()=>propInput.focus(),300); }
-function closeProp() { propPanel.classList.remove("open"); propPanel.setAttribute("aria-hidden","true"); propTrigger.classList.remove("thinking"); }
-function askProp(text) { openProp(); propInput.value = text; sendProp(new Event("submit")); }
-
-function sendProp(e) {
-  if (e) e.preventDefault();
-  const text = propInput.value.trim();
-  if (!text) return;
-  addMsg(text, "user");
-  propInput.value = "";
-  propTrigger.classList.add("thinking");
-  setTimeout(() => {
-    propTrigger.classList.remove("thinking");
-    addMsg(propResponse(text), "ai");
-  }, 900);
-}
-
-function addMsg(text, type) {
-  const m = document.createElement("div");
-  m.className = `prop-message ${type}`;
-  m.innerHTML = type === "ai" ? `<small>Prop</small>${text}` : text;
-  propMessages.appendChild(m);
-  propMessages.scrollTop = propMessages.scrollHeight;
-}
-
-function propResponse(q) {
-  const s = q.toLowerCase();
-  if (s.includes("overdue") || s.includes("follow-up")) return "Mariam Yusuf has 4 overdue follow-ups and Grace Obi has 3. Want me to open Mariam's queue?";
-  if (s.includes("enquir")) return "Lekki Residence and Banana Island Villa are generating the most enquiries this week — 11 and 9 respectively.";
-  if (s.includes("available")) return "Sarah Johnson, Daniel Peter and Tunde Bello are currently Active and available to receive a call.";
-  if (s.includes("partner")) return "XYZ Properties hasn't been contacted in 14 days and has 3 listings with outstanding documentation.";
-  if (s.includes("ibeju") || s.includes("lekki pipeline")) return "11 active leads and 24 listings sit in the Ibeju-Lekki corridor affected by the new road development — worth a proactive outreach push.";
-  return "I can help with agents, leads, properties, partners and pipeline questions — try asking about overdue follow-ups or available agents.";
-}
-
-document.addEventListener("keydown", e => { if (e.key === "Escape") { closeProp(); closeDrawer(); } });
-document.addEventListener("click", e => {
-  if (propPanel.classList.contains("open") && !propPanel.contains(e.target) && !propTrigger.contains(e.target)) closeProp();
-});
+document.addEventListener("keydown",e=>{if(e.key!=="Escape")return;
+ if(panel.classList.contains("open"))closeProp();else closeDrawer();});
+document.addEventListener("click",e=>{if(justOpened)return;
+ if(panel.classList.contains("open")&&!panel.contains(e.target)&&!trigger.contains(e.target))closeProp();});
 </script>
-
 </body>
 </html>
